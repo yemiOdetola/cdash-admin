@@ -117,6 +117,10 @@ const routes: Routes = [
 				component: RoleEditComponent
 			},
 			{
+				path: 'roles/add/:id',
+				component: RoleEditComponent
+			},
+			{
 				path: 'claims/add',
 				component: ClaimEditComponent
 			},

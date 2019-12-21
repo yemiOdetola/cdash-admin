@@ -174,21 +174,28 @@ export class RoleEditComponent implements OnInit, OnDestroy {
 	}
 
 	updateRole(role) {
-		this.rolesService.updateRole(role, this.role._id).subscribe(
-			data => {
-				console.log('success reponse', data);
-				this.loadingSubject.next(false);
-				const message = `Updated Successfully`;
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-				this.router.navigate(['/strada/users/roles']);
-			},
-			error => {
-				this.loadingSubject.next(false);
-				console.log('Error response', error);
-				const title = 'Please Retry';
-				const message = 'Sorry, Temporary Error Occured';
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-			});
+		const payload = this.roleForm.value;
+		if (this.myRoles.length > 0) {
+			payload.permissions = this.myRoles;
+			this.rolesService.updateRole(role, this.role._id).subscribe(
+				data => {
+					console.log('success reponse', data);
+					this.loadingSubject.next(false);
+					const message = `Updated Successfully`;
+					this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+					this.router.navigate(['/cdash/users/roles']);
+				},
+				error => {
+					this.loadingSubject.next(false);
+					console.log('Error response', error);
+					const title = 'Please Retry';
+					const message = 'Sorry, Temporary Error Occured';
+					this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+				});
+		} else {
+			const message = `Please Add permissions for this role`;
+			this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+		}
 	}
 	/**
 	 * Add Role

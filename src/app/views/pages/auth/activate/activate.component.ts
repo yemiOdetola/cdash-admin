@@ -34,12 +34,21 @@ export class ActivateComponent implements OnInit, OnDestroy {
 	) { }
 
 	ngOnInit(): void {
-		if (localStorage.getItem('orgDetails')) {
-			this.router.navigate(['/cdash/dashboard']);
-		}
-		if (localStorage.getItem('activated')) {
-			this.router.navigate(['/auth/create-organization']);
-		}
+		this.auth.checkOrganization().subscribe(response => {
+			if (response.status !== false) {
+				localStorage.setItem('activated', 'true');
+				localStorage.setItem('orgDetails', response.data.data);
+				this.router.navigate(['/cdash/dashboard']);
+			} else {
+				this.router.navigate(['/auth/create-organization']);
+			}
+		});
+		// if (localStorage.getItem('orgDetails')) {
+		// 	this.router.navigate(['/cdash/dashboard']);
+		// }
+		// if (localStorage.getItem('activated')) {
+		// 	this.router.navigate(['/auth/create-organization']);
+		// }
 		this.initActivationForm();
 		this.route.queryParams.subscribe(params => {
 			this.returnUrl = params['returnUrl'] || '/';

@@ -32,6 +32,10 @@ export class AuthService {
 		});
 	}
 
+	checkOrganization(): Observable<any> {
+		return this.http.get<any>(`${environment.BASE_URL}/organization`);
+	}
+
 	activate(payload): Observable<any> {
 		return this.http.post<any>(`${environment.BASE_URL}/organization/activate`, payload);
 	}

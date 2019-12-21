@@ -37,6 +37,7 @@
 									<td class="uppercase-spacing">{{ role.permissions }}</td>
 									<td class="table-menu">
 										<a (click)="onDelete(role._id)" class="view delete">Delete</a>
+										<a routerLink="/cdash/users/roles/add/{{role._id}}" class="view edit">Edit</a>
 									</td>
 								</tr>
 							</tbody>

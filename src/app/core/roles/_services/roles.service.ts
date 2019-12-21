@@ -65,7 +65,7 @@ export class RolesService {
 	// get a role
 	getRoleById(roleId: string): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<any>(`${BASE_URL}/api/roles/${roleId}`, {
+		return this.http.get<any>(`${BASE_URL}/roles/${roleId}`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -76,7 +76,7 @@ export class RolesService {
 	// update a role
 	updateRole(role: any, roleId: string) {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.put<any>(`${BASE_URL}/api/role?role_id=${roleId}`, role, {
+		return this.http.put<any>(`${BASE_URL}/roles/${roleId}`, role, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
