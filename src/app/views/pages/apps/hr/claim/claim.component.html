@@ -1,0 +1,489 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action edit text-center" routerLink="/strada/hr/claim/edit/{{claimId}}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Edit Claim</span>
+			</div>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Reject</span>
+			</div>
+			<div class="details-action approve text-center" *ngIf="claimDetails && !claimDetails.approved"
+				(click)="approveClaim(claimId)">
+				<img src="./assets/media/icons/details-approve.svg" alt="">
+				<span>Approve</span>
+			</div>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+			<div class="goback" (click)="goBack()">
+					<img src="./assets/media/icons/backBtn.svg" alt="">
+					<span>Back</span>
+				</div>
+		<div class="contact-body" *ngIf="claimDetails">
+			<div class="item-details mt-4">
+				<div class="row">
+					<div class="col-xl-7">
+						<div class="details">
+							<table class="ml-5 details-table">
+								<tr class="each-data" *ngIf="claimDetails.name">
+									<td class="label">Name</td>
+									<td class="value">{{ claimDetails.name }}</td>
+								</tr>
+								<tr class="each-data" *ngIf="userDetails && userDetails.name">
+									<td class="label">Requested by</td>
+									<td class="value status"><span
+											class="plain">{{ userDetails.name | uppercase }}</span></td>
+								</tr>
+								<tr class="each-data" *ngIf="singleClaimType && singleClaimType.roles">
+									<td class="label">Approval Flow</td>
+									<td class="value"> USER >>> {{singleClaimType.roles.join(' >>> ') | uppercase}}</td>
+								</tr>
+								<tr class="each-data">
+									<td class="label">Total Claims Amount</td>
+									<td class="value">&#8358; {{ totalAmount || 0}}</td>
+								</tr>
+								<tr class="each-data">
+									<td class="label">Date created</td>
+									<td class="value">
+										{{ claimDetails.created_at | date: "medium" }}
+									</td>
+								</tr>
+								<tr class="each-data">
+									<td class="label">Date updated</td>
+									<td class="value">
+										{{ claimDetails.updated_at | date: "medium" }}
+									</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="col-xl-5">
+						<div class="side-form approval">
+							<div class="title-status">
+								<div class="title">Request Status</div>
+								<div class="status"
+									[ngClass]="claimDetails && claimDetails.approved ? 'approved' : 'pending'">
+									{{claimDetails.approved ? 'Approved' : 'Pending'}}</div>
+							</div>
+							<div class="approval-cover">
+								<div class="each-level approved">
+									<div class="notification approved"></div>
+									<div class="level-info">
+										<div class="leveler">Staff</div>
+										<div class="into">Sent claim request</div>
+									</div>
+								</div>
+								<div class="each-level" *ngIf="singleClaimType && singleClaimType.roles.length > 0"
+									[ngClass]="claimDetails && claimDetails.approved ? 'approved' : 'pending'">
+									<div class="notification"
+										[ngClass]="claimDetails && claimDetails.approved ? 'approved' : 'pending'">
+									</div>
+									<div class="level-info">
+										<div class="leveler">{{singleClaimType.roles[0] | titlecase}}</div>
+										<div class="into">{{ claimDetails.approved ? 'Approved by' : 'Waiting on' }}
+											{{singleClaimType.roles[0] | titlecase}}</div>
+									</div>
+								</div>
+								<div class="each-level" *ngIf="singleClaimType && singleClaimType.roles.length > 1"
+									[ngClass]="claimDetails && claimDetails.approved ? 'approved' : 'pending'">
+									<div class="notification"
+										[ngClass]="claimDetails && claimDetails.approved ? 'approved' : 'pending'">
+									</div>
+									<div class="level-info">
+										<div class="leveler">{{singleClaimType.roles[1] | titlecase}}</div>
+										<div class="into">{{ claimDetails.approved ? 'Approved by' : 'Waiting on' }}
+											{{singleClaimType.roles[1] | titlecase}}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="!claimDetails" class="mt-5 please-data text-center">Please Wait...</div>
+
+		<div class="claims-add mt-5">
+			<!-- <form [formGroup]="addClaimForm" class="kt-form kt-form--group-seperator-dashed mt-5 slide-in mb-5"
+				*ngIf="addnew">
+				<div class="col-md-12 kt-margin-bottom-10-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Enter Claim" formControlName="claim">
+						<mat-error> Claim is <strong>required</strong> </mat-error>
+					</mat-form-field>
+				</div>
+				<div class="col-md-12 kt-margin-bottom-10-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<input type="number" matInput placeholder="Enter Amount" formControlName="amount">
+						<mat-error> Claim Amount is <strong>required</strong> </mat-error>
+					</mat-form-field>
+				</div>
+				<div class="col-md-12 kt-margin-bottom-10-mobile">
+					<mat-form-field class="mat-form-field-fluid">
+						<textarea matInput rows="7" placeholder="Claim's Description"
+							formControlName="description"></textarea>
+					</mat-form-field>
+				</div>
+				<div class="mt-2">
+					<button type="Submit" (click)="addClaim()" mat-raised-button>Submit</button>
+				</div>
+			</form> -->
+
+			<form [formGroup]="addClaimForm">
+				<table class="table-view">
+					<thead>
+						<tr>
+							<th>Claim items description</th>
+							<th>Item amount</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="each-row" *ngFor="let claim of claimItems">
+							<td>{{ claim.description }}</td>
+							<td>{{claim.amount}}</td>
+							<td (click)="deleteClaim(claim)">
+								<a class="delete">Remove item</a>
+							</td>
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 0">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 1">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 2">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 3">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 4">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 5">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 6">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 7">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 8">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 9">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 10">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 11">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 12">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 13">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 14">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 15">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 16">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 17">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 18">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 19">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+						<tr class="each-row" *ngIf="newClaim === 20">
+							<!-- <form> -->
+							<td class="input">
+								<input type="text" (change)="setName($event.target.value)" placeholder="Enter item name"
+									required>
+							</td>
+							<td class="input">
+								<input type="number" (change)="setAmount($event.target.value)"
+									placeholder="Enter item amount" required>
+							</td>
+							<td (click)="addClaim()">
+								<a class="view">Submit</a>
+							</td>
+							<!-- </form> -->
+						</tr>
+
+					</tbody>
+				</table>
+			</form>
+			<div class="claims mt-5 hide">
+				<div class="each-claim" *ngFor="let claimItem of claimItems;let idx = index">
+					<div class="data w-100">
+						<div class="tag-value">
+							<div class="tag">Amount: </div>
+							<div class="value">{{nairaSign}} {{claimItem.amount}}</div>
+						</div>
+						<div class="tag-value">
+							<div class="tag">Description: </div>
+							<div class="value">{{claimItem.description}}</div>
+						</div>
+					</div>
+					<div class="delete" (click)="deleteClaim(claimItem)">
+						<i class="la la-trash-o"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,63 @@
+<kt-portlet>
+		<kt-portlet-header
+			[title]="pageTitle"
+			[class]="'kt-portlet__head--lg'"
+			[viewLoading$]="loading$"
+		>
+			<ng-container ktPortletTools>
+			</ng-container>
+		</kt-portlet-header>
+		<kt-portlet-body>
+			<div class="contact-body">
+				<form [formGroup]="analyticsReportForm">
+					<div class="analytics">
+						<div class="row">
+							<div class="col-xl-6 col-lg-12 kt-margin-bottom-10-mobile">
+								<div class="titl">Choose User</div>
+								<mat-form-field class="mat-form-field-fluid">
+									<mat-select placeholder="Select User" formControlName="queryUser">
+										<mat-option value="{{user._id}}" *ngFor="let user of users;">{{user.name}}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+							<div class="col-xl-3 col-lg-6 date-shift kt-margin-bottom-10-mobile">
+								<mat-form-field>
+									<input matInput [matDatepicker]="pickerA" formControlName="start" placeholder="Choose start date">
+									<mat-datepicker-toggle matSuffix [for]="pickerA"></mat-datepicker-toggle>
+									<mat-datepicker #pickerA></mat-datepicker>
+								</mat-form-field>
+							</div>
+							<div class="col-xl-3 col-lg-6 date-shift kt-margin-bottom-10-mobile">
+								<mat-form-field>
+									<input matInput [min]="analyticsReportForm.value.start" [matDatepicker]="picker" formControlName="end" placeholder="Choose end date">
+									<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+									<mat-datepicker #picker></mat-datepicker>
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<span class="btn btn-primary right button-r hover mt-2" (click)="generateReport(0, 10)">Generate Report</span>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="reports mt-5" *ngIf="reportsAll && reportsAll?.length > 0">
+				<h3 class="section-title text-center mt-3">Generated Reports</h3>
+				<div class="each-report" *ngFor="let report of reportsAll">
+					<div class="report-data"> <div class="tag">Created On:</div> <div class="value">{{report.created_at | date: 'fullDate'}}</div></div>
+					<div class="report-data"> <div class="tag">Updated On:</div> <div class="value">{{report.updated_at | date: 'fullDate'}}</div></div>
+					<div class="report-data"><div class="tag">Description:</div><div class="value">{{report.description}}</div></div>
+				</div>
+				<div class="my-pagination mt-5 mb-4">
+					<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
+					<div class="btn-grp">
+						<button mat-raised-button (click)="getPrev()" color="primary" [disabled]="disablePrev">Previous</button>
+						<button mat-raised-button (click)="getNext()" color="primary" [disabled]="disableNext">Next</button>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="!reportsAll">
+				<h2 class="text-center">No reports found</h2>
+			</div>
+		</kt-portlet-body>
+	</kt-portlet>

@@ -1,0 +1,66 @@
+<kt-portlet>
+	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<form [formGroup]="mdTaskForm">
+			<div class="form-group">
+
+				<div class="row" *ngIf="!idParams">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label for="title" class="label">User</label>
+							<select formControlName="user_id">
+								<option value="">Select user</option>
+								<option value="{{user._id}}" *ngFor="let user of users;">{{user.name | titlecase}}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row" *ngIf="!idParams">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label for="title" class="label">Status</label>
+							<select formControlName="status">
+								<option value="">Select status</option>
+								<option value="{{status}}" *ngFor="let status of taskStatuses;">{{status}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Name</label>
+							<input type="text" placeholder="Enter task's title" formControlName="name">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Start</label>
+							<input type="date" placeholder="Enter start date" formControlName="start">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Description</label>
+							<textarea placeholder="Description" formControlName="description"></textarea>
+						</div>
+					</div>
+				</div>
+				<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
+					(close)="onAlertClose($event)">
+					Oops! Form is not filled correctly. Change a few things up and try submitting again.
+				</kt-alert>
+				<div class="form-submit mt-3 mb-4">
+					<button class="reset" (click)="reset()">Reset</button>
+					<button class="submit" (click)="onSubmit()">Submit</button>
+				</div>
+			</div>
+		</form>
+	</kt-portlet-body>
+</kt-portlet>

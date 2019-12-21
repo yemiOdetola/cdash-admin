@@ -1,0 +1,49 @@
+<kt-portlet>
+	<kt-portlet-body>
+		<!-- <form role="form" [formGroup]="mailForm" class="kt-form kt-form--group-seperator-dashed">
+			<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
+				(close)="onAlertClose($event)">
+				{{formError}}
+			</kt-alert>
+			<div *ngIf="init" class="kt-form__section kt-form__section--first">
+				<div *ngIf="!sub" class="form-group">
+					<button color="primary" style="" mat-raised-button (click)="auth()">Email Login</button>
+				</div>
+				<div *ngIf="sub" class="form-group">
+					<p>Logged in as:</p>
+					<h6> Name: {{sub.username}}</h6>
+					<h6>Email: {{sub.useremail}}</h6>
+					<br /> <br />
+					<button color="warn" style="" mat-raised-button (click)="logout()">Email Logout</button>
+				</div>
+			</div>
+		</form> -->
+		<div *ngIf="init" class="form-group">
+			<tr class="each-data" *ngIf="!sub">
+				<button class="btn btn-primary btn-sm" (click)="auth()">Email login</button>
+			</tr>
+		</div>
+		<div class="item-details maxed pt-0" *ngIf="sub">
+			<table class="ml-5 details-table">
+				<tr class="each-data">
+					<td class="label">Logged in details</td>
+					<td class="value"> </td>
+				</tr>
+				<tr class="each-data">
+					<td class="label">Username</td>
+					<td class="value">{{ sub.username }}</td>
+				</tr>
+				<tr class="each-data">
+					<td class="label">User email</td>
+					<td class="value">{{ sub.useremail }}</td>
+				</tr>
+				<tr class="each-data">
+					<td class="label"></td>
+					<td class="value">
+						<button class="btn btn-primary btn-sm" (click)="logout()">logout</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

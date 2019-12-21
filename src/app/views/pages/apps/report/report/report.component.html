@@ -1,0 +1,45 @@
+<kt-portlet>
+	<kt-portlet-header
+		[title]="pageTitle"
+		[class]="'kt-portlet__head--lg'"
+		[viewLoading$]="loading$"
+	>
+	<ng-container ktPortletTools>
+			<div class="details-action edit text-center" routerLink="/strada/reports/manage/{{ reportId }}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Edit</span>
+			</div>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Delete</span>
+			</div>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+			<div class="goback" (click)="goBack()">
+					<img src="./assets/media/icons/backBtn.svg" alt="">
+					<span>Back</span>
+				</div>
+		<div class="contact-body" *ngIf="reportDetails">
+			<div class="item-details maxed pt-0">
+				<table class="ml-5 details-table">
+					<tr class="each-data" *ngIf="reportDetails.name">
+						<td class="label">Task </td>
+						<td class="value status">
+							<span class="plain">{{ reportDetails.name }}</span>
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="reportDetails.description">
+						<td class="label">Remark</td>
+						<td class="value">{{ reportDetails.description }}</td>
+					</tr>
+					<tr class="each-data" *ngIf="reportDetails.created_at">
+						<td class="label">Date Created</td>
+						<td class="value">{{ reportDetails.created_at | date: 'medium' }}</td>
+					</tr>
+				</table>
+			</div>
+			<div *ngIf="!reportDetails" class="mt-5 please-data text-center">Please Wait...</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

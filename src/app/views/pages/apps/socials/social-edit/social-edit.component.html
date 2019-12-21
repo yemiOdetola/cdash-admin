@@ -1,0 +1,56 @@
+<kt-portlet>
+	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<form [formGroup]="socialForm">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Post caption</label>
+							<input type="text" placeholder="Enter post's caption" formControlName="title">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">URL</label>
+							<input type="url" placeholder="Enter a valid url (www.google.com)" formControlName="link">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+						<div class="col-lg-12">
+							<div class="form-item upload">
+								<label class="label" for="upload">
+									<img src="./assets/media/icons/upload-all.svg" alt="">
+								</label>
+								<input type="file" id="upload" (change)="onFileChange($event)" accept="image/*">
+								<div class="placeholder" *ngIf="!fileName">Upload image</div>
+								<div class="placeholder slide-in" *ngIf="fileName">{{fileName}}</div>
+							</div>
+						</div>
+					</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Target</label>
+							<input type="number" placeholder="Target posts views/clicks" formControlName="target">
+						</div>
+					</div>
+				</div>
+			</div>
+			<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
+				(close)="onAlertClose($event)">
+				Oops! Form is not filled correctly. Change a few things up and try submitting again.
+			</kt-alert>
+			<div class="form-submit mt-3 mb-4">
+				<button class="reset" (click)="reset()">Reset</button>
+				<button class="submit" (click)="onSubmit()">Submit</button>
+			</div>
+		</form>
+	</kt-portlet-body>
+</kt-portlet>

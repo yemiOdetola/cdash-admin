@@ -1,0 +1,290 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action edit text-center" routerLink="/strada/sales/manage/{{saleId}}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Edit</span>
+			</div>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Delete</span>
+			</div>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="goback" (click)="goBack()">
+			<img src="./assets/media/icons/backBtn.svg" alt="">
+			<span>Back</span>
+		</div>
+		<div class="lead-body" *ngIf="saleDetails">
+			<div class="item-details">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="details">
+							<div class="name-email mt-5 mb-2">
+								<div class="icon">
+									<img src="./assets/media/icons/details-icon.svg" alt="">
+								</div>
+								<div class="detail">
+									<div class="name">{{ contactName | titlecase }}</div>
+									<div class="email">{{ contactEmail }}</div>
+								</div>
+							</div>
+							<table class="ml-5 details-table">
+								<tr class="each-data" *ngIf="saleDetails.quotation_amount">
+									<td class="label">Quotation Amount</td>
+									<td class="value">{{ saleDetails.quotation_amount }}</td>
+								</tr>
+								<tr class="each-data" *ngIf="saleDetails.status">
+									<td class="label">Status</td>
+									<td class="value status"><span class="plain">{{ saleDetails.status }}</span></td>
+								</tr>
+								<tr class="each-data" *ngIf="saleDetails.unit">
+									<td class="label">Unit</td>
+									<td class="value">{{ saleDetails.unit }}</td>
+								</tr>
+								<tr class="each-data" *ngIf="saleDetails.created_at">
+									<td class="label">Created On</td>
+									<td class="value">{{ saleDetails.created_at | date: 'fullDate' }}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="side-form">
+							<div class="form-types">
+								<div [className]="activeTab === 'invoice' ? 'type-menu active' : 'type-menu'"
+									(click)="activateTab('invoice')">Send Invoice</div>
+								<div [className]="activeTab === 'quotation' ? 'type-menu active' : 'type-menu'"
+									(click)="activateTab('quotation')">Send Quotation</div>
+								<div [className]="activeTab === 'receipt' ? 'type-menu active' : 'type-menu'"
+									(click)="activateTab('receipt')">Send Receipt</div>
+								<div [className]="activeTab === 'mou' ? 'type-menu active' : 'type-menu'"
+									(click)="activateTab('mou')">Send MOU</div>
+							</div>
+							<form [formGroup]="invoiceForm" *ngIf="activeTab === 'invoice'">
+								<div [className]="!showpart2 ? 'slide-in' : 'none'">
+									<div class="form-item">
+										<label class="label">Subject</label>
+										<input type="text" placeholder="Enter invoice subject"
+											formControlName="subject">
+									</div>
+									<div class="form-item">
+										<label class="label">Description</label>
+										<input type="text" placeholder="Describe service rendered"
+											formControlName="service_description">
+									</div>
+									<div class="form-item">
+										<label class="label">Body</label>
+										<input type="text" placeholder="Invoice body" formControlName="body">
+									</div>
+									<div class="form-item">
+										<label class="label">Amount</label>
+										<input type="text" placeholder="Enter invoice amount" formControlName="amount">
+									</div>
+
+									<div class="form-item">
+										<label class="label">TIN</label>
+										<input type="text" placeholder="Enter TIN number" formControlName="tin">
+									</div>
+									<div class="navigation">
+										<button class="action primary" (click)="showPage2()">Next page</button>
+									</div>
+								</div>
+								<div [className]="showpart2 ? 'slide-in' : 'none'">
+									<div class="form-item">
+										<label class="label">Account number</label>
+										<input type="text" placeholder="Enter recepient account number"
+											formControlName="account_number">
+									</div>
+									<div class="form-item">
+										<label class="label">Units</label>
+										<input type="text" placeholder="Enter units" formControlName="unit">
+									</div>
+
+									<div class="form-item">
+										<label class="label">Account name</label>
+										<input type="text" placeholder="Account name" formControlName="account_name">
+									</div>
+									<div class="form-item">
+										<label class="label">Bank name</label>
+										<input type="text" placeholder="Enter recepient bank name"
+											formControlName="bank_name">
+									</div>
+									<div class="navigation">
+										<button class="action primary" [ngClass]="downloadInvoice ? '' : 'hide'" (click)="showInvoice()">Preview Invoice</button>
+										<button class="action secondary" (click)="showPage2()">Previous page</button>
+										<button class="action primary" (click)="sendInvoice()">Send Invoice</button>
+									</div>
+								</div>
+							</form>
+							<form [formGroup]="quotationForm" *ngIf="activeTab === 'quotation'">
+								<div class="form-item">
+									<label class="label">TIN</label>
+									<input type="text" placeholder="Enter TIN number" formControlName="tin">
+								</div>
+								<div class="form-item">
+									<label class="label">Subject</label>
+									<input type="text" placeholder="Enter invoice subject" formControlName="subject">
+								</div>
+								<div class="form-item">
+									<label class="label">Body</label>
+									<input type="text" placeholder="Add body" formControlName="body">
+								</div>
+								<div class="form-item">
+									<label class="label">Description</label>
+									<input type="text" placeholder="Describe service rendered"
+										formControlName="description">
+								</div>
+								<div class="form-item">
+									<label class="label">Amount</label>
+									<input type="number" placeholder="Enter invoice amount" formControlName="amount">
+								</div>
+								<div class="form-item">
+									<label class="label">Units</label>
+									<input type="text" placeholder="Enter units" formControlName="unit">
+								</div>
+								<div class="navigation">
+									<button class="action primary" (click)="sendQuotation()"
+										[disabled]="!quotationForm.valid">Send quotation</button>
+								</div>
+							</form>
+							<form [formGroup]="receiptForm" *ngIf="activeTab === 'receipt'">
+								<div class="form-item">
+									<label class="label">Subject</label>
+									<input type="text" placeholder="Enter invoice subject" formControlName="subject">
+								</div>
+								<div class="form-item">
+									<label class="label">Body</label>
+									<input type="text" placeholder="Add body" formControlName="body">
+								</div>
+								<div class="form-item">
+									<label class="label">Amount</label>
+									<input type="text" placeholder="Enter invoice amount" formControlName="amount">
+								</div>
+								<div class="form-item">
+									<label class="label">Description</label>
+									<input type="text" placeholder="Describe service rendered"
+										formControlName="description">
+								</div>
+								<div class="form-item">
+									<label class="label">Remark</label>
+									<input type="text" placeholder="Enter remark" formControlName="remark">
+								</div>
+								<div class="navigation">
+									<button class="action primary" (click)="sendReceipt()"
+										[disabled]="!receiptForm.valid">Send receipt</button>
+								</div>
+							</form>
+							<form [formGroup]="mouForm" *ngIf="activeTab === 'mou'">
+								<div class="pdf-upload">
+									<label class="upload" for="mouPDF">
+										<img src="./assets/media/icons/pdf-upload.svg" alt="">
+										<div class="img-text">Click here to Upload file (.pdf)</div>
+									</label>
+									<input type="file" accept="application/pdf" id="mouPDF"
+										(change)="onFileChange($event)" />
+								</div>
+								<div class="form-item">
+									<label class="label">Message</label>
+									<textarea type="text" placeholder="Additional message"
+										formControlName="message"></textarea>
+								</div>
+								<div class="navigation">
+									<button class="action primary" (click)="sendMOU()" [disabled]="!mouForm.valid">Send
+										MOU</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="mt-5 mb-3 detail-table-options">
+				<div class="menus-cover">
+					<div [matMenuTriggerFor]="menu">{{showing}}</div>
+					<mat-menu #menu="matMenu">
+						<button mat-menu-item (click)="showTable('invoices')">Invoices</button>
+						<button mat-menu-item (click)="showTable('mous')">MOUs</button>
+						<button mat-menu-item (click)="showTable('quotations')">Quotations</button>
+					</mat-menu>
+				</div>
+				<img src="./assets/media/icons/select-arrow.svg" alt="">
+			</div>
+			<table class="table-view mt-4" *ngIf="showing === 'invoices'">
+				<thead>
+					<tr>
+						<th>Invoice Id</th>
+						<th>Amount</th>
+						<th>Unit</th>
+						<th>TIN</th>
+						<th>Subject</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr className="each-row" *ngFor="let invoice of invoiceList">
+						<td>{{ invoice.invoice_id }}</td>
+						<td>{{ invoice.amount }}</td>
+						<td>{{ invoice.unit ? invoice.unit : 'not available'}}</td>
+						<td>{{ invoice.tin }}</td>
+						<td>{{ invoice.subject ? invoice.subject : 'not available' }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="empty-list text-center"
+				*ngIf="showing === 'invoices' && invoiceList && invoiceList.length === 0">
+				<img src="./assets/media/icons/empty-list.png" alt="">
+				<p>No {{showing}} have been sent on this sale</p>
+			</div>
+
+
+			<table class="table-view" *ngIf="showing === 'mous'">
+				<thead>
+					<tr>
+						<th>MOU Id</th>
+						<th>Quotation amount</th>
+						<th>Unit</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr className="each-row" *ngFor="let moudetails of mouList">
+						<td>{{ (moudetails.mou.length > 33) ? (moudetails.mou | slice:0:33)+'...' : (moudetails.mou)}}
+						</td>
+						<td>{{ moudetails.quotation_amount }}</td>
+						<td>{{ moudetails.unit ? moudetails.unit : 'not available'}}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="empty-list text-center" *ngIf="showing === 'mous' && mouList && mouList.length === 0">
+				<img src="./assets/media/icons/empty-list.png" alt="">
+				<p>No {{showing}} have been sent on this sale</p>
+			</div>
+
+			<table class="table-view" *ngIf="showing === 'quotations'">
+				<thead>
+					<tr>
+						<th>Subject</th>
+						<th>Body</th>
+						<th> Amount</th>
+						<th> Unit</th>
+						<th> TIN</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr className="each-row" *ngFor="let quotation of quotationsList">
+						<td>{{ quotation.subject }}</td>
+						<td>{{ quotation.body }}</td>
+						<td>{{ quotation.amount }}</td>
+						<td>{{ quotation.unit }}</td>
+						<td>{{ quotation.tin }}</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="empty-list text-center"
+				*ngIf="showing === 'quotations' && quotationsList && quotationsList.length === 0">
+				<img src="./assets/media/icons/empty-list.png" alt="">
+				<p>No {{showing}} have been sent on this sale</p>
+			</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,162 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Delete</span>
+			</div>
+			<div class="details-action edit text-center" routerLink="/strada/projects/manage/{{ projectId }}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Edit Project</span>
+			</div>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+			<div class="goback" (click)="goBack()">
+					<img src="./assets/media/icons/backBtn.svg" alt="">
+					<span>Back</span>
+				</div>
+		<div class="contact-body" *ngIf="projectDetails">
+			<div class="item-details">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="details">
+							<table class="ml-5 details-table">
+								<tr class="each-data" *ngIf="projectDetails.name">
+									<td class="label">Name</td>
+									<td class="value status">
+										<span class="plain">{{ projectDetails.name }}</span>
+									</td>
+								</tr>
+								<tr class="each-data" *ngIf="projectDetails.status">
+									<td class="label">Status</td>
+									<td class="value status"><span class="plain">{{ projectDetails.status }}</span></td>
+								</tr>
+								<tr class="each-data" *ngIf="projectDetails.description">
+									<td class="label">Description</td>
+									<td class="value">{{ projectDetails.description }}</td>
+								</tr>
+								<tr class="each-data" *ngIf="projectDetails.created_at">
+									<td class="label">Date created</td>
+									<td class="value">{{ projectDetails.created_at | date: 'medium' }}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="side-form">
+							<div class="form-types">
+								<div [className]="activeTab === 'users' ? 'type-menu active' : 'type-menu'"
+									(click)="activateTab('users')">Project Users</div>
+								<div [className]="activeTab === 'vendors' ? 'type-menu active' : 'type-menu'"
+									(click)="activateTab('vendors')">Vendors</div>
+								<div [className]="activeTab === 'comments' ? 'type-menu active' : 'type-menu'"
+									(click)="activateTab('comments')">Comments</div>
+							</div>
+							<div class="users-cover" *ngIf="activeTab === 'users'">
+								<div class="users-list mt-3" *ngIf="users && users.length > 0">
+									<div class="each-user" *ngFor="let user of users;let idx = index">
+										<div class="name">
+											<img src="./assets/media/icons/details-icon.svg" alt="">
+											{{user.name}}
+										</div>
+										<div class="action ml-4" (click)="deleteUser(user)">
+											<img src="./assets/media/icons/delete-close.svg" alt="">
+										</div>
+									</div>
+								</div>
+								<div class="toggle-user mt-4" *ngIf="!userFormDisplay">
+									<button (click)="showNewUserForm()">Add another user</button>
+								</div>
+								<form [formGroup]="projectUserForm" class="slide-in" *ngIf="userFormDisplay">
+									<div class="mt-4">
+										<select formControlName="user">
+											<option value="{{user.name}}" *ngFor="let user of users">{{user.name}}
+											</option>
+										</select>
+									</div>
+									<div class="navigation">
+										<button class="action primary comment" (click)="addUser()">Add user</button>
+									</div>
+								</form>
+							</div>
+							<div class="users-cover" *ngIf="activeTab === 'vendors'">
+								<div class="users-list mt-3" *ngIf="vendors && vendors.length > 0">
+									<div class="each-user" *ngFor="let vendor of vendors;let idx = index">
+										<div class="name">
+											<img src="./assets/media/icons/vendor-pic.svg" alt="">
+											{{vendor.name}}
+										</div>
+										<div class="action ml-4" (click)="deleteVendor(vendor)">
+											<img src="./assets/media/icons/delete-close.svg" alt="">
+										</div>
+									</div>
+								</div>
+								<div class="toggle-user mt-4" *ngIf="!vendorFormDisplay">
+									<button (click)="showNewVendorForm()">Add another vendor</button>
+								</div>
+								<form [formGroup]="projectVendorForm" class="slide-in" *ngIf="vendorFormDisplay">
+									<div class="mt-4">
+										<select formControlName="vendor">
+											<option value="{{vendor.name}}" *ngFor="let vendor of vendors">
+												{{vendor.name}}
+											</option>
+										</select>
+									</div>
+									<div class="navigation">
+										<button class="action primary comment" (click)="addUser()">Add vendor</button>
+									</div>
+								</form>
+							</div>
+							<div class="users-cover" *ngIf="activeTab === 'comments'">
+								<div class="comment-list mt-4" *ngIf="comments.length && comments.length">
+									<div class="each-comment" *ngFor="let comment of comments;let idx = index">
+										<div class="comment">{{comment.comment}}</div>
+										<div class="action ml-2" (click)="deleteComment(comment)">
+											<img src="./assets/media/icons/delete-close.svg" alt="">
+										</div>
+									</div>
+								</div>
+								<form [formGroup]="commentForm" class="comment-form mt-4 slide-in"
+									*ngIf="activeTab === 'comments'">
+									<div class="form-item">
+										<input type="text" placeholder="Type a comment" formControlName="comment">
+									</div>
+									<div class="navigation">
+										<button class="action primary comment" (click)="addComment()"
+											[disabled]="!commentForm.valid">Send</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="!projectDetails" class="mt-5 please-data text-center">Please Wait...</div>
+		<!-- <div class="title mt-5">Purchase order list</div> -->
+		<table class="table-view mt-2">
+			<thead>
+				<tr>
+					<th>Purchase Id</th>
+					<th>Subject</th>
+					<th>Body</th>
+					<th>Shipping address</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr className="each-row" *ngFor="let po of poList">
+					<td>{{ po.purchase_id }}</td>
+					<td>{{ po.subject }}</td>
+					<td>{{ (po.body.length > 33) ? (po.body | slice:0:33)+'...' : (po.body)}}
+					</td>
+					<td>{{ po.address ? po.address : 'not available'}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="empty-list text-center" *ngIf=" poList && poList.length === 0">
+			<img src="./assets/media/icons/empty-list.png" alt="">
+			<p>No POs have been sent yet.</p>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

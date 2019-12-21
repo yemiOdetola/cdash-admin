@@ -1,0 +1,7 @@
+.form-group {
+	width: 95%;
+	margin: 1.5rem auto;
+	@media(min-width: 992px) {
+		width: 40%;
+	}
+}

@@ -1,0 +1,66 @@
+<kt-portlet>
+	<kt-portlet-header title="Sales" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<a routerLink="/strada/sales/manage" class="primary-button kt-margin-r-10" matTooltip="Add new sale">
+				<i class="la la-plus"></i>
+				<span class="kt-hidden-mobile">New Sale</span>
+			</a>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="sale-body">
+			<div class="stage-history">
+				<table class="table-view">
+					<thead>
+						<tr>
+							<th>Contact's Name</th>
+							<th>Quotation Amount</th>
+							<th>Units</th>
+							<th>Status</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let sale of sales">
+							<td>{{ sale.contact[0].name | titlecase }}</td>
+							<td>{{ sale.quotation_amount ? sale.quotation_amount : 'NOT AVAILABLE' }}</td>
+							<td>{{ sale.unit ? sale.unit : 'NOT AVAILABLE'}}</td>
+							<td class="status">
+								<span
+								[ngClass]="{
+									'leadInitiated': sale.status == 'Sales Initiated',
+									'emailSent': sale.status == 'Email Sent',
+									'scheduledMeeting': sale.status == 'Scheduled Meeting',
+									'sentMOUProposal': sale.status == 'Sent MOU/Proposal',
+									'reviewMOUProposal': sale.status == 'Review MOU/Proposal',
+									'followUpRequested': sale.status == 'Follow Up Requested',
+									'sentInvoice': sale.status == 'Sent Invoice',
+									'signedAgreement': sale.status == 'Signed Agreement',
+									'convertedToContact': sale.status == 'Completed'
+								}"
+								[matMenuTriggerFor]="menu">{{ sale.status }}</span>
+								<mat-menu #menu="matMenu">
+									<button mat-menu-item (click)="changed(status, sale._id)"
+										*ngFor="let status of statuses">{{status}}
+									</button>
+								</mat-menu>
+							</td>
+							<td>
+								<a routerLink="/strada/sales/sale/{{sale._id}}" class="view">View</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="my-pagination mt-5 mb-4">
+			<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
+			<div class="btn-grp">
+				<button mat-raised-button (click)="getPrev()" color="primary" [disabled]="disablePrev">Previous</button>
+				<button mat-raised-button (click)="getNext()" color="primary" [disabled]="disableNext">Next</button>
+			</div>
+		</div>
+
+	</kt-portlet-body>
+</kt-portlet>

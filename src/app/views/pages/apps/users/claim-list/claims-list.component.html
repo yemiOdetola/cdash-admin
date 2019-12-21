@@ -1,0 +1,39 @@
+<kt-portlet>
+	<kt-portlet-header title="All Approval Flows" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<a routerLink="/strada/users/claims/add" class="primary-button kt-margin-r-10" matTooltip="Add new approval flow">
+				<i class="la la-plus"></i>
+				<span class="kt-hidden-mobile">Add new</span>
+			</a>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="claim-body">
+			<table class="table-view">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Pipeline</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr className="each-row" *ngFor="let claim of claims">
+						<td>{{claim.name}}</td>
+						<td>USER >>> {{claim.roles.join(' >>> ')}}</td>
+						<td>
+							<a (click)="onDelete(claim._id)" class="view">Delete</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="my-pagination mt-5 mb-4">
+			<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
+			<div class="btn-grp">
+				<button mat-raised-button (click)="getPrev()" color="primary" [disabled]="disablePrev">Previous</button>
+				<button mat-raised-button (click)="getNext()" color="primary" [disabled]="disableNext">Next</button>
+			</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

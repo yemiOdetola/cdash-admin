@@ -1,0 +1,65 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle|titlecase" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action edit text-center" routerLink="/strada/users/staff/manage/{{ staffId }}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Edit</span>
+			</div>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Delete</span>
+			</div>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="goback" (click)="goBack()">
+			<img src="./assets/media/icons/backBtn.svg" alt="">
+			<span>Back</span>
+		</div>
+		<div class="contact-body" *ngIf="staffDetails">
+			<div class="item-details maxed pt-0">
+				<table class="ml-5 details-table">
+					<tr class="each-data" *ngIf="staffDetails.image">
+						<td class="label">Staff's Picture</td>
+						<td class="images">
+							<img src="{{staffDetails.image}}" alt="{{staffDetails.name}}'s picture'">
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="staffDetails.name">
+						<td class="label">Fullname</td>
+						<td class="value">{{ staffDetails.title | titlecase }} {{ staffDetails.name | titlecase }}</td>
+					</tr>
+					<tr class="each-data" *ngIf="staffDetails.email">
+						<td class="label">Email</td>
+						<td class="value">
+							<a href="mailto:{{ staffDetails.email }}">{{	staffDetails.email }}</a>
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="staffDetails.tel">
+						<td class="label">Phone</td>
+						<td class="value">{{ staffDetails.tel }}</td>
+					</tr>
+					<tr class="each-data" *ngIf="staffDetails.date_joined">
+						<td class="label">Date Joined</td>
+						<td class="value">
+							{{ staffDetails.date_joined | date: "medium" }}
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="staffDetails.position">
+						<td class="label">Position held</td>
+						<td class="value">
+							{{ staffDetails.position | titlecase }}
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="staffDetails.summary">
+						<td class="label">Summary</td>
+						<td class="value">
+							{{ staffDetails.summary  }}
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div *ngIf="!staffDetails" class="mt-5 please-data text-center">Please retry...</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,71 @@
+<kt-portlet>
+	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<form [formGroup]="projectForm">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label"> Project name</label>
+							<input type="text" placeholder="Project name is required" formControlName="name">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Project Description</label>
+							<input type="description" placeholder="Project Description is required"
+								formControlName="description">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Project status</label>
+							<select formControlName="status">
+								<option value="">Select status</option>
+								<option *ngFor="let status of statuses" value="{{status}}">{{status}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Duration</label>
+							<input type="number" placeholder="Duration" formControlName="duration">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Project start</label>
+							<input type="date" placeholder="Choose a start date" formControlName="start">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Project ends</label>
+							<input type="date" [min]="projectForm.value.start" placeholder="End date is required"
+								formControlName="end" required>
+						</div>
+					</div>
+				</div>
+			</div>
+			<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
+				(close)="onAlertClose($event)">
+				Oops! Form is not filled correctly. Change a few things up and try submitting again.
+			</kt-alert>
+			<div class="form-submit mt-3 mb-4">
+				<button class="reset" (click)="reset()">Reset</button>
+				<button class="submit" (click)="onSubmit()">Submit</button>
+			</div>
+		</form>
+	</kt-portlet-body>
+</kt-portlet>

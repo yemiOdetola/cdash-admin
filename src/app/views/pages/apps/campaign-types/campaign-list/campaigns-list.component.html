@@ -1,0 +1,23 @@
+<kt-portlet>
+	<kt-portlet-header title="All Campaign Types" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<a routerLink="/strada/campaign-types/manage" class="primary-button kt-margin-r-10"
+				matTooltip="Add new campaign">
+				<i class="la la-plus"></i>
+				<span class="kt-hidden-mobile">Add campaign type</span>
+			</a>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="campaign-body">
+			<div class="campaign-list">
+				<div class="campaign-cards">
+					<div class="each-campaign-card" *ngFor="let campaignType of campaignTypeList">
+						<a
+							routerLink="/strada/campaign-types/campaign-type/{{campaignType._id}}">{{campaignType.name}}</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,138 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Delete</span>
+			</div>
+			<div class="details-action edit text-center" routerLink="/strada/permissions/manage/{{ permissionId }}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Duplicate</span>
+			</div>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="contact-body">
+			<div class="item-details">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="details mt-4">
+							<!-- <table class="ml-5 details-table">
+								<tr class="each-data" *ngIf="saleDetails.quotation_amount">
+									<td class="label">Quotation Amount</td>
+									<td class="value">{{ saleDetails.quotation_amount }}</td>
+								</tr>
+								<tr class="each-data" *ngIf="saleDetails.status">
+									<td class="label">Status</td>
+									<td class="value status"><span class="plain">{{ saleDetails.status }}</span></td>
+								</tr>
+								<tr class="each-data" *ngIf="saleDetails.unit">
+									<td class="label">Unit</td>
+									<td class="value">{{ saleDetails.unit }}</td>
+								</tr>
+								<tr class="each-data" *ngIf="saleDetails.created_at">
+									<td class="label">Created On</td>
+									<td class="value">{{ saleDetails.created_at | date: 'fullDate' }}</td>
+								</tr>
+							</table> -->
+							<table class="details-table ml-5">
+								<tr class="each-data">
+									<td class="label">Permission:</td>
+									<td class="value">Super Admin</td>
+								</tr>
+								<tr class="each-data">
+									<td class="label">Description:</td>
+									<td class="value">Brief description of permission that can be on multiple lines</td>
+								</tr>
+								<tr class="each-data">
+									<td class="label">Created by:</td>
+									<td class="value">Baba Folarin</td>
+								</tr>
+								<tr class="each-data">
+									<td class="label">Modified by:</td>
+									<td class="value">Wale</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="side-form">
+							<div class="form-types">
+								<div class='type-menu active'>Users</div>
+							</div>
+							<div class="users-cover">
+								<!-- <div class="users-list mt-3" *ngIf="users && users.length > 0">
+									<div class="each-user" *ngFor="let user of users;let idx = index">
+										<div class="name">
+											<img src="./assets/media/icons/user-icon.svg" alt="">
+											{{user.name}}
+										</div>
+										<div class="permission ml-4" (click)="deleteUser(user)">
+											<img src="./assets/media/icons/delete-close.svg" alt="">
+										</div>
+									</div>
+								</div> -->
+								<div class="users-list mt-3">
+									<div class="each-user">
+										<div class="name">
+											<img src="./assets/media/icons/user-icon.svg" alt="">
+											Ismail Chinedu
+										</div>
+										<div class="permission ml-4">
+											CEO
+										</div>
+									</div>
+									<div class="each-user">
+										<div class="name">
+											<img src="./assets/media/icons/user-icon.svg" alt="">
+											Emmanuel Odogu
+										</div>
+										<div class="permission ml-4">
+											Managing Director
+										</div>
+									</div>
+									<div class="each-user">
+										<div class="name">
+											<img src="./assets/media/icons/user-icon.svg" alt="">
+											Fashanu Matthew
+										</div>
+										<div class="permission ml-4">
+											IT analyst
+										</div>
+									</div>
+									<div class="each-user">
+										<div class="name">
+											<img src="./assets/media/icons/user-icon.svg" alt="">
+											Jack Dorsey
+										</div>
+										<div class="permission ml-4">
+											IT intern
+										</div>
+									</div>
+								</div>
+								<div class="toggle-user mt-4">
+									<button (click)="showNewUserForm()">Add another user</button>
+								</div>
+								<!-- <form [formGroup]="projectUserForm" class="slide-in" *ngIf="userFormDisplay">
+									<div class="mt-4">
+										<select formControlName="user">
+											<option value="{{user.name}}" *ngFor="let user of users">{{user.name}}
+											</option>
+										</select>
+									</div>
+									<div class="navigation">
+										<button class="action primary comment" (click)="addUser()">Add user</button>
+									</div>
+								</form> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="contact-body" *ngIf="permissionDetails">
+
+				<div *ngIf="!permissionDetails" class="mt-5 please-data text-center">Please Wait...</div>
+			</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

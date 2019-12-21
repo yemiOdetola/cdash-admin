@@ -1,0 +1,106 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action edit text-center" routerLink="/strada/hr/loan/edit/{{loanId}}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Edit</span>
+			</div>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Reject</span>
+			</div>
+			<div class="details-action approve text-center" *ngIf="loanDetails && !loanDetails.approved"
+				(click)="approveLoan(loanId)">
+				<img src="./assets/media/icons/details-approve.svg" alt="">
+				<span>Approve</span>
+			</div>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+			<div class="goback" (click)="goBack()">
+					<img src="./assets/media/icons/backBtn.svg" alt="">
+					<span>Back</span>
+				</div>
+		<div *ngIf="!loanDetails" class="mt-5 please-data text-center">Please retry...</div>
+		<div class="item-details mt-4" *ngIf="loanDetails">
+			<div class="row">
+				<div class="col-xl-7">
+					<div class="details">
+						<table class="ml-5 details-table">
+							<tr class="each-data" *ngIf="loanDetails.name">
+								<td class="label">Title/Name</td>
+								<td class="value">{{ loanDetails.name }}</td>
+							</tr>
+							<tr class="each-data" *ngIf="loanDetails.amount">
+									<td class="label">Amount</td>
+									<td class="value">{{ loanDetails.amount }}</td>
+								</tr>
+							<tr class="each-data" *ngIf="loanDetails && userDetails && userDetails.name">
+								<td class="label">Requested by</td>
+								<td class="value status"><span class="plain">{{ userDetails.name | uppercase }}</span>
+								</td>
+							</tr>
+							<tr class="each-data" *ngIf="singleClaimType && singleClaimType.roles">
+								<td class="label">Approval Flow</td>
+								<td class="value"> USER >>> {{singleClaimType.roles.join(' >>> ') | uppercase}}</td>
+							</tr>
+							<tr class="each-data">
+								<td class="label">Payback start date</td>
+								<td class="value">
+									{{ loanDetails.start | date: "fullDate" }}
+								</td>
+							</tr>
+							<tr class="each-data">
+								<td class="label">Payback completion date</td>
+								<td class="value">
+									{{ loanDetails.end | date: "fullDate" }}
+								</td>
+							</tr>
+							<tr class="each-data">
+								<td class="label">Date updated</td>
+								<td class="value">
+									{{ loanDetails.updated_at | date: "medium" }}
+								</td>
+							</tr>
+							<tr class="each-data">
+								<td class="label">Date created</td>
+								<td class="value">
+									{{ loanDetails.created_at | date: "medium" }}
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div class="col-xl-5">
+					<div class="side-form approval">
+						<div class="title-status">
+							<div class="title">Request Status</div>
+							<div class="status"
+								[ngClass]="loanDetails && loanDetails.approved ? 'approved' : 'pending'">
+								{{loanDetails.approved ? 'Approved' : 'Pending'}}</div>
+						</div>
+						<div class="approval-cover">
+							<div class="each-level approved">
+								<div class="notification approved"></div>
+								<div class="level-info">
+									<div class="leveler">Staff</div>
+									<div class="into">Sent loan request</div>
+								</div>
+							</div>
+							<div class="each-level"
+								[ngClass]="loanDetails && loanDetails.approved ? 'approved' : 'pending'">
+								<div class="notification"
+									[ngClass]="loanDetails && loanDetails.approved ? 'approved' : 'pending'">
+								</div>
+								<div class="level-info">
+									<div class="leveler">loan approvals</div>
+									<div class="into">{{ loanDetails.approved ? 'Approved' : 'Pending' }}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

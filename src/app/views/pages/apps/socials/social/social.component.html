@@ -1,0 +1,109 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action edit text-center" routerLink="/strada/socials/manage/{{ socialId }}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Edit</span>
+			</div>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Delete</span>
+			</div>
+			<div class="details-action approve text-center" [matMenuTriggerFor]="menu">
+				<img src="./assets/media/icons/details-approve.svg" alt="">
+				<span>Actions</span>
+			</div>
+			<mat-menu #menu="matMenu">
+				<a mat-menu-item href="http://www.facebook.com/sharer.php?u={{facebookLink}}" target="_blank">Share to
+					FaceBook</a>
+				<a mat-menu-item
+					href="http://twitter.com/share?url={{twitterLink}}&text=StradaLimited&hashtags=StradaNG"
+					target="_blank">Share to Twitter</a>
+				<a mat-menu-item href="http://www.linkedin.com/shareArticle?mini=true&url={{linkedInLink}}"
+					target="_blank">Share
+					to LinkedIn</a>
+			</mat-menu>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+			<div class="goback" (click)="goBack()">
+					<img src="./assets/media/icons/backBtn.svg" alt="">
+					<span>Back</span>
+				</div>
+		<div class="contact-body" *ngIf="socialDetails">
+			<div class="item-details maxed p-3 pt-0">
+				<table class="ml-5 details-table">
+					<tr class="each-data">
+						<td class="label">Post Caption</td>
+						<td class="value">{{ socialDetails.title }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Link</td>
+						<td class="value status">
+							<span class="plain"><a href="{{ socialDetails.link }}"
+									target="_blank">{{ socialDetails.link }}</a></span>
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="socialDetails.image">
+						<td class="label">Media</td>
+						<td class="images">
+							<img src="{{socialDetails.image}}" alt="Media file">
+						</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Total social analytics</td>
+						<td class="value">{{ allSocialAnalytics }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Facebook analytics</td>
+						<td class="value">{{ facebookAnalytics }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Twitter analytics</td>
+						<td class="value">{{ twitterAnalytics }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">LinkedIn analytics</td>
+						<td class="value">{{ linkedinAnalytics }}</td>
+					</tr>
+				</table>
+			</div>
+			<div *ngIf="!socialDetails" class="mt-5 please-data text-center">Please retry...</div>
+		</div>
+		<div class="row">
+			<div class="col-xl-6">
+				<div class="each-chart">
+					<div id="chartContainer" style="width: 450px; height: 450px;"></div>
+				</div>
+			</div>
+			<div class="col-xl-6">
+				<div class="chartss">
+					<div class="chart text-center">
+						<circle-progress [percent]="70" [subtitle]="twitterAnalytics" [outerStrokeColor]="'#3F51B5'"
+							[outerStrokeGradientStopColor]="'#9C27B0'"></circle-progress>
+						<div class="title">Twitter analytics</div>
+					</div>
+					<div class="chart text-center">
+						<circle-progress [percent]="80" [subtitle]="facebookAnalytics" [outerStrokeColor]="'#CDDC39'"
+							[outerStrokeGradientStopColor]="'#8BC34A'"></circle-progress>
+						<div class="title">Facebook analytics</div>
+					</div>
+					<div class="chart text-center">
+						<circle-progress [percent]="65" [subtitle]="linkedinAnalytics" [outerStrokeColor]="'#5773ff'"
+							[outerStrokeGradientStopColor]="'#77efff'"></circle-progress>
+						<div class="title">LinkedIn analytics</div>
+					</div>
+				</div>
+				<!-- <div class="each-chart">
+					<div id="chartContainer2" style="width: 350px; height: 400px;"></div>
+				</div> -->
+			</div>
+		</div>
+		<!-- <div class="each-chart">
+			<div id="chartContainer" style="width: 500px; height: 350px;"></div>
+		</div>
+		<div class="each-chart">
+			<div id="chartContainer2" style="width: 500vw; height: 350px;"></div>
+		</div> -->
+	</kt-portlet-body>
+</kt-portlet>

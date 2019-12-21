@@ -1,0 +1,74 @@
+<kt-portlet>
+	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<form [formGroup]="roleForm">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Role name</label>
+							<input type="text" placeholder="Enter role name" formControlName="name">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label for="title" class="label">Permissions</label>
+							<select [(ngModel)]="selectedRole" (change)="handleRoleChange($event)">
+								<option value="" selected="true">Select role</option>
+								<option [value]="type.value" *ngFor="let type of permissionTypes;">{{type.label}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+								<label class="label">Role name</label>
+							<mat-form-field class="mat-form-field-fluid">
+								<mat-select placeholder="Permissions">
+									<mat-option value="{{type.value}}" *ngFor="let type of permissionTypes;"
+										(click)="roleChanged(type)">{{type.label}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</div>
+				</div> -->
+			</div>
+			<div class="form-group">
+				<div class="users-list mt-3" *ngIf="myRoles && myRoles.length > 0">
+					<div class="each-user" *ngFor="let type of myRoles; let i = index;">
+						<div class="name">
+							<img src="./assets/media/icons/details-icon.svg" alt="">
+							{{stMap[type] | titlecase}}
+						</div>
+						<div class="action ml-4" (click)="roleRemove(type)">
+							<img src="./assets/media/icons/delete-close.svg" alt="">
+						</div>
+					</div>
+				</div>
+				<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
+					(close)="onAlertClose($event)">
+					Oops! Form is not filled correctly. Change a few things up and try submitting again.
+				</kt-alert>
+			</div>
+			<!-- <div class="row">
+				<button color="primary" [disabled]="!cRole || cRole==='' || roleMap[cRole]"
+					style="margin: 0 auto; display: block; margin: '15px 0px'" mat-raised-button
+					(click)="rolePush()">Add</button>
+			</div> -->
+			<!-- <div *ngFor="let type of myRoles;"
+				style="display: block; width: 40%;min-width: 300px; margin: 0 auto; height: 45px;padding: 5px 0;">
+				<span style="line-height: 45px">{{stMap[type] | titlecase}} </span>
+				<button color="warn" style="margin-left: 10px;display: inline;" mat-raised-button
+					(click)="roleRemove(type)">X</button>
+			</div> -->
+		</form>
+		<div class="form-submit mt-5 mb-4">
+			<button class="reset" (click)="reset()">Reset</button>
+			<button class="submit" (click)="onSubmit()">Submit</button>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

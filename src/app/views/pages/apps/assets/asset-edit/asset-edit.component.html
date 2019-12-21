@@ -1,0 +1,66 @@
+<kt-portlet>
+	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<form [formGroup]="assetForm">
+			<!-- <div class="mt-3 mb-2 instruction m-auto">
+				<p>All fields except the file upload is compulsory.</p>
+			</div> -->
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Name</label>
+							<input type="text" placeholder="Enter assets's name" formControlName="name">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Start</label>
+							<input type="date" placeholder="Enter start date" formControlName="start">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">End</label>
+							<input type="date" [min]="assetForm.value.start" placeholder="Enter end date"
+								formControlName="end">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item upload">
+							<label class="label" for="upload">
+								<img src="./assets/media/icons/upload-all.svg" alt="">
+							</label>
+							<input type="file" id="upload" (change)="onFileChange($event)" accept="image/*">
+							<div class="placeholder" *ngIf="!fileName">Upload image</div>
+							<div class="placeholder slide-in" *ngIf="fileName">{{fileName}}</div>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Description</label>
+							<textarea placeholder="Description" formControlName="description"></textarea>
+						</div>
+					</div>
+				</div> -->
+			</div>
+			<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
+				(close)="onAlertClose($event)">
+				Oops! Form is not filled correctly. Change a few things up and try submitting again.
+			</kt-alert>
+			<div class="form-submit mt-3 mb-4">
+				<button class="reset" (click)="reset()">Reset</button>
+				<button class="submit" (click)="onSubmit()">Submit</button>
+			</div>
+		</form>
+	</kt-portlet-body>
+</kt-portlet>

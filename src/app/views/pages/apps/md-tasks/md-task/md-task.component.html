@@ -1,0 +1,59 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action edit text-center" routerLink="/strada/md-tasks/manage/{{mdTaskId}}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Edit</span>
+			</div>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Delete</span>
+			</div>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+			<div class="goback" (click)="goBack()">
+					<img src="./assets/media/icons/backBtn.svg" alt="">
+					<span>Back</span>
+				</div>
+		<div class="contact-body" *ngIf="mdTaskDetails">
+			<div class="item-details maxed pt-0">
+				<table class="ml-5 details-table">
+					<tr class="each-data" *ngIf="userDetails">
+						<td class="label">Assigned User</td>
+						<td class="value status">
+							<span class="plain">{{ userDetails.name }}</span>
+						</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Name</td>
+						<td class="value">{{ mdTaskDetails.name }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Description</td>
+						<td class="value">{{ mdTaskDetails.description }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Status</td>
+						<td class="value status">
+							<span class="plain">{{ mdTaskDetails.status }}</span>
+						</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Start</td>
+						<td class="value">{{ mdTaskDetails.start | date: 'fullDate' }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Created On</td>
+						<td class="value">{{ mdTaskDetails.created_at | date: 'medium' }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Updated On</td>
+						<td class="value">{{ mdTaskDetails.updated_at | date: 'medium' }}</td>
+					</tr>
+				</table>
+			</div>
+			<div *ngIf="!mdTaskDetails" class="mt-5 please-data text-center">Please retry...</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

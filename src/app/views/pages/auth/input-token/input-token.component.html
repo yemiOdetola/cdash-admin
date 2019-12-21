@@ -1,0 +1,34 @@
+<!--begin::Body-->
+<div class="kt-login__body">
+	<!--begin::Signin-->
+	<div class="kt-login__form">
+		<div class="kt-login__title">
+			<h3>Activate your Account</h3>
+		</div>
+
+		<kt-auth-notice></kt-auth-notice>
+
+		<form class="kt-form" [formGroup]="resetForm">
+			<div class="form-group">
+				<mat-form-field>
+					<mat-label>Token</mat-label>
+					<input matInput type="text" placeholder="Your token" formControlName="token" autocomplete="off"/>
+					<mat-error *ngIf="tokenError">
+						<strong>Token seem to be invalid, Please retry.</strong>
+					</mat-error>
+				</mat-form-field>
+				<mat-form-field>
+					<mat-label>New Password</mat-label>
+					<input matInput type="password" placeholder="New Password" formControlName="password" autocomplete="off"/>
+				</mat-form-field>
+			</div>
+			<!--begin::Action-->
+			<div class="kt-login__actions">
+				<button routerLink="/auth/login" [disabled]="loading" id="kt_login_signup_cancel" class="btn btn-secondary btn-elevate kt-login__btn-secondary">Sign In</button>
+				<button (click)="submit()" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}">Change Password</button>
+			</div>
+			<!--end::Action-->
+		</form>
+	</div>
+</div>
+

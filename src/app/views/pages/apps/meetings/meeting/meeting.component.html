@@ -1,0 +1,82 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action edit text-center" routerLink="/strada/meetings/manage/{{ meetingId }}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Edit</span>
+			</div>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Delete</span>
+			</div>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+			<div class="goback" (click)="goBack()">
+					<img src="./assets/media/icons/backBtn.svg" alt="">
+					<span>Back</span>
+				</div>
+		<div class="contact-body" *ngIf="meetingDetails">
+			<div class="item-details">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="details">
+							<table class="ml-5 details-table">
+								<tr class="each-data" *ngIf="meetingDetails.name">
+									<td class="label">Client</td>
+									<td class="value status"><span class="plain">{{ meetingDetails.name }}</span></td>
+								</tr>
+								<tr class="each-data" *ngIf="meetingDetails.duration">
+									<td class="label">Duration</td>
+									<td class="value">{{ meetingDetails.duration }} minutes</td>
+								</tr>
+								<tr class="each-data" *ngIf="meetingDetails.description">
+									<td class="label">Description</td>
+									<td class="value">{{ meetingDetails.description }}</td>
+								</tr>
+								<tr class="each-data" *ngIf="meetingDetails.start">
+									<td class="label">Start</td>
+									<td class="value">{{ meetingDetails.start | date: 'medium' }}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="side-form">
+							<div class="form-types">
+								<div className="type-menu active">Attendees</div>
+							</div>
+							<div class="users-cover">
+								<div class="users-list mt-3" *ngIf="users && attendants.length > 0">
+									<div class="each-user" *ngFor="let attender of attendants; let idx = index">
+										<div class="name">
+											<img src="./assets/media/icons/details-icon.svg" alt="">
+											{{attender.name}}
+										</div>
+										<div class="action ml-4" (click)="deleteUser(attender)">
+											<img src="./assets/media/icons/delete-close.svg" alt="">
+										</div>
+									</div>
+								</div>
+								<div class="toggle-user slide-in mt-4" *ngIf="!userFormDisplay">
+									<button (click)="showNewUserForm()">Add another user</button>
+								</div>
+								<form [formGroup]="meetingUserForm" class="slide-in" *ngIf="userFormDisplay">
+									<div class="mt-4">
+										<select formControlName="user">
+											<option value="{{user.name}}" *ngFor="let user of users;">{{user.name}}
+											</option>
+										</select>
+									</div>
+									<div class="navigation">
+										<button class="action primary comment" (click)="addUser()">Add user</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

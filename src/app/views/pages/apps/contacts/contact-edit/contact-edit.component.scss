@@ -1,0 +1,41 @@
+.form-group {
+	width: 95%;
+	margin: 1.5rem auto;
+	@media(min-width: 992px) {
+		width: 40%;
+	}
+	.image-upload > input {
+		display: none;
+	}
+	.image-upload img {
+		width: 70px;
+		cursor: pointer;
+	}
+	.file-input {
+		width: 100%;
+		img {
+			margin: auto;
+			display: flex;
+		}
+	}
+}
+.instructions {
+	font-size: 1.1rem;
+	color: #333;
+	.instruction {
+		margin: 0.4rem 0;
+	}
+}
+.slide-in {
+	position: relative;
+	animation: slideIn 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateY(1rem);
+	}
+	to {
+		transform: translateY(0);
+	}
+}

@@ -1,0 +1,70 @@
+<kt-portlet>
+	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<form [formGroup]="claimForm">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Claim name</label>
+							<input type="text" placeholder="Enter claim name" formControlName="name">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label for="title" class="label">Roles</label>
+							<select (change)="passRole($event)" [(ngModel)]="selectedRole">
+								<option selected>Select role</option>
+								<option value="{{type.permission}}" *ngFor="let type of roles;">{{type.name}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row d-flex ml-auto mt-2 mb-2">
+					<button class="btn btn-primary btn-sm mr-4" (click)="addPipeline()"> Add
+					</button>
+					<button class="btn btn-danger btn-sm" (click)="removePipeline()">Remove</button>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label for="nothing" class="label">Current claim pipeline</label>
+						</div>
+					</div>
+				</div>
+				<div class="row mt-1 mb-4">
+					<div class="col-md-12 kt-margin-bottom-10-mobile" *ngIf="rolesE">
+						<b><span> USER >>> </span> <span class="slide-in" *ngFor="let type of rolesE;index as i">{{type | uppercase}}
+								<span *ngIf="i < rolesE.length - 1">
+									>>>
+								</span>
+							</span></b>
+					</div>
+				</div>
+				<!-- <div class="row">
+					<div class="col-md-12 kt-margin-bottom-10-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<mat-select placeholder="Select Role">
+								<mat-option value="{{type.permission}}" *ngFor="let type of roles;"
+									(click)="roleChanged(type)">{{type.name}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</div>
+				</div> -->
+			</div>
+			<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
+				(close)="onAlertClose($event)">
+				Oops! Form is not filled correctly. Change a few things up and try submitting again.
+			</kt-alert>
+			<div class="form-submit mt-3 mb-4">
+				<button class="reset" (click)="reset()">Reset</button>
+				<button class="submit" (click)="onSubmit()">Submit</button>
+			</div>
+		</form>
+	</kt-portlet-body>
+</kt-portlet>

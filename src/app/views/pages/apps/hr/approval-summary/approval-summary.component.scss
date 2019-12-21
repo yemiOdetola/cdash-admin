@@ -1,0 +1,23 @@
+table {
+	width: 100%;
+}
+.appr {
+	position: relative;
+    top: 0.45rem;
+}
+.my-pagination {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	.pg {
+		font-size: 1.25rem;
+		color: #222;
+	}
+	// margin-right: 3rem;
+	.btn-grp {
+		display: flex;
+	}
+	button {
+		margin-left: 2rem;
+	}
+}

@@ -1,0 +1,101 @@
+<kt-portlet>
+	<kt-portlet-header title="Tasks" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<a routerLink="/strada/md-tasks/manage" class="primary-button kt-margin-r-10" matTooltip="Add new task">
+				<i class="la la-plus"></i>
+				<span class="kt-hidden-mobile">New Task</span>
+			</a>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="contact-body">
+			<div class="mt-1 mb-4 detail-table-options">
+				<div class="menus-cover">
+					<div [matMenuTriggerFor]="menu">{{showing}}</div>
+					<mat-menu #menu="matMenu">
+						<button mat-menu-item (click)="showTable('All tasks')">All tasks</button>
+						<button mat-menu-item (click)="showTable('My tasks')">My tasks</button>
+					</mat-menu>
+				</div>
+				<img src="./assets/media/icons/select-arrow.svg" alt="">
+			</div>
+			<div class="stage-history" *ngIf="showing === 'All tasks'">
+				<table class="table-view">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Created on</th>
+							<th>Status</th>
+							<th>Description</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let task of mdTasks">
+							<td>{{ task.name }}</td>
+							<td>{{task.created_at | date: 'medium'}}</td>
+							<td class="status">
+								<span
+								[ngClass]="{
+									'leadInitiated': task.status == 'In Progress',
+									'scheduledMeeting': task.status == 'Stucked',
+									'signedAgreement': task.status == 'Completed',
+									'convertedToContact': task.status == 'Canceled'
+								}"
+								[matMenuTriggerFor]="menu">{{ task.status }}</span>
+								<mat-menu #menu="matMenu">
+									<button mat-menu-item (click)="changed(status, task._id)"
+										*ngFor="let status of statuses">{{status}}</button>
+								</mat-menu>
+							</td>
+							<td>{{ (task.description.length > 20) ? (task.description | slice:0:20)+'...' : (task.description)}}
+							</td>
+							<td>
+								<a routerLink="/strada/md-tasks/md-task/{{task._id}}" class="view">View</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<table class="table-view" *ngIf="showing === 'My tasks'">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Created on</th>
+						<th>Status</th>
+						<th>Description</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr className="each-row" *ngFor="let task of myTasks">
+						<td>{{ task.name }}</td>
+						<td>{{task.created_at | date: 'medium'}}</td>
+						<td class="status">
+							<span class="plain" [matMenuTriggerFor]="menu">{{ task.status }}</span>
+							<mat-menu #menu="matMenu">
+								<button mat-menu-item (click)="changed(status, task._id)"
+									*ngFor="let status of statuses">{{status}}</button>
+							</mat-menu>
+						</td>
+
+						<td>{{ (task.description.length > 30) ? (task.description | slice:0:20)+'...' : (task.description)}}
+						</td>
+						<td>
+							<a routerLink="/strada/md-tasks/md-task/{{task._id}}" class="view">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="my-pagination mt-5 mb-4">
+				<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
+				<div class="btn-grp">
+					<button mat-raised-button (click)="getPrev()" color="primary"
+						[disabled]="disablePrev">Previous</button>
+					<button mat-raised-button (click)="getNext()" color="primary" [disabled]="disableNext">Next</button>
+				</div>
+			</div>
+		</div>
+
+	</kt-portlet-body>
+</kt-portlet>

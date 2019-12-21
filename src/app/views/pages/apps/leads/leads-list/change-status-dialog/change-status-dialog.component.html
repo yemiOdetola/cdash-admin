@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Change Status</h2>
+
+<mat-dialog-content>
+	<form [formGroup]="form">
+		<div class="row">
+			<div class="col-md-12 kt-margin-bottom-10-mobile">
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-select placeholder="Lead Status" formControlName="status">
+						<mat-option value="{{status}}" *ngFor="let status of statuses;">{{status}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div>
+	</form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+	<button mat-raised-button (click)="close()">Close</button>
+	<button color="primary" mat-raised-button (click)="save()">Change</button>
+</mat-dialog-actions>

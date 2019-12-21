@@ -1,0 +1,64 @@
+<kt-portlet>
+	<kt-portlet-header title="All Projects" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<a routerLink="/strada/projects/manage" class="primary-button kt-margin-r-10" matTooltip="Add new project">
+				<i class="la la-plus"></i>
+				<span class="kt-hidden-mobile">New Project</span>
+			</a>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="vendor-body">
+			<div class="stage-history">
+				<table class="table-view">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Description</th>
+							<th>Created On</th>
+							<th>Status</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let project of projects">
+							<td>{{project.name}}</td>
+							<td>{{ (project.description.length > 33) ? (project.description | slice:0:33)+'...' : (project.description)}}
+							</td>
+							<td>{{ project.created_at | date: 'fullDate' }}</td>
+							<td class="status">
+								<span
+								[ngClass]="{
+									'leadInitiated': project.status == 'Initialized',
+									'scheduledMeeting': project.status == 'Running',
+									'sentMOUProposal': project.status == 'Extended',
+									'reviewMOUProposal': project.status == 'Report sent',
+									'signedAgreement': project.status == 'Completed',
+									'emailSent': project.status == 'terminated'
+								}"
+								[matMenuTriggerFor]="menu">{{ project.status }}</span>
+								<mat-menu #menu="matMenu">
+									<button mat-menu-item (click)="changed(status, project._id)"
+										*ngFor="let status of statuses">{{status}}
+									</button>
+								</mat-menu>
+							</td>
+							<td>
+								<a routerLink="/strada/projects/project/{{project._id}}" class="view">View</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="my-pagination mt-5 mb-4">
+			<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
+			<div class="btn-grp">
+				<button mat-raised-button (click)="getPrev()" color="primary" [disabled]="disablePrev">Previous</button>
+				<button mat-raised-button (click)="getNext()" color="primary" [disabled]="disableNext">Next</button>
+			</div>
+		</div>
+
+	</kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,33 @@
+<kt-portlet>
+	<kt-portlet-header
+		title="Tasks Calender"
+		[class]="'kt-portlet__head--lg'"
+		[viewLoading$]="loading$"
+	>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="mt-2 p-4 task-calender">
+			<div class="mb-3" *ngIf="userDetails && userDetails.admin">
+				<div class="row">
+					<form [formGroup]="toggleCalender">
+						<div class="col-md-12 kt-margin-bottom-10-mobile w-100">
+							<mat-form-field class="mat-form-field-fluid">
+								<mat-select placeholder="Select Calender" formControlName="option" (ngModelChange)="toggleCal($event)">
+									<mat-option value="{{option}}" *ngFor="let option of options;">{{option}}</mat-option>
+								</mat-select>
+							</mat-form-field>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="my-tasks">
+				<full-calendar
+					[weekends]="false"
+					defaultView="dayGridMonth"
+					[plugins]="calendarPlugins"
+					[events]="events">
+				</full-calendar>
+			</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

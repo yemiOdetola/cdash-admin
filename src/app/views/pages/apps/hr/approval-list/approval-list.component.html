@@ -1,0 +1,134 @@
+<kt-portlet>
+	<kt-portlet-header [title]='activeList' [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action approve text-center" [matMenuTriggerFor]="menu">
+				<span>Switch list</span>
+				&nbsp;
+				<img src="./assets/media/icons/button-down.svg" alt="">
+			</div>
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item (click)="switchList('all')">All approvals</button>
+				<button mat-menu-item (click)="switchList('loans')">Loans approvals</button>
+				<button mat-menu-item (click)="switchList('leaves')">Leave approvals</button>
+				<button mat-menu-item (click)="switchList('claims')">Claim approvals</button>
+			</mat-menu>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="asset-body">
+			<table class="table-view" *ngIf="activeList == 'all'">
+				<thead>
+					<tr>
+						<th>Title/Name</th>
+						<th>Type</th>
+						<th>Created On</th>
+						<th>Updated On</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="each-row" *ngFor="let all of allApproved">
+						<td>{{all.name | titlecase}}</td>
+						<td>{{all.type}}</td>
+						<td>{{all.created_at | date: 'longDate'}}</td>
+						<td>{{all.updated_at | date: 'longDate'}}</td>
+						<td>
+							<a routerLink="/strada/hr/loan/{{all._id}}" class="view">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="empty-list text-center" *ngIf="activeList == 'all' && !allApproved">
+				<img src="./assets/media/icons/empty-list.png" alt="">
+				<p>Sorry, {{activeList}} is currently empty</p>
+			</div>
+
+
+			<table class="table-view" *ngIf="activeList == 'claims'">
+				<thead>
+					<tr>
+						<th>Title/Name</th>
+						<th>Created On</th>
+						<th>Updated On</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="each-row" *ngFor="let all of approvedClaims">
+						<td>{{all.name | titlecase}}</td>
+						<td>{{all.created_at | date: 'longDate'}}</td>
+						<td>{{all.updated_at | date: 'longDate'}}</td>
+						<td>
+							<a routerLink="/strada/hr/loan/{{all._id}}" class="view">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="empty-list text-center" *ngIf="activeList == 'claims' && approvedClaims.length == 0">
+				<img src="./assets/media/icons/empty-list.png" alt="">
+				<p>Sorry, {{activeList}} is currently empty</p>
+			</div>
+
+
+			<table class="table-view" *ngIf="activeList == 'leaves'">
+				<thead>
+					<tr>
+						<th>Title/Name</th>
+						<th>Created On</th>
+						<th>Updated On</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="each-row" *ngFor="let all of approvedLeaves">
+						<td>{{all.name | titlecase}}</td>
+						<td>{{all.created_at | date: 'longDate'}}</td>
+						<td>{{all.updated_at | date: 'longDate'}}</td>
+						<td>
+							<a routerLink="/strada/hr/loan/{{all._id}}" class="view">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="empty-list text-center" *ngIf="activeList == 'leaves' && approvedLeaves.length == 0">
+				<img src="./assets/media/icons/empty-list.png" alt="">
+				<p>Sorry, {{activeList}} is currently empty</p>
+			</div>
+
+
+			<table class="table-view" *ngIf="activeList == 'loans'">
+				<thead>
+					<tr>
+						<th>Title/Name</th>
+						<th>Created On</th>
+						<th>Updated On</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="each-row" *ngFor="let all of approvedLoans">
+						<td>{{all.name | titlecase}}</td>
+						<td>{{all.created_at | date: 'longDate'}}</td>
+						<td>{{all.updated_at | date: 'longDate'}}</td>
+						<td>
+							<a routerLink="/strada/hr/loan/{{all._id}}" class="view">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="empty-list text-center" *ngIf="activeList == 'loans' && approvedLoans.length == 0">
+				<img src="./assets/media/icons/empty-list.png" alt="">
+				<p>Sorry, {{activeList}} is currently empty</p>
+			</div>
+		</div>
+
+		<!-- <div class="my-pagination mt-5 mb-4">
+			<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
+			<div class="btn-grp">
+				<button mat-raised-button (click)="getPrev()" color="primary" [disabled]="disablePrev">Previous</button>
+				<button mat-raised-button (click)="getNext()" color="primary" [disabled]="disableNext">Next</button>
+			</div>
+		</div> -->
+
+	</kt-portlet-body>
+</kt-portlet>

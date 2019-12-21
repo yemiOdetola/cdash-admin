@@ -1,0 +1,158 @@
+.contact-body {
+	.hide {
+		display: none;
+	}
+	.color-black {
+		color: #333;
+	}
+	.section-title {
+		color: #555;
+		font-size: 1.125rem;
+		font-weight: 400;
+	}
+	.section-supertitle {
+		color: #333;
+		font-size: 1.25rem;
+		font-weight: 500;
+	}
+	.details-table {
+		padding: 2rem;
+		// border-right: 0.05rem solid #495dbe;
+		// border-left: 0.05rem solid #495dbe;
+	}
+	.contact-details {
+		.each-data {
+			display: flex;
+			justify-content: space-between;
+			font-weight: 400;
+			margin: 1rem 0;
+			.label {
+				width: 12rem;
+				color: #777;
+				text-overflow: ellipsis;
+				text-align: right;
+				font-size: 1.05rem;
+			}
+			.value {
+				word-break: normal;
+				text-overflow: ellipsis;
+				width: 20rem;
+				float: none;
+				color: #000;
+				margin-left: 2rem;
+				font-size: 1.05rem;
+				&.lighter {
+					color: #444;
+				}
+			}
+		}
+	}
+	.form-body {
+		&.with-flex {
+			display: flex;
+			justify-content: space-around;
+			width: 90%;
+		}
+		width: 80%;
+		margin: auto;
+		@media(min-width: 992px ) {
+			width: 80%;
+		}
+		// .submit {
+		// 	button {
+		// 		float: right;
+		// 	}
+		// }
+	}
+	.notes-added {
+		.proceeding {
+			color: #555;
+			padding: 2rem 1rem;
+			box-shadow: 1px 2px 5px rgb(212, 212, 212);
+			width: 90%;
+			margin: 2rem auto;
+			.others {
+				display: flex;
+				.label {
+					color: #333;
+					width: 6rem;
+				}
+				.value {
+					margin-left: 1rem;
+					color: #555;
+					a {
+						color: rgb(0, 106, 206);
+						text-decoration: none;
+					}
+				}
+			}
+		}
+	}
+	.stage-history {
+		table {
+			width: 100%;
+		}
+	}
+}
+.section-title {
+	color: #464457;
+	font-size: 1.2rem;
+	font-weight: 500;
+	padding: 1.5rem 1rem;
+	border-bottom: 1px solid #ebedf2;
+	border-top: 1px solid #ebedf2;
+	margin: 0 -1.2rem;
+}
+.attendees {
+	width: 90%;
+	margin: auto;
+	margin-top: 7rem;
+	@media(min-width: 1200px) {
+		width: 50%;
+	}
+	.each-attender {
+		display: flex;
+		justify-content: space-between;
+		padding: 0.7rem 0;
+		// border-bottom: 1px solid #f1f1f1;
+		color: #000;
+		.start-details {
+			display: flex;
+			.index {
+				font-size: 1.5rem;
+				margin-right: 1rem;
+			}
+			.name {
+				font-size: 1.2rem;
+				font-weight: 500;
+				position: relative;
+				top: 0.2rem;
+				color: #333;
+			}
+		}
+		.delete {
+			i {
+				font-size: 2.25rem;
+				color: rgb(238, 92, 66);
+				&:hover {
+					cursor: pointer;
+					color: rgb(255, 72, 0);
+				}
+			}
+		}
+	}
+}
+
+.slide-in {
+position: relative;
+animation: slideIn 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideIn {
+from {
+	transform: translateY(1rem);
+}
+to {
+	transform: translateY(0);
+}
+}

@@ -1,0 +1,21 @@
+.form-group {
+	width: 95%;
+	margin: 1.5rem auto;
+	@media(min-width: 992px) {
+		width: 40%;
+	}
+	.image-upload > input {
+		display: none;
+	}
+	.image-upload img {
+		width: 70px;
+		cursor: pointer;
+	}
+	.file-input {
+		width: 100%;
+		img {
+			margin: auto;
+			display: flex;
+		}
+	}
+}

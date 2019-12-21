@@ -1,0 +1,56 @@
+<kt-portlet>
+	<kt-portlet-header title="Mails" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<a routerLink="/strada/mails/manage" class="primary-button kt-margin-r-10" matTooltip="Add new meeting">
+				<i class="la la-plus"></i>
+				<span class="kt-hidden-mobile">Setup email</span>
+			</a>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="mail-body">
+			<table class="table-view">
+				<thead>
+					<tr>
+						<th>Subject</th>
+						<th>Sender name</th>
+						<th>Read</th>
+						<th>Sender email</th>
+						<th></th>
+						<th>Last Reply/Interaction</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="each-row" *ngFor="let mail of mails">
+						<td>{{(mail.subject.length > 33) ? (mail.subject | slice:0:33)+'...':(mail.subject)}}</td>
+						<td>{{mail.sender.emailAddress.name}}</td>
+						<td class="status">
+							<span class="approved" *ngIf="mail.isRead">Yes</span>
+							<span class="pending" *ngIf="!mail.isRead">No</span>
+						</td>
+						<td>{{mail.sender.emailAddress.address}}</td>
+						<td class="flagged">
+							<span *ngIf="toNow(mail.updated_at) > 10">
+								<img src="./assets/media/icons/flag.svg" alt="">
+							</span>
+						</td>
+						<td>{{mail.updated_at | timeAgo}}</td>
+						<td>
+							<a (click)="seeDetails(mail)" class="view">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="my-pagination mt-5 mb-4">
+			<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
+			<div class="btn-grp">
+				<button mat-raised-button (click)="getPrev()" color="primary" [disabled]="disablePrev">Previous</button>
+				<button mat-raised-button (click)="getNext()" color="primary" [disabled]="disableNext">Next</button>
+			</div>
+		</div>
+
+	</kt-portlet-body>
+</kt-portlet>

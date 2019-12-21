@@ -1,0 +1,13 @@
+:host {
+	::ng-deep {
+		ngb-tabset > .nav-tabs {
+			display: none;
+		}
+	}
+}
+
+.btn-grp {
+	padding: 1rem;
+	display: flex;
+	justify-content: space-between;
+}

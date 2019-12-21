@@ -1,0 +1,1042 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/vendors/global/vendors.bundle.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~material-design-icons/iconfont/material-icons.css";
+@import "~highlight.js/styles/googlecode.css";
+
+// for calender
+@import "~@fullcalendar/core/main.css";
+@import "~@fullcalendar/daygrid/main.css";
+
+// hide bootstrap dropdown arrow globally
+.dropdown-toggle::after {
+	display: none !important;
+}
+
+.mat-elevation-z8 {
+	box-shadow: 1px 1px 5px #d4d5d7 !important;
+}
+
+.mat-table__wrapper--dashboard .mat-table {
+	min-width: 600px !important;
+	width: 100% !important;
+}
+
+.position-static {
+	position: static;
+}
+
+.fc-unthemed .fc-event .fc-title,
+.fc-unthemed .fc-event-dot .fc-title {
+	text-transform: capitalize !important;
+	color: #fff !important;
+}
+
+.fc-unthemed .fc-event .fc-time,
+.fc-unthemed .fc-event-dot .fc-time {
+	color: #fff !important;
+	text-transform: uppercase !important;
+}
+
+.fc-day-grid-event .fc-content {
+	white-space: normal !important;
+	overflow: visible !important;
+	background: #03188c !important;
+}
+
+.fc-unthemed .fc-toolbar .fc-button {
+	background: #001799 !important;
+	color: #fff !important;
+}
+
+.instruction {
+	font-family: "Poppins";
+	font-size: 1.1rem;
+	color: #333;
+	padding: 1.2rem;
+	background: #f1f1f1;
+	border-radius: 0.4rem;
+	width: max-content;
+	margin-left: 3rem;
+
+	p {
+		margin: 0.4rem 0;
+	}
+}
+
+.slide-in {
+	position: relative;
+	animation: slideIn 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateY(1rem);
+	}
+
+	to {
+		transform: translateY(0);
+	}
+}
+
+button:disabled,
+a:disabled,
+a[disabled],
+button[disabled] {
+	cursor: not-allowed !important;
+	pointer-events: none !important;
+}
+
+.table-view {
+	font-family: "Poppins", "sans serif";
+	width: 100%;
+
+	thead {
+		background-color: #1b1b28;
+
+		tr {
+			height: 5rem;
+			color: #fafafa;
+			font-size: 0.875rem;
+			th {
+				padding-left: 2.7rem;
+			}
+		}
+	}
+
+	tbody {
+		margin-top: 1rem;
+
+		tr {
+			height: 5rem;
+			&:nth-child(even) {
+				background-color: #ffffff;
+			}
+
+			&:nth-child(odd) {
+				background-color: #fafafa;
+			}
+
+			td {
+				padding: 1.25rem;
+				padding-left: 2.7rem;
+				color: #3b3b3f;
+				&.faded {
+					color: rgb(202, 202, 212);
+					font-weight: 400;
+				}
+				&.input {
+					input {
+						height: 4.2rem;
+						border: none;
+						background: none;
+						width: 90%;
+						padding: 1rem;
+						margin: auto;
+
+						&:active {
+							outline: none;
+						}
+					}
+				}
+
+				a {
+					&.view {
+						color: #5d78ff;
+						font-weight: 600;
+					}
+
+					&.delete {
+						color: #fb2e2e;
+						font-weight: 500;
+						font-size: 0.935rem;
+					}
+
+					&:hover {
+						cursor: pointer;
+					}
+				}
+				&.flagged {
+					span {
+						display: block;
+						text-align: center;
+						img {
+							width: 20px;
+							height: 20px;
+							display: block;
+							margin: auto;
+						}
+					}
+				}
+				&.status {
+					span {
+						width: max-content;
+						text-align: center;
+						display: block;
+						font-size: 0.735rem;
+						font-weight: 600;
+						border-radius: 0.25rem;
+						padding: 0.4rem 1rem;
+						border-radius: 1.4rem;
+
+						// margin: 0 auto;
+						&.plain {
+							color: #1d1d27;
+							background-color: #e2e2ff;
+						}
+						&.approved {
+							color: #2B743F;
+							background-color: rgb(214, 253, 224);
+						}
+						&.pending {
+							color: #74642B;
+							background-color: rgb(255, 243, 204);
+						}
+						&.leadInitiated {
+							color: #065c81;
+							background-color: #c3ebfc;
+						}
+						&.emailSent {
+							color: #848600;
+							background-color: #fcfdd4;
+						}
+						&.scheduledMeeting {
+							color: #410561;
+							background-color: #f0d5ff;
+						}
+						&.sentMOUProposal {
+							color: #880310;
+							background-color: #fddde0;
+						}
+						&.reviewMOUProposal {
+							color: #151965;
+							background-color: #999de4;
+						}
+						&.followUpRequested {
+							color: #e13a9d;
+							background-color: #ffd6ef;
+						}
+						&.sentInvoice {
+							color: #9b45e4;
+							background-color: #ecd6ff;
+						}
+						&.signedAgreement {
+							color: #416100;
+							background-color: #f7ffe6;
+						}
+						&.convertedToContact {
+							color: #007e50;
+							background-color: #e0fff3;
+						}
+					}
+
+					&:hover {
+						cursor: pointer;
+					}
+				}
+
+				&.double-menu {
+					display: flex;
+					justify-content: flex-start;
+
+					a {
+						margin-right: 1.2rem;
+						font-size: 1rem;
+						font-weight: 600;
+						text-decoration: none;
+
+						&.edit {
+							color: rgb(64, 64, 255);
+
+							&:hover {
+								color: rgb(59, 59, 224);
+							}
+						}
+
+						&.delete {
+							color: rgb(255, 77, 23);
+
+							&:hover {
+								color: rgb(241, 31, 31);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.empty-list {
+	width: 100%;
+
+	img {
+		width: 3rem;
+		height: 3rem;
+		display: block;
+		margin: 4rem auto 2rem;
+	}
+
+	p {
+		color: #97979d;
+		font-size: 0.87rem;
+	}
+}
+
+.primary-button {
+	background-color: #5d78ff;
+	color: #ffffff;
+	font-size: 0.87rem;
+	font-weight: 500;
+	width: 140px;
+	height: 38px;
+	border: none;
+	border-radius: 0.2rem;
+	text-align: center;
+	padding-top: 0.5rem;
+
+	&:hover {
+		background-color: #4363ff;
+
+		span {
+			color: #fff;
+		}
+
+		i {
+			color: #fff;
+		}
+	}
+
+	i {
+		display: inline-block;
+		margin-right: 0.3rem;
+		font-size: 1.4rem;
+		position: relative;
+		top: 3px;
+	}
+
+	span {
+		display: inline-block;
+		font-weight: 500;
+		font-size: 0.935rem;
+	}
+}
+
+.full-import {
+	label {
+		display: block;
+		&:hover {
+			cursor: pointer;
+		}
+		img {
+			width: 200px;
+			height: 220px;
+			display: block;
+			margin: 1rem auto;
+		}
+	}
+	.placeholder {
+		color: #444;
+		text-align: center;
+		margin: 1rem 0;
+		font-weight: 500;
+	}
+
+	input {
+		display: none;
+	}
+}
+
+.form-item {
+	width: 90%;
+	margin: 1rem auto;
+	font-family: "Poppins";
+	&.no-padding {
+		input {
+			padding: 0 !important;
+		}
+	}
+	@media (min-width: 992px) {
+		width: 100%;
+		margin: 1.4rem 0;
+	}
+
+	&.flexed {
+		display: flex;
+		width: 100%;
+
+		.mat-form-field {
+			width: 75%;
+			input {
+				width: 100%;
+			}
+		}
+
+		button {
+			height: 2.5rem;
+			color: #333;
+			font-weight: bold;
+		}
+	}
+
+	&.upload {
+		label {
+			&:hover {
+				cursor: pointer;
+			}
+
+			img {
+				width: 90px;
+				height: 90px;
+				display: block;
+				margin: 1rem auto;
+			}
+		}
+
+		input {
+			display: none;
+		}
+
+		.placeholder {
+			font-size: 0.935rem;
+			text-align: center;
+			font-weight: 500;
+			color: #444;
+		}
+	}
+
+	label {
+		color: #14141e;
+		font-size: 0.875rem;
+		margin-bottom: 0.875rem;
+		display: block;
+	}
+
+	input,
+	textarea {
+		width: 100%;
+		height: 3.2rem;
+		border: 0.5px solid #97979d;
+		color: rgb(75, 75, 78);
+		padding-left: 1rem;
+		font-size: 1.1rem;
+		outline: none !important;
+		&:active {
+			border: 1px solid #97979d;
+		}
+	}
+
+	textarea {
+		height: 9rem;
+		padding: 1rem;
+	}
+
+	select {
+		width: 100%;
+		height: 3.2rem;
+		border: 0.5px solid #97979d;
+		padding-left: 1rem;
+		background: none;
+
+		option {
+			background: none;
+			height: 2.8rem;
+			color: #97979d;
+		}
+	}
+}
+
+.form-submit {
+	display: flex;
+	justify-content: center;
+
+	button {
+		font-size: 1.1rem;
+		font-weight: 500;
+		width: 130px;
+		height: 38px;
+		border: none;
+		border-radius: 0.2rem;
+
+		&.submit {
+			background-color: #274af8;
+			color: #ffffff;
+		}
+
+		&.reset {
+			background-color: #d4d5d7;
+			color: #333;
+			margin-right: 2rem;
+		}
+	}
+}
+
+.item-details {
+	font-family: "Poppins";
+	font-weight: 500;
+
+	&.maxed {
+		table {
+			@media(min-width: 992px) {
+				max-width: 470px;
+			}
+		}
+	}
+
+	.details-table {
+		display: flex;
+		justify-content: center;
+	}
+
+	.each-data {
+		display: flex;
+		justify-content: space-between;
+		margin: 1.5rem 0 0;
+		font-size: 0.875rem;
+		text-overflow: ellipsis;
+
+		.label {
+			width: 12rem;
+			color: #97979d;
+			text-align: right;
+		}
+		.images {
+			img {
+				width: 250px;
+			}
+		}
+		.value {
+			word-break: normal;
+			width: 20rem;
+			float: none;
+			color: #000000;
+			margin-left: 1.5rem;
+			img {
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+			}
+			&.status {
+				span {
+					width: max-content;
+					text-align: center;
+					display: block;
+					font-size: 0.735rem;
+					font-weight: 600;
+					border-radius: 0.25rem;
+					padding: 0.4rem 1rem;
+					border-radius: 1.4rem;
+					&.plain {
+						color: #1d1d27;
+						background-color: #d0d0d1;
+					}
+					&.leadInitiated {
+						color: #297ca0;
+						background-color: #aae6ff;
+					}
+					&.emailSent {
+						color: #e9ea77;
+						background-color: #feffcc;
+					}
+					&.scheduledMeeting {
+						color: #46185f;
+						background-color: #e4b3ff;
+					}
+					&.sentMOUProposal {
+						color: #ac2431;
+						background-color: #fca6ae;
+					}
+					&.reviewMOUProposal {
+						color: #151965;
+						background-color: #999de4;
+					}
+					&.followUpRequested {
+						color: #e13a9d;
+						background-color: #ffb5e1;
+					}
+					&.sentInvoice {
+						color: #9b45e4;
+						background-color: #d7b2f7;
+					}
+					&.signedAgreement {
+						color: #91bd3a;
+						background-color: #f7ffe6;
+					}
+					&.convertedToContact {
+						color: #0c9463;
+						background-color: #bdfde6;
+					}
+				}
+
+				&:hover {
+					cursor: pointer;
+				}
+			}
+		}
+	}
+
+	.side-form {
+		background-color: rgb(252, 252, 252);
+		padding: 2rem 4rem;
+		font-family: "Poppins";
+
+		@media (min-width: 1200px) {
+			width: 90%;
+			margin: auto;
+			max-height: 600px;
+			min-height: 400px;
+			overflow: scroll;
+		}
+
+		@media (max-width: 767px) {
+			padding: 2.5rem;
+		}
+		.feint-title {
+			color: #97979D;
+			font-size: 1.2rem;
+			font-weight: 300;
+			margin: 0.75rem 0 1.75rem;
+		}
+
+		.form-types {
+			display: flex;
+			justify-content: space-between;
+			font-size: 0.875rem;
+			font-weight: 500;
+			margin-bottom: 2.5rem;
+
+			.type-menu {
+				color: #97979d;
+
+				&.active,
+				&:hover {
+					color: #1b1b28;
+					border-bottom: 2px solid #5d78ff;
+					cursor: pointer;
+				}
+			}
+		}
+
+		&.approval {
+			.title-status {
+				display: flex;
+				justify-content: space-between;
+				margin: 0 0.5rem 1.5rem;
+
+				.title {
+					font-weight: 500;
+					color: #97979d;
+					font-size: 0.935rem;
+				}
+
+				.status {
+					padding: 0.5rem 1.5rem;
+					font-weight: 600;
+					border-radius: 1.75rem;
+					font-size: 0.75rem;
+					position: relative;
+					bottom: 0.25rem;
+
+					&.pending {
+						color: #74642b;
+						background-color: rgb(253, 239, 192);
+					}
+
+					&.approved {
+						background-color: #2b743f;
+						box-shadow: 0 0 0 5px rgb(189, 255, 207);
+						color: #fff;
+					}
+				}
+			}
+
+			.approval-cover {
+				.each-level {
+					padding-left: 2rem;
+					height: 80px;
+
+					&.approved {
+						border-left: 3px solid #b5ffc9;
+					}
+
+					&.pending {
+						border-left: 3px solid #ffeeb5;
+					}
+
+					.level-info {
+						position: relative;
+						bottom: 1rem;
+
+						.leveler {
+							color: #000000;
+							font-size: 0.935rem;
+							margin-bottom: 0.4rem;
+						}
+
+						.into {
+							color: #97979d;
+							font-size: 0.75rem;
+						}
+					}
+
+					.notification {
+						position: relative;
+						left: -2.45rem;
+						width: 0.75rem;
+						height: 0.75rem;
+						border-radius: 50%;
+
+						&.approved {
+							background-color: #2b743f;
+							box-shadow: 0 0 0 5px rgb(189, 255, 207);
+						}
+
+						&.pending {
+							background-color: #74642b;
+							box-shadow: 0 0 0 5px rgb(252, 237, 190);
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+form {
+	.navigation {
+		font-family: "Poppins";
+		margin: 1.5rem 0;
+		display: flex;
+		justify-content: flex-end;
+
+		button.action {
+			background: none;
+			border: none;
+			font-size: 0.875rem;
+			font-weight: 500;
+
+			&:disabled {
+				cursor: not-allowed;
+				color: #97979d;
+			}
+
+			&.primary {
+				color: #5d78ff;
+			}
+
+			&.secondary {
+				color: #97979d;
+			}
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+
+	.pdf-upload {
+		display: flex;
+		justify-content: center;
+
+		&:hover {
+			cursor: pointer;
+		}
+
+		input[type="file"] {
+			display: none;
+		}
+
+		.upload {
+			height: 10rem;
+			box-shadow: 1px 1px 3px rgba(255, 255, 255, 0.1),
+				inset 1px 1px 2px rgba(0, 0, 0, 0.1);
+			border-radius: 3px;
+			background-color: #ffffff;
+			padding: 1.4rem;
+			margin: 2rem auto 1.4rem;
+
+			img {
+				width: 3rem;
+				height: 3rem;
+				display: block;
+				margin: auto;
+				margin-bottom: 0.75rem;
+			}
+
+			.img-text {
+				margin: auto;
+				color: #97979d;
+				font-size: 0.75rem;
+				text-align: center;
+			}
+		}
+	}
+}
+
+.none {
+	display: none;
+}
+
+.detail-table-options {
+	display: flex;
+	justify-content: flex-start;
+	font-family: "Poppins";
+
+	img {
+		width: 1.2rem;
+		height: 1.2rem;
+		display: block;
+		margin-left: 0.2rem;
+		top: 0.4rem;
+		position: relative;
+	}
+
+	.menus-cover {
+		background: none;
+		height: 2.2rem;
+		border: none;
+		font-weight: 600;
+		font-size: 1.3rem;
+		color: #000000;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}
+
+.users-cover {
+	.toggle-user {
+		button {
+			border: none;
+			background: none;
+			color: #5D78FF;
+			margin: 2rem;
+		}
+	}
+
+	form {
+
+		// &.comment-form {
+		.navigation {
+			button.comment {
+				position: relative;
+				bottom: 2rem;
+				left: 0.7rem;
+			}
+		}
+
+		// }
+		select {
+			margin-top: 2.2rem;
+			width: 100%;
+			height: 2.25rem;
+			border: 0.5px solid #97979D;
+			padding-left: 1rem;
+			background: none;
+
+			option {
+				background: none;
+				height: 2.80rem;
+				color: #97979D;
+			}
+		}
+
+		.navigation {
+			button {
+				margin: 1.2rem 2rem;
+			}
+		}
+	}
+}
+
+.goback {
+	display: flex;
+	justify-content: flex-start;
+	margin: 0.25rem 0 1.25rem;
+	&:hover {
+		cursor: pointer;
+	}
+	img {
+		width: 15px;
+		height: 15px;
+		display: block;
+		margin-right: 0.5rem;
+		position: relative;
+		top: 0.25rem;
+	}
+	span {
+		color: #000000;
+		font-size: 1.125rem;
+		font-weight: 400;
+	}
+}
+
+.users-list {
+	font-size: 0.935rem;
+
+	.each-user {
+		display: flex;
+		justify-content: flex-start;
+		margin: 0.75rem 1.25rem;
+
+		.name {
+			min-width: 60%;
+			color: #1B1B28;
+			font-size: 1rem;
+			// font-weight: 400;
+			img {
+				width: 1.3rem;
+				height: 1.3rem;
+				margin-right: 1.25rem;
+				display: inline-block;
+			}
+		}
+		.permission {
+			color: #97979D;
+			font-size: 0.875rem;
+		}
+
+		.action {
+			img {
+				width: 1rem;
+				height: 1rem;
+				display: block;
+			}
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
+}
+
+.details-action {
+	display: flex;
+	justify-content: center;
+	margin-right: 2rem;
+	padding: 0.75rem 1.5rem;
+	border-radius: 0.2rem;
+	&.large {
+		width: 9rem;
+	}
+	&:hover {
+		cursor: pointer;
+	}
+
+	span {
+		font-weight: 500;
+		font-size: 0.875rem;
+	}
+
+	img {
+		width: 0.875rem;
+		height: 1rem;
+		display: inline-block;
+		margin-right: 0.75rem;
+		position: relative;
+		top: 0.125rem;
+	}
+
+	&.delete {
+		span {
+			color: #731515;
+		}
+
+		background: none;
+		border: 1px solid #731515;
+	}
+
+	&.approve {
+		color: #fff;
+		background: #2b743f;
+
+		span {
+			color: #fff;
+		}
+	}
+
+	&.edit {
+		color: #fff;
+		background: #5d78ff;
+	}
+}
+
+// .contact-details {
+// 	.each-data {
+// 		display: flex;
+// 		justify-content: space-between;
+// 		font-weight: 400;
+// 		margin: 1rem 0;
+
+// 		.label {
+// 			width: 12rem;
+// 			color: #777;
+// 			text-overflow: ellipsis;
+// 			text-align: right;
+// 			font-size: 1.05rem;
+// 		}
+
+// 		.value {
+// 			word-break: normal;
+// 			text-overflow: ellipsis;
+// 			width: 20rem;
+// 			float: none;
+// 			color: #000;
+// 			margin-left: 2rem;
+// 			font-size: 1.05rem;
+
+// 			a {
+// 				color: #111;
+// 				text-decoration: underline;
+// 			}
+// 		}
+
+// 		td.images {
+// 			display: flex;
+// 			margin-left: 1rem;
+
+// 			img {
+// 				// width: 150px;
+// 				height: 150px;
+// 				display: block;
+// 			}
+// 		}
+// 	}
+// }
+
+
+.goods {
+	display: flex;
+	flex-wrap: wrap;
+
+	.good {
+		display: inline-flex;
+		align-items: center;
+		margin: 0.5rem 1rem;
+
+		.item {
+			padding: 0.25rem 1rem;
+			margin: 0.5rem;
+			color: #333333;
+			font-weight: 600;
+
+		}
+
+		.removebtn {
+			margin-left: 0.25rem;
+			font-weight: 600;
+			color: #e71708;
+			img {
+				width: 1rem;
+				height: 1rem;
+				display: inline-block;
+			}
+		}
+	}
+}
+
+.please-data {
+	color: #444;
+	font-size: 1.25rem;
+}

@@ -1,0 +1,41 @@
+<h4 mat-dialog-title>Role Management</h4>
+<mat-dialog-content>
+	<form [formGroup]="form">
+		<!-- <div class="row">
+			<div class="col-md-12">
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-select placeholder="Select Role">
+						<mat-option value="{{type.name}}" *ngFor="let type of roles;" (click)="roleChanged(type)">
+							{{type.name | titlecase }}</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+		</div> -->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="form-item">
+					<label for="title" class="label">Roles</label>
+					<select (change)="handleRoleChange($event)">
+						<option value="" selected="true">Select role</option>
+						<option [value]="type.value" *ngFor="let type of roles;">{{ type.name | titlecase }}</option>
+					</select>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="users-list mt-5" *ngIf="myRoles && myRoles.length > 0">
+		<div class="each-user" *ngFor="let type of myRoles; let i = index;">
+			<div class="name">
+				<img src="./assets/media/icons/details-icon.svg" alt="">
+				{{type | titlecase}}
+			</div>
+			<div class="action ml-4" (click)="roleRemove(type)">
+				<img src="./assets/media/icons/delete-close.svg" alt="">
+			</div>
+		</div>
+	</div>
+</mat-dialog-content>
+<div class="form-submit mt-4 mb-4">
+	<button class="reset" (click)="close()">close</button>
+	<button class="submit" (click)="save()">save</button>
+</div>

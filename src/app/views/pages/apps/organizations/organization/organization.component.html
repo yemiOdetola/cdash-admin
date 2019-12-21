@@ -1,0 +1,58 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action edit text-center" routerLink="/strada/organizations/manage/{{organizationId}}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Edit</span>
+			</div>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Delete</span>
+			</div>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="goback" (click)="goBack()">
+			<img src="./assets/media/icons/backBtn.svg" alt="">
+			<span>Back</span>
+		</div>
+		<div class="lead-body" *ngIf="organizationDetails">
+			<div class="item-details maxed pt-0">
+				<table class="ml-5 details-table">
+					<tr class="each-data" *ngIf="organizationDetails.name">
+						<td class="label">Organization name</td>
+						<td class="value">{{ organizationDetails.name }}</td>
+					</tr>
+					<tr class="each-data" *ngIf="organizationDetails.address">
+						<td class="label">Address</td>
+						<td class="value">{{ organizationDetails.address }}</td>
+					</tr>
+					<tr class="each-data" *ngIf="organizationDetails.email">
+						<td class="label">Email</td>
+						<td class="value"><a
+								href="mailto:{{ organizationDetails.email }}">{{ organizationDetails.email }}</a></td>
+					</tr>
+					<tr class="each-data" *ngIf="organizationDetails.rc">
+						<td class="label">RC number</td>
+						<td class="value status">
+							<span class="plain">{{ organizationDetails.rc }}</span>
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="organizationDetails.website">
+						<td class="label">Website</td>
+						<td class="value">{{ organizationDetails.website }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Created On</td>
+						<td class="value">{{ organizationDetails.createdAt | date: 'medium' }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Updated On</td>
+						<td class="value">{{ organizationDetails.updatedAt | date: 'medium' }}</td>
+					</tr>
+				</table>
+			</div>
+			<div *ngIf="!organizationDetails" class="mt-5 please-data text-center">Please Wait...</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

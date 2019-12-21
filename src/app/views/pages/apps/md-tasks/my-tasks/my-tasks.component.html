@@ -1,0 +1,44 @@
+<kt-portlet>
+	<kt-portlet-header title="All Tasks" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="contact-body">
+			<table class="table-view">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Created on</th>
+						<th>Status</th>
+						<th>Description</th>
+						<th>Source</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr className="each-row" *ngFor="let task of myTasks">
+						<td>{{ task.name }}</td>
+						<td>{{task.created_at | date: 'medium'}}</td>
+						<td class="status" [matMenuTriggerFor]="menu">{{ task.status }}</td>
+						<mat-menu #menu="matMenu">
+							<button mat-menu-item (click)="changed(status, task._id)"
+								*ngFor="let status of statuses">{{status}}</button>
+						</mat-menu>
+						<td>{{ (task.description.length > 33) ? (task.description | slice:0:33)+'...' : (task.description)}}
+						</td>
+						<td>
+							<a routerLink="/strada/md-tasks/md-task/{{task._id}}" class="view">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="my-pagination mt-5 mb-4">
+			<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
+			<div class="btn-grp">
+				<button mat-raised-button (click)="getPrev()" color="primary" [disabled]="disablePrev">Previous</button>
+				<button mat-raised-button (click)="getNext()" color="primary" [disabled]="disableNext">Next</button>
+			</div>
+		</div>
+
+	</kt-portlet-body>
+</kt-portlet>

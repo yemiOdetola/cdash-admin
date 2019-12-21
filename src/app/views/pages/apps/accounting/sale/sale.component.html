@@ -1,0 +1,309 @@
+<kt-portlet>
+	<kt-portlet-header
+		[title]="pageTitle"
+		[class]="'kt-portlet__head--lg'"
+		[viewLoading$]="loading$"
+	>
+		<ng-container ktPortletTools>
+			<a
+				href="javascript:;"
+				class="btn btn-primary kt-margin-r-10"
+				color="warn"
+				(click)="onDelete()"
+				mat-raised-button
+				matTooltip="Permanently Remove"
+			>
+				<i class="la la-trash-o"></i>
+				<span class="kt-hidden-mobile">Delete</span>
+			</a>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="lead-body"  *ngIf="saleDetails">
+			<div class="item-details maxed pt-0">
+				<table
+					class="ml-5 details-table">
+					<tr class="each-data">
+						<td class="label">Contact Name</td>
+						<td class="value status">
+							<span class="plain">{{ contactName | titlecase }}</span>
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="saleDetails && saleDetails.quotation_amount">
+						<td class="label">Quotation Amount</td>
+						<td class="value">{{ saleDetails.quotation_amount }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Status</td>
+						<td class="value">{{ saleDetails.status }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Unit</td>
+						<td class="value">{{ saleDetails.unit }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Created On</td>
+						<td class="value">{{ saleDetails.created_at | date: 'fullDate' }}</td>
+					</tr>
+				</table>
+			</div>
+			<div *ngIf="saleDetails" class="actions mt-5 mb-5">
+				<button color="primary" (click)="toggleInvoice()" mat-raised-button>Send Invoice</button>
+				<button color="primary" (click)="toggleQuotation()" mat-raised-button>Send Quotation</button>
+				<button color="primary" (click)="toggleReceipt()" mat-raised-button>Send Receipt/Thank You</button>
+				<button color="primary" (click)="toggleMOU()" mat-raised-button>Send MOU</button>
+			</div>
+			<div *ngIf="!saleDetails" class="mt-5 please-data text-center">Please Wait...</div>
+			<div class="mou-form mt-5" *ngIf="toggMOU">
+				<div class="file-name">Upload File (.pdf)</div>
+				<div class="wrapper">
+					<div class="file-upload">
+						<input type="file"accept="application/pdf" (change)="onFileChange($event)"/>
+						<i class="fa fa-arrow-up"></i>
+					</div>
+				</div>
+				<div class="mt-3 mb-5 file-name" *ngIf="fileName slide-in">
+					{{fileName}}
+				</div>
+				<form [formGroup]="mouForm" class="mt-4 mb-5">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-8 mx-auto kt-margin-bottom-10-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Additional Message" formControlName="message">
+									<mat-error> Message is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+							</div>
+						</div>
+					</div>
+				</form>
+				<div class="mt-5 text-center">
+					<button (click)="sendMOU()" [disabled]="!mouForm.valid" mat-raised-button>Send MOU</button>
+				</div>
+			</div>
+
+			<div class="invoice-form mt-5" *ngIf="toggInvoice">
+				<form [formGroup]="invoiceForm" class="mt-4 mb-5">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-8 mx-auto kt-margin-bottom-10-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Subject" formControlName="subject">
+									<mat-error> Subject is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Service Description" formControlName="service_description">
+									<mat-error> Service Description is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Body" formControlName="body">
+									<mat-error> Body is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input type="text" matInput placeholder="Enter TIN" formControlName="tin">
+									<mat-error> TIN is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Account Name" formControlName="account_name">
+									<mat-error> Account Name is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input type="text" matInput placeholder="Account Number" formControlName="account_number">
+									<mat-error> Account Number is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Bank Name" formControlName="bank_name">
+									<mat-error> Bank Name is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input type="text" matInput placeholder="Enter Amount" formControlName="amount">
+									<mat-error> Amount is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input type="text" matInput placeholder="Enter Units" formControlName="unit">
+									<mat-error> Units is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="mt-5 text-center">
+							<button (click)="sendInvoice()" [disabled]="!invoiceForm.valid" mat-raised-button>Send Invoice</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="quotation-form mt-5" *ngIf="toggQuotation">
+				<form [formGroup]="quotationForm" class="mt-4 mb-5">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-8 mx-auto kt-margin-bottom-10-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="TIN" formControlName="tin">
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input type="text" matInput placeholder="Enter Subject" formControlName="subject">
+									<mat-error> Subject is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Body" formControlName="body">
+									<mat-error> Body is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<!-- <mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Email" formControlName="email">
+									<mat-error> Email is <strong>required</strong> </mat-error>
+									<mat-hint align="start">Please enter <strong>Title</strong></mat-hint>
+								</mat-form-field> -->
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Description" formControlName="description">
+									<mat-error> Description is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input type="text" matInput placeholder="Enter Amount" formControlName="amount">
+									<mat-error> Amount is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Units" formControlName="unit">
+									<mat-error> Unit is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="mt-5 text-center">
+							<button (click)="sendQuotation()" [disabled]="!quotationForm.valid" mat-raised-button>Send Quotation</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="receipt-form mt-5" *ngIf="toggReceipt">
+				<form [formGroup]="receiptForm" class="mt-4 mb-5">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-md-8 mx-auto kt-margin-bottom-10-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<input type="text" matInput placeholder="Enter Subject" formControlName="subject">
+									<mat-error> Subject is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Body" formControlName="body">
+									<mat-error> Body is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Amount" formControlName="amount">
+									<mat-error> Amount is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input matInput placeholder="Enter Description" formControlName="description">
+									<mat-error> Description is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+								<mat-form-field class="mat-form-field-fluid">
+									<input type="text" matInput placeholder="Enter Remark" formControlName="remark">
+									<mat-error> Remark is <strong>required</strong> </mat-error>
+									<!-- <mat-hint align="start">Please enter <strong>Title</strong></mat-hint> -->
+								</mat-form-field>
+							</div>
+						</div>
+						<div class="mt-5 text-center">
+							<button (click)="sendReceipt()" [disabled]="!receiptForm.valid" mat-raised-button>Send Receipt</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<h3 class="section-title mt-5 mb-4" *ngIf="invoiceList">Invoices List</h3>
+			<div class="mat-elevation-z8 mt-5" *ngIf="invoiceList && invoiceList.length !== 0">
+				<table mat-table [dataSource]="dataSourceInvoice" class="w-100">
+					<ng-container matColumnDef="Invoice Id">
+						<th mat-header-cell *matHeaderCellDef   > Invoice Id </th>
+						<td mat-cell *matCellDef="let invoiceList"> {{invoiceList.invoice_id}}</td>
+					</ng-container>
+					<ng-container matColumnDef="Amount">
+						<th mat-header-cell *matHeaderCellDef   > Amount </th>
+						<td mat-cell *matCellDef="let invoiceList">&#8358; {{invoiceList.amount}}</td>
+					</ng-container>
+					<ng-container matColumnDef="Unit">
+						<th mat-header-cell *matHeaderCellDef   > Unit </th>
+						<td mat-cell *matCellDef="let invoiceList"> {{invoiceList.unit}}</td>
+					</ng-container>
+					<ng-container matColumnDef="TIN">
+						<th mat-header-cell *matHeaderCellDef   > TIN </th>
+						<td mat-cell *matCellDef="let invoiceList">{{ invoiceList.tin}}</td>
+					</ng-container>
+					<ng-container matColumnDef="Subject">
+						<th mat-header-cell *matHeaderCellDef   > Subject </th>
+						<td mat-cell *matCellDef="let invoiceList">{{ invoiceList.subject}}</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="invoiceColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: invoiceColumns;"></tr>
+				</table>
+			</div>
+
+			<h3 class="section-title mt-5 mb-4" *ngIf="mouList">MOUs List</h3>
+			<div class="mat-elevation-z8 mt-5" *ngIf="mouList && mouList.length !== 0">
+				<table mat-table [dataSource]="dataSourceMOU" class="w-100">
+					<ng-container matColumnDef="MOU">
+						<th mat-header-cell *matHeaderCellDef   > MOU </th>
+						<td mat-cell *matCellDef="let moudetails"> <a href="{{moudetails.mou}}" target="_blank">{{ (moudetails.mou.length > 33) ? (moudetails.mou | slice:0:33)+'...' : (moudetails.mou)}}</a></td>
+					</ng-container>
+					<ng-container matColumnDef="Quotation Amount">
+						<th mat-header-cell *matHeaderCellDef   > Quotation Amount </th>
+						<td mat-cell *matCellDef="let moudetails">&#8358; {{ moudetails.quotation_amount}}</td>
+					</ng-container>
+					<ng-container matColumnDef="Unit">
+						<th mat-header-cell *matHeaderCellDef   > Unit </th>
+						<td mat-cell *matCellDef="let moudetails">{{ moudetails.unit}}</td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="MOUcolumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: MOUcolumns;"></tr>
+				</table>
+			</div>
+
+			<h3 class="section-title mt-5 mb-4" *ngIf="quotationsList">Quotations List</h3>
+			<div class="mat-elevation-z8 mt-5" *ngIf="quotationsList && quotationsList.length !== 0">
+				<table mat-table [dataSource]="dataSourceQuotation" class="w-100">
+					<ng-container matColumnDef="Subject">
+						<th mat-header-cell *matHeaderCellDef   > Subject </th>
+						<td mat-cell *matCellDef="let quoteDetails"> {{quoteDetails.subject}} </td>
+					</ng-container>
+					<ng-container matColumnDef="Body">
+						<th mat-header-cell *matHeaderCellDef   > Body </th>
+						<td mat-cell *matCellDef="let quoteDetails"> {{quoteDetails.body}} </td>
+					</ng-container>
+					<ng-container matColumnDef="Amount">
+						<th mat-header-cell *matHeaderCellDef   > Amount </th>
+						<td mat-cell *matCellDef="let quoteDetails">&#8358; {{quoteDetails.amount}} </td>
+					</ng-container>
+					<ng-container matColumnDef="Unit">
+						<th mat-header-cell *matHeaderCellDef   > Unit </th>
+						<td mat-cell *matCellDef="let quoteDetails">{{ quoteDetails.unit}}</td>
+					</ng-container>
+					<ng-container matColumnDef="TIN">
+						<th mat-header-cell *matHeaderCellDef   > TIN </th>
+						<td mat-cell *matCellDef="let quoteDetails"> {{quoteDetails.tin}} </td>
+					</ng-container>
+					<tr mat-header-row *matHeaderRowDef="quotationsColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: quotationsColumns;"></tr>
+				</table>
+			</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

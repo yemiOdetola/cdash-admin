@@ -1,0 +1,76 @@
+<kt-portlet>
+	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<form [formGroup]="saleForm">
+			<!-- <div class="mt-3 mb-2 instruction m-auto">
+				<p>Name, Qutation Amount, Status, Units and Contact are compulsory fields.</p>
+			</div> -->
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item" *ngIf="!idParams">
+							<label class="label">Name</label>
+							<input type="text" placeholder="Enter Name" formControlName="name">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Quotation Amount</label>
+							<input type="text" placeholder="Enter quotation amount" formControlName="quotation_amount">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div [className]="idParams ? 'form-item' : 'none'">
+							<label class="label">Invoice Amount</label>
+							<input type="number" placeholder="Enter invoice amount" formControlName="invoice_amount">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div [className]="idParams ? 'form-item' : 'none'">
+							<label class="label">Remarks</label>
+							<input type="text" placeholder="Add remarks" formControlName="remark">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label for="title" class="label">Status</label>
+							<select formControlName="status" (ngModelChange)="handleCompletedsDisplay($event)">
+								<option value="">Select status</option>
+								<option *ngFor="let status of statuses" value="{{status}}">{{status}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item" *ngIf="!idParams">
+							<label for="title" class="label">Contact</label>
+							<select formControlName="contact_id">
+								<option value="">Add contact</option>
+								<option *ngFor="let contact of contactsAll" value="{{contact._id}}">{{contact.name}}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
+				(close)="onAlertClose($event)">
+				Oops! Form is not filled correctly. Change a few things up and try submitting again.
+			</kt-alert>
+			<div class="form-submit mt-3 mb-4">
+				<button class="reset" (click)="reset()">Reset</button>
+				<button class="submit" (click)="onSubmit()">Submit</button>
+			</div>
+		</form>
+	</kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,24 @@
+<kt-portlet>
+	<kt-portlet-header
+		title="Users Birthdays"
+		[class]="'kt-portlet__head--lg'"
+		[viewLoading$]="loading$"
+	>
+	</kt-portlet-header>
+	<kt-portlet-body>
+			<div class="goback" (click)="goBack()">
+					<img src="./assets/media/icons/backBtn.svg" alt="">
+					<span>Back</span>
+				</div>
+		<div class="mt-2 p-4 task-calender">
+			<div class="my-tasks">
+				<full-calendar
+					[weekends]="true"
+					defaultView="dayGridMonth"
+					[plugins]="calendarPlugins"
+					[events]="events">
+				</full-calendar>
+			</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

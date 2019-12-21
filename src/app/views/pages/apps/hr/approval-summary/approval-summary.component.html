@@ -1,0 +1,101 @@
+<kt-portlet>
+	<kt-portlet-header title="{{activeList | titlecase }}" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<h6 class="appr" *ngIf="activeList === 'claims'">
+				<mat-checkbox id="showClaimItems" name="showClaimItems" #showClaimItems
+					(change)="handleShowClaimItems(showClaimItems)">Show All Claim Items</mat-checkbox>
+			</h6>
+			<div class="details-action approve text-center ml-4" (click)="postApproval()">
+				<img src="./assets/media/icons/details-approve.svg" alt="">
+				<span>Approve all</span>
+			</div>
+			<div class="details-action edit text-center" [matMenuTriggerFor]="menu">
+				<span>Switch list</span>
+				&nbsp; &nbsp;
+				<img src="./assets/media/icons/button-down.svg" alt="">
+			</div>
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item (click)="switchList('loans')">Loans summary</button>
+				<button mat-menu-item (click)="switchList('leaves')">Leave summary</button>
+				<button mat-menu-item (click)="switchList('claims')">Claim summary</button>
+			</mat-menu>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="asset-body">
+			<table class="table-view" *ngIf="showClaimsList && activeList === 'claims'">
+				<thead>
+					<tr>
+						<th>Title/Name</th>
+						<th>Created On</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="each-row" *ngFor="let claim of approvedSummaryClaim">
+						<td>{{claim.name | titlecase}}</td>
+						<td>{{claim.created_at | date: 'longDate'}}</td>
+						<td>
+							<a routerLink="/strada/hr/claim/{{claim._id}}" class="view">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="table-view" *ngIf="pleaseHide && activeList === 'claims'">
+				<thead>
+					<tr>
+						<th>Claim item</th>
+						<th>Claim</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="each-row" *ngFor="let claimItem of summaryColumns">
+						<td>{{claimItem.description}}</td>
+						<td>{{claimMap[claimItem.hr_id]}}</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="table-view" *ngIf="activeList === 'leaves'">
+				<thead>
+					<tr>
+						<th>Title/Name</th>
+						<th>Created On</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="each-row" *ngFor="let leave of approvedSummaryLeave">
+						<td>{{leave.name | titlecase}}</td>
+						<td>{{leave.created_at | date: 'longDate'}}</td>
+						<td>
+							<a routerLink="/strada/hr/leave/{{leave._id}}" class="view">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="table-view" *ngIf="activeList === 'loans'">
+				<thead>
+					<tr>
+						<th>Title/Name</th>
+						<th>Created On</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="each-row" *ngFor="let loan of approvedSummaryLoan">
+						<td>{{loan.name | titlecase}}</td>
+						<td>{{loan.created_at | date: 'longDate'}}</td>
+						<td>
+							<a routerLink="/strada/hr/loan/{{loan._id}}" class="view">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,35 @@
+.contact-body {
+	.hide {
+		display: none;
+	}
+	.each-data {
+		font-weight: 400;
+	}
+
+	.stage-history {
+		table {
+			width: 100%;
+		}
+	}
+}
+
+.slide-in {
+	position: relative;
+	animation: slideIn 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideIn {
+	from {
+		transform: translateY(1rem);
+	}
+
+	to {
+		transform: translateY(0);
+	}
+}
+.users-list .each-user {
+	margin-bottom: 1.935rem;
+	.name {
+		font-weight: 400;
+	}
+}

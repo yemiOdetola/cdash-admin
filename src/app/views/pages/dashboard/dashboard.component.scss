@@ -1,0 +1,103 @@
+:host {
+	::ng-deep {
+		ngb-tabset > .nav-tabs {
+			display: none;
+		}
+	}
+}
+
+.cards {
+	width: 100%;
+	.card {
+		padding: 2rem;
+		box-shadow: 0 0 13px 0 rgba(82, 63, 105, 0.05);
+		.value {
+			font-size: 3rem;
+			font-weight: 600;
+			letter-spacing: 0.25rem;
+			margin-bottom: 1rem;
+			color: #777;
+		}
+		.tag {
+			color: #222;
+			font-size: 1.25rem;
+		}
+	}
+}
+.section-title {
+	color: #464457;
+	font-size: 1.2rem;
+	font-weight: 500;
+	padding: 1.5rem 1rem;
+	border-bottom: 1px solid #ebedf2;
+	border-top: 1px solid #ebedf2;
+	background: #fff;
+}
+.white-bg {
+	background-color: #fff;
+	padding: 2rem;
+	color: #333;
+}
+
+.each-stat {
+	font-family: "Poppins";
+	margin: 0 1rem 1rem 0;
+	.top-header {
+		background-color: #fafafa;
+		padding: 1.2rem 1.5rem;
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		.title {
+			display: flex;
+			justify-content: space-between;
+			img {
+				display: block;
+				width: 1.25rem;
+				height: 1.25rem;
+				margin-right: 1rem;
+			}
+			span {
+				display: block;
+				color: #1b1b28;
+				font-size: 0.875rem;
+			}
+		}
+		.link {
+			font-size: 0.875rem;
+			font-weight: 500;
+			color: #5d78ff;
+			&:hover {
+				cursor: pointer;
+				color: #2346f5;
+			}
+		}
+	}
+	.chart {
+		background-color: #ffffff;
+		padding: 1.25rem;
+	}
+}
+.hoverable {
+	&:hover {
+		cursor: pointer;
+	}
+}
+.position-8 {
+	position: relative;
+	bottom: 0.8rem;
+}
+.drop-down {
+	padding: 1.5rem 0 0;
+    display: flex;
+    color: #333;
+	font-weight: 500;
+	margin-bottom: 1rem;
+	&:hover {
+		cursor: pointer;
+	}
+	img {
+		display: block;
+		margin-left: 0.15rem;
+	}
+}

@@ -1,0 +1,406 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle|titlecase" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action edit text-center" routerLink="/strada/users/manage/{{ userId }}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Edit</span>
+			</div>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Delete</span>
+			</div>
+			<div class="details-action approve text-center" [matMenuTriggerFor]="menu">
+				<img src="./assets/media/icons/details-approve.svg" alt="">
+				<span>Actions</span>
+			</div>
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item *ngIf="userDetails && !userDetails.head" (click)="makeHod()">Make User
+					HOD</button>
+				<button mat-menu-item *ngIf="userDetails && userDetails.head" (click)="removeHod()">Remove User as
+					HOD</button>
+				<button mat-menu-item *ngIf="userDetails && !userDetails.head" (click)="assign()">Assign HOD</button>
+				<button mat-menu-item (click)="doRole()">Roles Management</button>
+			</mat-menu>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="goback" (click)="goBack()">
+			<img src="./assets/media/icons/backBtn.svg" alt="">
+			<span>Back</span>
+		</div>
+		<div class="contact-body" *ngIf="userDetails">
+			<div class="item-details maxed pt-0">
+				<table class="ml-5 details-table">
+					<tr class="each-data" *ngIf="userDetails.name">
+						<td class="label">Name</td>
+						<td class="value">{{ userDetails.name|titlecase }}</td>
+					</tr>
+
+					<tr class="each-data" *ngIf="userDetails.email">
+						<td class="label">Email</td>
+						<td class="value">
+							<a href="mailto:{{ userDetails.email }}">{{	userDetails.email }}</a>
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="userDetails.phone">
+						<td class="label">Phone</td>
+						<td class="value">{{ userDetails.phone }}</td>
+					</tr>
+					<tr class="each-data" *ngIf="userDetails.dob">
+						<td class="label">Date of Birth</td>
+						<td class="value">
+							{{ userDetails.dob | date: "medium" }}
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="userDetails.company">
+						<td class="label">Company</td>
+						<td class="value">
+							{{ userDetails.company | titlecase }}
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="userDetails.address">
+						<td class="label">Address</td>
+						<td class="value">
+							{{ userDetails.address  }}
+						</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Roles</td>
+						<td class="value" *ngIf=" userDetails.roles &&  userDetails.roles.length>0">
+							<span style="display: block" *ngFor="let type of userDetails.roleNames ;">
+								{{ type| titlecase  }}
+							</span>
+
+						</td>
+						<td class="value" *ngIf=" !userDetails.roles || userDetails.roles.length==0">
+							Nill
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf=" userDetails.head">
+						<td class="label">Status</td>
+						<td class="value">
+							Head of Department
+						</td>
+					</tr>
+
+					<tr class="each-data" *ngIf="hod">
+						<td class="label">Head of Department</td>
+						<td class="value">
+							{{ hod.name }}
+						</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Created On</td>
+						<td class="value">
+							{{ userDetails.created_at | date: "medium" }}
+						</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Updated On</td>
+						<td class="value">
+							{{ userDetails.updated_at | date: "medium" }}
+						</td>
+					</tr>
+
+				</table>
+			</div>
+			<div *ngIf="!userDetails" class="mt-5 please-data text-center">Please retry...</div>
+			<div class="mt-4 mb-4 detail-table-options">
+				<div class="menus-cover">
+					<div [matMenuTriggerFor]="menu">{{showing}}</div>
+					<mat-menu #menu="matMenu">
+						<button mat-menu-item (click)="showTable('Leads')">Leads</button>
+						<button mat-menu-item (click)="showTable('Contacts')">contacts</button>
+						<button mat-menu-item (click)="showTable('Campaigns')">Campaigns</button>
+						<button mat-menu-item (click)="showTable('Meetings')">Meetings</button>
+						<button mat-menu-item (click)="showTable('Projects')">Projects</button>
+						<button mat-menu-item (click)="showTable('Tasks')">Tasks</button>
+						<button mat-menu-item (click)="showTable('Claims')">Claims</button>
+					</mat-menu>
+				</div>
+				<img src="./assets/media/icons/select-arrow.svg" alt="">
+			</div>
+			<div class="stage-history mt-3" *ngIf="showing === 'Leads'">
+				<table class="table-view">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Company</th>
+							<th>Email</th>
+							<th>Status</th>
+							<th>Source</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let lead of leads">
+							<td>{{ lead.name }}</td>
+							<td>{{lead.company}}</td>
+							<td class="email">{{ lead.email }}</td>
+							<td class="status">
+								<span class="plain">{{ lead.status }}</span>
+							</td>
+							<td>{{lead.source}}</td>
+							<td>
+								<a routerLink="/strada/leads/lead/{{lead._id}}" class="view">View</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="empty-list text-center" *ngIf="leads && leads.length === 0">
+					<img src="./assets/media/icons/empty-list.png" alt="">
+					<p>No {{showing}} have been sent with this user</p>
+				</div>
+				<div class="my-pagination mt-5 mb-4">
+					<div class="pg">Page: <b>{{pageIndex[0] + 1}}</b></div>
+					<div class="btn-grp">
+						<button mat-raised-button (click)="getPrev(0)" color="primary"
+							[disabled]="disablePrev[0]">Previous</button>
+						<button mat-raised-button (click)="getNext(0)" color="primary"
+							[disabled]="disableNext[0]">Next</button>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="showing === 'Contacts'" class="cover mt-4">
+				<table class="table-view">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Company</th>
+							<th>Email</th>
+							<th>Phone</th>
+							<th>Source</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let contact of contacts">
+							<td>{{ contact.name }}</td>
+							<td>{{contact.company}}</td>
+							<td>{{contact.email}}</td>
+							<td>{{contact.phone}}</td>
+							<td>{{contact.source}}</td>
+							<td>
+								<a routerLink="/strada/contacts/contact/{{contact._id}}" class="view">View</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="empty-list text-center" *ngIf="contacts && contacts.length === 0">
+					<img src="./assets/media/icons/empty-list.png" alt="">
+					<p>No {{showing}} have been sent with this user</p>
+				</div>
+				<div class="my-pagination mt-5 mb-4">
+					<div class="pg">Page: <b>{{pageIndex[1] + 1}}</b></div>
+					<div class="btn-grp">
+						<button mat-raised-button (click)="getPrev(1)" color="primary"
+							[disabled]="disablePrev[1]">Previous</button>
+						<button mat-raised-button (click)="getNext(1)" color="primary"
+							[disabled]="disableNext[1]">Next</button>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="showing === 'Campaigns'" class="cover mt-4">
+				<table class="table-view">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>status</th>
+							<th>Type</th>
+							<th>Price</th>
+							<th>Created on</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let campaign of campaigns">
+							<td>{{ campaign.name }}</td>
+							<td class="status">
+								<span class="plain">{{campaign.status}}</span>
+							</td>
+							<td>{{campaign.type}}</td>
+							<td>{{nairaSign}} {{campaign.price}}</td>
+							<td>{{campaign.created_at}}</td>
+							<td>
+								<a routerLink="/strada/campaigns/campaign/{{campaign._id}}" class="view">View</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="empty-list text-center" *ngIf="campaigns && campaigns.length === 0">
+					<img src="./assets/media/icons/empty-list.png" alt="">
+					<p>No {{showing}} have been sent with this user</p>
+				</div>
+				<div class="my-pagination mt-5 mb-4">
+					<div class="pg">Page: <b>{{pageIndex[2] + 1}}</b></div>
+					<div class="btn-grp">
+						<button mat-raised-button (click)="getPrev(2)" color="primary"
+							[disabled]="disablePrev[2]">Previous</button>
+						<button mat-raised-button (click)="getNext(2)" color="primary"
+							[disabled]="disableNext[2]">Next</button>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="showing === 'Meetings'" class="cover mt-4">
+				<table class="table-view">
+					<thead>
+						<tr>
+							<th>Client/ User</th>
+							<th>Type</th>
+							<th>Duration</th>
+							<th>Start</th>
+							<th>Description</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let meeting of meetings">
+							<td>{{ meeting.name }}</td>
+
+							<td>{{meeting.type}}</td>
+							<td>{{meeting.duration}} minutes</td>
+							<td>{{meeting.start}}</td>
+							<td>{{meeting.created_at | date: 'fullDate'}}</td>
+							<td>
+								<a routerLink="/strada/meetings/meeting/{{meeting._id}}" class="view">View</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="empty-list text-center" *ngIf="campaigns && campaigns.length === 0">
+					<img src="./assets/media/icons/empty-list.png" alt="">
+					<p>No {{showing}} have been sent with this user</p>
+				</div>
+				<div class="my-pagination mt-5 mb-4">
+					<div class="pg">Page: <b>{{pageIndex[3] + 1}}</b></div>
+					<div class="btn-grp">
+						<button mat-raised-button (click)="getPrev(3)" color="primary"
+							[disabled]="disablePrev[3]">Previous</button>
+						<button mat-raised-button (click)="getNext(3)" color="primary"
+							[disabled]="disableNext[3]">Next</button>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="showing === 'Projects'" class="cover mt-4">
+				<table class="table-view">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>status</th>
+							<th>Description</th>
+							<th>Created on</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let project of projects">
+							<td>{{ project.name }}</td>
+							<td class="status">
+								<span class="plain">{{project.status}}</span>
+							</td>
+							<td>{{(project.description.length > 50) ? (project.description | slice:0:50)+'...':(project.description)}}
+							</td>
+							<td>{{project.created_at}}</td>
+							<td>
+								<a routerLink="/strada/projects/project/{{project._id}}" class="view">View</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="empty-list text-center" *ngIf="campaigns && campaigns.length === 0">
+					<img src="./assets/media/icons/empty-list.png" alt="">
+					<p>No {{showing}} have been sent with this user</p>
+				</div>
+				<div class="my-pagination mt-5 mb-4">
+					<div class="pg">Page: <b>{{pageIndex[4] + 1}}</b></div>
+					<div class="btn-grp">
+						<button mat-raised-button (click)="getPrev(4)" color="primary"
+							[disabled]="disablePrev[4]">Previous</button>
+						<button mat-raised-button (click)="getNext(4)" color="primary"
+							[disabled]="disableNext[4]">Next</button>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="showing === 'Tasks'" class="cover mt-4">
+				<table class="table-view">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>status</th>
+							<th>Description</th>
+							<th>Created on</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let task of mdTasks">
+							<td>{{ task.name }}</td>
+							<td class="status">
+								<span class="plain">{{task.status}}</span>
+							</td>
+							<td>{{(task.description.length > 50) ? (task.description | slice:0:50)+'...':(task.description)}}
+							</td>
+							<td>{{task.created_at}}</td>
+							<td>
+								<a routerLink="/strada/md-tasks/md-task/{{task._id}}" class="view">View</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="empty-list text-center" *ngIf="campaigns && campaigns.length === 0">
+					<img src="./assets/media/icons/empty-list.png" alt="">
+					<p>No {{showing}} have been assigned to this user</p>
+				</div>
+				<div class="my-pagination mt-5 mb-4">
+					<div class="pg">Page: <b>{{pageIndex[5] + 1}}</b></div>
+					<div class="btn-grp">
+						<button mat-raised-button (click)="getPrev(5)" color="primary"
+							[disabled]="disablePrev[5]">Previous</button>
+						<button mat-raised-button (click)="getNext(5)" color="primary"
+							[disabled]="disableNext[5]">Next</button>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="showing === 'Claims'" class="cover mt-4">
+				<table class="table-view">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>status</th>
+							<th>Description</th>
+							<th>Created on</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let claim of claims">
+							<td>{{ claim.name }}</td>
+							<td class="status">
+								<span class="plain">{{claim.status}}</span>
+							</td>
+							<td>{{(claim.description.length > 50) ? (claim.description | slice:0:50)+'...':(claim.description)}}
+							</td>
+							<td>{{claim.created_at}}</td>
+							<td>
+								<a routerLink="/strada/hr/claim/{{claim._id}}" class="view">View</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="empty-list text-center" *ngIf="campaigns && campaigns.length === 0">
+					<img src="./assets/media/icons/empty-list.png" alt="">
+					<p>No {{showing}} have been assigned to this user</p>
+				</div>
+				<div class="my-pagination mt-5 mb-4">
+					<div class="pg">Page: <b>{{pageIndex[6] + 1}}</b></div>
+					<div class="btn-grp">
+						<button mat-raised-button (click)="getPrev(6)" color="primary"
+							[disabled]="disablePrev[6]">Previous</button>
+						<button mat-raised-button (click)="getNext(6)" color="primary"
+							[disabled]="disableNext[6]">Next</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

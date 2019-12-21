@@ -1,0 +1,157 @@
+<kt-portlet>
+	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<a routerLink="/strada/leads/import" class="primary-button kt-margin-r-10" matTooltip="Add New Lead">
+				<i class="la la-plus"></i>
+				<span class="kt-hidden-mobile">Import Leads</span>
+			</a>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<form [formGroup]="leadForm">
+			<div class="form-group">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label for="title" class="label">Title</label>
+							<select formControlName="title">
+								<option value="">Select title</option>
+								<option *ngFor="let title of titles" value="{{title}}">{{title}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Name</label>
+							<input type="text" placeholder="Enter Full Name" formControlName="name">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Source</label>
+							<select formControlName="source">
+								<option value="">Select lead source</option>
+								<option *ngFor="let source of sources" value="{{source}}">{{source}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Status</label>
+							<select formControlName="status">
+								<option value="">Select lead status</option>
+								<option *ngFor="let status of statuses" value="{{status}}">{{status}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Website</label>
+							<input type="url" placeholder="Enter company's website" formControlName="website">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Company</label>
+							<input type="text" placeholder="Enter company's name" formControlName="company">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Email</label>
+							<input type="email" placeholder="Company's email address" formControlName="email">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Industry</label>
+							<select formControlName="industry">
+								<option value="">Select company's industry</option>
+								<option *ngFor="let industry of industries" value="{{industry}}">{{industry}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Phone 1</label>
+							<input type="number" placeholder="Company's phone number" formControlName="phone">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Phone 2</label>
+							<input type="number" placeholder="Company's alternative phone number"
+								formControlName="phone2">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Country</label>
+							<select formControlName="country">
+								<option *ngFor="let key of objectKeys(countriesObj)" value="{{key}}">
+									{{countriesObj[key]}}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item upload">
+							<label class="label" for="upload">
+								<img src="./assets/media/icons/upload-all.svg" alt="">
+							</label>
+							<input type="file" id="upload" (change)="onFileChange($event)" accept="image/*">
+							<div class="placeholder" *ngIf="!fileName">Upload business card/logo</div>
+							<div class="placeholder slide-in" *ngIf="fileName">{{fileName}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Address</label>
+							<input type="email" placeholder="Company's full address" formControlName="address">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Description</label>
+							<textarea placeholder="Description" formControlName="description"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
+				(close)="onAlertClose($event)">
+				Oops! Form is not filled correctly. Change a few things up and try submitting again.
+			</kt-alert>
+			<div class="form-submit mt-3 mb-4">
+				<button class="reset" (click)="reset()">Reset</button>
+				<button class="submit" (click)="onSubmit()">Submit</button>
+			</div>
+		</form>
+	</kt-portlet-body>
+</kt-portlet>

@@ -1,0 +1,171 @@
+<div class="row">
+	<div class="col-xl-4 col-sm-6">
+		<div class="each-stat">
+			<div class="top-header">
+				<div class="title">
+					<img src="./assets/media/icons/dashboard-leads.svg" alt="">
+					<span>Leads</span>
+				</div>
+				<div class="link" routerLink="/strada/leads">View all</div>
+			</div>
+			<div class="chart text-center">
+				<circle-progress [percent]="85" [subtitle]="leadsCount" [outerStrokeColor]="'#77efff'"
+					[outerStrokeGradientStopColor]="'#5773ff'"></circle-progress>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-4 col-sm-6">
+		<div class="each-stat">
+			<div class="top-header">
+				<div class="title">
+					<img src="./assets/media/icons/dashboard-contacts.svg" alt="">
+					<span>Contacts</span>
+				</div>
+				<div class="link" routerLink="/strada/contacts">View all</div>
+			</div>
+			<div class="chart text-center">
+				<circle-progress [percent]="70" [subtitle]="contactsCount" [outerStrokeColor]="'#CDDC39'"
+					[outerStrokeGradientStopColor]="'#8BC34A'"></circle-progress>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-4 col-sm-6">
+		<div class="each-stat">
+			<div class="top-header">
+				<div class="title">
+					<img src="./assets/media/icons/dashboard-vendors.svg" alt="">
+					<span>Vendors</span>
+				</div>
+				<div class="link" routerLink="/strada/vendors">View all</div>
+			</div>
+			<div class="chart text-center">
+				<circle-progress [percent]="45" [subtitle]="vendorsCount" [outerStrokeColor]="'#9C27B0'"
+					[outerStrokeGradientStopColor]="'#3F51B5'"></circle-progress>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xl-4 col-sm-6">
+		<div class="each-stat">
+			<div class="top-header">
+				<div class="title">
+					<img src="./assets/media/icons/dashboard-assets.svg" alt="">
+					<span>Assets</span>
+				</div>
+				<div class="link" routerLink="/strada/assets">View all</div>
+			</div>
+			<div class="chart text-center">
+				<circle-progress [percent]="33" [subtitle]="assetsCount" [outerStrokeColor]="'#1F7772'"
+					[outerStrokeGradientStopColor]="'#44faf0'"></circle-progress>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-4 col-sm-6" *ngIf="usersCount">
+		<div class="each-stat">
+			<div class="top-header">
+				<div class="title">
+					<img src="./assets/media/icons/dashboard-users.svg" alt="">
+					<span>Users</span>
+				</div>
+				<div class="link" routerLink="/strada/users">View all</div>
+			</div>
+			<div class="chart text-center">
+				<circle-progress [percent]="79" [subtitle]="usersCount" [outerStrokeColor]="'#FFC107'"
+					[outerStrokeGradientStopColor]="'#CB1313'"></circle-progress>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-4 col-sm-6">
+		<div class="each-stat">
+			<div class="top-header">
+				<div class="title">
+					<img src="./assets/media/icons/dashboard-campaigns.svg" alt="">
+					<span>Campaigns</span>
+				</div>
+				<div class="link" routerLink="/strada/campaigns">View all</div>
+			</div>
+			<div class="chart text-center">
+				<circle-progress [percent]="44" [subtitle]="campaignsCount" [outerStrokeColor]="'#FAFAFA'"
+					[outerStrokeGradientStopColor]="'#333333'"></circle-progress>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xl-6 col-sm-12">
+		<div class="drop-down position-8">
+			<div class="menus-cover">
+				<div [matMenuTriggerFor]="menu">{{showing}}</div>
+				<mat-menu #menu="matMenu">
+					<button mat-menu-item (click)="showTable('Leads')">Leads</button>
+					<button mat-menu-item (click)="showTable('Contacts')">contacts</button>
+				</mat-menu>
+			</div>
+			<img src="./assets/media/icons/select-arrow.svg" alt="">
+		</div>
+		<div class="leads position-8" *ngIf="showing === 'Leads'">
+			<table class="table-view">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Status</th>
+						<th>Created on</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr className="each-row" *ngFor="let lead of leads">
+						<td class="hoverable" routerLink="/strada/leads/lead/{{lead._id}}">{{ lead.name }}</td>
+						<td class="status">
+							<span
+							[ngClass]="{
+								'leadInitiated': lead.status == 'Lead Initiated',
+								'emailSent': lead.status == 'Email Sent',
+								'scheduledMeeting': lead.status == 'Scheduled Meeting',
+								'sentMOUProposal': lead.status == 'Sent MOU/Proposal',
+								'reviewMOUProposal': lead.status == 'Review MOU/Proposal',
+								'followUpRequested': lead.status == 'Follow Up Requested',
+								'sentInvoice': lead.status == 'Sent Invoice',
+								'signedAgreement': lead.status == 'Signed Agreement',
+								'convertedToContact': lead.status == 'Converted to Contact'
+							}"
+							[matMenuTriggerFor]="menu">{{ lead.status }}</span>
+							<mat-menu #menu="matMenu">
+								<button mat-menu-item (click)="changed(status, lead._id)"
+									*ngFor="let status of statuses">
+									{{ status }}
+								</button>
+							</mat-menu>
+						</td>
+						<td>{{ lead.created_at | date: 'shortDate' }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="stage-history" *ngIf="showing === 'Contacts'">
+			<table class="table-view">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Company</th>
+						<th>Source</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr className="each-row" *ngFor="let contact of contacts">
+						<td>{{ contact.name }}</td>
+						<td>{{ contact.company }}</td>
+						<td>{{ contact.source }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-xl-6 col-sm-12">
+		<div class="section-title mb-3 mt-5">My Tasks Calender</div>
+		<div class="white-bg">
+			<full-calendar [weekends]="false" defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="events">
+			</full-calendar>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,167 @@
+.user-profile {
+	// margin-top: 2rem;
+	width: 100%;
+	color: #333;
+	.pic {
+		width: 8rem;
+		margin: 1rem auto;
+		@media(min-width: 992px) {
+			width: 10rem;
+		}
+		img {
+			width: 90%;
+			margin: auto;
+		}
+	}
+	.details {
+		text-align: center;
+		margin: 1rem auto 2rem;
+		// position: relative;
+		// top: 3rem;
+		.name {
+			font-size: 2.35rem;
+			font-weight: 300;
+			letter-spacing: 1px;
+		}
+		.role {
+			width: max-content;
+			margin: auto;
+			padding: 0.5rem 1.2rem;
+			border: 1px solid #909090;
+			border-radius: 3px;
+		}
+	}
+	.others {
+		justify-content: center;
+		.each {
+			display: flex;
+			width: max-content;
+			margin-left: 37%;
+			// justify-content: center;
+			.tag {
+				max-width: 3rem;
+					img {
+						width: 1.5rem;
+						height: 1.53rem;
+					}
+			}
+			.value {
+				// font-weight: 500;
+				margin-left: 8px;
+			}
+		}
+	}
+}
+
+.profile-btn {
+	width: 100%;
+	.details-action {
+		margin: 1.5rem auto;
+		width: 90px;
+	}
+}
+
+
+
+.profile-data {
+    .biz-title {
+      color: rgba(32, 38, 55, 0.53);
+      font-weight: bold;
+    }
+    .biz-underline {
+      width: 75px;
+      height: 0.3rem;
+      background-color: #36DA33;
+      border-radius: 0.875rem;
+    }
+
+    .profile-card {
+	  background-color: rgb(244, 249, 253);
+      padding: 1.5rem;
+      display: block;
+      box-shadow: 0px 2.0879px 13.0879px rgba(0, 0, 0, 0.05);
+      border-radius: 0.5rem;
+      margin-top: 2rem;
+      color: #626369;
+      margin: 0 auto;
+        .images-flex {
+            display: flex;
+            flex-wrap: wrap;
+            img {
+                width: 80px;
+                height: 80px;
+                display: block;
+                margin: 0.5rem;
+            }
+        }
+      @media(min-width: 768px) {
+        padding: 1.75rem;
+        display: flex;
+        max-width: 700px;
+      }
+
+      .profile {
+        margin-right: 2rem;
+
+        @media(max-width: 767px) {
+          margin: 1.75rem auto;
+        }
+
+        img {
+          display: block;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          margin: 0.25rem auto;
+        }
+
+        .name,
+        .address, .description {
+          font-weight: 600;
+          text-align: center;
+          font-size: 0.935rem;
+        }
+
+        .name {
+            text-transform: uppercase;
+        }
+
+        .address {
+          font-size: 0.65rem;
+        }
+
+        .description {
+            font-weight: 400;
+            width: 80%;
+            margin: 0 auto;
+            font-size: 0.935rem;
+        }
+      }
+
+      .details {
+        margin: auto;
+
+        @media(max-width: 767px) {
+          margin-top: 3rem;
+        }
+
+        .each-details {
+          display: flex;
+          justify-content: flex-start;
+          margin-bottom: 0.75rem;
+
+          img {
+            display: block;
+            width: 1.125rem;
+            height: 1.125rem;
+            margin-right: 0.5rem;
+          }
+
+          span {
+            font-size: 0.935rem;
+            display: block;
+          }
+        }
+      }
+    }
+  }

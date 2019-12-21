@@ -1,0 +1,47 @@
+<kt-portlet>
+	<kt-portlet-header title="All Users" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<a routerLink="/strada/users/staff/manage" class="primary-button kt-margin-r-10" matTooltip="Add new staff">
+				<i class="la la-plus"></i>
+				<span class="kt-hidden-mobile">New staff</span>
+			</a>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="user-body">
+			<div class="claim-body">
+				<table class="table-view">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Email</th>
+							<th>Phone number</th>
+							<th>Position</th>
+							<th>Date joined</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let staff of staffs">
+							<td>{{staff.name | titlecase}}</td>
+							<td>{{staff.email}}</td>
+							<td>{{staff.tel ? staff.tel : 'not available'}}</td>
+							<td>{{staff.position ? staff.position : 'not available'}}</td>
+							<td>{{staff.date_joined ? (staff.date_joined | date: 'fullDate') : 'not available'}}</td>
+							<td>
+								<a routerLink="/strada/users/staffs/{{staff._id}}" class="view">View</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="my-pagination mt-5 mb-4">
+			<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
+			<div class="btn-grp">
+				<button mat-raised-button (click)="getPrev()" color="primary" [disabled]="disablePrev">Previous</button>
+				<button mat-raised-button (click)="getNext()" color="primary" [disabled]="disableNext">Next</button>
+			</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

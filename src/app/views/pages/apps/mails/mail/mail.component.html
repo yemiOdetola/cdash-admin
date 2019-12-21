@@ -1,0 +1,50 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="goback" (click)="goBack()">
+			<img src="./assets/media/icons/backBtn.svg" alt="">
+			<span>Back</span>
+		</div>
+		<div class="lead-body" *ngIf="savedData && userDetails">
+			<div class="item-details maxed pt-0">
+				<table class="ml-5 details-table">
+					<tr class="each-data">
+						<td class="label">Account name</td>
+						<td class="value">{{ userDetails.name | titlecase }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Sender name</td>
+						<td class="value">{{ savedData.sender.emailAddress.name }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Sender email</td>
+						<td class="value">{{ savedData.sender.emailAddress.address }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Subject</td>
+						<td class="value">{{ savedData.subject }}</td>
+					</tr>
+
+					<tr class="each-data">
+						<td class="label">Description</td>
+						<td class="value">{{ savedData.description }}</td>
+					</tr>
+					<tr class="each-data">
+						<td class="label">Read</td>
+						<td class="value status">
+							<span class="plain">{{savedData.isRead ? 'Yes' : 'No'}}</span>
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="toNow(savedData.updated_at) > 10">
+						<td class="label"></td>
+						<td class="value">
+							<img src="./assets/media/icons/flag.svg" alt="">
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div *ngIf="!savedData" class="mt-5 please-data text-center">Please retry...</div>
+		</div>
+	</kt-portlet-body>
+</kt-portlet>

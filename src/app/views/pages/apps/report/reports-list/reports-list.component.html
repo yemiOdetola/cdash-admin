@@ -1,0 +1,103 @@
+<kt-portlet>
+	<kt-portlet-header title="{{today | date: 'fullDate'}}" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<!-- <mat-form-field class="example-full-width" class="hidde">
+				<input matInput [matDatepicker]="picker" [max]="today" [(ngModel)]="reportDate"
+					(ngModelChange)="genReport($event)">
+				<mat-datepicker #picker></mat-datepicker>
+			</mat-form-field>
+			<div class="details-action approve text-center" (click)="picker.open()">
+				<img src="./assets/media/icons/details-approve.svg" alt="">
+				<span>{{currentlyShowing === 'Select date' ? 'Select date' :currentlyShowing | date: 'shortDate'}}</span>
+			</div> -->
+			<!-- <div class="details-action delete text-center" (click)="toggleForm()">
+					<span>Generate</span>
+				</div> -->
+			<a routerLink="/strada/reports/manage" class="primary-button kt-margin-r-10" matTooltip="Add new campaign">
+				<i class="la la-plus"></i>
+				<span class="kt-hidden-mobile">New Report</span>
+			</a>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="goback" (click)="goBack()">
+			<img src="./assets/media/icons/backBtn.svg" alt="">
+			<span>Back</span>
+		</div>
+		<div class="contact-body mb-5">
+			<form [formGroup]="analyticsReportForm">
+				<div class="analytics">
+					<div class="titl" *ngIf="startD">{{startD | date: 'shortDate'}} -
+						{{endD | date: 'shortDate'}}</div>
+					<div class="row slide-in" *ngIf="showForm">
+						<div class="col-xl-6 col-lg-12 kt-margin-bottom-10-mobile date-shift">
+							<div class="form-item">
+								<label class="label">Users</label>
+								<select formControlName="queryUser">
+									<option value="">Select user</option>
+									<option value="{{user._id}}" *ngFor="let user of users;">{{user.name}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-xl-3 col-lg-6 date-shift kt-margin-bottom-10-mobile">
+							<div class="form-item">
+								<label class="label">Start</label>
+								<input type="date" placeholder="Choose start date" formControlName="start">
+							</div>
+						</div>
+						<div class="col-xl-3 col-lg-6 date-shift kt-margin-bottom-10-mobile">
+							<div class="form-item">
+								<label class="label">End</label>
+								<input type="date" [min]="analyticsReportForm.value.start" placeholder="Choose end date"
+									formControlName="end">
+							</div>
+						</div>
+						<div class="col-md-12 mt-3">
+							<button class="btn btn-primary btn-md right d-block ml-auto"
+								[disabled]="!analyticsReportForm.valid" (click)="generateReport(0, 999)">Generate
+								report</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="vendor-body">
+			<table class="table-view">
+				<thead>
+					<tr>
+						<th>S/N</th>
+						<th>Task</th>
+						<th>Remark</th>
+						<th>Date</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr className="each-row" *ngFor="let report of reports; let i = index;">
+						<td>{{(pageIndex * 10)+(i+1)}}</td>
+						<td>{{report.name | titlecase}}</td>
+						<td>{{(report.description.length > 50) ? (report.description | slice:0:50)+'...':(report.description)}}
+						</td>
+						<td>{{report.createdAt | date: 'fullDate'}}</td>
+						<td>
+							<a routerLink="/strada/reports/report/{{report._id}}" class="view">View</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="empty-list text-center" *ngIf="noReports">
+				<img src="./assets/media/icons/empty-list.png" alt="">
+				<p>Sorry, no report sent on {{currentlyShowing | date: 'fullDate'}}</p>
+			</div>
+		</div>
+
+		<div class="my-pagination mt-5 mb-4">
+			<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
+			<div class="btn-grp">
+				<button mat-raised-button (click)="getPrev()" color="primary" [disabled]="disablePrev">Previous</button>
+				<button mat-raised-button (click)="getNext()" color="primary" [disabled]="disableNext">Next</button>
+			</div>
+		</div>
+
+	</kt-portlet-body>
+</kt-portlet>
