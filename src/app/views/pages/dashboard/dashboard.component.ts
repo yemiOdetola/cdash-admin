@@ -59,21 +59,21 @@ export class DashboardComponent implements OnInit {
 
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
-		this.loadingSubject.next(true);
-		this.user$ = this.store.pipe(select(currentUser));
-		this.user$.subscribe(
-			userData => {
-				this.getUserDetails(userData['_id']);
-			}
-		);
-		this.getAssetsCount();
-		this.getCampaignsCount();
-		this.getContactsCount();
-		this.getLeadsCount();
-		this.getVendorsCount();
-		this.getMyTasksEvery();
-		this.getAllLeads(0, 9);
-		this.getContacts(0, 9);
+		this.loadingSubject.next(false);
+		// this.user$ = this.store.pipe(select(currentUser));
+		// this.user$.subscribe(
+		// 	userData => {
+		// 		this.getUserDetails(userData['_id']);
+		// 	}
+		// );
+		// this.getAssetsCount();
+		// this.getCampaignsCount();
+		// this.getContactsCount();
+		// this.getLeadsCount();
+		// this.getVendorsCount();
+		// this.getMyTasksEvery();
+		// this.getAllLeads(0, 9);
+		// this.getContacts(0, 9);
 	}
 
 	getAllLeads(skip, limit) {

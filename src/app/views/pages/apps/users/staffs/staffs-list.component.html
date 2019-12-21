@@ -1,7 +1,7 @@
 <kt-portlet>
 	<kt-portlet-header title="All Users" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
-			<a routerLink="/strada/users/staff/manage" class="primary-button kt-margin-r-10" matTooltip="Add new staff">
+			<a routerLink="/cdash/users/staff/manage" class="primary-button kt-margin-r-10" matTooltip="Add new staff">
 				<i class="la la-plus"></i>
 				<span class="kt-hidden-mobile">New staff</span>
 			</a>
@@ -29,7 +29,7 @@
 							<td>{{staff.position ? staff.position : 'not available'}}</td>
 							<td>{{staff.date_joined ? (staff.date_joined | date: 'fullDate') : 'not available'}}</td>
 							<td>
-								<a routerLink="/strada/users/staffs/{{staff._id}}" class="view">View</a>
+								<a routerLink="/cdash/users/staffs/{{staff._id}}" class="view">View</a>
 							</td>
 						</tr>
 					</tbody>

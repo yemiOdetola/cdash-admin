@@ -2,34 +2,21 @@
 	<kt-portlet-body>
 		<div class="list-ccover">
 			<div class="menu">
-				<div [className]="selected === 'permissions' ? 'item active' : 'item'"
-					(click)="selectMenu('permissions')">
-					<div class="selected">Permissions</div>
-					<div class="active"></div>
-				</div>
-				<div [className]="selected === 'roles' ? 'item active' : 'item'" (click)="selectMenu('roles')">
+				<div class='item active'>
 					<div class="selected">Roles</div>
 					<div class="active"></div>
 				</div>
-				<div [className]="selected === 'hod' ? 'item active' : 'item'" (click)="selectMenu('hod')">
-					<div class="selected">HODs</div>
-					<div class="active"></div>
-				</div>
 			</div>
-			<div [className]="selected === 'permissions' ? 'intro-text slide-in' : 'hide'">
-				Permissions define a set of provileges that cover access to different modules, functions, operations and
-				parts of the platform. You can assign permissions to different users.
-			</div>
-			<div [className]="selected === 'roles' ? 'intro-text slide-in' : 'hide'">
+			<div class='intro-text slide-in'>
 				Roles help to define how information is shared among users based on the organisations role hierarchy.
 			</div>
 			<div class="goback mt-3 mb-3" (click)="goBack()">
 				<img src="./assets/media/icons/backBtn.svg" alt="">
 				<span>Back</span>
 			</div>
-			<div class="roles-table" *ngIf="selected === 'roles'">
+			<div class="roles-table">
 				<div class="headers">
-					<div class="details-action edit text-center" routerLink="/strada/users/roles/add">
+					<div class="details-action edit text-center" routerLink="/cdash/users/roles/add">
 						<img src="./assets/media/icons/details-edit.svg" alt="">
 						<span>Add role</span>
 					</div>
@@ -41,21 +28,15 @@
 								<tr>
 									<th>Name</th>
 									<th>Permission</th>
-									<!-- <th>Created by</th> -->
-									<!-- <th>Modified by</th> -->
 									<th></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr className="each-row" *ngFor="let role of roles">
 									<td>{{role.name}}</td>
-									<td>{{role.permission}}</td>
-									<!-- <td class="faded">Default</td> -->
-									<!-- <td class="faded">Default</td> -->
+									<td class="uppercase-spacing">{{ role.permissions }}</td>
 									<td class="table-menu">
 										<a (click)="onDelete(role._id)" class="view delete">Delete</a>
-										<!-- <a routerLink="/strada/users/user/{{role._id}}" class="view">View</a> -->
-										<!-- <a routerLink="/strada/users/permission/123456" class="view">View</a> -->
 									</td>
 								</tr>
 							</tbody>
@@ -71,180 +52,6 @@
 							[disabled]="disableNext">Next</button>
 					</div>
 				</div>
-			</div>
-			<div class="roles-table" *ngIf="selected === 'permissions'">
-				<div class="role-body">
-					<div class="claim-body">
-						<table class="table-view">
-							<thead>
-								<tr>
-									<!-- <th>Name</th> -->
-									<th>Permission</th>
-									<!-- <th>Created by</th>
-									<th>Modified by</th> -->
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr className="each-row" *ngFor="let role of roles">
-									<!-- <td>{{role.name}}</td> -->
-									<td>{{role.permission}}</td>
-									<!-- <td class="faded">Default</td>
-									<td class="faded">Default</td> -->
-									<td class="table-menu">
-										<a (click)="onDelete(role._id)" class="view delete">Delete</a>
-										<!-- <a routerLink="/strada/users/user/{{user._id}}" class="view">View</a> -->
-										<!-- <a routerLink="/strada/users/permission/123456" class="view">View</a> -->
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div class="my-pagination mt-5 mb-4">
-					<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
-					<div class="btn-grp">
-						<button mat-raised-button (click)="getPrev()" color="primary"
-							[disabled]="disablePrev">Previous</button>
-						<button mat-raised-button (click)="getNext()" color="primary"
-							[disabled]="disableNext">Next</button>
-					</div>
-				</div>
-			</div>
-			<div class="roles-table" *ngIf="selected === 'hod'">
-				<div class="headers">
-					<div class="title" *ngIf="organizationDetails">{{organizationDetails.name}}</div>
-					<!-- <div class="details-action edit text-center" routerLink="/strada/users/roles/add">
-						<img src="./assets/media/icons/details-edit.svg" alt="">
-						<span>Add role</span>
-					</div> -->
-				</div>
-				<kt-portlet-body>
-					<div class="contact-body">
-						<div class="item-details">
-							<div class="row">
-								<div class="col-lg-6">
-									<div class="multi-menu">
-										<div class="nav">
-											<div class="multi-level">
-												<div class="item" *ngFor="let hod of hods; let i = index;">
-													<input type="checkbox" id="{{i}}" />
-													<img src="./assets/media/icons/hierarchy-toggle.svg" class="arrow"
-														alt="">
-													<label for="{{i}}" (click)="showMyUsers(i)">
-														<div class="top-label">
-															<span>{{hod.name | titlecase}}</span>
-															<div class="menus">
-																<div class="menu delete" (click)="removeHod(hod._id)">
-																	Remove HOD</div>
-																<div class="menu add" (click)="selectUser(hod._id)">Add
-																	user</div>
-															</div>
-														</div>
-													</label>
-													<ul>
-														<li *ngFor="let user of usersArr[i]">
-															<div class="sub-item">
-																<input type="checkbox" id="{{i+100}}" />
-																<label for="{{i+100}}">{{user.name}}</label>
-															</div>
-														</li>
-													</ul>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="col-lg-6">
-									<div class="side-form">
-										<!-- <div class="feint-title">Business Development</div> -->
-										<div class="form-types">
-											<div [className]="activeTab === 'hodForm' ? 'type-menu active slide-in' : 'type-menu'"
-												(click)="activateTab('hodForm')">Assign user to HOD</div>
-											<div [className]="activeTab === 'newHOD' ? 'type-menu active slide-in' : 'type-menu'"
-												(click)="activateTab('newHOD')">Create new HOD</div>
-											<!-- <div [className]="activeTab === 'editRole' ? 'type-menu active slide-in' : 'type-menu'"
-													(click)="activateTab('editRole')">Edit role</div> -->
-											<!-- <div [className]="activeTab === 'users' ? 'type-menu active slide-in' : 'type-menu'"
-													(click)="activateTab('users')">Add new HOD</div> -->
-										</div>
-										<div class="edit-role" *ngIf="activeTab === 'newHOD'">
-											<form [formGroup]="newHODForm" class="slide-in"
-												*ngIf="activeTab === 'newHOD'">
-												<div class="mt-4 form-item">
-													<label class="label">All users</label>
-													<select formControlName="user_id">
-														<option value="">Select user</option>
-														<option value="{{user._id}}" *ngFor="let user of users">
-															{{user.name}}
-														</option>
-													</select>
-												</div>
-												<div class="navigation mt-5">
-													<button class="action primary comment" (click)="makeUserHOD()">Make
-														user HOD</button>
-												</div>
-											</form>
-										</div>
-										<div class="add-sub-role" *ngIf="activeTab === 'hodForm'">
-											<form [formGroup]="hodForm" class="slide-in"
-												*ngIf="activeTab === 'hodForm'">
-												<div class="mt-4 form-item">
-													<label class="label">All users</label>
-													<select formControlName="user_id">
-														<option value="">Select user</option>
-														<option value="{{user._id}}" *ngFor="let user of users">
-															{{user.name}}
-														</option>
-													</select>
-												</div>
-												<div class="mt-4 form-item" *ngIf="roleSelect">
-													<label class="label">Reports to</label>
-													<select formControlName="hod_id">
-														<option value="">Select HOD</option>
-														<option value="{{hod._id}}" *ngFor="let hod of hods">
-															{{hod.name}}
-														</option>
-													</select>
-												</div>
-												<div class="navigation mt-5">
-													<button type="submit" [disabled]="!hodForm.valid"
-														class="action primary comment"
-														(click)="assignUserToHOD()">Assign user to HOD</button>
-												</div>
-											</form>
-										</div>
-										<!-- <div *ngIf="activeTab === 'editRole'">
-											<form [formGroup]="editRoleForm" class="slide-in"
-												*ngIf="activeTab === 'editRole'">
-												<div class="form-item">
-													<label class="label">Role name</label>
-													<input type="text" placeholder="Enter role name"
-														formControlName="role">
-												</div>
-												<div class="mt-4 form-item">
-													<label class="label">Reports to</label>
-													<select formControlName="report">
-														<option value="">Select role</option>
-														<option value="{{vendor.name}}"
-															*ngFor="let vendor of claimRoles">
-															{{vendor.name}}
-														</option>
-														<option value=""></option>
-													</select>
-												</div>
-												<div class="navigation mt-5">
-													<button class="action primary comment">Save changes</button>
-												</div>
-											</form>
-										</div> -->
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</kt-portlet-body>
 			</div>
 		</div>
 	</kt-portlet-body>

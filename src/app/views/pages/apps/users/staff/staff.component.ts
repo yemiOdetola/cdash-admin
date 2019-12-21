@@ -36,6 +36,7 @@ export class StaffComponent implements OnInit {
 				this.staffDetails = singleStaff['data'];
 				console.log('this user details oninit', this.staffDetails);
 				this.pageTitle = `${this.staffDetails.name}`;
+				this.loadingSubject.next(false);
 			},
 			error => {
 				console.log('error occured', error);
@@ -65,7 +66,7 @@ export class StaffComponent implements OnInit {
 				deleted => {
 					console.log('deleted', deleted);
 					this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
-					this.router.navigate(['/strada/users/staffs']);
+					this.router.navigate(['/cdash/users/staffs']);
 				},
 				error => {
 					console.log('error', error);

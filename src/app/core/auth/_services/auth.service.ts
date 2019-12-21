@@ -9,8 +9,6 @@ import { QueryParamsModel, QueryResultsModel } from '../../_base/crud';
 import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
 
-// const API_USERS_URL = 'http://back.wecurios.com/v1/auth/user/login';
-// const BASE_URL = 'http://back.wecurios.com/v1';
 const BASE_URL = environment.BASE_URL;
 const API_USERS_URL = `${BASE_URL}/user/login`;
 const API_PERMISSION_URL = 'api/permissions';
@@ -32,6 +30,14 @@ export class AuthService {
 				, 'encrypted': 'true'
 			}
 		});
+	}
+
+	activate(payload): Observable<any> {
+		return this.http.post<any>(`${environment.BASE_URL}/organization/activate`, payload);
+	}
+
+	createOrganization(payload): Observable<any> {
+		return this.http.post<any>(`${environment.BASE_URL}/organization`, payload);
 	}
 
 	register(user: User): Observable<any> {

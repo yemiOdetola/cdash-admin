@@ -15,6 +15,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { InterceptService } from '../../../core/_base/crud/';
 // Module components
 import { AuthComponent } from './auth.component';
+import { ActivateComponent } from './activate/activate.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
@@ -22,6 +23,7 @@ import { AuthNoticeComponent } from './auth-notice/auth-notice.component';
 import { InputTokenComponent } from './input-token/input-token.component';
 // Auth
 import { AuthEffects, AuthGuard, authReducer, AuthService } from '../../../core/auth';
+import { CreateOrganizationComponent } from './create-organization/create-organization.component';
 
 const routes: Routes = [
 	{
@@ -30,13 +32,21 @@ const routes: Routes = [
 		children: [
 			{
 				path: '',
-				redirectTo: 'login',
+				redirectTo: 'activate',
 				pathMatch: 'full'
 			},
 			{
 				path: 'login',
 				component: LoginComponent,
 				data: {returnUrl: window.location.pathname}
+			},
+			{
+				path: 'activate',
+				component: ActivateComponent
+			},
+			{
+				path: 'create-organization',
+				component: CreateOrganizationComponent
 			},
 			{
 				path: 'register',
@@ -85,7 +95,9 @@ const routes: Routes = [
 		RegisterComponent,
 		ForgotPasswordComponent,
 		AuthNoticeComponent,
-		InputTokenComponent
+		InputTokenComponent,
+		ActivateComponent,
+		CreateOrganizationComponent
 	]
 })
 

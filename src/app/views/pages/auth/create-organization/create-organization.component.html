@@ -1,0 +1,67 @@
+<!--begin::Body-->
+<div class="kt-login__body">
+	<!--begin::Signin-->
+	<div class="kt-login__form">
+		<div class="kt-login__title">
+			<h3>Create Organization</h3>
+		</div>
+
+		<kt-auth-notice></kt-auth-notice>
+
+		<!--begin::Form-->
+		<form class="kt-form" [formGroup]="organizationForm" autocomplete="off">
+			<div class="form-group">
+				<mat-form-field>
+					<mat-label>Name</mat-label>
+					<input matInput type="text" placeholder="Enter organization's name" formControlName="name"
+						autocomplete="off" />
+					<mat-error *ngIf="isControlHasError('name','required')">
+						<strong>Name is required</strong>
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div class="form-group">
+				<mat-form-field>
+					<mat-label>Address</mat-label>
+					<input matInput type="text" placeholder="Enter address" formControlName="address"
+						autocomplete="off" />
+					<mat-error *ngIf="isControlHasError('address','required')">
+						<strong>Address is required</strong>
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div class="form-group">
+				<mat-form-field>
+					<mat-label>Crganization's color</mat-label>
+					<input matInput type="color" placeholder="Select color" formControlName="color"
+						autocomplete="off" />
+					<mat-error *ngIf="isControlHasError('color','required')">
+						<strong>Color is required</strong>
+					</mat-error>
+				</mat-form-field>
+			</div>
+			<div class="form-group">
+				<div class="form-item upload">
+					<label class="label" for="upload">
+						<img src="./assets/media/icons/upload-all.svg" alt="">
+					</label>
+					<input type="file" id="upload" (change)="onFileChange($event)" accept="image/*">
+					<div class="placeholder" *ngIf="!fileName">Upload organizations's picture</div>
+					<div class="placeholder slide-in" *ngIf="fileName">{{fileName}}</div>
+				</div>
+			</div>
+			<!--begin::Action-->
+			<div class="kt-login__actions">
+				<a href="javascript:;" routerLink="/auth/forgot-password" class="kt-link kt-login__link-forgot">
+				</a>
+				<button (click)="submit()"
+					[ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}"
+					id="kt_login_signin_submit"
+					class="btn btn-primary btn-elevate kt-login__btn-primary">Submit</button>
+			</div>
+			<!--end::Action-->
+		</form>
+		<!--end::Form-->
+	</div>
+</div>
+<!--end::Body-->

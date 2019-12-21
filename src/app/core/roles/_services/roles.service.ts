@@ -18,9 +18,9 @@ export class RolesService {
 
 
 	// creates new role
-	createRole(role): Observable<RoleModel> {
+	createRole(role): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.post<RoleModel>(`${BASE_URL}/api/role`, role, {
+		return this.http.post<any>(`${BASE_URL}/roles`, role, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -29,9 +29,9 @@ export class RolesService {
 	}
 
 	// get all roles
-	getRoles(skip, limit): Observable<RoleModel[]> {
+	getRoles(skip, limit): Observable<any[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<RoleModel[]>(`${BASE_URL}/api/role/all`, {
+		return this.http.get<any[]>(`${BASE_URL}/roles`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -42,19 +42,19 @@ export class RolesService {
 			}
 		});
 	}
-  // get every roless
-  getEveryRoles(): Observable<RoleModel[]> {
+
+  getEveryRoles(): Observable<any[]> {
 	const userToken = localStorage.getItem(environment.authTokenKey);
-	return this.http.get<RoleModel[]>(`${BASE_URL}/api/role/every`, {
+	return this.http.get<any[]>(`${BASE_URL}/api/role/every`, {
 		headers: {
 			'Authorization': 'Bearer ' + userToken,
 			'encrypted': 'true'
 		},
 	});
 }
-	getRolesCount(): Observable<RoleModel[]> {
+	getRolesCount(): Observable<any[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<RoleModel[]>(`${BASE_URL}/api/role/all?count=${1}`, {
+		return this.http.get<any[]>(`${BASE_URL}/roles/count`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -63,9 +63,9 @@ export class RolesService {
 	}
 
 	// get a role
-	getRoleById(roleId: string): Observable<RoleModel> {
+	getRoleById(roleId: string): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<RoleModel>(`${BASE_URL}/api/role?role_id=${roleId}`, {
+		return this.http.get<any>(`${BASE_URL}/api/roles/${roleId}`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -74,9 +74,9 @@ export class RolesService {
 	}
 
 	// update a role
-	updateRole(role: RoleModel, roleId: string) {
+	updateRole(role: any, roleId: string) {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.put<RoleModel>(`${BASE_URL}/api/role?role_id=${roleId}`, role, {
+		return this.http.put<any>(`${BASE_URL}/api/role?role_id=${roleId}`, role, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -85,12 +85,11 @@ export class RolesService {
 	}
 
 	// delete a role
-	deleteRole(roleId: string): Observable<RoleModel> {
+	deleteRole(id: string): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.delete<RoleModel>(`${BASE_URL}/api/role?role_id=${roleId}`, {
+		return this.http.delete<any>(`${BASE_URL}/roles/${id}`, {
 			headers: {
-				'Authorization': 'Bearer ' + userToken,
-				'encrypted': 'true'
+				'Authorization': 'Bearer ' + userToken
 			}
 		});
 	}

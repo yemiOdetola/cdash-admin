@@ -160,7 +160,7 @@ export class StaffEditComponent implements OnInit {
 				this.loadingSubject.next(false);
 				const message = `Updated Successfully`;
 				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-				this.router.navigate(['/strada/users/staffs']);
+				this.router.navigate(['/cdash/users/staffs']);
 			},
 			error => {
 				this.loadingSubject.next(false);
@@ -195,7 +195,7 @@ export class StaffEditComponent implements OnInit {
 				console.log('success reponse', data);
 				const message = `Staff has been Successfully Created`;
 				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-				this.router.navigate(['/strada/users/staffs']);
+				this.router.navigate(['/cdash/users/staffs']);
 			}, error => {
 				this.loadingSubject.next(false);
 				console.log('Error response', error);

@@ -54,9 +54,10 @@ export class RoleEditComponent implements OnInit, OnDestroy {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
 		this.permissionTypes = [
-			{ 'label': 'Human Resources', 'value': 'HR' },
-			{ 'label': 'Mobile Calls Administrator', 'value': 'DEVICE_ADMIN' },
-			{ 'label': 'Campaign Type Administrator', 'value': 'TYPE_ADMIN' },
+			{ 'label': 'Log', 'value': 'log' },
+			{ 'label': 'Edit', 'value': 'edit' },
+			{ 'label': 'View income', 'value': 'view_income' },
+			{ 'label': 'View financial', 'value': 'view_financial' },
 		];
 		console.log('RoleEditComponent initiated');
 		this.initRoleForm();
@@ -85,7 +86,6 @@ export class RoleEditComponent implements OnInit, OnDestroy {
 	}
 
 	handleRoleChange(event) {
-		console.log(event.target.value);
 		if (event.target.value === '') {
 			return;
 		}
@@ -117,7 +117,7 @@ export class RoleEditComponent implements OnInit, OnDestroy {
 	getRoleDetails() {
 		return this.rolesService.getRoleById(this.idParams).pipe(
 			map(roleDetails => {
-				this.role = roleDetails['role'];
+				this.role = roleDetails['data'];
 				this.loadingSubject.next(false);
 				console.log('retrieving role with pipe', this.role);
 				return this.role;
@@ -131,6 +131,7 @@ export class RoleEditComponent implements OnInit, OnDestroy {
 		});
 
 	}
+
 	titleCase(str: any) {
 		let splitStr = str.toLowerCase().split(' ');
 		for (let i = 0; i < splitStr.length; i++) {
@@ -200,14 +201,14 @@ export class RoleEditComponent implements OnInit, OnDestroy {
 		const payload = this.roleForm.value;
 		console.log(payload);
 		if (this.myRoles.length > 0) {
-			payload.permission = this.myRoles;
+			payload.permissions = this.myRoles;
 			this.rolesService.createRole(payload).subscribe(
 				data => {
 					this.loadingSubject.next(false);
 					console.log('success reponse', data);
 					const message = `Role has been Successfully Created`;
 					this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-					this.router.navigate(['/strada/users/roles']);
+					this.router.navigate(['/cdash/users/roles']);
 				}, error => {
 					this.loadingSubject.next(false);
 					console.log('Error response', error);
