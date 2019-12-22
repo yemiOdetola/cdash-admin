@@ -34,7 +34,7 @@
 							<tbody>
 								<tr className="each-row" *ngFor="let role of roles">
 									<td>{{role.name}}</td>
-									<td class="uppercase-spacing">{{ role.permissions }}</td>
+									<td class="uppercase-spacing">{{replaceUnderscore(role.name)}}</td>
 									<td class="table-menu">
 										<a (click)="onDelete(role._id)" class="view delete">Delete</a>
 										<a routerLink="/cdash/users/roles/add/{{role._id}}" class="view edit">Edit</a>

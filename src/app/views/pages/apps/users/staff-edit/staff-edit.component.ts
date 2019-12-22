@@ -33,6 +33,7 @@ export class StaffEditComponent implements OnInit {
 	idParams: string;
 	fSelected;
 	fileName;
+	titles = ['Mrs.', 'Mr.', 'Dr.', 'Chief', 'Miss', 'Prof'];
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private router: Router,
@@ -216,8 +217,8 @@ export class StaffEditComponent implements OnInit {
 
 	onFileChange(event) {
 		if (event.target.files.length > 0) {
-			const fileSelected: File = event.target.files[0];
-			this.fSelected = fileSelected;
+			const fileSelected: any = event.target.files[0];
+			this.fSelected = event.target.files[0];
 			this.fileName = fileSelected.name;
 		}
 	}

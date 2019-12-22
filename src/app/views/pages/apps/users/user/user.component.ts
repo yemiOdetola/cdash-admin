@@ -34,6 +34,7 @@ export class UserComponent implements OnInit {
 			singleUser => {
 				this.userDetails = singleUser['data'];
 				this.pageTitle = `${this.userDetails.name}`;
+				this.loadingSubject.next(false);
 			},
 			error => {
 				console.log('error occured', error);

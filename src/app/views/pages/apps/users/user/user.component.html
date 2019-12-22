@@ -5,10 +5,10 @@
 				<img src="./assets/media/icons/details-edit.svg" alt="">
 				<span>Edit</span>
 			</div>
-			<!-- <div class="details-action delete text-center" (click)="onDelete()">
-				<img src="./assets/media/icons/details-delete.svg" alt="">
-				<span>Delete</span>
-			</div> -->
+			<div class="details-action approve text-center" routerLink="/cdash/users/managepassword/{{ userId }}">
+				<img src="./assets/media/icons/details-approve.svg" alt="">
+				<span>Change password</span>
+			</div>
 		</ng-container>
 	</kt-portlet-header>
 	<kt-portlet-body>
@@ -34,10 +34,10 @@
 						<td class="label">User type</td>
 						<td class="value">{{ userDetails.type | titlecase }}</td>
 					</tr>
-					<tr class="each-data" *ngIf="userDetails.role">
+					<!-- <tr class="each-data" *ngIf="userDetails.role">
 						<td class="label">Role</td>
 						<td class="value">{{ userDetails.role }}</td>
-					</tr>
+					</tr> -->
 				</table>
 			</div>
 			<div *ngIf="!userDetails" class="mt-5 please-data text-center">Please retry...</div>

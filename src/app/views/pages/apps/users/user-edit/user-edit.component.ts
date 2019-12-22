@@ -33,6 +33,11 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	idParams: string;
 	good: string;
 	roles: any[];
+	changePassword = false;
+	userTypes = [
+		{ 'label': 'Admin level user', 'value': 'admin' },
+		{ 'label': 'Normal user', 'value': 'user' }
+	];
 	constructor(
 		private rolesService: RolesService,
 		private activatedRoute: ActivatedRoute,
@@ -49,6 +54,11 @@ export class UserEditComponent implements OnInit, OnDestroy {
 		console.log('UserEditComponent initiated');
 		this.initUserForm();
 		this.getAllRoles(0, 999);
+		if (this.activatedRoute.snapshot.paramMap.get['managepassword']) {
+			this.changePassword = true;
+			console.log(this.changePassword);
+			this.initPasswordChangeForm();
+		}
 		if (this.activatedRoute.snapshot.params['id']) {
 			this.idParams = this.activatedRoute.snapshot.params['id'];
 		}
@@ -95,10 +105,16 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	initEditUserForm(user: any = {}) {
 		this.userForm = this.fb.group({
 			name: [user.name || '', Validators.required],
-			email: [user.email || '', Validators.required],
-			address: [user.address || '', Validators.required],
+			type: [user.type || '', Validators.required],
 			password: [user.password || '', Validators.required],
 			role: [user.role || '', Validators.required],
+		});
+	}
+
+	initPasswordChangeForm() {
+		this.userForm = this.fb.group({
+			password: ['', Validators.required],
+			confirm_password: ['', Validators.required]
 		});
 	}
 
@@ -106,7 +122,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 		this.userForm = this.fb.group({
 			name: ['', Validators.required],
 			email: ['', Validators.required],
-			address: ['', Validators.required],
+			type: ['', Validators.required],
 			password: ['', Validators.required],
 			role: ['', Validators.required],
 		});
@@ -177,19 +193,20 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	 */
 	addUser(_user: UserModel) {
 		this.loadingSubject.next(true);
-		let company = '';
 		const payload = {
 			name: this.userForm.value.name,
 			email: this.userForm.value.email,
 			role: this.userForm.value.role,
 			password: this.userForm.value.password,
-			address: this.userForm.value.address
+			type: this.userForm.value.type
 		};
 		console.log(payload, 'edited and passsed company');
 		this.usersService.createUser(payload).subscribe(
 			data => {
 				this.loadingSubject.next(false);
-				console.log('success reponse', data);
+				if (data.status === false) {
+					return this.layoutUtilsService.showActionNotification(data.msg, MessageType.Create, 10000, true, true);
+				}
 				const message = `User has been Successfully Created`;
 				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 				this.router.navigate(['/cdash/users/users']);

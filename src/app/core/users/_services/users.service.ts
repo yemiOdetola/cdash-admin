@@ -99,10 +99,16 @@ export class UserService {
 	// creates new contacts
 	createUser(User): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		if (User.date_joined) {
-			User.date_joined = User.date_joined.getTime();
-		}
 		return this.http.post<any>(`${BASE_URL}/user/register`, User, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+	updatePassword(User): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.put<any>(`${BASE_URL}/user/change_password/admin`, User, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken
 			}

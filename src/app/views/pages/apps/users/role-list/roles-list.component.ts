@@ -55,6 +55,10 @@ export class RolesListComponent implements OnInit, OnDestroy {
 		this.getAllRoles(skip, this.limit);
 	}
 
+	replaceUnderscore(string) {
+		return string.replace('_', ' ');
+	}
+
 	countRoles() {
 		this.rolesService.getRolesCount().subscribe(
 			countResult => {

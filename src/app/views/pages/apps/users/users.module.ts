@@ -31,6 +31,7 @@ import { MeetingsService } from '../../../../core/meetings';
 import { ProjectsService } from '../../../../core/projects';
 import { StaffEditComponent } from './staff-edit/staff-edit.component';
 import { StaffComponent } from './staff/staff.component';
+import { PasswordEditComponent } from './password/password-edit.component';
 
 
 // Core => utils
@@ -141,6 +142,10 @@ const routes: Routes = [
 				component: UserEditComponent
 			},
 			{
+				path: 'managepassword/:id',
+				component: PasswordEditComponent
+			},
+			{
 				path: 'user/:id',
 				component: UserComponent,
 			},
@@ -229,7 +234,8 @@ const routes: Routes = [
 		HrDialogComponent,
 		RolesDialogComponent,
 		PermissionComponent,
-		StaffComponent
+		StaffComponent,
+		PasswordEditComponent
 	]
 })
 export class UsersModule { }
