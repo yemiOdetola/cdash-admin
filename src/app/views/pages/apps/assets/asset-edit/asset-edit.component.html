@@ -2,64 +2,76 @@
 	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 	</kt-portlet-header>
 	<kt-portlet-body>
-		<form [formGroup]="assetForm">
-			<!-- <div class="mt-3 mb-2 instruction m-auto">
-				<p>All fields except the file upload is compulsory.</p>
-			</div> -->
-			<div class="form-group">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="form-item">
-							<label class="label">Name</label>
-							<input type="text" placeholder="Enter assets's name" formControlName="name">
-						</div>
-					</div>
+		<form>
+			<div class="form-items-cover">
+				<div class="form-items">
+					<input type="checkbox" id="icon">
+					<label for="icon">Icon(file upload)</label>
 				</div>
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="form-item">
-							<label class="label">Start</label>
-							<input type="date" placeholder="Enter start date" formControlName="start">
-						</div>
-					</div>
+				<div class="form-items">
+					<input type="checkbox" id="name">
+					<label for="name">Name</label>
 				</div>
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="form-item">
-							<label class="label">End</label>
-							<input type="date" [min]="assetForm.value.start" placeholder="Enter end date"
-								formControlName="end">
-						</div>
-					</div>
+				<div class="form-items">
+					<input type="checkbox" id="Summary">
+					<label for="Summary">Summary</label>
 				</div>
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="form-item upload">
-							<label class="label" for="upload">
-								<img src="./assets/media/icons/upload-all.svg" alt="">
-							</label>
-							<input type="file" id="upload" (change)="onFileChange($event)" accept="image/*">
-							<div class="placeholder" *ngIf="!fileName">Upload image</div>
-							<div class="placeholder slide-in" *ngIf="fileName">{{fileName}}</div>
-						</div>
-					</div>
+				<div class="form-items">
+					<input type="checkbox" id="date_acquired">
+					<label for="date_acquired">Date acquired</label>
 				</div>
-				<!-- <div class="row">
-					<div class="col-lg-12">
-						<div class="form-item">
-							<label class="label">Description</label>
-							<textarea placeholder="Description" formControlName="description"></textarea>
-						</div>
-					</div>
-				</div> -->
-			</div>
-			<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
-				(close)="onAlertClose($event)">
-				Oops! Form is not filled correctly. Change a few things up and try submitting again.
-			</kt-alert>
-			<div class="form-submit mt-3 mb-4">
-				<button class="reset" (click)="reset()">Reset</button>
-				<button class="submit" (click)="onSubmit()">Submit</button>
+				<div class="form-items">
+					<input type="checkbox" id="cost_of_acquisition">
+					<label for="cost_of_acquisition">Cost of acquisition</label>
+				</div>
+				<div class="form-items">
+					<input type="checkbox" id="depreciation_per_annum">
+					<label for="depreciation_per_annum">Depreciation per annum</label>
+				</div>
+				<div class="form-items">
+					<input type="checkbox" id="business_purpose">
+					<label for="business_purpose">Business purpose</label>
+				</div>
+				<div class="form-items">
+					<input type="checkbox" id="business_owners">
+					<label for="business_owners">Business owners</label>
+				</div>
+				<div class="form-items">
+					<input type="checkbox" id="recurrent_expenditure">
+					<label for="recurrent_expenditure">Recurrent expenditure(per annum - chart)</label>
+				</div>
+				<div class="form-items">
+					<input type="checkbox" id="location_of_deployment_file">
+					<label for="location_of_deployment_file">Location of deployment (file)</label>
+				</div>
+				<div class="form-items">
+					<input type="checkbox" id="location_of_deployment_text">
+					<label for="location_of_deployment_text">Location of deployment (text)</label>
+				</div>
+				<div class="form-items">
+					<input type="checkbox" id="technical_details">
+					<label for="technical_details">Technical details</label>
+				</div>
+				<div class="form-items">
+					<input type="checkbox" id="type">
+					<label for="type">Type (Software/ Hardware/ Connectivity/ Others)</label>
+				</div>
+				<div class="form-items">
+					<input type="checkbox" id="historical_cost">
+					<label for="historical_cost">Historical cost (chart)</label>
+				</div>
+				<div class="form-items">
+					<input type="checkbox" id="projected_cost">
+					<label for="projected_cost">Projected cost</label>
+				</div>
+				<div class="form-items">
+					<input type="checkbox" id="industrial_link">
+					<label for="industrial_link">Industrial link (file)</label>
+				</div>
+				<div class="form-items">
+					<input type="checkbox" id="diagram_schematics">
+					<label for="diagram_schematics">Diagram/ schematics(file)</label>
+				</div>
 			</div>
 		</form>
 	</kt-portlet-body>

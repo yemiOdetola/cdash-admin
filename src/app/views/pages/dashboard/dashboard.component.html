@@ -6,10 +6,10 @@
 					<img src="./assets/media/icons/dashboard-leads.svg" alt="">
 					<span>Staffs</span>
 				</div>
-				<div class="link" routerLink="/strada/leads">View all</div>
+				<div class="link" routerLink="/cdash/users/staffs">View all</div>
 			</div>
 			<div class="chart text-center">
-				<circle-progress [percent]="85" subtitle="83" [outerStrokeColor]="'#77efff'"
+				<circle-progress [percent]="85" subtitle="{{staffsCount}}" [outerStrokeColor]="'#77efff'"
 					[outerStrokeGradientStopColor]="'#5773ff'"></circle-progress>
 			</div>
 		</div>
@@ -19,12 +19,12 @@
 			<div class="top-header">
 				<div class="title">
 					<img src="./assets/media/icons/dashboard-contacts.svg" alt="">
-					<span>% Income</span>
+					<span>Users</span>
 				</div>
-				<div class="link" routerLink="/strada/contacts">View all</div>
+				<div class="link" routerLink="/cdash/users">View all</div>
 			</div>
 			<div class="chart text-center">
-				<circle-progress [percent]="70" subtitle="60" [outerStrokeColor]="'#CDDC39'"
+				<circle-progress [percent]="70" subtitle="{{usersCount}}" [outerStrokeColor]="'#CDDC39'"
 					[outerStrokeGradientStopColor]="'#8BC34A'"></circle-progress>
 			</div>
 		</div>
@@ -36,7 +36,7 @@
 					<img src="./assets/media/icons/dashboard-vendors.svg" alt="">
 					<span>Weekly Visits</span>
 				</div>
-				<div class="link" routerLink="/strada/vendors">View all</div>
+				<div class="link">View all</div>
 			</div>
 			<div class="chart text-center">
 				<circle-progress [percent]="45" subtitle="34k" [outerStrokeColor]="'#9C27B0'"
@@ -53,7 +53,7 @@
 					<img src="./assets/media/icons/dashboard-assets.svg" alt="">
 					<span>Ongoing Activities</span>
 				</div>
-				<div class="link" routerLink="/strada/assets">View all</div>
+				<div class="link">View all</div>
 			</div>
 			<div class="chart text-center">
 				<circle-progress [percent]="33" subtitle="19" [outerStrokeColor]="'#1F7772'"
@@ -68,7 +68,7 @@
 					<img src="./assets/media/icons/dashboard-users.svg" alt="">
 					<span>ICTMaturityScore</span>
 				</div>
-				<div class="link" routerLink="/strada/users">View all</div>
+				<div class="link">View all</div>
 			</div>
 			<div class="chart text-center">
 				<circle-progress [percent]="79" subtitle="80" [outerStrokeColor]="'#FFC107'"
@@ -83,7 +83,7 @@
 					<img src="./assets/media/icons/dashboard-campaigns.svg" alt="">
 					<span>Recurring Expenditure (%)</span>
 				</div>
-				<div class="link" routerLink="/strada/campaigns">View all</div>
+				<div class="link">View all</div>
 			</div>
 			<div class="chart text-center">
 				<circle-progress [percent]="44" subtitle="44%" [outerStrokeColor]="'#FAFAFA'"

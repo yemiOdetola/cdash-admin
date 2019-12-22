@@ -43,6 +43,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
 	idParams: string;
 	fSelected;
 	fileName = '';
+	required = ['true', 'false'];
 	constructor(
 
 		private activatedRoute: ActivatedRoute,

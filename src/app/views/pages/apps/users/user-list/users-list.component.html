@@ -15,8 +15,7 @@
 						<tr>
 							<th>Name</th>
 							<th>Email</th>
-							<th>Address</th>
-							<!-- <th>Role</th> -->
+							<th>Type</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -24,7 +23,7 @@
 						<tr className="each-row" *ngFor="let user of users">
 							<td>{{user.name | titlecase}}</td>
 							<td>{{user.email}}</td>
-							<td>{{user.address ? user.address : 'not available'}}</td>
+							<td>{{user.type ? user.type : 'not available'}}</td>
 							<!-- <td>{{user.role ? user.role : 'not available'}}</td> -->
 							<td>
 								<a routerLink="/cdash/users/user/{{user._id}}" class="view">View</a>

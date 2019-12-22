@@ -29,7 +29,8 @@ export class DashboardComponent implements OnInit {
 	assetsCount = '...';
 	vendorsCount = '...';
 	campaignsCount = '...';
-	usersCount;
+	usersCount = '...';
+	staffsCount = '...';
 	calendarPlugins = [dayGridPlugin];
 	events = [];
 	allTasks;
@@ -66,14 +67,29 @@ export class DashboardComponent implements OnInit {
 		// 		this.getUserDetails(userData['_id']);
 		// 	}
 		// );
-		// this.getAssetsCount();
-		// this.getCampaignsCount();
+		this.getUsersCount();
+		this.getStaffsCount();
 		// this.getContactsCount();
 		// this.getLeadsCount();
 		// this.getVendorsCount();
 		// this.getMyTasksEvery();
 		// this.getAllLeads(0, 9);
 		// this.getContacts(0, 9);
+	}
+
+	getUsersCount() {
+		this.usersService.getUsersCount().subscribe(
+			countResult => {
+				this.usersCount = countResult['data'];
+			}
+		);
+	}
+	getStaffsCount() {
+		this.usersService.getStaffsCount().subscribe(
+			countResult => {
+				this.staffsCount = countResult['data'];
+			}
+		);
 	}
 
 	getAllLeads(skip, limit) {
@@ -116,21 +132,6 @@ export class DashboardComponent implements OnInit {
 			},
 			error => {
 				console.log('error occured', error);
-			}
-		);
-	}
-
-	getUsersCount() {
-		this.usersService.getUsersCount().subscribe(
-			countResult => {
-				this.usersCount = countResult['count'];
-			}
-		);
-	}
-	getLeadsCount() {
-		this.leadsService.getLeadsCount('').subscribe(
-			countResult => {
-				this.leadsCount = countResult['count'];
 			}
 		);
 	}

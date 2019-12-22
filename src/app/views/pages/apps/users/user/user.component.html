@@ -34,10 +34,10 @@
 						<td class="label">User type</td>
 						<td class="value">{{ userDetails.type | titlecase }}</td>
 					</tr>
-					<!-- <tr class="each-data" *ngIf="userDetails.role">
-						<td class="label">Role</td>
-						<td class="value">{{ userDetails.role }}</td>
-					</tr> -->
+					<tr class="each-data" *ngIf="userDetails.role">
+						<td class="label">Roles</td>
+						<td class="value"><span class="spacings" *ngFor="let permisson of rolePerm">{{replaceUnderscore(permisson)}}, </span></td>
+					</tr>
 				</table>
 			</div>
 			<div *ngIf="!userDetails" class="mt-5 please-data text-center">Please retry...</div>

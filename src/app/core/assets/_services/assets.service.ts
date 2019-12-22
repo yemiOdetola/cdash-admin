@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { HttpUtilsService } from '../../_base/crud';
 
 // Model
-import { AssetModel } from '../_models/asset.model';
 import { environment } from '../../../../environments/environment';
 
 // url
@@ -18,9 +17,9 @@ export class AssetsService {
 
 
 	// creates new asset
-	createAsset(asset): Observable<AssetModel> {
+	createAsset(asset): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.post<AssetModel>(`${BASE_URL}/api/asset`, asset, {
+		return this.http.post<any>(`${BASE_URL}/api/asset`, asset, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -29,9 +28,9 @@ export class AssetsService {
 	}
 
 	// get all assets
-	getAssets(skip, limit): Observable<AssetModel[]> {
+	getAssets(skip, limit): Observable<any[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<AssetModel[]>(`${BASE_URL}/api/asset/all`, {
+		return this.http.get<any[]>(`${BASE_URL}/api/asset/all`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -43,9 +42,9 @@ export class AssetsService {
 		});
 	}
 
-	getAssetsCount(): Observable<AssetModel[]> {
+	getAssetsCount(): Observable<any[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<AssetModel[]>(`${BASE_URL}/api/asset/all?count=${1}`, {
+		return this.http.get<any[]>(`${BASE_URL}/api/asset/all?count=${1}`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -54,9 +53,9 @@ export class AssetsService {
 	}
 
 	// get a asset
-	getAssetById(assetId: string): Observable<AssetModel> {
+	getAssetById(assetId: string): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<AssetModel>(`${BASE_URL}/api/asset?asset_id=${assetId}`, {
+		return this.http.get<any>(`${BASE_URL}/api/asset?asset_id=${assetId}`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -67,7 +66,7 @@ export class AssetsService {
 	// update a asset
 	updateAsset(asset: any, assetId: string) {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.put<AssetModel>(`${BASE_URL}/api/asset?asset_id=${assetId}`, asset, {
+		return this.http.put<any>(`${BASE_URL}/api/asset?asset_id=${assetId}`, asset, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -76,9 +75,9 @@ export class AssetsService {
 	}
 
 	// delete a asset
-	deleteAsset(assetId: string): Observable<AssetModel> {
+	deleteAsset(assetId: string): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.delete<AssetModel>(`${BASE_URL}/api/asset?asset_id=${assetId}`, {
+		return this.http.delete<any>(`${BASE_URL}/api/asset?asset_id=${assetId}`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../../../../core/users';
-import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
+import { RolesService } from '../../../../../core/roles';
+import { LayoutUtilsService } from '../../../../../core/_base/crud';
 import { Location } from '@angular/common';
 
 
@@ -18,11 +19,16 @@ export class UserComponent implements OnInit {
 	userDetails: any;
 	pageTitle = 'Please wait...';
 	nairaSign = '₦';
+	roles = [];
+	roleId;
+	rolePerm;
+
 	constructor(
 		private route: ActivatedRoute,
 		private usersService: UserService,
 		private layoutUtilsService: LayoutUtilsService,
 		private router: Router,
+		private rolesService: RolesService,
 		private _location: Location,
 	) { }
 
@@ -33,12 +39,38 @@ export class UserComponent implements OnInit {
 		this.usersService.getUserById(this.userId).subscribe(
 			singleUser => {
 				this.userDetails = singleUser['data'];
+				this.getAllRoles();
 				this.pageTitle = `${this.userDetails.name}`;
 				this.loadingSubject.next(false);
 			},
 			error => {
 				console.log('error occured', error);
 				this.loadingSubject.next(false);
+			}
+		);
+	}
+
+	replaceUnderscore(string) {
+		return string.replace('_', ' ');
+	}
+
+
+	getAllRoles() {
+		this.loading$ = this.loadingSubject.asObservable();
+		this.loadingSubject.next(true);
+		this.rolesService.getRoles(0, 999).subscribe(
+			responseData => {
+				this.roles = responseData['data'];
+				this.roles.forEach(role => {
+					if (this.userDetails.role === role._id) {
+						console.log(role, this.userDetails.role);
+						this.rolePerm = role.permissions;
+					}
+				});
+				this.loadingSubject.next(false);
+			},
+			error => {
+				console.log('error', error);
 			}
 		);
 	}

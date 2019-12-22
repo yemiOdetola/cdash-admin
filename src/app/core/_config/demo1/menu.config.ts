@@ -51,35 +51,35 @@ export class MenuConfig {
 				},
 				{
 					title: 'Computations',
-					page: 'calls/calls',
+					// page: 'calls/calls',
 					root: true,
 					bullet: 'dot',
 					icon: 'flaticon-users',
 					submenu: [
 						{
 							title: 'Recurring expenditure',
-							page: 'campaigns/campaigns',
+							// page: 'campaigns/campaigns',
 							root: true,
 							bullet: 'dot',
 							icon: 'flaticon-users',
 						},
 						{
 							title: 'Capital expenditure',
-							page: 'meetings/meetings',
+							// page: 'meetings/meetings',
 							root: true,
 							bullet: 'dot',
 							icon: 'flaticon-chat-1',
 						},
 						{
 							title: 'Expenses/TurnoverRatio',
-							page: 'projects/projects',
+							// page: 'projects/projects',
 							root: true,
 							bullet: 'dot',
 							icon: 'flaticon-graphic-2',
 						},
 						{
 							title: 'ICT/ maturity score',
-							page: 'socials/socials',
+							// page: '/dashboard',
 							bullet: 'dot',
 							icon: 'flaticon2-digital-marketing',
 							root: true,
@@ -91,11 +91,11 @@ export class MenuConfig {
 					root: true,
 					bullet: 'dot',
 					icon: 'flaticon-graphic-2',
-					page: '/dashboard'
+					// page: '/dashboard'
 				},
 				{
 					title: 'Organization Settings',
-					page: 'accounting/analytics',
+					// page: '/dashboard',
 					root: true,
 					bullet: 'dot',
 					icon: 'flaticon-signs-1',

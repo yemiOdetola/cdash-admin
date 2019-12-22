@@ -38,6 +38,15 @@ export class UserService {
 		});
 	}
 
+	getStaffsCount(): Observable<any[]> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<any[]>(`${BASE_URL}/staff/count`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken,
+			}
+		});
+	}
+
 
 	getStaffById(staffId: string): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
