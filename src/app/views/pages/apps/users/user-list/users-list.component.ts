@@ -19,9 +19,7 @@ import { MatSort } from '@angular/material/sort';
 export class UsersListComponent implements OnInit, OnDestroy {
 	loading$: Observable<boolean>;
 	loadingSubject = new BehaviorSubject<boolean>(true);
-	users: UserModel[];
-	proceedingColumns: string[] = ['Name', 'Email', 'Phone', 'Organization', 'Date Of Birth'];
-	dataSource: any;
+	users: any[];
 	resultsLength: number = 0;
 	pageIndex = 0;
 	limit = 10;
@@ -34,7 +32,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 		this.loadingSubject.next(true);
 		this.usersService.getUsersCount().subscribe(
 			countResult => {
-				this.resultsLength = countResult['count'];
+				this.resultsLength = countResult['data'];
 				if ( this.resultsLength <= 10) {
 					console.log('not up to 10', this.resultsLength);
 					this.disableNext = true;
@@ -47,23 +45,24 @@ export class UsersListComponent implements OnInit, OnDestroy {
 		let skip = this.pageIndex * this.limit;
 		this.getAllUsers(skip, this.limit);
 	}
+
 	countAllUsers() {
 		this.usersService.getUsersCount().subscribe(
 			countResult => {
-				this.resultsLength = countResult['count'];
+				this.resultsLength = countResult['data'];
 				if (this.pageIndex > 0) {
 					this.disablePrev = false;
 				}
 			}
 		);
 	}
+
 	getAllUsers(skip, limit) {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
 		this.usersService.getUsers(skip, limit).subscribe(
-			responseData => {
-				this.users = responseData['success'];
-				this.dataSource = new MatTableDataSource<UserModel>(this.users);
+			response => {
+				this.users = response['data'];
 				this.loadingSubject.next(false);
 				console.log('all users returned', this.users);
 			},
@@ -77,7 +76,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
 		if (((this.pageIndex * 10) + 10) >= this.resultsLength) {
 			this.disableNext = true;
 			console.log('paste total numbers');
-
 		} else {
 			this.disableNext = false;
 		}
@@ -88,6 +86,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 			this.disablePrev = false;
 		}
 	}
+
 	getNext() {
 		this.pageIndex = this.pageIndex + 1;
 		let skip = this.pageIndex * this.limit;

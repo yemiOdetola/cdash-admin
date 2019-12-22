@@ -94,25 +94,11 @@ export class MenuConfig {
 					page: '/dashboard'
 				},
 				{
-					title: 'Accounting',
+					title: 'Organization Settings',
 					page: 'accounting/analytics',
 					root: true,
 					bullet: 'dot',
 					icon: 'flaticon-signs-1',
-					submenu: [
-						{
-							title: 'Analytics',
-							page: 'accounting/analytics'
-						},
-						{
-							title: 'Client Payments',
-							page: 'accounting/client-payments'
-						},
-						{
-							title: 'Expense Management',
-							page: 'accounting/expense-management'
-						}
-					]
 				},
 			]
 		},

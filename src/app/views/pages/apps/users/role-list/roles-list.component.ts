@@ -2,16 +2,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { ClaimsService } from '../../../../../core/claims';
-import { UserService } from '../../../../../core/users';
-import { OrganizationsService } from '../../../../../core/organizations';
 // Services and Models
-import { RoleModel, RolesService } from '../../../../../core/roles';
+import { RolesService } from '../../../../../core/roles';
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 import { Location } from '@angular/common';
-
-// material for table
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 @Component({
 	// tslint:disable-next-line:component-selector

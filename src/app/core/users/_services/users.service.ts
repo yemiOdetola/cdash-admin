@@ -76,38 +76,66 @@ export class UserService {
 		});
 	}
 
-	// creates new contacts
-	createUser(User): Observable<UserModel> {
+	getUsersCount(): Observable<any[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		if (User.dob) {
-			User.dob = User.dob.getTime();
-		}
-		return this.http.post<UserModel>(`${BASE_URL}/auth/user/signup`, User, {
+		return this.http.get<any[]>(`${BASE_URL}/user/count`, {
 			headers: {
-				'Authorization': 'Bearer ' + userToken,
-				'encrypted': 'true'
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+	// get a contact
+	getUserById(UserId: string): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<any>(`${BASE_URL}/user/${UserId}`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+
+	// creates new contacts
+	createUser(User): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		if (User.date_joined) {
+			User.date_joined = User.date_joined.getTime();
+		}
+		return this.http.post<any>(`${BASE_URL}/user/register`, User, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
 			}
 		});
 	}
 
 	// get all contacts
-	getUsers(skip, limit): Observable<UserModel[]> {
+	getUsers(skip, limit): Observable<any[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<UserModel[]>(`${BASE_URL}/auth/user/all`, {
+		return this.http.get<any[]>(`${BASE_URL}/user`, {
 			headers: {
-				'Authorization': 'Bearer ' + userToken,
-				'encrypted': 'true'
+				'Authorization': 'Bearer ' + userToken
 			},
 			params: {
-				limit: limit,
+				count: limit,
 				skip: skip,
 			}
 		});
 	}
 
-	getHODUsers(skip, limit, hodId): Observable<UserModel[]> {
+		// update a contact
+		updateUser(User: UserModel, UserId: string) {
+			const userToken = localStorage.getItem(environment.authTokenKey);
+			return this.http.put<UserModel>(`${BASE_URL}/user/${UserId}`, User, {
+				headers: {
+					'Authorization': 'Bearer ' + userToken
+				}
+			});
+		}
+
+	getHODUsers(skip, limit, hodId): Observable<any[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<UserModel[]>(`${BASE_URL}/auth/user/all`, {
+		return this.http.get<any[]>(`${BASE_URL}/auth/user/all`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -123,40 +151,6 @@ export class UserService {
 	getUsersBirthday(): Observable<UserModel[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.get<UserModel[]>(`${BASE_URL}/auth/user/birthdays`, {
-			headers: {
-				'Authorization': 'Bearer ' + userToken,
-				'encrypted': 'true'
-			}
-		});
-	}
-
-	// auth/user/birthdays
-
-	getUsersCount(): Observable<UserModel[]> {
-		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<UserModel[]>(`${BASE_URL}/auth/user/all?count=${1}`, {
-			headers: {
-				'Authorization': 'Bearer ' + userToken,
-				'encrypted': 'true'
-			}
-		});
-	}
-
-	// get a contact
-	getUserById(UserId: string): Observable<UserModel> {
-		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<UserModel>(`${BASE_URL}/auth/user/id?user_id=${UserId}`, {
-			headers: {
-				'Authorization': 'Bearer ' + userToken,
-				'encrypted': 'true'
-			}
-		});
-	}
-
-	// update a contact
-	updateUser(User: UserModel, UserId: string) {
-		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.put<UserModel>(`${BASE_URL}/auth/user?user_id=${UserId}`, User, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'

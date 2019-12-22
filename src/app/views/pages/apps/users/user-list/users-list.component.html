@@ -1,7 +1,7 @@
 <kt-portlet>
 	<kt-portlet-header title="All Users" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
-			<a routerLink="/strada/users/manage" class="primary-button kt-margin-r-10" matTooltip="Add new user">
+			<a routerLink="/cdash/users/manage" class="primary-button kt-margin-r-10" matTooltip="Add new user">
 				<i class="la la-plus"></i>
 				<span class="kt-hidden-mobile">New user</span>
 			</a>
@@ -15,9 +15,8 @@
 						<tr>
 							<th>Name</th>
 							<th>Email</th>
-							<th>Phone number</th>
-							<th>Organization</th>
-							<th>DOB</th>
+							<th>Address</th>
+							<th>Role</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -25,11 +24,10 @@
 						<tr className="each-row" *ngFor="let user of users">
 							<td>{{user.name | titlecase}}</td>
 							<td>{{user.email}}</td>
-							<td>{{user.phone ? user.phone : 'not available'}}</td>
-							<td>{{user.company ? user.company : 'not available'}}</td>
-							<td>{{user.dob ? (user.dob | date: 'fullDate') : 'not available'}}</td>
+							<td>{{user.address ? user.address : 'not available'}}</td>
+							<td>{{user.role ? user.role : 'not available'}}</td>
 							<td>
-								<a routerLink="/strada/users/user/{{user._id}}" class="view">View</a>
+								<a routerLink="/cdash/users/user/{{user._id}}" class="view">View</a>
 							</td>
 						</tr>
 					</tbody>

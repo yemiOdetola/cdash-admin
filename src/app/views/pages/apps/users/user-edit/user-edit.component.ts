@@ -4,14 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { UserModel, UserService } from '../../../../../core/users';
-import { OrganizationModel, OrganizationsService } from '../../../../../core/organizations';
-// Layout
-import { LayoutConfigService } from '../../../../../core/_base/layout';
+import { RolesService } from '../../../../../core/roles';
 // CRUD
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 import { MatDialog } from '@angular/material';
 import { tap, map } from 'rxjs/operators';
-import * as moment from 'moment';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -35,13 +32,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	selectedFile: File = null;
 	idParams: string;
 	good: string;
-
+	roles: any[];
 	constructor(
+		private rolesService: RolesService,
 		private activatedRoute: ActivatedRoute,
 		private router: Router,
 		public dialog: MatDialog,
 		private layoutUtilsService: LayoutUtilsService,
-		private organizationsService: OrganizationsService,
 		private fb: FormBuilder,
 		private usersService: UserService
 	) { }
@@ -49,15 +46,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
-		this.companyTypes = [
-			{ 'label': 'Strada Media', 'value': 'Strada Media' },
-			{ 'label': 'BrandMyCar', 'value': 'BrandMyCar' },
-			{ 'label': 'Promovers', 'value': 'Promovers' },
-			{ 'label': 'SekereNews', 'value': 'SekereNews' },
-			{ 'label': 'MooveTV', 'value': 'MooveTV' },
-		];
 		console.log('UserEditComponent initiated');
 		this.initUserForm();
+		this.getAllRoles(0, 999);
 		if (this.activatedRoute.snapshot.params['id']) {
 			this.idParams = this.activatedRoute.snapshot.params['id'];
 		}
@@ -66,7 +57,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
 			this.getUserDetails().subscribe(userData => this.initEditUserForm(userData));
 			this.loadingSubject.next(true);
 		} else {
-			this.user = this.userForm.value;
 			this.loadingSubject.next(false);
 		}
 		window.onload = () => {
@@ -75,17 +65,15 @@ export class UserEditComponent implements OnInit, OnDestroy {
 		};
 		console.log(this.userForm.value);
 		console.log('form control', this.userForm.controls);
-		this.getOrganizations();
 	}
 
-	getOrganizations() {
+	getAllRoles(skip, limit) {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
-		this.organizationsService.getOrganizationsEvery().subscribe(
+		this.rolesService.getRoles(skip, limit).subscribe(
 			responseData => {
-				this.organizations = responseData['success'];
+				this.roles = responseData['data'];
 				this.loadingSubject.next(false);
-				console.log('all organization returned', this.organizations);
 			},
 			error => {
 				console.log('error', error);
@@ -96,7 +84,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	getUserDetails() {
 		return this.usersService.getUserById(this.idParams).pipe(
 			map(userDetails => {
-				this.user = userDetails['user'];
+				this.user = userDetails['data'];
 				this.loadingSubject.next(false);
 				console.log('retrieving user with pipe', this.user);
 				return this.user;
@@ -108,10 +96,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
 		this.userForm = this.fb.group({
 			name: [user.name || '', Validators.required],
 			email: [user.email || '', Validators.required],
-			phone: [user.phone || '', Validators.required],
-			dob: [new Date(user.dob) || '', Validators.required],
 			address: [user.address || '', Validators.required],
-			// organization_id: ['', Validators.required],
+			password: [user.password || '', Validators.required],
+			role: [user.role || '', Validators.required],
 		});
 	}
 
@@ -119,7 +106,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
 		this.userForm = this.fb.group({
 			name: ['', Validators.required],
 			email: ['', Validators.required],
-			organization_id: ['', Validators.required],
+			address: ['', Validators.required],
+			password: ['', Validators.required],
+			role: ['', Validators.required],
 		});
 	}
 
@@ -155,10 +144,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
 			this.selectedTab = 0;
 			return;
 		}
-		if (this.user._id) {
-			console.log('User has an Id');
+		if (this.idParams) {
 			let editedUser = this.userForm.value;
-			console.log('User to send', editedUser);
 			this.updateUser(editedUser);
 			return;
 		}
@@ -166,14 +153,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	}
 
 	updateUser(user) {
-		user.dob = user.dob.getTime();
 		this.usersService.updateUser(user, this.user._id).subscribe(
 			data => {
 				console.log('success reponse', data);
 				this.loadingSubject.next(false);
 				const message = `Updated Successfully`;
 				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-				this.router.navigate(['/strada/users/users']);
+				this.router.navigate(['/cdash/users/users']);
 			},
 			error => {
 				this.loadingSubject.next(false);
@@ -192,16 +178,12 @@ export class UserEditComponent implements OnInit, OnDestroy {
 	addUser(_user: UserModel) {
 		this.loadingSubject.next(true);
 		let company = '';
-		this.organizations.forEach(org => {
-			if (org._id === this.userForm.value.organization_id) {
-				company = org.name;
-			}
-		});
 		const payload = {
 			name: this.userForm.value.name,
 			email: this.userForm.value.email,
-			organization_id: this.userForm.value.organization_id,
-			company: company
+			role: this.userForm.value.role,
+			password: this.userForm.value.password,
+			address: this.userForm.value.address
 		};
 		console.log(payload, 'edited and passsed company');
 		this.usersService.createUser(payload).subscribe(
@@ -210,7 +192,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 				console.log('success reponse', data);
 				const message = `User has been Successfully Created`;
 				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-				this.router.navigate(['/strada/users/users']);
+				this.router.navigate(['/cdash/users/users']);
 			}, error => {
 				this.loadingSubject.next(false);
 				console.log('Error response', error);
