@@ -138,8 +138,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 				if (responseData.user_token) {
 					this.store.dispatch(new Login({ authToken: responseData.user_token }));
 					localStorage.setItem('userToken', responseData.user_token);
-					const myId = response['_id'];
-					this.userData = responseData;
+					localStorage.setItem('orgDetails', JSON.stringify(responseData.organization));
+					this.userData = responseData.organization;
 					localStorage.setItem('loginData', JSON.stringify(this.userData));
 					this.router.navigateByUrl(this.returnUrl); // Main page
 				} else {

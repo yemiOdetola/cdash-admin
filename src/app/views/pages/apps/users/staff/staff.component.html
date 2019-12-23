@@ -42,7 +42,7 @@
 					<tr class="each-data" *ngIf="staffDetails.date_joined">
 						<td class="label">Date Joined</td>
 						<td class="value">
-							{{ staffDetails.date_joined | date: "medium" }}
+							{{ staffDetails.date_joined | date: "fullDate" }}
 						</td>
 					</tr>
 					<tr class="each-data" *ngIf="staffDetails.position">

@@ -16,71 +16,67 @@
 			<div class="form-items-cover p-3 p-sm-1">
 				<div class="form-items">
 					<input type="checkbox" id="icon">
-					<label for="icon">Icon(file upload)</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="name">
-					<label for="name">Name</label>
+					<label for="icon" (click)="addIcon()">Icon(file upload)</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="Summary">
-					<label for="Summary">Summary</label>
+					<label for="Summary" (click)="addSummary()">Summary</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="date_acquired">
-					<label for="date_acquired">Date acquired</label>
+					<label for="date_acquired" (click)="addFormElement('date', 'date_acquired')">Date acquired</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="cost_of_acquisition">
-					<label for="cost_of_acquisition">Cost of acquisition</label>
+					<label for="cost_of_acquisition" (click)="addFormElement('number', 'cost_of_acquisition')">Cost of acquisition</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="depreciation_per_annum">
-					<label for="depreciation_per_annum">Depreciation per annum</label>
+					<label for="depreciation_per_annum" (click)="addFormElement('chart', 'depreciation_per_annum')">Depreciation per annum</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="business_purpose">
-					<label for="business_purpose">Business purpose</label>
+					<label for="business_purpose" (click)="addFormElement('text', 'business_purpose')">Business purpose</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="business_owners">
-					<label for="business_owners">Business owners</label>
+					<label for="business_owners" (click)="addFormElement('text', 'business_owners')">Business owners</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="recurrent_expenditure">
-					<label for="recurrent_expenditure">Recurrent expenditure(per annum - chart)</label>
+					<label for="recurrent_expenditure" (click)="addFormElement('chart', 'recurrent_expenditure')">Recurrent expenditure(per annum - chart)</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="location_of_deployment_file">
-					<label for="location_of_deployment_file">Location of deployment (file)</label>
+					<label for="location_of_deployment_file" (click)="addFormElement('file', 'location_of_deployment_file')">Location of deployment (file)</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="location_of_deployment_text">
-					<label for="location_of_deployment_text">Location of deployment (text)</label>
+					<label for="location_of_deployment_text" (click)="addFormElement('text', 'location_of_deployment_text')">Location of deployment (text)</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="technical_details">
-					<label for="technical_details">Technical details</label>
+					<label for="technical_details" (click)="addFormElement('text', 'technical_details')">Technical details</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="type">
-					<label for="type">Type (Software/ Hardware/ Connectivity/ Others)</label>
+					<label for="type" (click)="addFormElement('dropdown', 'type')">Type (Software/ Hardware/ Connectivity/ Others)</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="historical_cost">
-					<label for="historical_cost">Historical cost (chart)</label>
+					<label for="historical_cost" (click)="addFormElement('chart', 'historical_cost')">Historical cost (chart)</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="projected_cost">
-					<label for="projected_cost">Projected cost</label>
+					<label for="projected_cost" (click)="addFormElement('number', 'projected_cost')">Projected cost</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="industrial_link">
-					<label for="industrial_link">Industrial link (file)</label>
+					<label for="industrial_link" (click)="addFormElement('url', 'industrial_link')">Industrial link (file)</label>
 				</div>
 				<div class="form-items">
 					<input type="checkbox" id="diagram_schematics">
-					<label for="diagram_schematics">Diagram/ schematics(file)</label>
+					<label for="diagram_schematics" (click)="addFormElement('file', 'diagram_schematics')">Diagram/ schematics(file)</label>
 				</div>
 			</div>
 		</form>
