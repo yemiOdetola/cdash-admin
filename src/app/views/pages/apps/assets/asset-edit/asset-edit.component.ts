@@ -44,6 +44,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
 	fSelected;
 	fileName = '';
 	required = ['true', 'false'];
+	form = [];
 	constructor(
 
 		private activatedRoute: ActivatedRoute,
@@ -58,13 +59,11 @@ export class AssetEditComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
-		this.emptyAssetForm();
 		if (this.activatedRoute.snapshot.params['id']) {
 			console.log('id found', this.activatedRoute.snapshot.params['id']);
 			this.idParams = this.activatedRoute.snapshot.params['id'];
 		}
 		if (this.idParams) {
-			this.getAssetDetails().subscribe(assetData => this.initAssetForm(assetData));
 			this.loadingSubject.next(true);
 		} else {
 			this.loadingSubject.next(false);
@@ -88,32 +87,12 @@ export class AssetEditComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	emptyAssetForm() {
-		this.assetForm = this.fb.group({
-			name: ['', Validators.required],
-			// description: ['', Validators.required],
-			start: ['', Validators.required],
-			end: ['', Validators.required],
-			file: ['']
-		});
-	}
-	initAssetForm(asset: any = {}) {
-		let startDate = moment(asset.start).format('YYYY-MM-DD');
-		let endDate = moment(asset.end).format('YYYY-MM-DD');
-		this.assetForm = this.fb.group({
-			name: [asset.name || '', Validators.required],
-			// description: [asset.description, Validators.required],
-			start: [startDate || '', Validators.required],
-			end: [endDate || '', Validators.required],
-			file: [''],
-		});
-	}
 	getComponentTitle() {
-		let result = 'Create Asset';
+		let result = 'Create Asset form';
 		if (!this.asset || !this.asset._id) {
 			return result;
 		}
-		result = `Edit Asset -  ${this.asset.name}`;
+		result = `Edit Asset form -  ${this.asset.name}`;
 		return result;
 	}
 
@@ -175,7 +154,6 @@ export class AssetEditComponent implements OnInit, OnDestroy {
 		const convertedEnd: any = prepEnd.getTime();
 		let updPayload = new FormData();
 		updPayload.append('name', this.assetForm.get('name').value);
-		// updPayload.append('description', this.assetForm.get('description').value);
 		updPayload.append('start', convertedStart);
 		updPayload.append('end', convertedEnd);
 		updPayload.append('file', this.fSelected, this.fSelected.name);
@@ -195,24 +173,6 @@ export class AssetEditComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	reset() {
-		this.asset = Object.assign({}, this.oldAsset);
-		this.emptyAssetForm();
-		this.hasFormErrors = false;
-		this.assetForm.markAsPristine();
-		this.assetForm.markAsUntouched();
-		this.assetForm.updateValueAndValidity();
-	}
-
-	onFileChange(event) {
-		if (event.target.files.length > 0) {
-			const fileSelected: File = event.target.files[0];
-			this.fSelected = fileSelected;
-			this.fileName = fileSelected.name;
-			console.log('fileSelected', fileSelected['originFileObj']);
-		}
-	}
-
 	/**
 	 * Close alert
 	 *
@@ -225,14 +185,3 @@ export class AssetEditComponent implements OnInit, OnDestroy {
 	ngOnDestroy() { }
 
 }
-
-// @Pipe({name: 'keys'})
-// export class KeysPipe implements PipeTransform {
-//   transform(value, args: string[]): any {
-//     let keys = [];
-//     for (let key in value) {
-//       keys.push(key);
-//     }
-//     return keys;
-//   }
-// }

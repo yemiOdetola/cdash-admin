@@ -1,8 +1,11 @@
 .form-group {
 	width: 95%;
-	margin: 1.5rem auto;
+	margin: 1.5rem 0;
 	@media(min-width: 992px) {
-		width: 40%;
+		width: 60%;
+	}
+	label {
+		font-weight: 500;
 	}
 }
 .instructions {
