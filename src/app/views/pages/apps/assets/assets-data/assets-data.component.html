@@ -1,9 +1,9 @@
 <kt-portlet>
 	<kt-portlet-header title="All Assets" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
-			<a routerLink="/cdash/assets/manage" class="primary-button kt-margin-r-10" matTooltip="Add New Asset">
+			<a routerLink="/cdash/assets/manage/new-asset-data/{{containerId}}" class="primary-button kt-margin-r-10" matTooltip="Add New Asset">
 				<i class="la la-plus"></i>
-				<span class="kt-hidden-mobile">New asset form</span>
+				<span class="kt-hidden-mobile">New asset</span>
 			</a>
 		</ng-container>
 	</kt-portlet-header>
@@ -21,14 +21,13 @@
 						<tr className="each-row" *ngFor="let asset of assets">
 							<td>{{ asset.name }}</td>
 							<td>
-								<a routerLink="/cdash/assets/data/{{asset._id}}" class="view">View</a>
+								<a routerLink="/cdash/assets/manage/new-asset-data/{{asset._id}}" class="view">View</a>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
-
 		<div class="my-pagination mt-5 mb-4">
 			<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
 			<div class="btn-grp">

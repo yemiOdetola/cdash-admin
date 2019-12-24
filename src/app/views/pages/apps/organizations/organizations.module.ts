@@ -63,13 +63,17 @@ const routes: Routes = [
 		children: [
 			{
 				path: '',
-				redirectTo: 'organizations',
+				redirectTo: 'organization',
 				pathMatch: 'full'
 			},
 			{
 				path: 'organizations',
 				component: OrganizationsListComponent,
 				pathMatch: 'full'
+			},
+			{
+				path: 'organization',
+				component: OrganizationComponent,
 			},
 			{
 				path: 'manage',

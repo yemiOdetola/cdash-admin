@@ -31,6 +31,29 @@ export class ProjectsService {
 		});
 	}
 
+	getLogs(skip, limit): Observable<ProjectModel[]> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<ProjectModel[]>(`${BASE_URL}/logs`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			},
+			params: {
+				count: limit,
+				skip: skip
+			}
+		});
+	}
+
+
+	getLogsCount(): Observable<ProjectModel[]> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<ProjectModel[]>(`${BASE_URL}/logs/count`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
 	// get all projects
 	getProjects(skip, limit, user_id): Observable<ProjectModel[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);

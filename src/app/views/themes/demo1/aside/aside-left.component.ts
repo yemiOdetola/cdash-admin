@@ -99,13 +99,17 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 	}
 
 	getOrganizationDetails(organizationId) {
-		this.organizationsService.getOrganizationById(organizationId).subscribe(
+		this.organizationsService.getOrganization().subscribe(
 			singleOrganization => {
 				this.organizationDetails = singleOrganization['success'];
 				console.log('org details sssssidemenu aside', this.organizationDetails);
-				localStorage.setItem('orgBg', this.organizationDetails.color);
-				localStorage.setItem('orgLogo', this.organizationDetails.image);
-				this.setBackground = localStorage.getItem('orgBg');
+				if (this.organizationDetails && this.organizationDetails.color) {
+					localStorage.setItem('orgBg', this.organizationDetails.color);
+				}
+				if (this.organizationDetails && this.organizationDetails.image) {
+					localStorage.setItem('orgBg', this.organizationDetails.image);
+					this.setBackground = localStorage.getItem('orgBg');
+				}
 			},
 			error => {
 				console.log('error occured', error);

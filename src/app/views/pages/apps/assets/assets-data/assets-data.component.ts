@@ -1,20 +1,16 @@
 // Angular
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 // Services and Models
-import { AssetModel, AssetsService } from '../../../../../core/assets';
-
-// material for table
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { AssetsService } from '../../../../../core/assets';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-	selector: 'kt-assets-list',
-	templateUrl: './assets-list.component.html',
-	styleUrls: ['./assets-list.component.scss']
+	selector: 'kt-assets-data',
+	templateUrl: './assets-data.component.html',
+	styleUrls: ['./assets-data.component.scss']
 })
-export class AssetsListComponent implements OnInit, OnDestroy {
+export class AssetsDataComponent implements OnInit, OnDestroy {
 	loading$: Observable<boolean>;
 	loadingSubject = new BehaviorSubject<boolean>(true);
 	assets: any[];
@@ -23,26 +19,32 @@ export class AssetsListComponent implements OnInit, OnDestroy {
 	resultsLength: number = 0;
 	disablePrev = true;
 	disableNext: boolean;
-	// dataSource = new MatTableDataSource(LEAD_DATA);
-	constructor(private assetsService: AssetsService) { }
+	containerId = '';
+	containerAssets;
+	constructor(
+		private assetsService: AssetsService,
+		private route: ActivatedRoute,
+		private router: Router
+	) { }
 
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
-		this.assetsService.getAssetsCount().subscribe(
-			countResult => {
-				this.resultsLength = countResult['data'];
-				if ( this.resultsLength <= 10) {
-					console.log('not up to 10', this.resultsLength);
-					this.disableNext = true;
-				} else {
-					console.log('up to 10', this.resultsLength);
-					this.disableNext = false;
-				}
+		this.containerId = this.route.snapshot.params['id'];
+		this.assetsService.getAssetContainerById(this.containerId).subscribe(
+			assetsData => {
+				this.containerAssets = assetsData['data'];
+				localStorage.setItem('formElement', JSON.stringify(assetsData['data']));
+				console.log('this lead details oninit', this.containerAssets);
+				this.loadingSubject.next(false);
+			},
+			error => {
+				console.log('error occured', error);
+				this.loadingSubject.next(false);
 			}
 		);
 		let skip = this.pageIndex * this.limit;
-		this.getAssets(skip, this.limit);
+		this.getAssetsData(skip, this.limit);
 	}
 
 	countAssets() {
@@ -56,10 +58,10 @@ export class AssetsListComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	getAssets(skip, limit) {
+	getAssetsData(skip, limit) {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
-		this.assetsService.getAssets(skip, limit).subscribe(
+		this.assetsService.getAssetsData(skip, limit).subscribe(
 			responseData => {
 				this.assets = responseData['data'];
 				this.loadingSubject.next(false);
@@ -87,7 +89,7 @@ export class AssetsListComponent implements OnInit, OnDestroy {
 	getNext() {
 		this.pageIndex = this.pageIndex + 1;
 		let skip = this.pageIndex * this.limit;
-		this.getAssets(skip, this.limit);
+		this.getAssetsData(skip, this.limit);
 		this.countAssets();
 		this.itemNav();
 	}
@@ -95,7 +97,7 @@ export class AssetsListComponent implements OnInit, OnDestroy {
 	getPrev() {
 		this.pageIndex = this.pageIndex - 1;
 		let skip = this.pageIndex * this.limit;
-		this.getAssets(skip, this.limit);
+		this.getAssetsData(skip, this.limit);
 		this.countAssets();
 		this.itemNav();
 	}

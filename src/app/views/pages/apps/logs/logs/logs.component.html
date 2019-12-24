@@ -1,28 +1,29 @@
 <kt-portlet>
-	<kt-portlet-header title="All Assets" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	<kt-portlet-header title="All Logs" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
-			<a routerLink="/cdash/assets/manage" class="primary-button kt-margin-r-10" matTooltip="Add New Asset">
-				<i class="la la-plus"></i>
-				<span class="kt-hidden-mobile">New asset form</span>
-			</a>
 		</ng-container>
 	</kt-portlet-header>
 	<kt-portlet-body>
-		<div class="asset-body">
+		<div class="vendor-body">
 			<div class="stage-history">
 				<table class="table-view">
 					<thead>
 						<tr>
-							<th>Container name</th>
-							<th></th>
+							<th>Name</th> 
+							<th>Date</th>
+							<th>Module</th>
+							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr className="each-row" *ngFor="let asset of assets">
-							<td>{{ asset.name }}</td>
-							<td>
-								<a routerLink="/cdash/assets/data/{{asset._id}}" class="view">View</a>
-							</td>
+						<tr className="each-row" *ngFor="let log of logs">
+							<td>{{log.name}}</td>
+							<td>{{log.date | date: 'fullDate'}}</td>
+							<td>{{log.module | titlecase}}</td>
+							<td>{{log.action | uppercase}}</td>
+							<!-- <td>
+								<a routerLink="/cdash/projects/log/{{log._id}}" class="view">View</a>
+							</td> -->
 						</tr>
 					</tbody>
 				</table>

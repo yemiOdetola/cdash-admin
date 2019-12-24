@@ -19,24 +19,46 @@ export class AssetsService {
 	// creates new asset
 	createAsset(asset): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.post<any>(`${BASE_URL}/api/asset`, asset, {
+		return this.http.post<any>(`${BASE_URL}/asset`, asset, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
-				'encrypted': 'true'
 			}
 		});
 	}
 
+
 	// get all assets
 	getAssets(skip, limit): Observable<any[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<any[]>(`${BASE_URL}/api/asset/all`, {
+		return this.http.get<any[]>(`${BASE_URL}/asset`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
 			},
 			params: {
-				limit: limit,
+				count: limit,
+				skip: skip
+			}
+		});
+	}
+
+	getAssetContainerById(containerId: string): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<any>(`${BASE_URL}/asset/${containerId}`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+	getAssetsData(skip, limit): Observable<any[]> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<any[]>(`${BASE_URL}/asset_data`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			},
+			params: {
+				count: limit,
 				skip: skip
 			}
 		});
@@ -44,10 +66,9 @@ export class AssetsService {
 
 	getAssetsCount(): Observable<any[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<any[]>(`${BASE_URL}/api/asset/all?count=${1}`, {
+		return this.http.get<any[]>(`${BASE_URL}/asset/count`, {
 			headers: {
-				'Authorization': 'Bearer ' + userToken,
-				'encrypted': 'true'
+				'Authorization': 'Bearer ' + userToken
 			}
 		});
 	}
@@ -55,7 +76,7 @@ export class AssetsService {
 	// get a asset
 	getAssetById(assetId: string): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<any>(`${BASE_URL}/api/asset?asset_id=${assetId}`, {
+		return this.http.get<any>(`${BASE_URL}/asset/${assetId}`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'

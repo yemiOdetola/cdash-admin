@@ -91,11 +91,11 @@ export class MenuConfig {
 					root: true,
 					bullet: 'dot',
 					icon: 'flaticon-graphic-2',
-					// page: '/dashboard'
+					page: 'logs'
 				},
 				{
 					title: 'Organization Settings',
-					// page: '/dashboard',
+					page: 'organizations',
 					root: true,
 					bullet: 'dot',
 					icon: 'flaticon-signs-1',

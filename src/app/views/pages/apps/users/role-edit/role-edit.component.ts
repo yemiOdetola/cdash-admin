@@ -114,6 +114,7 @@ export class RoleEditComponent implements OnInit, OnDestroy {
 			this.roleMap[role] = false;
 		}
 	}
+
 	getRoleDetails() {
 		return this.rolesService.getRoleById(this.idParams).pipe(
 			map(roleDetails => {

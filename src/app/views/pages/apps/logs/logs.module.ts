@@ -8,14 +8,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleGuard } from '../../../../core/auth';
 // UI
 import { PartialsModule } from '../../../partials/partials.module';
+
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 // Components
-import { AssetsComponent } from './assets.component';
-// Assets Actions
-import { AssetsListComponent } from './assets-list/assets-list.component';
-import { AssetEditComponent } from './asset-edit/asset-edit.component';
-import { AssetComponent } from './asset/asset.component';
-import { AssetsDataComponent } from './assets-data/assets-data.component';
-import { AssetDataComponent } from './asset-data/asset-data.component';
+import { LogsComponent } from './logs.component';
+import { AllLogsComponent } from './logs/logs.component';
 
 // Core => utils
 import { HttpUtilsService,
@@ -24,8 +22,7 @@ import { HttpUtilsService,
 	LayoutUtilsService
 } from '../../../../core/_base/crud';
 
-// Core => service
-import { AssetsService } from '../../../../core/assets';
+import { ProjectsService } from '../../../../core/projects';
 import {
 	ActionNotificationComponent,
 	DeleteEntityDialogComponent,
@@ -61,37 +58,17 @@ import {
 const routes: Routes = [
 	{
 		path: '',
-		component: AssetsComponent,
+		component: LogsComponent,
 		children: [
 			{
 				path: '',
-				redirectTo: 'assets',
+				redirectTo: 'logs',
 				pathMatch: 'full'
 			},
 			{
-				path: 'assets',
-				component: AssetsListComponent,
+				path: 'logs',
+				component: AllLogsComponent,
 				pathMatch: 'full'
-			},
-			{
-				path: 'data/:id',
-				component: AssetsDataComponent,
-			},
-			{
-				path: 'manage',
-				component: AssetEditComponent
-			},
-			{
-				path: 'manage/new-asset-data/:id',
-				component: AssetDataComponent
-			},
-			{
-				path: 'manage/:id',
-				component: AssetEditComponent
-			},
-			{
-				path: 'asset/:id',
-				component: AssetComponent,
 			}
 		]
 	}
@@ -125,7 +102,8 @@ const routes: Routes = [
 		MatAutocompleteModule,
 		MatSnackBarModule,
 		MatTooltipModule,
-		MatStepperModule
+		MatStepperModule,
+		InfiniteScrollModule
 	],
 	providers: [
 		ModuleGuard,
@@ -147,7 +125,7 @@ const routes: Routes = [
 				width: '900px'
 			}
 		},
-		AssetsService
+		ProjectsService
 	],
 	entryComponents: [
 		ActionNotificationComponent,
@@ -156,12 +134,8 @@ const routes: Routes = [
 		UpdateStatusDialogComponent,
 	],
 	declarations: [
-		AssetsComponent,
-		AssetsListComponent,
-		AssetEditComponent,
-		AssetComponent,
-		AssetsDataComponent,
-		AssetDataComponent
+		LogsComponent,
+		AllLogsComponent
 	]
 })
-export class AssetsModule { }
+export class LogsModule { } 

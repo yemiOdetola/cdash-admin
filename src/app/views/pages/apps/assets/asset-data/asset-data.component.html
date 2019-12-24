@@ -1,0 +1,67 @@
+<kt-portlet>
+	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action edit text-center" routerLink="/strada/assets/manage/{{assetId}}">
+				<img src="./assets/media/icons/details-edit.svg" alt="">
+				<span>Edit</span>
+			</div>
+			<div class="details-action delete text-center" (click)="onDelete()">
+				<img src="./assets/media/icons/details-delete.svg" alt="">
+				<span>Delete</span>
+			</div>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<form [formGroup]="dataFormGroup" (ngSubmit)="onSubmit()">
+			<div class="form-group">
+				<div *ngFor="let form_elem of formFields">
+					<div [ngSwitch]="form_elem.type">
+						<div *ngSwitchCase="'text'">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
+										<label class="label">{{form_elem.name}}</label>
+										<input type="text" placeholder="Enter {{form_elem.name}}"
+											formControlName="{{form_elem.id}}" required="{{form_elem.required}}" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div *ngSwitchCase="'number'">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
+										<label class="label">{{form_elem.name}}</label>
+										<input type="number" placeholder="Enter {{form_elem.name}}"
+											formControlName="{{form_elem.id}}" required="{{form_elem.required}}" />
+									</div>
+								</div>
+							</div>
+						</div>
+						<div *ngSwitchCase="'select'">
+							<select formControlName="{{form_elem.label}}" required="{{form_elem.required}}">
+								<option selected>Select {{form_elem.name}}</option>
+								<option *ngFor="let opt of form_elem.options">
+									{{opt}}
+								</option>
+							</select>
+						</div>
+						<div *ngSwitchCase="'file'">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item upload">
+										<label class="label" for="{{form_elem.id}}">
+											<img src="./assets/media/icons/upload-all.svg" alt="">
+										</label>
+										<input type="file" id="{{form_elem.id}}" (change)="onFileChange($event)" accept="image/*">
+										<div class="placeholder">Upload image</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</kt-portlet-body>
+</kt-portlet>

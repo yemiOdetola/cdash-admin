@@ -20,10 +20,19 @@ export class OrganizationsService {
 	// creates new organization
 	createOrganization(organization): Observable<OrganizationModel> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.post<OrganizationModel>(`${BASE_URL}/api/organization`, organization, {
+		return this.http.post<OrganizationModel>(`${BASE_URL}/organization`, organization, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
+			}
+		});
+	}
+
+	addTurnovers(turnover): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.post<any>(`${BASE_URL}/organization/turnover`, turnover, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
 			}
 		});
 	}
@@ -67,23 +76,21 @@ export class OrganizationsService {
 	}
 
 	// get a organization
-	getOrganizationById(organizationId: string): Observable<OrganizationModel> {
+	getOrganization(): Observable<OrganizationModel> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<OrganizationModel>(`${BASE_URL}/api/organization?organization_id=${organizationId}`, {
+		return this.http.get<OrganizationModel>(`${BASE_URL}/organization`, {
 			headers: {
-				'Authorization': 'Bearer ' + userToken,
-				'encrypted': 'true'
+				'Authorization': 'Bearer ' + userToken
 			}
 		});
 	}
 
 	// update a organization
-	updateOrganization(organization, organizationId: string) {
+	updateOrganization(organization) {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.put<OrganizationModel>(`${BASE_URL}/api/organization?organization_id=${organizationId}`, organization, {
+		return this.http.put<OrganizationModel>(`${BASE_URL}/organization`, organization, {
 			headers: {
-				'Authorization': 'Bearer ' + userToken,
-				'encrypted': 'true'
+				'Authorization': 'Bearer ' + userToken
 			}
 		});
 	}

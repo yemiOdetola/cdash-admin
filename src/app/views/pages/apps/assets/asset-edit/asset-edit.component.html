@@ -2,83 +2,62 @@
 	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 	</kt-portlet-header>
 	<kt-portlet-body>
-		<form>
+		<form [formGroup]="assetForm">
 			<div class="form-group">
-				<div class="form-item">
-					<label class="label">Form name</label>
-					<input type="text" placeholder="Enter form name or title" required>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">form name</label>
+							<input type="text" placeholder="Enter form name" formControlName="name">
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label for="title" class="label">Select currency type</label>
+							<select formControlName="currency"> 
+								<option value="">Select currency</option>
+								<option value="{{currency}}" *ngFor="let currency of currencies;">
+									{{currency}}
+								</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label for="title" class="label">Form elements</label>
+							<select (change)="handleFormChange($event)">
+								<option value="" selected="true">Select element</option>
+								<option [value]="type.id" *ngFor="let type of formTypes;">{{type.name}}</option>
+							</select>
+						</div>
+					</div>
 				</div>
 			</div>
-			<!-- <div class="form-item">
-				<label for="form_name"></label>
-				<input type="text" id="" placeholder="Enter form name" />
-			</div> -->
-			<div class="form-items-cover p-3 p-sm-1">
-				<div class="form-items">
-					<input type="checkbox" id="icon">
-					<label for="icon" (click)="addIcon()">Icon(file upload)</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="Summary">
-					<label for="Summary" (click)="addSummary()">Summary</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="date_acquired">
-					<label for="date_acquired" (click)="addFormElement('date', 'date_acquired')">Date acquired</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="cost_of_acquisition">
-					<label for="cost_of_acquisition" (click)="addFormElement('number', 'cost_of_acquisition')">Cost of acquisition</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="depreciation_per_annum">
-					<label for="depreciation_per_annum" (click)="addFormElement('chart', 'depreciation_per_annum')">Depreciation per annum</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="business_purpose">
-					<label for="business_purpose" (click)="addFormElement('text', 'business_purpose')">Business purpose</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="business_owners">
-					<label for="business_owners" (click)="addFormElement('text', 'business_owners')">Business owners</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="recurrent_expenditure">
-					<label for="recurrent_expenditure" (click)="addFormElement('chart', 'recurrent_expenditure')">Recurrent expenditure(per annum - chart)</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="location_of_deployment_file">
-					<label for="location_of_deployment_file" (click)="addFormElement('file', 'location_of_deployment_file')">Location of deployment (file)</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="location_of_deployment_text">
-					<label for="location_of_deployment_text" (click)="addFormElement('text', 'location_of_deployment_text')">Location of deployment (text)</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="technical_details">
-					<label for="technical_details" (click)="addFormElement('text', 'technical_details')">Technical details</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="type">
-					<label for="type" (click)="addFormElement('dropdown', 'type')">Type (Software/ Hardware/ Connectivity/ Others)</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="historical_cost">
-					<label for="historical_cost" (click)="addFormElement('chart', 'historical_cost')">Historical cost (chart)</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="projected_cost">
-					<label for="projected_cost" (click)="addFormElement('number', 'projected_cost')">Projected cost</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="industrial_link">
-					<label for="industrial_link" (click)="addFormElement('url', 'industrial_link')">Industrial link (file)</label>
-				</div>
-				<div class="form-items">
-					<input type="checkbox" id="diagram_schematics">
-					<label for="diagram_schematics" (click)="addFormElement('file', 'diagram_schematics')">Diagram/ schematics(file)</label>
+			<div class="form-group">
+				<div class="users-list mt-3" *ngIf="myForms && myForms.length > 0">
+					<div class="each-user" *ngFor="let type of myForms; let i = index;">
+						<div class="name">
+							<img src="./assets/media/icons/details-icon.svg" alt="">
+							{{type.name | titlecase}}
+						</div>
+						<div class="action ml-4" (click)="formRemove(type)">
+							<img src="./assets/media/icons/delete-close.svg" alt="">
+						</div>
+					</div>
 				</div>
 			</div>
+			<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
+					(close)="onAlertClose($event)">
+					Oops! Form is not filled correctly. Change a few things up and try submitting again.
+				</kt-alert>
 		</form>
+		<div class="form-submit mt-5 mb-4">
+			<button class="reset" (click)="reset()">Reset</button>
+			<button class="submit" (click)="onSubmit()">Submit</button>
+		</div>
 	</kt-portlet-body>
 </kt-portlet>
