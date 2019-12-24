@@ -28,6 +28,7 @@ import { SalesModule } from './apps/sales/sales.module';
 import { HRModule } from './apps/hr/hr.module';
 import { OrganizationsModule } from './apps/organizations/organizations.module';
 import { ProjectsModule } from './apps/projects/projects.module';
+import { ComputationsModule } from './apps/computations/computations.module';
 import { LogsModule } from './apps/logs/logs.module';
 import { SocialsModule } from './apps/socials/socials.module';
 import { CampaignTypesModule } from './apps/campaign-types/campaign-types.module';
@@ -53,6 +54,7 @@ import { CampaignTypesModule } from './apps/campaign-types/campaign-types.module
 		CampaignsModule,
 		MdTasksModule,
 		ProjectsModule,
+		ComputationsModule,
 		ReportsModule,
 		SocialsModule,
 		VendorsModule,

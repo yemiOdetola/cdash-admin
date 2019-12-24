@@ -51,7 +51,7 @@ export class MenuConfig {
 				},
 				{
 					title: 'Computations',
-					// page: 'calls/calls',
+					page: 'computations',
 					root: true,
 					bullet: 'dot',
 					icon: 'flaticon-users',
@@ -79,7 +79,7 @@ export class MenuConfig {
 						},
 						{
 							title: 'ICT/ maturity score',
-							// page: '/dashboard',
+							page: 'computations',
 							bullet: 'dot',
 							icon: 'flaticon2-digital-marketing',
 							root: true,

@@ -75,6 +75,10 @@ const routes: Routes = [
 				loadChildren: 'app/views/pages/apps/projects/projects.module#ProjectsModule'
 			},
 			{
+				path: 'computations',
+				loadChildren: 'app/views/pages/apps/computations/computations.module#ComputationsModule'
+			},
+			{
 				path: 'logs',
 				loadChildren: 'app/views/pages/apps/logs/logs.module#LogsModule'
 			},
