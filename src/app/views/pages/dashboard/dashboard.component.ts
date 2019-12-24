@@ -14,6 +14,7 @@ import { ContactsService, ContactModel } from '../../../core/contacts';
 import { AssetsService } from '../../../core/assets';
 import { VendorsService } from '../../../core/vendors';
 import { CampaignsService } from '../../../core/campaigns';
+import { ComputationsService } from '../../../core/computations';
 
 @Component({
 	selector: 'kt-dashboard',
@@ -28,7 +29,7 @@ export class DashboardComponent implements OnInit {
 	contactsCount = '...';
 	assetsCount = '...';
 	vendorsCount = '...';
-	campaignsCount = '...';
+	maturityAverage = '...';
 	usersCount = '...';
 	staffsCount = '...';
 	calendarPlugins = [dayGridPlugin];
@@ -54,6 +55,7 @@ export class DashboardComponent implements OnInit {
 		private assetsService: AssetsService,
 		private vendorsService: VendorsService,
 		private campaignsService: CampaignsService,
+		private computationsService: ComputationsService,
 		private store: Store<AppState>,
 		private layoutUtilsService: LayoutUtilsService
 	) { }
@@ -61,26 +63,23 @@ export class DashboardComponent implements OnInit {
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(false);
-		// this.user$ = this.store.pipe(select(currentUser));
-		// this.user$.subscribe(
-		// 	userData => {
-		// 		this.getUserDetails(userData['_id']);
-		// 	}
-		// );
 		this.getUsersCount();
 		this.getStaffsCount();
-		// this.getContactsCount();
-		// this.getLeadsCount();
-		// this.getVendorsCount();
-		// this.getMyTasksEvery();
-		// this.getAllLeads(0, 9);
-		// this.getContacts(0, 9);
+		this.getMaturityScoreAverage();
 	}
 
 	getUsersCount() {
 		this.usersService.getUsersCount().subscribe(
 			countResult => {
 				this.usersCount = countResult['data'];
+			}
+		);
+	}
+
+	getMaturityScoreAverage() {
+		this.computationsService.getScoreAverage().subscribe(
+			countResult => {
+				this.maturityAverage = countResult['average'];
 			}
 		);
 	}
@@ -132,34 +131,6 @@ export class DashboardComponent implements OnInit {
 			},
 			error => {
 				console.log('error occured', error);
-			}
-		);
-	}
-	getAssetsCount() {
-		this.assetsService.getAssetsCount().subscribe(
-			countResult => {
-				this.assetsCount = countResult['count'];
-			}
-		);
-	}
-	getVendorsCount() {
-		this.vendorsService.getVendorsCount().subscribe(
-			countResult => {
-				this.vendorsCount = countResult['count'];
-			}
-		);
-	}
-	getCampaignsCount() {
-		this.campaignsService.getCampaignsCount('').subscribe(
-			countResult => {
-				this.campaignsCount = countResult['count'];
-			}
-		);
-	}
-	getContactsCount() {
-		this.contactsService.getContactsCount('').subscribe(
-			countResult => {
-				this.contactsCount = countResult['count'];
 			}
 		);
 	}

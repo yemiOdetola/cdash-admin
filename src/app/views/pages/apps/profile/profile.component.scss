@@ -65,8 +65,9 @@
 
 .profile-data {
     .biz-title {
-      color: rgba(32, 38, 55, 0.53);
-      font-weight: bold;
+      color: #555;
+      font-weight: 600;
+      font-size: 1.25rem;
     }
     .biz-underline {
       width: 75px;
@@ -76,7 +77,7 @@
     }
 
     .profile-card {
-	  background-color: rgb(244, 249, 253);
+	    background-color: #f7f8fa;
       padding: 1.5rem;
       display: block;
       box-shadow: 0px 2.0879px 13.0879px rgba(0, 0, 0, 0.05);

@@ -12,22 +12,22 @@
 						<div class="address" *ngIf="userDetails.admin">Admin</div>
 					</div>
 					<div class="details">
-						<div class="each-details" *ngIf="userDetails.email">
+						<div class="each-details" *ngIf="userDetails.username">
 							<img src="./assets/media/icons/email.svg" alt="">
-							<span>{{userDetails.email}}</span>
+							<span>{{userDetails.username}}</span>
 						</div>
-						<div class="each-details" *ngIf="userDetails.phone">
-							<img src="./assets/media/icons/call.svg" alt="">
-							<span>{{userDetails.phone}}</span>
-						</div>
-						<div class="each-details" *ngIf="userDetails.company">
-							<img src="./assets/media/icons/website.svg" alt="">
-							<span>{{userDetails.company}}</span>
+						<div class="each-details" *ngIf="userDetails.type">
+							<img src="./assets/media/icons/email.svg" alt="">
+							<span>{{userDetails.type}}</span>
 						</div>
 						<div class="each-details">
-							<img src="./assets/media/icons/views.svg" alt="">
-							<span>{{userDetails.dob | date: 'fullDate'}}</span>
+							<img src="./assets/media/icons/email.svg" alt="">
+							<span>{{companyDetails.name}}</span>
 						</div>
+						<!-- <div class="each-details">
+							<img src="./assets/media/icons/email.svg" alt="">
+							<span>{{userDetails.dob | date: 'fullDate'}}</span>
+						</div> -->
 					</div>
 				</div>
 			</div>

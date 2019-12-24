@@ -86,6 +86,15 @@ export class ComputationsService {
 		});
 	}
 
+	getScoreAverage(): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.post<any>(`${BASE_URL}/maturity/average`, {}, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken,
+			}
+		});
+	}
+
 	deleteScore(scoreId): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.delete<any>(`${BASE_URL}/maturity/${scoreId}`, {

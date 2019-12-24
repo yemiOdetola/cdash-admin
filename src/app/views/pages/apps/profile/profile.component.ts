@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
 	user$: Observable<User>;
 	userDetails: any;
 	userId = '';
+	companyDetails;
 	awaitError = 'Please Wait...';
 	constructor(
 		private store: Store<AppState>,
@@ -25,21 +26,16 @@ export class ProfileComponent implements OnInit {
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
-		this.user$ = this.store.pipe(select(currentUser));
-		this.user$.subscribe(
-			userData => {
-				this.userId = userData['_id'];
-				this.getUserDetails(userData['_id']);
-				this.loadingSubject.next(false);
-			}
-		);
+		this.userId = localStorage.getItem('loginId');
+		this.companyDetails = JSON.parse(localStorage.getItem('loginData'));
+		this.getUserDetails(this.userId);
 	}
 
 	getUserDetails(id) {
 		this.loadingSubject.next(true);
 			this.usersService.getUserById(id).subscribe(
 			singleUser => {
-				this.userDetails = singleUser['user'];
+				this.userDetails = singleUser['data'];
 			},
 			error => {
 				console.log('error occured', error);

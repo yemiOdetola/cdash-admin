@@ -29,6 +29,23 @@
 			</div>
 		</div>
 	</div>
+	<div class="col-xl-4 col-sm-6" *ngIf="usersCount">
+		<div class="each-stat">
+			<div class="top-header">
+				<div class="title">
+					<img src="./assets/media/icons/dashboard-users.svg" alt="">
+					<span>Average maturity score</span>
+				</div>
+				<div class="link" routerLink="/cdash/computations/maturity-scores">View all</div>
+			</div>
+			<div class="chart text-center">
+				<circle-progress [percent]="79" subtitle="{{maturityAverage}}" [outerStrokeColor]="'#FFC107'"
+					[outerStrokeGradientStopColor]="'#CB1313'"></circle-progress>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
 	<div class="col-xl-4 col-sm-6">
 		<div class="each-stat">
 			<div class="top-header">
@@ -44,8 +61,6 @@
 			</div>
 		</div>
 	</div>
-</div>
-<div class="row">
 	<div class="col-xl-4 col-sm-6">
 		<div class="each-stat">
 			<div class="top-header">
@@ -58,21 +73,6 @@
 			<div class="chart text-center">
 				<circle-progress [percent]="33" subtitle="19" [outerStrokeColor]="'#1F7772'"
 					[outerStrokeGradientStopColor]="'#44faf0'"></circle-progress>
-			</div>
-		</div>
-	</div>
-	<div class="col-xl-4 col-sm-6" *ngIf="usersCount">
-		<div class="each-stat">
-			<div class="top-header">
-				<div class="title">
-					<img src="./assets/media/icons/dashboard-users.svg" alt="">
-					<span>ICTMaturityScore</span>
-				</div>
-				<div class="link">View all</div>
-			</div>
-			<div class="chart text-center">
-				<circle-progress [percent]="79" subtitle="80" [outerStrokeColor]="'#FFC107'"
-					[outerStrokeGradientStopColor]="'#CB1313'"></circle-progress>
 			</div>
 		</div>
 	</div>
