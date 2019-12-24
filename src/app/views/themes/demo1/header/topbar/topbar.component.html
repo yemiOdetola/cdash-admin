@@ -1,6 +1,6 @@
 <!-- begin:: Header Topbar -->
 <div class="kt-header__topbar">
-	<div class="kt-header__topbar-item">
+	<div class="kt-header__topbar-item" *ngIf="userDetails">
 		<span class="name-item">Hi, {{userDetails.name}}</span>
 	</div>
 	<!--end: Quick panel toggler -->

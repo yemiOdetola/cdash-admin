@@ -47,7 +47,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 		this.organizationsService.getOrganization().subscribe(organizationDetails => {
 			console.log('organization details full', organizationDetails);
 			this.organizationDetails = organizationDetails['data'];
-			this.initTurnoverForm(this.organizationDetails);
+			const turnovers = organizationDetails['data'].turnOvers;
+			this.initTurnoverForm(turnovers);
 			this.loadingSubject.next(false);
 		});
 	}
@@ -57,14 +58,14 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 	}
 	initTurnoverForm(turnover) {
 		this.turnoverForm = this.fb.group({
-			year12: [turnover.year[0] || ''],
-			year13: [turnover.year[1] || ''],
-			year14: [turnover.year[2] || ''],
-			year15: [turnover.year[3] || ''],
-			year16: [turnover.year[4] || ''],
-			year17: [turnover.year[5] || ''],
-			year18: [turnover.year[6] || ''],
-			year19: [turnover.year[7] || ''],
+			year12: [turnover[0].turnover || ''],
+			year13: [turnover[1].turnover || ''],
+			year14: [turnover[2].turnover || ''],
+			year15: [turnover[3].turnover || ''],
+			year16: [turnover[4].turnover || ''],
+			year17: [turnover[5].turnover || ''],
+			year18: [turnover[6].turnover || ''],
+			year19: [turnover[7].turnover || ''],
 		});
 	}
 
@@ -106,7 +107,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 			this.hasFormErrors = true;
 			return;
 		}
-		if (this.turnover._id) {
+		if (this.turnover && this.turnover._id) {
 			console.log('lead has an Id');
 			let editedLead = this.turnoverForm.value;
 			console.log('lead to send', editedLead);
@@ -117,6 +118,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 	}
 
 	addTurnover() {
+		console.log('initialized add');
 		const turnovers = this.turnoverForm.value;
 		const payload = [
 			{
@@ -156,7 +158,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 			data => {
 				console.log('success reponse', data);
 				this.loadingSubject.next(false);
-				const message = `Turnover successfully updated`;
+				const message = `Turnover successfully added`;
 				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 			},
 			error => {
@@ -169,6 +171,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 	}
 
 	updateTurnover() {
+		console.log('initialized edit');
 		const turnovers = this.turnoverForm.value;
 		const payload = [
 			{
