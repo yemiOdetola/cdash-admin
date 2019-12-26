@@ -35,6 +35,15 @@ export class AssetsService {
 		});
 	}
 
+	addCharts(chartData, assetId): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.put<any>(`${BASE_URL}/asset_data/${assetId}`, chartData, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken,
+			}
+		});
+	}
+
 	updateAssetData(asset, assetId): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.put<any>(`${BASE_URL}/asset_data/${assetId}`, asset, {

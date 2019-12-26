@@ -67,24 +67,24 @@ export class AssetEditComponent implements OnInit {
 			this.idParams = this.activatedRoute.snapshot.params['id'];
 		}
 		this.formTypes = [
-			{ 'id': 'icon', 'name': 'Icon', 'type': 'file', 'required': 'true' },
 			{ 'id': 'summary', 'name': 'Summary', 'type': 'text', 'required': 'true' },
 			{ 'id': 'date_acquired', 'name': 'Date acquired', 'type': 'date', 'required': 'true' },
-			{ 'id': 'cost_of_acquisition', 'name': 'Cost of acquisition', 'type': 'number', 'required': 'true' },
-			{ 'id': 'depreciation_per_annum', 'name': 'Depreciation per annum', 'type': 'number', 'required': 'true' },
+			{ 'id': 'cost', 'name': 'Cost of acquisition', 'type': 'number', 'required': 'true' },
+			{ 'id': 'depreciation', 'name': 'Depreciation per annum', 'type': 'number', 'required': 'true' },
 			{ 'id': 'business_purpose', 'name': 'Business purpose', 'type': 'text', 'required': 'true' },
+			{ 'id': 'icon', 'name': 'Icon', 'type': 'file', 'required': 'true' },
 			{ 'id': 'business_owners', 'name': 'Business owners', 'type': 'select', 'required': 'true' },
 			{ 'id': 'recurrent_expenditure_year', 'name': 'Recurrent expenditure(year)', 'type': 'chart', 'required': 'true' },
 			{ 'id': 'recurrent_expenditure_month', 'name': 'Recurrent expenditure(month)', 'type': 'chart', 'required': 'true' },
-			{ 'id': 'location_of_deployment_text', 'name': 'Location of deployment(text)', 'type': 'text', 'required': 'true' },
-			{ 'id': 'location_of_deployment_image', 'name': 'Location of deployment(image)', 'type': 'file', 'required': 'true' },
+			{ 'id': 'location_of_deployment', 'name': 'Location of deployment(text)', 'type': 'text', 'required': 'true' },
+			// { 'id': 'location_of_deployment_image', 'name': 'Location of deployment(image)', 'type': 'file', 'required': 'true' },
 			{ 'id': 'technical_details', 'name': 'Technical details', 'type': 'text', 'required': 'true' },
-			{ 'id': 'type', 'name': 'Type (select)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Othere']},
+			{ 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Othere']},
 			{ 'id': 'type_others', 'name': 'Type others(text)', 'type': 'text', 'required': 'true' },
 			{ 'id': 'historical_cost', 'name': 'Historical cost', 'type': 'chart', 'required': 'true' },
 			{ 'id': 'projected_cost', 'name': 'Projected cost', 'type': 'number', 'required': 'true' },
 			{ 'id': 'industrial_link', 'name': 'Industrial Link', 'type': 'file', 'required': 'true' },
-			{ 'id': 'diagram_schematics', 'name': 'Diagram/ Schematics', 'type': 'file', 'required': 'true' },
+			{ 'id': 'diagram', 'name': 'Diagram/ Schematics', 'type': 'file', 'required': 'true' },
 		];
 		if (this.idParams) {
 			this.loadingSubject.next(true);

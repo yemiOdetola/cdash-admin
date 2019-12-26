@@ -1,9 +1,11 @@
 <kt-portlet>
+	<kt-portlet-header [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	</kt-portlet-header>
 	<kt-portlet-body>
 		<div class="list-ccover p-4">
-			<div class="menu">
+			<div class="menu mb-5">
 				<div [className]="selected === 'main_form' ? 'item active' : 'item'" (click)="selectMenu('main_form')">
-					<div class="selected">Main form</div>
+					<div class="selected">Asset details</div>
 					<div class="active"></div>
 				</div>
 				<div [className]="selected === 'reccurent_year' ? 'item active' : 'item'"
@@ -22,8 +24,19 @@
 					<div class="active"></div>
 				</div>
 			</div>
-			<div class="roles-table" *ngIf="selected === 'main_form'">
+			<div class="roles-table slide-in" *ngIf="selected === 'main_form'">
 				<div class="role-body">
+					<div class="form-group">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="form-item">
+									<label class="label">Asset name/title</label>
+									<input type="text" placeholder="Enter asset name" [(ngModel)]="assetName"
+										required="required" />
+								</div>
+							</div>
+						</div>
+					</div>
 					<form [formGroup]="dataFormGroup" (ngSubmit)="onSubmit()">
 						<div class="form-group">
 							<div *ngFor="let form_elem of forms">
@@ -46,6 +59,18 @@
 												<div class="form-item">
 													<label class="label">{{form_elem.name}}</label>
 													<input type="number" placeholder="Enter {{form_elem.name}}"
+														formControlName="{{form_elem.id}}"
+														required="{{form_elem.required}}" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div *ngSwitchCase="'date'">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="form-item">
+													<label class="label">{{form_elem.name}}</label>
+													<input type="date" placeholder="Enter {{form_elem.name}}"
 														formControlName="{{form_elem.id}}"
 														required="{{form_elem.required}}" />
 												</div>
@@ -117,15 +142,29 @@
 					</div>
 				</div>
 			</div>
-			<div class="roles-table" *ngIf="selected === 'reccurent_year'">
+			<div class="roles-table slide-in" *ngIf="selected === 'reccurent_year'">
 				<div class="role-body">
 					<form [formGroup]="reccurentFormGroup">
 						<div class="form-group">
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-item">
+										<label class="label">Choose currency</label>
+										<select formControlName="currency"
+											required="required">
+											<option selected="selected">Select currency</option>
+											<option>naira</option>
+											<option>dollar</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
 										<label class="label">2012</label>
-										<input type="number" placeholder="Enter 2012 expenditure" formControlName="year12">
+										<input type="number" placeholder="Enter 2012 expenditure"
+											formControlName="year12">
 									</div>
 								</div>
 							</div>
@@ -133,7 +172,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2013</label>
-										<input type="number" placeholder="Enter 2013 expenditure" formControlName="year13">
+										<input type="number" placeholder="Enter 2013 expenditure"
+											formControlName="year13">
 									</div>
 								</div>
 							</div>
@@ -141,7 +181,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2014</label>
-										<input type="number" placeholder="Enter 2014 expenditure" formControlName="year14">
+										<input type="number" placeholder="Enter 2014 expenditure"
+											formControlName="year14">
 									</div>
 								</div>
 							</div>
@@ -149,7 +190,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2015</label>
-										<input type="number" placeholder="Enter 2015 expenditure" formControlName="year15">
+										<input type="number" placeholder="Enter 2015 expenditure"
+											formControlName="year15">
 									</div>
 								</div>
 							</div>
@@ -157,7 +199,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2016</label>
-										<input type="number" placeholder="Enter 2016 expenditure" formControlName="year16">
+										<input type="number" placeholder="Enter 2016 expenditure"
+											formControlName="year16">
 									</div>
 								</div>
 							</div>
@@ -165,7 +208,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2017</label>
-										<input type="number" placeholder="Enter 2017 expenditure" formControlName="year17">
+										<input type="number" placeholder="Enter 2017 expenditure"
+											formControlName="year17">
 									</div>
 								</div>
 							</div>
@@ -173,7 +217,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2018</label>
-										<input type="number" placeholder="Enter 2018 expenditure" formControlName="year18">
+										<input type="number" placeholder="Enter 2018 expenditure"
+											formControlName="year18">
 									</div>
 								</div>
 							</div>
@@ -181,7 +226,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2019</label>
-										<input type="number" placeholder="Enter 2019 expenditure" formControlName="year19">
+										<input type="number" placeholder="Enter 2019 expenditure"
+											formControlName="year19">
 									</div>
 								</div>
 							</div>
@@ -193,11 +239,11 @@
 					</form>
 					<div class="form-submit mt-5 mb-4">
 						<button class="reset" (click)="reset()">Reset</button>
-						<button class="submit" type="button" (click)="onSubmit()">Submit</button>
+						<button class="submit" type="button" (click)="addReccurentYear('recurrent_expenditure_year')">Submit</button>
 					</div>
 				</div>
 			</div>
-			<div class="roles-table" *ngIf="selected === 'reccurent_month'">
+			<div class="roles-table slide-in" *ngIf="selected === 'reccurent_month'">
 				<div class="role-body">
 					<form [formGroup]="reccurentMonthFormGroup">
 						<div class="form-group">
@@ -205,7 +251,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">January</label>
-										<input type="number" placeholder="Enter january expenditure" formControlName="january">
+										<input type="number" placeholder="Enter january expenditure"
+											formControlName="january">
 									</div>
 								</div>
 							</div>
@@ -213,7 +260,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">February</label>
-										<input type="number" placeholder="Enter february expenditure" formControlName="february">
+										<input type="number" placeholder="Enter february expenditure"
+											formControlName="february">
 									</div>
 								</div>
 							</div>
@@ -221,7 +269,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">March</label>
-										<input type="number" placeholder="Enter march expenditure" formControlName="march">
+										<input type="number" placeholder="Enter march expenditure"
+											formControlName="march">
 									</div>
 								</div>
 							</div>
@@ -229,7 +278,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">April</label>
-										<input type="number" placeholder="Enter april expenditure" formControlName="april">
+										<input type="number" placeholder="Enter april expenditure"
+											formControlName="april">
 									</div>
 								</div>
 							</div>
@@ -245,7 +295,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">June</label>
-										<input type="number" placeholder="Enter june expenditure" formControlName="june">
+										<input type="number" placeholder="Enter june expenditure"
+											formControlName="june">
 									</div>
 								</div>
 							</div>
@@ -253,7 +304,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">July</label>
-										<input type="number" placeholder="Enter july expenditure" formControlName="july">
+										<input type="number" placeholder="Enter july expenditure"
+											formControlName="july">
 									</div>
 								</div>
 							</div>
@@ -261,7 +313,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">August</label>
-										<input type="number" placeholder="Enter august expenditure" formControlName="august">
+										<input type="number" placeholder="Enter august expenditure"
+											formControlName="august">
 									</div>
 								</div>
 							</div>
@@ -269,7 +322,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">September</label>
-										<input type="number" placeholder="Enter september expenditure" formControlName="september">
+										<input type="number" placeholder="Enter september expenditure"
+											formControlName="september">
 									</div>
 								</div>
 							</div>
@@ -277,7 +331,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">October</label>
-										<input type="number" placeholder="Enter october expenditure" formControlName="october">
+										<input type="number" placeholder="Enter october expenditure"
+											formControlName="october">
 									</div>
 								</div>
 							</div>
@@ -285,15 +340,17 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">November</label>
-										<input type="number" placeholder="Enter november expenditure" formControlName="november">
+										<input type="number" placeholder="Enter november expenditure"
+											formControlName="november">
 									</div>
 								</div>
-							</div> 
+							</div>
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">December</label>
-										<input type="number" placeholder="Enter december expenditure" formControlName="december">
+										<input type="number" placeholder="Enter december expenditure"
+											formControlName="december">
 									</div>
 								</div>
 							</div>
@@ -305,11 +362,11 @@
 					</form>
 					<div class="form-submit mt-5 mb-4">
 						<button class="reset" (click)="reset()">Reset</button>
-						<button class="submit" type="button" (click)="onSubmit()">Submit</button>
+						<button class="submit" type="button" (click)="addReccurentMonth('recurrent_expenditure_month')">Submit</button>
 					</div>
 				</div>
 			</div>
-			<div class="roles-table" *ngIf="selected === 'historical_cost'">
+			<div class="roles-table slide-in" *ngIf="selected === 'historical_cost'">
 				<div class="role-body">
 					<form [formGroup]="historicalFormGroup">
 						<div class="form-group">
@@ -317,7 +374,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2012</label>
-										<input type="number" placeholder="Enter 2012 expenditure" formControlName="year12">
+										<input type="number" placeholder="Enter 2012 expenditure"
+											formControlName="year12">
 									</div>
 								</div>
 							</div>
@@ -325,7 +383,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2013</label>
-										<input type="number" placeholder="Enter 2013 expenditure" formControlName="year13">
+										<input type="number" placeholder="Enter 2013 expenditure"
+											formControlName="year13">
 									</div>
 								</div>
 							</div>
@@ -333,7 +392,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2014</label>
-										<input type="number" placeholder="Enter 2014 expenditure" formControlName="year14">
+										<input type="number" placeholder="Enter 2014 expenditure"
+											formControlName="year14">
 									</div>
 								</div>
 							</div>
@@ -341,7 +401,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2015</label>
-										<input type="number" placeholder="Enter 2015 expenditure" formControlName="year15">
+										<input type="number" placeholder="Enter 2015 expenditure"
+											formControlName="year15">
 									</div>
 								</div>
 							</div>
@@ -349,7 +410,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2016</label>
-										<input type="number" placeholder="Enter 2016 expenditure" formControlName="year16">
+										<input type="number" placeholder="Enter 2016 expenditure"
+											formControlName="year16">
 									</div>
 								</div>
 							</div>
@@ -357,7 +419,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2017</label>
-										<input type="number" placeholder="Enter 2017 expenditure" formControlName="year17">
+										<input type="number" placeholder="Enter 2017 expenditure"
+											formControlName="year17">
 									</div>
 								</div>
 							</div>
@@ -365,7 +428,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2018</label>
-										<input type="number" placeholder="Enter 2018 expenditure" formControlName="year18">
+										<input type="number" placeholder="Enter 2018 expenditure"
+											formControlName="year18">
 									</div>
 								</div>
 							</div>
@@ -373,7 +437,8 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2019</label>
-										<input type="number" placeholder="Enter 2019 expenditure" formControlName="year19">
+										<input type="number" placeholder="Enter 2019 expenditure"
+											formControlName="year19">
 									</div>
 								</div>
 							</div>
@@ -385,7 +450,7 @@
 					</form>
 					<div class="form-submit mt-5 mb-4">
 						<button class="reset" (click)="reset()">Reset</button>
-						<button class="submit" type="button" (click)="onSubmit()">Submit</button>
+						<button class="submit" type="button" (click)="addHistoricalCost('historical_cost')">Submit</button>
 					</div>
 				</div>
 			</div>
