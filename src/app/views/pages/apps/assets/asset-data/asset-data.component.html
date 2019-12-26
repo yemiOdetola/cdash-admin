@@ -9,17 +9,17 @@
 					<div class="active"></div>
 				</div>
 				<div [className]="selected === 'reccurent_year' ? 'item active' : 'item'"
-					(click)="selectMenu('reccurent_year')">
+					(click)="selectMenu('reccurent_year')" *ngIf="showReccurentYear">
 					<div class="selected">Reccurent expenditure (year)</div>
 					<div class="active"></div>
 				</div>
 				<div [className]="selected === 'reccurent_month' ? 'item active' : 'item'"
-					(click)="selectMenu('reccurent_month')">
+					(click)="selectMenu('reccurent_month')" *ngIf="showReccurentMonth">
 					<div class="selected">Reccurent expenditure (month)</div>
 					<div class="active"></div>
 				</div>
 				<div [className]="selected === 'historical_cost' ? 'item active' : 'item'"
-					(click)="selectMenu('historical_cost')">
+					(click)="selectMenu('historical_cost')" *ngIf="showHistorical">
 					<div class="selected">Historical cost</div>
 					<div class="active"></div>
 				</div>
@@ -77,18 +77,39 @@
 											</div>
 										</div>
 									</div>
-									<div *ngSwitchCase="'select'">
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="form-item">
-													<label class="label">{{form_elem.name}}</label>
-													<select formControlName="{{form_elem.id}}"
+									<div *ngIf="form_elem.id === 'type'">
+										<div *ngSwitchCase="'select'">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="form-item">
+														<label class="label">{{form_elem.name}}</label>
+														<select formControlName="{{form_elem.id}}"
 														required="{{form_elem.required}}">
 														<option selected="selected">Select {{form_elem.name}}</option>
 														<option *ngFor="let opt of form_elem.options">
 															{{opt}}
 														</option>
 													</select>
+												</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div *ngIf="form_elem.id === 'business_owners'">
+										<div *ngSwitchCase="'select'">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="form-item">
+														<label class="label">{{form_elem.name}}</label>
+														<select formControlName="{{form_elem.id}}"
+															required="{{form_elem.required}}">
+															<option selected="selected">Select {{form_elem.name}}
+															</option>
+															<option value="{{staff._id}}" *ngFor="let staff of staffs">
+																{{staff.name}}
+															</option>
+														</select>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -150,8 +171,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">Choose currency</label>
-										<select formControlName="currency"
-											required="required">
+										<select formControlName="currency" required="required">
 											<option selected="selected">Select currency</option>
 											<option>naira</option>
 											<option>dollar</option>
@@ -239,7 +259,8 @@
 					</form>
 					<div class="form-submit mt-5 mb-4">
 						<button class="reset" (click)="reset()">Reset</button>
-						<button class="submit" type="button" (click)="addReccurentYear('recurrent_expenditure_year')">Submit</button>
+						<button class="submit" type="button"
+							(click)="addReccurentYear('recurrent_expenditure_year')">Submit</button>
 					</div>
 				</div>
 			</div>
@@ -362,7 +383,8 @@
 					</form>
 					<div class="form-submit mt-5 mb-4">
 						<button class="reset" (click)="reset()">Reset</button>
-						<button class="submit" type="button" (click)="addReccurentMonth('recurrent_expenditure_month')">Submit</button>
+						<button class="submit" type="button"
+							(click)="addReccurentMonth('recurrent_expenditure_month')">Submit</button>
 					</div>
 				</div>
 			</div>
@@ -450,7 +472,8 @@
 					</form>
 					<div class="form-submit mt-5 mb-4">
 						<button class="reset" (click)="reset()">Reset</button>
-						<button class="submit" type="button" (click)="addHistoricalCost('historical_cost')">Submit</button>
+						<button class="submit" type="button"
+							(click)="addHistoricalCost('historical_cost')">Submit</button>
 					</div>
 				</div>
 			</div>

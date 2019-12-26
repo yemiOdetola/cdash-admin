@@ -35,9 +35,9 @@ export class AssetsService {
 		});
 	}
 
-	addCharts(chartData, assetId): Observable<any> {
+	addCharts(chartData): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.put<any>(`${BASE_URL}/asset_data/${assetId}`, chartData, {
+		return this.http.put<any>(`${BASE_URL}/asset_data/finance`, chartData, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 			}

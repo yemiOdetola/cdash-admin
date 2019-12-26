@@ -13,13 +13,23 @@
 				<table class="table-view">
 					<thead>
 						<tr>
-							<th>Container name</th>
+							<th>Asset name</th>
+							<th>Summary</th>
+							<th>Date acquired</th>
+							<th>Acquisition cost</th>
+							<th>Purpose</th>
+							<th>Type</th>
 							<th></th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr className="each-row" *ngFor="let asset of assets">
 							<td>{{ asset.name }}</td>
+							<td>{{ asset.summary ? asset.summary : 'not available' }}</td>
+							<td>{{ asset.date_acquired | date: 'longDate'}}</td>
+							<td>{{ asset.cost ? asset.cost : 'not available' }}</td>
+							<td>{{ asset.purpose ? asset.purpose : 'not available' }}</td>
+							<td>{{ asset.type ? asset.type : 'not available' }}</td>
 							<td>
 								<a routerLink="/cdash/assets/manage/new-asset-data/{{asset._id}}" class="view">View</a>
 							</td>

@@ -2,7 +2,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 // Services and Models
-import { UserModel, UserService } from '../../../../../core/users';
+import { UserService } from '../../../../../core/users';
 
 // material for tabl
 

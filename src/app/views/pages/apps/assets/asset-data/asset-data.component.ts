@@ -3,8 +3,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssetsService } from '../../../../../core/assets';
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
-import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { UserService } from '../../../../../core/users';
 
 @Component({
 	selector: 'kt-asset-data',
@@ -43,15 +43,17 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	showHistorical = false;
 	editAssetInit = false;
 	assetName = '';
+	staffs = [];
 	constructor(
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
 		private assetsService: AssetsService,
 		private layoutUtilsService: LayoutUtilsService,
-		private _location: Location,
+		private usersService: UserService,
 		private router: Router) { }
 
 	ngOnInit() {
+		this.getAllStaffs();
 		console.clear();
 		let group = {};
 		this.localFields.forEach(input_template => {
@@ -74,6 +76,21 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		this.emptyReccurentForm();
 		this.emptyReccurentMonthForm();
 		this.emptyHistoricalCost();
+	}
+
+	getAllStaffs() {
+		this.loading$ = this.loadingSubject.asObservable();
+		this.loadingSubject.next(true);
+		this.usersService.getStaffs(0, 999).subscribe(
+			response => {
+				this.staffs = response['data'];
+				this.loadingSubject.next(false);
+				console.log('all staffs returned', this.staffs);
+			},
+			error => {
+				console.log('error', error);
+			}
+		);
 	}
 
 	selectMenu(item) {
@@ -147,10 +164,10 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			this.updateAssetMainData(editedAsset);
 			return;
 		}
-		this.addAssetMainData(this.dataFormGroup.value);
+		this.addAssetMainData();
 	}
 
-	addAssetMainData(assetData) {
+	addAssetMainData() {
 		this.loadingSubject.next(true);
 		let payload = new FormData();
 		let forms = this.dataFormGroup.value;
@@ -170,6 +187,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			payload.append('diagram_schematics', this.fSelectedSchematics, this.fSelectedSchematics.name);
 		}
 		payload.append('name', this.assetName);
+		payload.append('asset_id', this.assetId);
 		console.log(this.assetName);
 		this.assetsService.createAssetData(payload).subscribe(
 			data => {
@@ -197,15 +215,47 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	addReccurentYear(formName) {
 		this.loadingSubject.next(true);
-		const formData = [];
-		formData.push(this.reccurentFormGroup.value);
+		const formData = [
+			{
+				year: 2012,
+				amount: this.reccurentFormGroup.get('year12').value
+			},
+			{
+				year: 2013,
+				amount: this.reccurentFormGroup.get('year13').value
+			},
+			{
+				year: 2014,
+				amount: this.reccurentFormGroup.get('year14').value
+			},
+			{
+				year: 2015,
+				amount: this.reccurentFormGroup.get('year15').value
+			},
+			{
+				year: 2016,
+				amount: this.reccurentFormGroup.get('year16').value
+			},
+			{
+				year: 2017,
+				amount: this.reccurentFormGroup.get('year17').value
+			},
+			{
+				year: 2018,
+				amount: this.reccurentFormGroup.get('year18').value
+			},
+			{
+				year: 2019,
+				amount: this.reccurentFormGroup.get('year19').value
+			},
+		];
 		const payload = {
 			data: formData,
 			type: formName,
 			currency: this.reccurentFormGroup.get('currency').value,
-			asset_data_id: this.assetId,
+			asset_data_id: localStorage.getItem('asset_data_id'),
 		};
-		this.assetsService.addCharts(payload, this.assetId).subscribe(
+		this.assetsService.addCharts(payload).subscribe(
 			data => {
 				this.loadingSubject.next(false);
 				const message = `Asset chart been successfully updated`;
@@ -214,6 +264,8 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 					this.selected = 'reccurent_month';
 				} else if (data.status === true && this.showHistorical) {
 					this.selected = 'historical_cost';
+				} else {
+					this.router.navigate([`/cdash/assets/data/${this.assetId}`]);
 				}
 			},
 			error => {
@@ -227,15 +279,63 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	addReccurentMonth(formName) {
 		this.loadingSubject.next(true);
-		const formData = [];
-		formData.push(this.reccurentMonthFormGroup.value);
+		const formData = [
+			{
+				month: 'january',
+				amount: this.reccurentMonthFormGroup.get('january').value
+			},
+			{
+				month: 'february',
+				amount: this.reccurentMonthFormGroup.get('february').value
+			},
+			{
+				month: 'march',
+				amount: this.reccurentMonthFormGroup.get('march').value
+			},
+			{
+				month: 'april',
+				amount: this.reccurentMonthFormGroup.get('april').value
+			},
+			{
+				month: 'may',
+				amount: this.reccurentMonthFormGroup.get('may').value
+			},
+			{
+				month: 'june',
+				amount: this.reccurentMonthFormGroup.get('june').value
+			},
+			{
+				month: 'july',
+				amount: this.reccurentMonthFormGroup.get('july').value
+			},
+			{
+				month: 'august',
+				amount: this.reccurentMonthFormGroup.get('august').value
+			},
+			{
+				month: 'september',
+				amount: this.reccurentMonthFormGroup.get('september').value
+			},
+			{
+				month: 'october',
+				amount: this.reccurentMonthFormGroup.get('october').value
+			},
+			{
+				month: 'november',
+				amount: this.reccurentMonthFormGroup.get('november').value
+			},
+			{
+				month: 'december',
+				amount: this.reccurentMonthFormGroup.get('december').value
+			},
+		];
 		const payload = {
 			data: formData,
 			type: formName,
 			currency: this.reccurentMonthFormGroup.get('currency').value,
-			asset_data_id: this.assetId,
+			asset_data_id: localStorage.getItem('asset_data_id'),
 		};
-		this.assetsService.addCharts(payload, this.assetId).subscribe(
+		this.assetsService.addCharts(payload).subscribe(
 			data => {
 				this.loadingSubject.next(false);
 				const message = `Asset chart been successfully updated`;
@@ -255,15 +355,47 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	addHistoricalCost(formName) {
 		this.loadingSubject.next(true);
-		const formData = [];
-		formData.push(this.historicalFormGroup.value);
+		const formData = [
+			{
+				year: 2012,
+				amount: this.historicalFormGroup.get('year12').value
+			},
+			{
+				year: 2013,
+				amount: this.historicalFormGroup.get('year13').value
+			},
+			{
+				year: 2014,
+				amount: this.historicalFormGroup.get('year14').value
+			},
+			{
+				year: 2015,
+				amount: this.historicalFormGroup.get('year15').value
+			},
+			{
+				year: 2016,
+				amount: this.historicalFormGroup.get('year16').value
+			},
+			{
+				year: 2017,
+				amount: this.historicalFormGroup.get('year17').value
+			},
+			{
+				year: 2018,
+				amount: this.historicalFormGroup.get('year18').value
+			},
+			{
+				year: 2019,
+				amount: this.historicalFormGroup.get('year19').value
+			},
+		];
 		const payload = {
 			data: formData,
 			type: formName,
 			currency: this.historicalFormGroup.get('currency').value,
-			asset_data_id: this.assetId,
+			asset_data_id: localStorage.getItem('asset_data_id'),
 		};
-		this.assetsService.addCharts(payload, this.assetId).subscribe(
+		this.assetsService.addCharts(payload).subscribe(
 			data => {
 				this.loadingSubject.next(false);
 				const message = `Asset chart been successfully updated`;
