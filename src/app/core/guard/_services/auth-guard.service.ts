@@ -6,12 +6,8 @@ export class AuthGuardService implements CanActivate {
 	constructor(public router: Router) { }
 	canActivate(): boolean {
 		let loginDetails = JSON.parse(localStorage.getItem('loginData'));
-		// if (loginDetails.admin !== true) {
-		// 	this.router.navigate(['strada/dashboard']);
-		// 	return false;
-		// }
 		if (loginDetails.head !== true && loginDetails.admin !== true) {
-			this.router.navigate(['strada/dashboard']);
+			this.router.navigate(['cdash/dashboard']);
 			return false;
 		}
 		return true;

@@ -26,6 +26,24 @@ export class AssetsService {
 		});
 	}
 
+	createAssetData(asset): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.post<any>(`${BASE_URL}/asset_data`, asset, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken,
+			}
+		});
+	}
+
+	updateAssetData(asset, assetId): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.put<any>(`${BASE_URL}/asset_data/${assetId}`, asset, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
 
 	// get all assets
 	getAssets(skip, limit): Observable<any[]> {
@@ -89,8 +107,7 @@ export class AssetsService {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.put<any>(`${BASE_URL}/api/asset?asset_id=${assetId}`, asset, {
 			headers: {
-				'Authorization': 'Bearer ' + userToken,
-				'encrypted': 'true'
+				'Authorization': 'Bearer ' + userToken
 			}
 		});
 	}

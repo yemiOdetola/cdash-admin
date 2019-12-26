@@ -17,15 +17,27 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	proceedingOption: string;
 	assetId: string;
 	assetDetails: any;
-	pageTitle = 'Please wait...';
+	pageTitle = 'Asset form';
 	hasFormErrors = false;
-	fSelected;
-	fileName;
-	assetDataForm: FormGroup;
+	fSelectedIcon;
+	fSelectedLocation;
+	fSelectedIndustrial;
+	fSelectedSchematics;
+	fileNameIcon;
+	fileNameLocation;
+	fileNameIndustrial;
+	fileNameSchematics;
 	oldAssetData: FormGroup;
 	assetData: any;
 	formFields = [];
+	localForms = JSON.parse(localStorage.getItem('formElement'));
+	localFields = this.localForms.form;
+	forms: any = this.localFields;
 	dataFormGroup: FormGroup;
+	reccurentFormGroup: FormGroup;
+	reccurentMonthFormGroup: FormGroup;
+	historicalFormGroup: FormGroup;
+	selected = 'main_form';
 	constructor(
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
@@ -35,45 +47,87 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		private router: Router) { }
 
 	ngOnInit() {
-		let formItems = JSON.parse(localStorage.getItem('formElement'));
+		console.clear();
 		let group = {};
-		let formsForm = formItems['form'];
-		formsForm.forEach(inputElement => {
-			group[inputElement.label] = new FormControl('');
+		this.localFields.forEach(input_template => {
+			group[input_template.id] = new FormControl('');
 		});
 		this.dataFormGroup = new FormGroup(group);
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
 		this.assetId = this.route.snapshot.params['id'];
-		// this.assetsService.getAssetById(this.assetId).subscribe(
-		// 	assetForm => {
-		// 		this.assetData = assetForm['data'];
-		// 		this.formFields = this.assetData.form;
-		// 		let formItems = this.assetData.form;
-		// 		formItems.forEach(inputElement => {
-		// 			group[inputElement.label] = new FormControl('');
-		// 		});
-		// 		this.dataFormGroup = new FormGroup(group);
-		// 		this.loadingSubject.next(false);
-		// 		this.pageTitle = `${this.assetData.name}`;
-		// 	},
-		// 	error => {
-		// 		console.log('error occured', error);
-		// 		this.loadingSubject.next(false);
-		// 	}
-		// );
-		console.log('id returned', this.route.snapshot.params['id']);
+		this.emptyReccurentForm();
+		this.emptyReccurentMonthForm();
+		this.emptyHistoricalCost();
 	}
 
-	initAssetForm() { }
+	selectMenu(item) {
+		return this.selected = item;
+	}
+
+	initReccurentForm(turnover) {
+		this.reccurentFormGroup = this.fb.group({
+			year12: [turnover[0].turnover || ''],
+			year13: [turnover[1].turnover || ''],
+			year14: [turnover[2].turnover || ''],
+			year15: [turnover[3].turnover || ''],
+			year16: [turnover[4].turnover || ''],
+			year17: [turnover[5].turnover || ''],
+			year18: [turnover[6].turnover || ''],
+			year19: [turnover[7].turnover || ''],
+		});
+	}
+
+	emptyReccurentForm() {
+		this.reccurentFormGroup = this.fb.group({
+			year12: [''],
+			year13: [''],
+			year14: [''],
+			year15: [''],
+			year16: [''],
+			year17: [''],
+			year18: [''],
+			year19: [''],
+		});
+	}
+
+	emptyHistoricalCost() {
+		this.historicalFormGroup = this.fb.group({
+			year12: [''],
+			year13: [''],
+			year14: [''],
+			year15: [''],
+			year16: [''],
+			year17: [''],
+			year18: [''],
+			year19: [''],
+		});
+	}
+
+	emptyReccurentMonthForm() {
+		this.reccurentMonthFormGroup = this.fb.group({
+			january: [''],
+			february: [''],
+			march: [''],
+			april: [''],
+			may: [''],
+			june: [''],
+			july: [''],
+			august: [''],
+			september: [''],
+			october: [''],
+			november: [''],
+			december: [''],
+		});
+	}
 
 
 	onSubmit() {
 		this.hasFormErrors = false;
-		const controls = this.assetDataForm.controls;
+		const controls = this.dataFormGroup.controls;
 		this.loadingSubject.next(true);
 		/** check form */
-		if (this.assetDataForm.invalid) {
+		if (this.dataFormGroup.invalid) {
 			this.loadingSubject.next(false);
 			Object.keys(controls).forEach(controlName =>
 				controls[controlName].markAsTouched()
@@ -83,32 +137,87 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		}
 		if (this.assetData._id) {
 			console.log('lead has an Id');
-			let editedLead = this.assetDataForm.value;
-			console.log('lead to send', editedLead);
-			this.updateAssetData(editedLead);
+			let editedAsset = this.dataFormGroup.value;
+			console.log('lead to send', editedAsset);
+			this.updateAssetData(editedAsset);
 			return;
 		}
-		this.addAssetData(this.assetDataForm.value);
+		this.addAssetData(this.dataFormGroup.value);
 	}
 
-	updateAssetData(assetData) { }
-	addAssetData(assetData) { }
+	addAssetData(assetData) {
+		this.assetsService.createAssetData(assetData).subscribe(
+			data => {
+				this.loadingSubject.next(false);
+				const message = `Asset been successfully added`;
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+				this.router.navigate(['/cdash/assets/assets']);
+			},
+			error => {
+				this.loadingSubject.next(false);
+				console.log('Error response', error);
+				const title = 'Please Retry';
+				const message = 'Sorry, Temporary Error Occured';
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			});
+	}
+
+	updateAssetData(assetData) {
+		this.assetsService.updateAssetData(assetData, this.assetId).subscribe(
+			data => {
+				this.loadingSubject.next(false);
+				const message = `Asset been successfully updated`;
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+				this.router.navigate(['/cdash/assets/assets']);
+			},
+			error => {
+				this.loadingSubject.next(false);
+				console.log('Error response', error);
+				const title = 'Please Retry';
+				const message = 'Sorry, Temporary Error Occured';
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			});
+	}
+
 
 
 	reset() {
 		this.assetData = Object.assign({}, this.oldAssetData);
-		this.initAssetForm();
+		// this.initAssetForm();
 		this.hasFormErrors = false;
-		this.assetDataForm.markAsPristine();
-		this.assetDataForm.markAsUntouched();
-		this.assetDataForm.updateValueAndValidity();
+		this.dataFormGroup.markAsPristine();
+		this.dataFormGroup.markAsUntouched();
+		this.dataFormGroup.updateValueAndValidity();
 	}
 
-	onFileChange(event) {
-		if (event.target.files.length > 0) {
-			const fileSelected: File = event.target.files[0];
-			this.fSelected = fileSelected;
-			this.fileName = fileSelected.name;
+	onFileChange(event, type) {
+		if (type === 'diagram_schematics') {
+			console.log('on diagram schematics', event.target.files[0]);
+			if (event.target.files.length > 0) {
+				this.fSelectedSchematics = event.target.files[0];
+				this.fileNameSchematics = event.target.files[0].name;
+			}
+		}
+		if (type === 'industrial_link') {
+			console.log('on industrial link', event.target.files[0]);
+			if (event.target.files.length > 0) {
+				this.fSelectedIndustrial = event.target.files[0];
+				this.fileNameIndustrial = event.target.files[0].name;
+			}
+		}
+		if (type === 'location_of_deployment_image') {
+			console.log('on location_of_deployment_image', event.target.files[0]);
+			if (event.target.files.length > 0) {
+				this.fSelectedLocation = event.target.files[0];
+				this.fileNameLocation = event.target.files[0].name;
+			}
+		}
+		if (type === 'icon') {
+			console.log('on icon', event.target.files[0]);
+			if (event.target.files.length > 0) {
+				this.fSelectedIcon = event.target.files[0];
+				this.fileNameIcon = event.target.files[0].name;
+			}
 		}
 	}
 

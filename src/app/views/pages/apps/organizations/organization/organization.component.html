@@ -15,11 +15,8 @@
 			<div class="roles-table" *ngIf="selected === 'organization'">
 				<div class="role-body">
 					<div class="mt-4 mb-5 profile-data">
-						<div class="biz-title text-center">Organization details</div>
-						<div class="biz-underline mx-auto mb-5"></div>
 						<div class="profile-card" *ngIf="organizationDetails">
 							<div class="profile">
-								<!-- <img src="./assets/media/icons/sample-picture.png" alt=""> -->
 								<img src="{{organizationDetails.logo}}" alt="{{organizationDetails.name}}'s logo'">
 								<div class="name" *ngIf="organizationDetails.name">{{ organizationDetails.name | uppercase }}</div>
 							</div>
@@ -47,15 +44,13 @@
 			<div class="roles-table" *ngIf="selected === 'turnover'">
 				<div class="role-body">
 					<div class="mt-4 mb-5 profile-data">
-						<div class="biz-title text-center">Organization turnovers</div>
-						<div class="biz-underline mx-auto mb-5"></div>
 						<form [formGroup]="turnoverForm">
 							<div class="form-group">
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="form-item">
 											<label class="label">2012</label>
-											<input type="number" placeholder="2012" formControlName="year12">
+											<input type="number" placeholder="2012's turnover" formControlName="year12">
 										</div>
 									</div>
 								</div>
@@ -63,7 +58,7 @@
 									<div class="col-lg-12">
 										<div class="form-item">
 											<label class="label">2013</label>
-											<input type="number" placeholder="2013" formControlName="year13">
+											<input type="number" placeholder="2013's turnover" formControlName="year13">
 										</div>
 									</div>
 								</div>
@@ -71,7 +66,7 @@
 									<div class="col-lg-12">
 										<div class="form-item">
 											<label class="label">2014</label>
-											<input type="number" placeholder="2014" formControlName="year14">
+											<input type="number" placeholder="2014's turnover" formControlName="year14">
 										</div>
 									</div>
 								</div>
@@ -79,7 +74,7 @@
 									<div class="col-lg-12">
 										<div class="form-item">
 											<label class="label">2015</label>
-											<input type="number" placeholder="2015" formControlName="year15">
+											<input type="number" placeholder="2015's turnover" formControlName="year15">
 										</div>
 									</div>
 								</div>
@@ -87,7 +82,7 @@
 									<div class="col-lg-12">
 										<div class="form-item">
 											<label class="label">2016</label>
-											<input type="number" placeholder="2016" formControlName="year16">
+											<input type="number" placeholder="2016's turnover" formControlName="year16">
 										</div>
 									</div>
 								</div>
@@ -95,7 +90,7 @@
 									<div class="col-lg-12">
 										<div class="form-item">
 											<label class="label">2017</label>
-											<input type="number" placeholder="2017" formControlName="year17">
+											<input type="number" placeholder="2017's turnover" formControlName="year17">
 										</div>
 									</div>
 								</div>
@@ -103,7 +98,7 @@
 									<div class="col-lg-12">
 										<div class="form-item">
 											<label class="label">2018</label>
-											<input type="number" placeholder="2018" formControlName="year18">
+											<input type="number" placeholder="2018's turnover" formControlName="year18">
 										</div>
 									</div>
 								</div>
@@ -111,7 +106,7 @@
 									<div class="col-lg-12">
 										<div class="form-item">
 											<label class="label">2019</label>
-											<input type="number" placeholder="2019" formControlName="year19">
+											<input type="number" placeholder="2019's turnover" formControlName="year19">
 										</div>
 									</div>
 								</div>

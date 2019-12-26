@@ -36,10 +36,10 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 		private router: Router) { }
 
 	ngOnInit() {
-		this.emptyTurnoverForm();
-		this.getOrganizationDetails();
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
+		this.emptyTurnoverForm();
+		this.getOrganizationDetails();
 	}
 
 	getOrganizationDetails() {
@@ -56,6 +56,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 	selectMenu(item) {
 		return this.selected = item;
 	}
+
+
 	initTurnoverForm(turnover) {
 		this.turnoverForm = this.fb.group({
 			year12: [turnover[0].turnover || ''],

@@ -83,48 +83,9 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.user$ = this.store.pipe(select(currentUser));
 		this.user$.subscribe(
 			userData => {
-				this.userId = userData['_id'];
-				localStorage.setItem('organizationId', userData.organization_id);
-				console.log(userData.organization_id, userData.user_token, 'orgId');
-				if (this.userId) {
-					console.log('this.userId', this.userId);
-					this.messagingService.requestPermission(this.userId);
-					this.sendPushId();
-					if (this.messagingService.permissionGranted) {
-						this.sendPushId();
-					}
-					let newToken = this.messagingService.permittedToken;
-					const oldToken = localStorage.getItem('pushToken');
-					if (oldToken !== newToken) {
-						this.sendPushId();
-					}
-				}
-			}
-		);
-
-		this.messagingService.receiveMessage();
-		this.message = this.messagingService.currentMessage;
-		this.message.subscribe(message => {
-			this.message = message;
-			console.log('push message', this.message);
-		});
+				this.userId = userData['_id'];});
 	}
 
-	sendPushId() {
-		const pushToken = localStorage.getItem('pushToken');
-		let payload = {
-			push_id: pushToken,
-			device_type: 'web'
-		};
-		this.messagingService.updatePushId(payload, this.userId).subscribe(
-			responseData => {
-				console.log(responseData);
-			},
-			error => {
-				console.log(error);
-			}
-		);
-	}
 
 	/**
 	 * On Destroy
