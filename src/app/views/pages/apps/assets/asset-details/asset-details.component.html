@@ -1,13 +1,13 @@
 <kt-portlet>
 	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
-			<div class="details-action edit text-center" routerLink="/cdash/assets/manage/new-asset-data/{{assetDataId}}">
+			<div class="details-action edit text-center" routerLink="/cdash/assets/new-asset-data/details/{{assetDataId}}">
 				<img src="./assets/media/icons/details-edit.svg" alt="">
 				<span>Edit</span>
 			</div>
 			<div class="details-action delete text-center" (click)="onDelete()">
 				<img src="./assets/media/icons/details-delete.svg" alt="">
-				<span>Delete</span>
+				<span>Delete</span> 
 			</div>
 		</ng-container>
 	</kt-portlet-header>

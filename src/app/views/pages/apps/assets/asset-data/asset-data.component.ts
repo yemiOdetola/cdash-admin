@@ -11,11 +11,14 @@ import { UserService } from '../../../../../core/users';
 	templateUrl: './asset-data.component.html',
 	styleUrls: ['./asset-data.component.scss']
 })
+// recurrent_month
+// recurrent_expenditure_year
+// historical_data
 export class AssetDataComponent implements OnInit, OnDestroy {
 	loading$: Observable<boolean>;
 	loadingSubject = new BehaviorSubject<boolean>(true);
 	proceedingOption: string;
-	assetId: string;
+	assetDataId: string;
 	assetDetails: any;
 	pageTitle = 'Asset form';
 	hasFormErrors = false;
@@ -44,6 +47,10 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	editAssetInit = false;
 	assetName = '';
 	staffs = [];
+	formMap: any;
+	myForms: any;
+	sForm;
+	formTypes;
 	constructor(
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
@@ -56,9 +63,13 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		this.getAllStaffs();
 		console.clear();
 		let group = {};
+		this.formMap = {};
+		this.myForms = [];
 		this.localFields.forEach(input_template => {
 			group[input_template.id] = new FormControl('');
 		});
+		this.dataFormGroup = new FormGroup(group);
+		console.log('data form groupp', this.dataFormGroup);
 		this.localFields.forEach(field => {
 			if (field.id === 'recurrent_expenditure_year') {
 				this.showReccurentYear = true;
@@ -70,20 +81,48 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				this.showHistorical = true;
 			}
 		});
-		this.dataFormGroup = new FormGroup(group);
 		this.loading$ = this.loadingSubject.asObservable();
-		this.assetId = this.route.snapshot.params['id'];
+		this.assetDataId = this.route.snapshot.params['id'];
+		if (this.assetDataId) {
+			this.getAssetDetails();
+		}
 		this.emptyReccurentForm();
 		this.emptyReccurentMonthForm();
 		this.emptyHistoricalCost();
 	}
-
+	getAssetDetails() {
+		this.loadingSubject.next(true);
+		this.assetsService.getAssetDataById(this.assetDataId).subscribe(
+			singleAsset => {
+				this.assetDetails = singleAsset['data'];
+				console.log('this assetdata details oninit', this.assetDetails);
+				this.dataFormGroup.patchValue(this.assetDetails);
+				this.assetName = this.assetDetails.name;
+				if (this.assetDetails.historical_data.length) {
+					this.initHistoricalCost(this.assetDetails.historical_data);
+				}
+				if (this.assetDetails.recurrent_month.length) {
+					this.initReccurentMonthForm(this.assetDetails.recurrent_month);
+				}
+				if (this.assetDetails.recurrent_year.length) {
+					this.initReccurentForm(this.assetDetails.recurrent_year);
+				}
+				this.editAssetInit = true;
+				this.loadingSubject.next(false);
+			},
+			error => {
+				console.log('error occured', error);
+				this.loadingSubject.next(false);
+			}
+		);
+	}
 	getAllStaffs() {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
 		this.usersService.getStaffs(0, 999).subscribe(
 			response => {
 				this.staffs = response['data'];
+				this.formTypes = response['data'];
 				this.loadingSubject.next(false);
 				console.log('all staffs returned', this.staffs);
 			},
@@ -111,6 +150,20 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	initReccurentForm(reccurentData) {
+		this.reccurentFormGroup = this.fb.group({
+			currency: ['' || 'naira'],
+			year12: [reccurentData[0].amount || ''],
+			year13: [reccurentData[1].amount || ''],
+			year14: [reccurentData[2].amount || ''],
+			year15: [reccurentData[3].amount || ''],
+			year16: [reccurentData[4].amount || ''],
+			year17: [reccurentData[5].amount || ''],
+			year18: [reccurentData[6].amount || ''],
+			year19: [reccurentData[7].amount || ''],
+		});
+	}
+
 	emptyHistoricalCost() {
 		this.historicalFormGroup = this.fb.group({
 			currency: ['' || 'naira'],
@@ -122,6 +175,20 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			year17: [''],
 			year18: [''],
 			year19: [''],
+		});
+	}
+
+	initHistoricalCost(historicalData) {
+		this.reccurentFormGroup = this.fb.group({
+			currency: ['' || 'naira'],
+			year12: [historicalData[0].amount || ''],
+			year13: [historicalData[1].amount || ''],
+			year14: [historicalData[2].amount || ''],
+			year15: [historicalData[3].amount || ''],
+			year16: [historicalData[4].amount || ''],
+			year17: [historicalData[5].amount || ''],
+			year18: [historicalData[6].amount || ''],
+			year19: [historicalData[7].amount || ''],
 		});
 	}
 
@@ -144,6 +211,25 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	}
 
 
+	initReccurentMonthForm(reccurentData) {
+		this.reccurentMonthFormGroup = this.fb.group({
+			currency: [reccurentData[0].currency || 'naira'],
+			january: [reccurentData[1].january || ''],
+			february: [reccurentData[2].february || ''],
+			march: [reccurentData[3].march || ''],
+			april: [reccurentData[4].april || ''],
+			may: [reccurentData[5].may || ''],
+			june: [reccurentData[6].june || ''],
+			july: [reccurentData[7].july || ''],
+			august: [reccurentData[8].august || ''],
+			september: [reccurentData[9].september || ''],
+			october: [reccurentData[10].october || ''],
+			november: [reccurentData[11].november || ''],
+			december: [reccurentData[12].december || ''],
+		});
+	}
+
+
 	onSubmit() {
 		this.hasFormErrors = false;
 		const controls = this.dataFormGroup.controls;
@@ -161,58 +247,10 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			console.log('lead has an Id');
 			let editedAsset = this.dataFormGroup.value;
 			console.log('lead to send', editedAsset);
-			this.updateAssetMainData(editedAsset);
+			this.updateAssetMainData();
 			return;
 		}
 		this.addAssetMainData();
-	}
-
-	addAssetMainData() {
-		this.loadingSubject.next(true);
-		let payload = new FormData();
-		let forms = this.dataFormGroup.value;
-		for (let key in forms) {
-			payload.append(key, forms[key]);
-		}
-		if (this.fSelectedIcon) {
-			payload.append('icon', this.fSelectedIcon, this.fSelectedIcon.name);
-		}
-		if (this.fSelectedIndustrial) {
-			payload.append('industrial_link', this.fSelectedIndustrial, this.fSelectedIndustrial.name);
-		}
-		if (this.fSelectedLocation) {
-			payload.append('location_of_deployment_image', this.fSelectedLocation, this.fSelectedLocation.name);
-		}
-		if (this.fSelectedSchematics) {
-			payload.append('diagram_schematics', this.fSelectedSchematics, this.fSelectedSchematics.name);
-		}
-		payload.append('name', this.assetName);
-		payload.append('asset_id', this.assetId);
-		console.log(this.assetName);
-		this.assetsService.createAssetData(payload).subscribe(
-			data => {
-				this.loadingSubject.next(false);
-				this.reset();
-				const message = `Asset been successfully added`;
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-				if (data.status === true && this.showReccurentYear) {
-					this.selected = 'reccurent_year';
-				} else if (data.status === true && this.showReccurentMonth) {
-					this.selected = 'reccurent_month';
-				} else if (data.status === true && this.showHistorical) {
-					this.selected = 'historical_cost';
-				} else {
-					this.router.navigate([`/cdash/assets/data/${this.assetId}`]);
-				}
-				localStorage.setItem('asset_data_id', data.data._id);
-			},
-			error => {
-				this.loadingSubject.next(false);
-				console.log('Error response', error);
-				const title = 'Please Retry';
-				const message = 'Sorry, Temporary Error Occured';
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-			});
 	}
 
 	addReccurentYear(formName) {
@@ -267,7 +305,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				} else if (data.status === true && this.showHistorical) {
 					this.selected = 'historical_cost';
 				} else {
-					this.router.navigate([`/cdash/assets/data/${this.assetId}`]);
+					this.router.navigate([`/cdash/assets/data/${this.localForms._id}`]);
 				}
 			},
 			error => {
@@ -413,8 +451,66 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	updateAssetMainData(assetData) {
-		this.assetsService.updateAssetData(assetData, this.assetId).subscribe(
+	addAssetMainData() {
+		this.loadingSubject.next(true);
+		let payload = new FormData();
+		let forms = this.dataFormGroup.value;
+		this.dataFormGroup.setValue({business_owners: this.myForms});
+		for (let key in forms) {
+			payload.append(key, forms[key]);
+		}
+		if (this.fSelectedIcon) {
+			payload.append('icon', this.fSelectedIcon, this.fSelectedIcon.name);
+		}
+		if (this.fSelectedIndustrial) {
+			payload.append('industrial_link', this.fSelectedIndustrial, this.fSelectedIndustrial.name);
+		}
+		if (this.fSelectedLocation) {
+			payload.append('location_of_deployment_image', this.fSelectedLocation, this.fSelectedLocation.name);
+		}
+		if (this.fSelectedSchematics) {
+			payload.append('diagram_schematics', this.fSelectedSchematics, this.fSelectedSchematics.name);
+		}
+		payload.append('name', this.assetName);
+		payload.append('asset_id', this.localForms._id);
+		console.log('payload', payload);
+		this.assetsService.createAssetData(payload).subscribe(
+			data => {
+				this.loadingSubject.next(false);
+				this.reset();
+				const message = `Asset been successfully added`;
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+				if (data.status === true && this.showReccurentYear) {
+					this.selected = 'reccurent_year';
+				} else if (data.status === true && this.showReccurentMonth) {
+					this.selected = 'reccurent_month';
+				} else if (data.status === true && this.showHistorical) {
+					this.selected = 'historical_cost';
+				} else {
+					this.router.navigate([`/cdash/assets/data/${this.localForms._id}`]);
+				}
+				localStorage.setItem('asset_data_id', data.data._id);
+			},
+			error => {
+				this.loadingSubject.next(false);
+				console.log('Error response', error);
+				const title = 'Please Retry';
+				const message = 'Sorry, Temporary Error Occured';
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			});
+	}
+
+	updateAssetMainData() {
+		let payload = new FormData();
+		let forms = this.dataFormGroup.value;
+		for (let key in forms) {
+			payload.append(key, forms[key]);
+		}
+		this.dataFormGroup.patchValue({business_owners: this.myForms});
+		payload.append('name', this.assetName);
+		console.log('payload', payload);
+		// payload.append('asset_id', this.localForms._id);
+		this.assetsService.updateAssetData(payload, this.assetDataId).subscribe(
 			data => {
 				this.loadingSubject.next(false);
 				const message = `Asset been successfully updated`;
@@ -425,6 +521,8 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 					this.selected = 'reccurent_month';
 				} else if (data.status === true && this.showHistorical) {
 					this.selected = 'historical_cost';
+				} else {
+					this.router.navigate([`/cdash/assets/data/${this.localForms._id}`]);
 				}
 			},
 			error => {
@@ -478,6 +576,37 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	onAlertClose($event) {
 		this.hasFormErrors = false;
+	}
+
+	handleFormChange(event) {
+		console.log(event.target.value);
+		if (event.target.value === '') {
+			return;
+		}
+		this.sForm = event.target.value;
+		this.formPush();
+	}
+
+	formPush() {
+		if (this.formMap[this.sForm] === undefined || this.formMap[this.sForm] === false) {
+			for (let i = 0; i < this.formTypes.length; i++) {
+				if (this.formTypes[i]._id === this.sForm) {
+					this.myForms.push(this.formTypes[i]._id);
+				}
+			}
+			this.formMap[this.sForm] = true;
+		}
+		console.log('myforms', this.myForms);
+	}
+
+	formRemove(form) {
+		console.log('form', form);
+		for (let i = 0; i < this.myForms.length; i++) {
+			if (this.myForms[i].id === form.id) {
+				console.log(form.id);
+				this.myForms.splice(i, 1);
+			}
+		}
 	}
 
 	ngOnDestroy() { }

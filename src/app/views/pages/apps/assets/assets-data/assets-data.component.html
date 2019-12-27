@@ -1,7 +1,7 @@
 <kt-portlet>
 	<kt-portlet-header title="All Assets" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
-			<a routerLink="/cdash/assets/manage/new-asset-data/{{containerId}}" class="primary-button kt-margin-r-10" matTooltip="Add New Asset">
+			<a routerLink="/cdash/assets/manage/new-asset-data" class="primary-button kt-margin-r-10" matTooltip="Add New Asset">
 				<i class="la la-plus"></i>
 				<span class="kt-hidden-mobile">Add an asset</span>
 			</a>
@@ -17,7 +17,7 @@
 							<th>Summary</th>
 							<th>Date acquired</th>
 							<th>Acquisition cost</th>
-							<th>Purpose</th>
+							<th>Business purpose</th>
 							<th>Type</th>
 							<th></th>
 						</tr>
@@ -28,7 +28,7 @@
 							<td>{{ asset.summary ? asset.summary : 'not available' }}</td>
 							<td>{{ asset.date_acquired | date: 'longDate'}}</td>
 							<td>{{ asset.cost ? asset.cost : 'not available' }}</td>
-							<td>{{ asset.purpose ? asset.purpose : 'not available' }}</td>
+							<td>{{ asset.business_purpose ? asset.business_purpose : 'not available' }}</td>
 							<td>{{ asset.type ? asset.type : 'not available' }}</td>
 							<td>
 								<a routerLink="/cdash/assets/asset-details/{{asset._id}}" class="view">View</a>

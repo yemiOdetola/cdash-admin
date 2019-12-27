@@ -83,7 +83,11 @@ const routes: Routes = [
 				component: AssetEditComponent
 			},
 			{
-				path: 'manage/new-asset-data/:id',
+				path: 'manage/new-asset-data',
+				component: AssetDataComponent
+			},
+			{
+				path: 'new-asset-data/details/:id',
 				component: AssetDataComponent
 			},
 			{

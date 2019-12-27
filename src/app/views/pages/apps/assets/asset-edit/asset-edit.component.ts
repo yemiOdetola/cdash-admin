@@ -72,7 +72,7 @@ export class AssetEditComponent implements OnInit {
 			{ 'id': 'cost', 'name': 'Cost of acquisition', 'type': 'number', 'required': 'true' },
 			{ 'id': 'business_purpose', 'name': 'Business purpose', 'type': 'text', 'required': 'true' },
 			{ 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Others']},
-			{ 'id': 'depreciation', 'name': 'Depreciation per annum', 'type': 'number', 'required': 'true' },
+			{ 'id': 'depreciation', 'name': 'Depreciation per annum(%)', 'type': 'number', 'required': 'true' },
 			{ 'id': 'icon', 'name': 'Icon', 'type': 'file', 'required': 'true' },
 			{ 'id': 'business_owners', 'name': 'Business owners', 'type': 'select', 'required': 'true' },
 			{ 'id': 'recurrent_expenditure_year', 'name': 'Recurrent expenditure(year)', 'type': 'chart', 'required': 'true' },
