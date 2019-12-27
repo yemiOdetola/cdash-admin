@@ -1,11 +1,7 @@
 <kt-portlet>
-	<kt-portlet-header
-		[title]="pageTitle"
-		[class]="'kt-portlet__head--lg'"
-		[viewLoading$]="loading$"
-	>
-	<ng-container ktPortletTools>
-			<div class="details-action edit text-center" routerLink="/strada/leads/manage/{{leadId}}">
+	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+			<div class="details-action edit text-center" routerLink="/cdash/assets/manage/new-asset-data/{{assetDataId}}">
 				<img src="./assets/media/icons/details-edit.svg" alt="">
 				<span>Edit</span>
 			</div>
@@ -13,67 +9,77 @@
 				<img src="./assets/media/icons/details-delete.svg" alt="">
 				<span>Delete</span>
 			</div>
-			<div class="details-action approve text-center"
-			(click)="onConvert()">
-				<img src="./assets/media/icons/details-approve.svg" alt="">
-				<span>Convert</span>
-			</div>
 		</ng-container>
 	</kt-portlet-header>
 	<kt-portlet-body>
-			<div class="goback" (click)="goBack()">
-					<img src="./assets/media/icons/backBtn.svg" alt="">
-					<span>Back</span>
-				</div>
-		<div class="lead-body"  *ngIf="leadDetails">
-			<div class="item-details maxed pt-0">
-				<table
-					class="ml-5 details-table">
-					<tr class="each-data" *ngIf="leadDetails.company">
-						<td class="label">Company</td>
-						<td class="value">{{ leadDetails.company }}</td>
+		<div class="goback" (click)="goBack()">
+			<img src="./assets/media/icons/backBtn.svg" alt="">
+			<span>Back</span>
+		</div>
+		<div class="lead-body" *ngIf="assetDetails">
+			<div class="item-details maxed pt-0 pb-5">
+				<table class="ml-5 details-table">
+					<tr class="each-data" *ngIf="assetDetails.name">
+						<td class="label">Name/ Title</td>
+						<td class="value">{{assetDetails.name}}</td>
 					</tr>
-					<tr class="each-data" *ngIf="leadDetails.industry">
-						<td class="label">Industry</td>
-						<td class="value">{{ leadDetails.industry }}</td>
+					<tr class="each-data" *ngIf="assetDetails.projected_cost">
+						<td class="label">Projected cost</td>
+						<td class="value">{{assetDetails.projected_cost | currency : currency}}</td>
 					</tr>
-					<tr class="each-data" *ngIf="leadDetails.email">
-						<td class="label">Email</td>
-						<td class="value"><a href="mailto:{{ leadDetails.email }}">{{ leadDetails.email }}</a></td>
-					</tr>
-					<tr class="each-data" *ngIf="leadDetails.status">
-							<td class="label">Status</td>
-							<td class="value status">
-								<span class="plain">{{ leadDetails.status }}</span>
-							</td>
-						</tr>
-					<tr class="each-data" *ngIf="leadDetails.source">
-						<td class="label">Source</td>
-						<td class="value status">
-							<span class="plain">{{ leadDetails.source }}</span>
+					<tr class="each-data" *ngIf="assetDetails.icon">
+						<td class="label">Icon</td>
+						<td class="images smallz">
+							<img src="{{assetDetails.icon}}" alt="{{assetDetails.name}}'s icon'">
 						</td>
 					</tr>
-					<tr class="each-data" *ngIf="leadDetails.address">
-						<td class="label">Address</td>
-						<td class="value">{{ leadDetails.address }}</td>
+					<tr class="each-data" *ngIf="assetDetails.summary">
+						<td class="label">Summary</td>
+						<td class="value">{{assetDetails.summary}}</td>
 					</tr>
-					<tr class="each-data">
-						<td class="label">Created On</td>
-						<td class="value">{{ leadDetails.created_at | date: 'medium' }}</td>
+					<tr class="each-data" *ngIf="assetDetails.date_acquired">
+						<td class="label">Date acquired</td>
+						<td class="value">{{assetDetails.date_acquired | date: 'longDate'}}</td>
 					</tr>
-					<tr class="each-data">
-						<td class="label">Updated On</td>
-						<td class="value">{{ leadDetails.updated_at | date: 'medium' }}</td>
+					<tr class="each-data" *ngIf="assetDetails.cost">
+						<td class="label">Acquisition cost</td>
+						<td class="value">{{assetDetails.cost | currency : currency}}</td>
 					</tr>
-					<!-- <tr class="each-data" *ngIf="leadDetails.image">
-						<td class="label">Business Card / Logo</td>
-						<td class="images">
-							<img src="{{leadDetails.image}}" alt="Media file">
+					<tr class="each-data" *ngIf="assetDetails.depreciation">
+						<td class="label">Depreciation per annum</td>
+						<td class="value">{{assetDetails.depreciation | currency : currency}}</td>
+					</tr>
+					<tr class="each-data" *ngIf="assetDetails.business_purpose">
+						<td class="label">Business purpose</td>
+						<td class="value">{{assetDetails.business_purpose}}</td>
+					</tr>
+					<tr class="each-data" *ngIf="assetDetails.type">
+						<td class="label">Type</td>
+						<td class="value">{{assetDetails.type}}</td>
+					</tr>
+					<tr class="each-data" *ngIf="assetDetails.industrial_link">
+						<td class="label">Industrial link</td>
+						<td class="value">
+							<img src="{{assetDetails.industrial_link}}" alt="{{assetDetails.name}}'s industrial link">
 						</td>
-					</tr> -->
+					</tr>
+					<tr class="each-data" *ngIf="assetDetails.diagram">
+						<td class="label">Diagram/ Schematics</td>
+						<td class="value">
+							<img src="{{assetDetails.industrial_link}}" alt="{{assetDetails.name}}'s industrial link">
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="assetDetails.technical_details">
+						<td class="label">Technical details</td>
+						<td class="value">{{assetDetails.technical_details}}</td>
+					</tr>
+					<tr class="each-data" *ngIf="assetDetails.location_of_deployment">
+						<td class="label">Location of deployment</td>
+						<td class="value">{{assetDetails.location_of_deployment}}</td>
+					</tr>
 				</table>
 			</div>
-			<div *ngIf="!leadDetails" class="mt-5 please-data text-center">Please Wait...</div>
+			<div *ngIf="!assetDetails" class="mt-5 please-data text-center">Please Wait...</div>
 		</div>
 	</kt-portlet-body>
 </kt-portlet>

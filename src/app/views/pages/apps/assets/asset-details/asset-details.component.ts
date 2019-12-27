@@ -1,39 +1,45 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LeadModel, LeadsService } from '../../../../../core/leads';
+import { AssetsService } from '../../../../../core/assets';
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 import { Location } from '@angular/common';
 
 @Component({
-	selector: 'kt-lead',
-	templateUrl: './lead.component.html',
-	styleUrls: ['./lead.component.scss']
+	selector: 'kt-asset-details',
+	templateUrl: './asset-details.component.html',
+	styleUrls: ['./asset-details.component.scss']
 })
-export class LeadComponent implements OnInit {
+export class AssetDetailsComponent implements OnInit {
 	loading$: Observable<boolean>;
 	loadingSubject = new BehaviorSubject<boolean>(true);
 	proceedingOption: string;
-	leadId: string;
-	leadDetails: any;
+	assetDataId: string;
+	assetDetails: any;
 	pageTitle = 'Please wait...';
+	currency = '₦';
+	assetDataObjKeys = Object.keys;
 	constructor(
 		private route: ActivatedRoute,
-		private leadsService: LeadsService,
+		private assetsService: AssetsService,
 		private _location: Location,
-		private layoutUtilsService: LayoutUtilsService,
-		private router: Router) { }
+		private layoutUtilsService: LayoutUtilsService) { }
 
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
-		this.leadId = this.route.snapshot.params['id'];
-		this.leadsService.getLeadById(this.leadId).subscribe(
-			singleLead => {
-				this.leadDetails = singleLead['success'];
-				console.log('this lead details oninit', this.leadDetails);
+		this.assetDataId = this.route.snapshot.params['id'];
+		this.assetsService.getAssetDataById(this.assetDataId).subscribe(
+			singleAsset => {
+				this.assetDetails = singleAsset['data'];
+				console.log('this assetdata details oninit', this.assetDetails);
 				this.loadingSubject.next(false);
-				this.pageTitle = `${this.leadDetails.company}`;
+				if (this.assetDetails.currency === 'naira') {
+					this.currency = '₦';
+				} else {
+					this.currency = '$';
+				}
+				this.pageTitle = `${this.assetDetails.name}`;
 			},
 			error => {
 				console.log('error occured', error);
@@ -47,29 +53,11 @@ export class LeadComponent implements OnInit {
 		this._location.back();
 	}
 
-	onConvert() {
-		this.leadsService.convertLead(this.leadId).subscribe(
-			data => {
-				console.log('success reponse', data);
-				this.loadingSubject.next(false);
-				const message = `Lead has been Successfully Converted`;
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-				this.router.navigate(['/strada/contacts/contacts']);
-			},
-			error => {
-				this.loadingSubject.next(false);
-				console.log('Error response', error);
-				const title = 'Please Retry';
-				const message = 'Sorry, Temporary Error Occured';
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-			});
-	}
-
 	onDelete() {
-		const _title: string = 'Delete Lead';
-		const _description: string = 'Are you sure to permanently delete this lead?';
-		const _waitDesciption: string = 'lead is deleting...';
-		const _deleteMessage = `lead has been deleted`;
+		const _title: string = 'Delete asset';
+		const _description: string = 'Are you sure to permanently delete this asset?';
+		const _waitDesciption: string = 'Please wait...';
+		const _deleteMessage = `Asset has been deleted`;
 		const _errorDelete = 'Seems and Error Occured, Retry';
 
 		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
@@ -78,11 +66,10 @@ export class LeadComponent implements OnInit {
 			if (!res) {
 				return;
 			}
-			this.leadsService.deleteLead(this.leadId).subscribe(
+			this.assetsService.deleteAssetData(this.assetDataId).subscribe(
 				deleted => {
-					console.log('deleted', deleted);
 					this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
-					this.router.navigate(['/strada/leads/leads']);
+					this.goBack();
 				},
 				error => {
 					console.log('error', error);
@@ -92,15 +79,3 @@ export class LeadComponent implements OnInit {
 		});
 	}
 }
-
-	// handleProceedings(e) {
-	// 	if (this.typeSelectorGroup.value.noteType === 'Contact') {
-	// 		this.proceedingOption = 'Contact';
-	// 	}
-	// 	if (this.typeSelectorGroup.value.noteType === 'Competition') {
-	// 		this.proceedingOption = 'Competition';
-	// 	}
-	// 	if (this.typeSelectorGroup.value.noteType === 'Note') {
-	// 		this.proceedingOption = 'Note';
-	// 	}
-	// }

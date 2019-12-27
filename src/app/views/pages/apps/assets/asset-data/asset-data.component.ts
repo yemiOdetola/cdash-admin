@@ -201,6 +201,8 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 					this.selected = 'reccurent_month';
 				} else if (data.status === true && this.showHistorical) {
 					this.selected = 'historical_cost';
+				} else {
+					this.router.navigate([`/cdash/assets/data/${this.assetId}`]);
 				}
 				localStorage.setItem('asset_data_id', data.data._id);
 			},

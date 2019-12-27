@@ -44,6 +44,24 @@ export class AssetsService {
 		});
 	}
 
+	getAssetDataById(assetDataId): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<any>(`${BASE_URL}/asset_data/${assetDataId}`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+	deleteAssetData(assetDataId): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.delete<any>(`${BASE_URL}/asset_data/${assetDataId}`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
 	updateAssetData(asset, assetId): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.put<any>(`${BASE_URL}/asset_data/${assetId}`, asset, {
