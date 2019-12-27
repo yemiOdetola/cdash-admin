@@ -20,6 +20,7 @@ export class AssetsDataComponent implements OnInit, OnDestroy {
 	disablePrev = true;
 	disableNext: boolean;
 	containerId = '';
+	assetsId;
 	containerAssets;
 	constructor(
 		private assetsService: AssetsService,
@@ -44,7 +45,7 @@ export class AssetsDataComponent implements OnInit, OnDestroy {
 			}
 		);
 		let skip = this.pageIndex * this.limit;
-		this.getAssetsData(skip, this.limit);
+		this.getAssetsData(skip, this.limit, this.containerId);
 	}
 
 	countAssets() {
@@ -58,10 +59,10 @@ export class AssetsDataComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	getAssetsData(skip, limit) {
+	getAssetsData(skip, limit, assetsId) {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
-		this.assetsService.getAssetsData(skip, limit).subscribe(
+		this.assetsService.getAssetsData(skip, limit, assetsId).subscribe(
 			responseData => {
 				this.assets = responseData['data'];
 				this.loadingSubject.next(false);
@@ -89,7 +90,7 @@ export class AssetsDataComponent implements OnInit, OnDestroy {
 	getNext() {
 		this.pageIndex = this.pageIndex + 1;
 		let skip = this.pageIndex * this.limit;
-		this.getAssetsData(skip, this.limit);
+		this.getAssetsData(skip, this.limit, this.assetsId);
 		this.countAssets();
 		this.itemNav();
 	}
@@ -97,7 +98,7 @@ export class AssetsDataComponent implements OnInit, OnDestroy {
 	getPrev() {
 		this.pageIndex = this.pageIndex - 1;
 		let skip = this.pageIndex * this.limit;
-		this.getAssetsData(skip, this.limit);
+		this.getAssetsData(skip, this.limit, this.assetsId);
 		this.countAssets();
 		this.itemNav();
 	}

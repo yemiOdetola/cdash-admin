@@ -26,6 +26,24 @@ export class AssetsService {
 		});
 	}
 
+	getAllAssetsCount(assetData): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.post<any>(`${BASE_URL}/asset_data/count`, assetData, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken,
+			}
+		});
+	}
+
+	getAllAssetsCapital(assetData): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.post<any>(`${BASE_URL}/asset_data/count/capital`, assetData, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken,
+			}
+		});
+	}
+
 	createAssetData(asset): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.post<any>(`${BASE_URL}/asset_data`, asset, {
@@ -87,6 +105,15 @@ export class AssetsService {
 		});
 	}
 
+	getAllAssets(): Observable<any[]> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<any[]>(`${BASE_URL}/asset/all`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken,
+			}
+		});
+	}
+
 	getAssetContainerById(containerId: string): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.get<any>(`${BASE_URL}/asset/${containerId}`, {
@@ -96,9 +123,9 @@ export class AssetsService {
 		});
 	}
 
-	getAssetsData(skip, limit): Observable<any[]> {
+	getAssetsData(skip, limit, assetsId): Observable<any[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<any[]>(`${BASE_URL}/asset_data`, {
+		return this.http.get<any[]>(`${BASE_URL}/asset/asset_data/${assetsId}`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken
 			},

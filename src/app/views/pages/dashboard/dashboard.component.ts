@@ -12,8 +12,6 @@ import { UserService } from '../../../core/users';
 import { LeadsService, LeadModel } from '../../../core/leads';
 import { ContactsService, ContactModel } from '../../../core/contacts';
 import { AssetsService } from '../../../core/assets';
-import { VendorsService } from '../../../core/vendors';
-import { CampaignsService } from '../../../core/campaigns';
 import { ComputationsService } from '../../../core/computations';
 
 @Component({
@@ -27,7 +25,7 @@ export class DashboardComponent implements OnInit {
 	user$: Observable<User>;
 	leadsCount = '...';
 	contactsCount = '...';
-	assetsCount = '...';
+	assetsCount: any = '...';
 	vendorsCount = '...';
 	maturityAverage = '...';
 	usersCount = '...';
@@ -41,20 +39,18 @@ export class DashboardComponent implements OnInit {
 	editedLead;
 	contacts: ContactModel[];
 	resultsLength: number = 0;
-	showing = 'Leads';
-	statuses = [
-		'Lead Initiated', 'Email Sent', 'Scheduled Meeting', 'Sent MOU/Proposal',
-		'Review MOU/Proposal', 'Follow Up Requested', 'Sent Invoice', 'Signed Agreement',
-		'Converted to Contact'
-	];
+	assetsArr;
+	capExp = 0;
+	capExpPercent = 0;
+	assetPercent = 0;
+	capitalCurrency = '₦';
+	payload = {};
 	constructor(
 		private mdTasksService: MdTasksService,
 		private usersService: UserService,
 		private leadsService: LeadsService,
 		private contactsService: ContactsService,
 		private assetsService: AssetsService,
-		private vendorsService: VendorsService,
-		private campaignsService: CampaignsService,
 		private computationsService: ComputationsService,
 		private store: Store<AppState>,
 		private layoutUtilsService: LayoutUtilsService
@@ -66,6 +62,10 @@ export class DashboardComponent implements OnInit {
 		this.getUsersCount();
 		this.getStaffsCount();
 		this.getMaturityScoreAverage();
+		this.getAllAssets();
+		this.initAssets();
+		this.initCapitalExpenditure();
+		console.clear();
 	}
 
 	getUsersCount() {
@@ -83,10 +83,89 @@ export class DashboardComponent implements OnInit {
 			}
 		);
 	}
+
 	getStaffsCount() {
 		this.usersService.getStaffsCount().subscribe(
 			countResult => {
 				this.staffsCount = countResult['data'];
+			}
+		);
+	}
+	initAssets() {
+		const payload = {
+			id: null
+		};
+		this.assetsService.getAllAssetsCount(payload).subscribe(
+			assetsCountr => {
+				this.assetsCount = assetsCountr['all_data'];
+				this.assetPercent = 100;
+			}
+		);
+	}
+
+	initCapitalExpenditure() {
+		const payload = {
+			id: null
+		};
+		this.assetsService.getAllAssetsCapital(payload).subscribe(
+			assetsCountr => {
+				this.capExp = assetsCountr['total_amount'];
+				this.capExpPercent = 100;
+			}
+		);
+	}
+
+	getCapitalExpenditure(event, type) {
+		const val = event.target.value;
+		if (type === 'currency') {
+			this.payload['currency'] = event.target.value;
+		}
+		if (type === 'id') {
+			this.payload['id'] = event.target.value;
+		}
+		if (val === 'null') {
+			this.payload['id'] = null;
+		}
+		this.assetsService.getAllAssetsCapital(this.payload).subscribe(
+			expCountr => {
+				this.capExp = expCountr['total_amount'];
+				this.capExpPercent = 100;
+				if (expCountr['currency'] === 'dollar') {
+					this.capitalCurrency = '$';
+				} else {
+					this.capitalCurrency = '₦';
+				}
+				if (typeof expCountr['amount'] === 'number') {
+					this.capExp = expCountr['amount'];
+					this.capExpPercent = (expCountr['amount'] / expCountr['total_amount']) * 100;
+				}
+			}
+		);
+	}
+
+	getAllAssetCount(event) {
+		console.log(event.target.value);
+		const val = event.target.value;
+		let payload = { 'id': val };
+		if (val === 'null') {
+			payload = null;
+		}
+		this.assetsService.getAllAssetsCount(payload).subscribe(
+			assetsCountr => {
+				this.assetsCount = assetsCountr['all_data'];
+				this.assetPercent = 100;
+				if (typeof assetsCountr['data'] === 'number') {
+					this.assetsCount = assetsCountr['data'];
+					this.assetPercent = (assetsCountr['data'] / assetsCountr['all_data']) * 100;
+				}
+			}
+		);
+	}
+
+	getAllAssets() {
+		this.assetsService.getAllAssets().subscribe(
+			assetsAll => {
+				this.assetsArr = assetsAll['data'];
 			}
 		);
 	}
@@ -106,7 +185,7 @@ export class DashboardComponent implements OnInit {
 
 	getContacts(skip, limit) {
 		this.loadingSubject.next(true);
-		this.contactsService.getContacts(skip, limit,'').subscribe(
+		this.contactsService.getContacts(skip, limit, '').subscribe(
 			responseData => {
 				this.contacts = responseData['success'];
 				this.loadingSubject.next(false);
@@ -133,10 +212,6 @@ export class DashboardComponent implements OnInit {
 				console.log('error occured', error);
 			}
 		);
-	}
-
-	showTable(table) {
-		this.showing = table;
 	}
 
 	getMyTasksEvery() {

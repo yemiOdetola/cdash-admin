@@ -3,60 +3,17 @@
 		<div class="each-stat">
 			<div class="top-header">
 				<div class="title">
-					<img src="./assets/media/icons/dashboard-leads.svg" alt="">
-					<span>Staffs</span>
-				</div>
-				<div class="link" routerLink="/cdash/users/staffs">View all</div>
-			</div>
-			<div class="chart text-center">
-				<circle-progress [percent]="85" subtitle="{{staffsCount}}" [outerStrokeColor]="'#77efff'"
-					[outerStrokeGradientStopColor]="'#5773ff'"></circle-progress>
-			</div>
-		</div>
-	</div>
-	<div class="col-xl-4 col-sm-6">
-		<div class="each-stat">
-			<div class="top-header">
-				<div class="title">
-					<img src="./assets/media/icons/dashboard-contacts.svg" alt="">
-					<span>Users</span>
-				</div>
-				<div class="link" routerLink="/cdash/users">View all</div>
-			</div>
-			<div class="chart text-center">
-				<circle-progress [percent]="70" subtitle="{{usersCount}}" [outerStrokeColor]="'#CDDC39'"
-					[outerStrokeGradientStopColor]="'#8BC34A'"></circle-progress>
-			</div>
-		</div>
-	</div>
-	<div class="col-xl-4 col-sm-6" *ngIf="usersCount">
-		<div class="each-stat">
-			<div class="top-header">
-				<div class="title">
-					<img src="./assets/media/icons/dashboard-users.svg" alt="">
-					<span>Average maturity score</span>
-				</div>
-				<div class="link" routerLink="/cdash/computations/maturity-scores">View all</div>
-			</div>
-			<div class="chart text-center">
-				<circle-progress [percent]="79" subtitle="{{maturityAverage}}" [outerStrokeColor]="'#FFC107'"
-					[outerStrokeGradientStopColor]="'#CB1313'"></circle-progress>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xl-4 col-sm-6">
-		<div class="each-stat">
-			<div class="top-header">
-				<div class="title">
 					<img src="./assets/media/icons/dashboard-vendors.svg" alt="">
-					<span>Weekly Visits</span>
+					<span>Assets</span>
 				</div>
-				<div class="link">View all</div>
+				<select class="ddown" (change)="getAllAssetCount($event)" *ngIf="assetsArr && assetsArr.length !== 0">
+					<option value="null" selected>All assets</option> 
+					<option value="{{assAr._id}}" *ngFor="let assAr of assetsArr">{{assAr.name | titlecase}}</option>
+				</select>
+				<div class="link" routerLink="/cdash/assets">View all</div>
 			</div>
 			<div class="chart text-center">
-				<circle-progress [percent]="45" subtitle="34k" [outerStrokeColor]="'#9C27B0'"
+				<circle-progress [percent]="assetPercent" subtitle="{{assetsCount}}" [outerStrokeColor]="'#9C27B0'"
 					[outerStrokeGradientStopColor]="'#3F51B5'"></circle-progress>
 			</div>
 		</div>
@@ -66,12 +23,19 @@
 			<div class="top-header">
 				<div class="title">
 					<img src="./assets/media/icons/dashboard-assets.svg" alt="">
-					<span>Ongoing Activities</span>
+					<span>Capital expenditure</span>
 				</div>
-				<div class="link">View all</div>
+				<select class="ddown" (change)="getCapitalExpenditure($event, 'id')" *ngIf="assetsArr && assetsArr.length !== 0">
+					<option value="null" selected>All assets</option> 
+					<option value="{{assAr._id}}" *ngFor="let assAr of assetsArr">{{assAr.name | titlecase}}</option>
+				</select>
+				<select class="ddown" (change)="getCapitalExpenditure($event, 'currency')" *ngIf="assetsArr && assetsArr.length !== 0">
+					<option value="naira" selected>₦</option>
+					<option value="dollar">$</option>
+				</select>
 			</div>
 			<div class="chart text-center">
-				<circle-progress [percent]="33" subtitle="19" [outerStrokeColor]="'#1F7772'"
+				<circle-progress [percent]="capExpPercent" subtitle="{{capExp | currency: capitalCurrency}}" [outerStrokeColor]="'#1F7772'"
 					[outerStrokeGradientStopColor]="'#44faf0'"></circle-progress>
 			</div>
 		</div>
@@ -88,6 +52,55 @@
 			<div class="chart text-center">
 				<circle-progress [percent]="44" subtitle="44%" [outerStrokeColor]="'#FAFAFA'"
 					[outerStrokeGradientStopColor]="'#333333'"></circle-progress>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-xl-4 col-sm-6">
+		<div class="each-stat">
+			<div class="top-header">
+				<div class="title">
+					<img src="./assets/media/icons/dashboard-leads.svg" alt="">
+					<span>Staffs</span>
+				</div>
+				<div class="link" routerLink="/cdash/users/staffs">View all</div>
+			</div>
+			<div class="chart text-center">
+				<circle-progress [percent]="100" subtitle="{{staffsCount}}" [outerStrokeColor]="'#77efff'"
+					[outerStrokeGradientStopColor]="'#5773ff'"></circle-progress>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-4 col-sm-6">
+		<div class="each-stat">
+			<div class="top-header">
+				<div class="title">
+					<img src="./assets/media/icons/dashboard-contacts.svg" alt="">
+					<span>Users</span>
+				</div>
+				<div class="link" routerLink="/cdash/users">View all</div>
+			</div>
+			<div class="chart text-center">
+				<circle-progress [percent]="100" subtitle="{{usersCount}}" [outerStrokeColor]="'#CDDC39'"
+					[outerStrokeGradientStopColor]="'#8BC34A'"></circle-progress>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-4 col-sm-6" *ngIf="usersCount">
+		<div class="each-stat">
+			<div class="top-header">
+				<div class="title">
+					<img src="./assets/media/icons/dashboard-users.svg" alt="">
+					<span>Average maturity score</span>
+				</div>
+				<div class="link" routerLink="/cdash/computations/maturity-scores">View all</div>
+			</div>
+			<div class="chart text-center">
+				<circle-progress [percent]="100" subtitle="{{maturityAverage}}" [outerStrokeColor]="'#FFC107'"
+					[outerStrokeGradientStopColor]="'#CB1313'"></circle-progress>
 			</div>
 		</div>
 	</div>
