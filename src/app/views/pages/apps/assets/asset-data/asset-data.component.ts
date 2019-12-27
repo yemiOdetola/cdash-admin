@@ -49,6 +49,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	staffs = [];
 	formMap: any;
 	myForms: any;
+	myformsName: any;
 	sForm;
 	formTypes;
 	constructor(
@@ -65,6 +66,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		let group = {};
 		this.formMap = {};
 		this.myForms = [];
+		this.myformsName = [];
 		this.localFields.forEach(input_template => {
 			group[input_template.id] = new FormControl('');
 		});
@@ -455,10 +457,10 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		this.loadingSubject.next(true);
 		let payload = new FormData();
 		let forms = this.dataFormGroup.value;
-		this.dataFormGroup.setValue({business_owners: this.myForms});
 		for (let key in forms) {
 			payload.append(key, forms[key]);
 		}
+		this.dataFormGroup.patchValue({business_owners: this.myForms});
 		if (this.fSelectedIcon) {
 			payload.append('icon', this.fSelectedIcon, this.fSelectedIcon.name);
 		}
@@ -591,12 +593,14 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		if (this.formMap[this.sForm] === undefined || this.formMap[this.sForm] === false) {
 			for (let i = 0; i < this.formTypes.length; i++) {
 				if (this.formTypes[i]._id === this.sForm) {
+					this.myformsName.push(this.formTypes[i]);
 					this.myForms.push(this.formTypes[i]._id);
 				}
 			}
 			this.formMap[this.sForm] = true;
 		}
 		console.log('myforms', this.myForms);
+		console.log('myforms', this.myformsName);
 	}
 
 	formRemove(form) {
@@ -605,6 +609,12 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			if (this.myForms[i].id === form.id) {
 				console.log(form.id);
 				this.myForms.splice(i, 1);
+			}
+		}
+		for (let i = 0; i < this.myformsName.length; i++) {
+			if (this.myformsName[i].id === form.id) {
+				console.log(form.id);
+				this.myformsName.splice(i, 1);
 			}
 		}
 	}

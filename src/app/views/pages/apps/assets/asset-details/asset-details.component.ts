@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssetsService } from '../../../../../core/assets';
+import { UserService } from '../../../../../core/users';
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 import { Location } from '@angular/common';
 
@@ -19,10 +20,15 @@ export class AssetDetailsComponent implements OnInit {
 	pageTitle = 'Please wait...';
 	currency = '₦';
 	assetDataObjKeys = Object.keys;
+	staffs: any;
+	biz_owners;
+	allStaffs = [];
+	normBiznez: any;
 	constructor(
 		private route: ActivatedRoute,
 		private assetsService: AssetsService,
 		private _location: Location,
+		private usersService: UserService,
 		private layoutUtilsService: LayoutUtilsService) { }
 
 	ngOnInit() {
@@ -32,6 +38,9 @@ export class AssetDetailsComponent implements OnInit {
 		this.assetsService.getAssetDataById(this.assetDataId).subscribe(
 			singleAsset => {
 				this.assetDetails = singleAsset['data'];
+				this.getAllStaffs();
+				this.biz_owners = this.assetDetails.business_owners[0];
+				this.normBiznez = this.biz_owners.split(',');
 				console.log('this assetdata details oninit', this.assetDetails);
 				this.loadingSubject.next(false);
 				if (this.assetDetails.currency === 'naira') {
@@ -47,6 +56,25 @@ export class AssetDetailsComponent implements OnInit {
 			}
 		);
 		console.log('id returned', this.route.snapshot.params['id']);
+	}
+
+	getAllStaffs() {
+		this.loading$ = this.loadingSubject.asObservable();
+		this.loadingSubject.next(true);
+		this.usersService.getStaffs(0, 999).subscribe(
+			response => {
+				this.staffs = response['data'];
+				for (let i = 0; i < this.normBiznez.length; i++) {
+					this.allStaffs.push(this.staffs[i]);
+				}
+				console.log('aaaaaaalllll staagggsgsgsgsg', this.allStaffs);
+				this.loadingSubject.next(false);
+				console.log('all staffs returned', this.staffs);
+			},
+			error => {
+				console.log('error', error);
+			}
+		);
 	}
 
 	goBack() {

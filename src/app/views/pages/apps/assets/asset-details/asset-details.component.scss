@@ -3,17 +3,15 @@
 		width: 120px;
 	}
 }
-
-.slide-in {
-position: relative;
-animation: slideIn 300ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes slideIn {
-from {
-	transform: translateY(1rem);
-}
-to {
-	transform: translateY(0);
-}
+.staffs {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	font-weight: 600;
+	.staff {
+		color: #5d78ff;
+		display: block;
+		margin:  0.5rem 1rem;
+		cursor: pointer;
+	}
 }

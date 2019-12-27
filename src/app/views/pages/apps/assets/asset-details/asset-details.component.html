@@ -57,6 +57,10 @@
 						<td class="label">Type</td>
 						<td class="value">{{assetDetails.type}}</td>
 					</tr>
+					<tr class="each-data" *ngIf="assetDetails.business_owners">
+						<td class="label">Business owners</td>
+						<td class="value staffs"><span *ngFor="let staff of allStaffs" class="staff" routerLink="/cdash/users/staffs/{{staff._id}}">{{staff.name}}</span></td>
+					</tr>
 					<tr class="each-data" *ngIf="assetDetails.industrial_link">
 						<td class="label">Industrial link</td>
 						<td class="value">
