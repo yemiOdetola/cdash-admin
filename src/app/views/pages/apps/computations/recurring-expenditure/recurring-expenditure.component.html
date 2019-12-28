@@ -9,17 +9,17 @@
 				<div class="analytics">
 					<div class="row slide-in">
 						<div class="col-lg-6 kt-margin-bottom-10-mobile date-shift">
-							<div class="form-item" *ngIf="allAssets">
+							<div class="form-item smallz" *ngIf="allAssets">
 								<label class="label">Assets</label>
 								<select formControlName="id">
-									<option value="">Select asset</option>
+									<option value="">All assets</option>
 									<option value="{{asset._id}}" *ngFor="let asset of allAssets;">{{asset.name}}
 									</option>
 								</select>
 							</div>
 						</div>
-						<div class="col-lg-3 kt-margin-bottom-10-mobile date-shift">
-							<div class="form-item">
+						<div class="col-lg-2 kt-margin-bottom-10-mobile date-shift">
+							<div class="form-item smallz">
 								<label class="label">Year</label>
 								<select formControlName="year">
 									<option value="">Choose year</option>
@@ -28,36 +28,40 @@
 								</select>
 							</div>
 						</div>
-						<div class="col-lg-3 kt-margin-bottom-10-mobile date-shift">
-							<div class="form-item">
+						<div class="col-lg-2 kt-margin-bottom-10-mobile date-shift">
+							<div class="form-item smallz">
 								<label class="label">Currency</label>
 								<select formControlName="currency">
-									<option value="" selected>Choose currency</option>
-									<option value="naira">₦</option>
+									<option value="naira" selected>₦</option>
 									<option value="dollar">$</option>
 								</select>
 							</div>
 						</div>
-						<div class="col-md-12 mt-4">
-							<button class="btn btn-primary btn-md right d-block ml-auto"
-								[disabled]="!recurringForm.valid" (click)="generateAnalytics()">Generate
-								analytics</button>
+						<div class="col-lg-2 mt-4">
+							<div class="form-item smallz">
+								<label class="label">&nbsp;</label>
+								<button class="btn btn-primary btn-sm" [disabled]="!recurringForm.valid"
+									(click)="generateAnalytics()">Submit</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</form>
 		</div>
+		<ul class="mt-5 detaiils" *ngIf="analyticss">
+			<li class="details" *ngIf="analyticss.total_amount">Total capital expenditure:
+				{{analyticss.total_amount | currency: selectedCurrency}}</li>
+			<li class="details" *ngIf="analyticss.amount">Capital expenditure for asset selected:
+				{{analyticss.amount | currency: selectedCurrency}}</li>
+		</ul>
 		<div class="mt-5 mb-5 chart">
 			<div class="row">
 				<div class="col-lg-10 mx-auto">
-					<canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [options]="chartOptions" [chartType]="chartType">
+					<canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [options]="chartOptions"
+						[chartType]="chartType">
 					</canvas>
 				</div>
 			</div>
-			<ul class="mt-5 detaiils" *ngIf="analyticss">
-				<li class="details" *ngIf="analyticss.total_amount">Total capital expenditure: {{analyticss.total_amount | currency: selectedCurrency}}</li>
-				<li class="details" *ngIf="analyticss.amount">Capital expenditure for asset selected: {{analyticss.amount | currency: selectedCurrency}}</li>
-			</ul>
 		</div>
 
 	</kt-portlet-body>
