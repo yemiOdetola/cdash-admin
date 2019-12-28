@@ -54,6 +54,15 @@ export class AssetsService {
 		});
 	}
 
+	getAssetsCapitalExp(assetData): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.post<any>(`${BASE_URL}/asset_data/count/capital`, assetData, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken,
+			}
+		});
+	}
+
 	createAssetData(asset): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.post<any>(`${BASE_URL}/asset_data`, asset, {

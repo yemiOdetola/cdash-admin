@@ -58,14 +58,14 @@ export class MenuConfig {
 					submenu: [
 						{
 							title: 'Recurring expenditure',
-							// page: 'campaigns/campaigns',
+							page: 'computations/recurring-expenditure',
 							root: true,
 							bullet: 'dot',
 							icon: 'flaticon-users',
 						},
 						{
 							title: 'Capital expenditure',
-							// page: 'meetings/meetings',
+							page: 'computations/capital-expenditure',
 							root: true,
 							bullet: 'dot',
 							icon: 'flaticon-chat-1',

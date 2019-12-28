@@ -1,0 +1,70 @@
+<kt-portlet>
+	<kt-portlet-header title="Capital expenditure" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="contact-body mb-5">
+			<form [formGroup]="recurringForm">
+				<div class="analytics">
+					<div class="row slide-in">
+						<div class="col-lg-6 kt-margin-bottom-10-mobile date-shift">
+							<div class="form-item" *ngIf="allAssets">
+								<label class="label">Assets</label>
+								<select formControlName="id">
+									<option value="">Select asset</option>
+									<option value="{{asset._id}}" *ngFor="let asset of allAssets;">{{asset.name}}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-2 kt-margin-bottom-10-mobile date-shift">
+							<div class="form-item">
+								<label class="label">Start year</label>
+								<select formControlName="start_year">
+									<option value="">select year</option>
+									<option value="{{year}}" *ngFor="let year of years;">{{year}}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-2 kt-margin-bottom-10-mobile date-shift">
+							<div class="form-item">
+								<label class="label">End year</label>
+								<select formControlName="end_year">
+									<option value="">select year</option>
+									<option value="{{year}}" *ngFor="let year of years;">{{year}}
+									</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-2 kt-margin-bottom-10-mobile date-shift">
+							<div class="form-item">
+								<label class="label">Currency</label>
+								<select formControlName="currency">
+									<option value="" selected>Choose currency</option>
+									<option value="naira">₦</option>
+									<option value="dollar">$</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-12 mt-4">
+							<button class="btn btn-primary btn-md right d-block ml-auto"
+								[disabled]="!recurringForm.valid" (click)="generateAnalytics()">Generate
+								analysis</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="mt-5 mb-5 chart">
+			<div class="row">
+				<div class="col-lg-5 mx-auto">
+					<canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [options]="chartOptions" [chartType]="chartType">
+					</canvas>
+				</div>
+			</div>
+		</div>
+
+	</kt-portlet-body>
+</kt-portlet>

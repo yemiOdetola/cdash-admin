@@ -13,9 +13,14 @@ import { ComputationsComponent } from './computations.component';
 import { ComputationsListComponent } from './computations-list/computations-list.component';
 import { MaturityScoreListComponent } from './maturity-score/maturity-score-list.component';
 import { ScoreEditComponent } from './score-edit/score-edit.component';
+import { RecurringExpenditureComponent } from './recurring-expenditure/recurring-expenditure.component';
+import { CapitalExpenditureComponent } from './capital-expenditure/capital-expenditure.component';
+
+import { ChartsModule } from 'ng2-charts';
 
 // Core => utils
-import { HttpUtilsService,
+import {
+	HttpUtilsService,
 	TypesUtilsService,
 	InterceptService,
 	LayoutUtilsService
@@ -51,7 +56,7 @@ import {
 	MAT_DIALOG_DEFAULT_OPTIONS,
 	MatSnackBarModule,
 	MatTooltipModule,
-	MatStepperModule
+	MatStepperModule,
 } from '@angular/material';
 
 // tslint:disable-next-line:class-name
@@ -68,6 +73,14 @@ const routes: Routes = [
 			{
 				path: 'maturity-scores',
 				component: MaturityScoreListComponent,
+			},
+			{
+				path: 'recurring-expenditure',
+				component: RecurringExpenditureComponent
+			},
+			{
+				path: 'capital-expenditure',
+				component: CapitalExpenditureComponent
 			},
 			{
 				path: 'maturity-scores/manage',
@@ -109,7 +122,8 @@ const routes: Routes = [
 		MatAutocompleteModule,
 		MatSnackBarModule,
 		MatTooltipModule,
-		MatStepperModule
+		MatStepperModule,
+		ChartsModule
 	],
 	providers: [
 		ModuleGuard,
@@ -118,10 +132,10 @@ const routes: Routes = [
 		InterceptService,
 		LayoutUtilsService,
 		{
-        	provide: HTTP_INTERCEPTORS,
-       	 	useClass: InterceptService,
-        	multi: true
-      	},
+			provide: HTTP_INTERCEPTORS,
+			useClass: InterceptService,
+			multi: true
+		},
 		{
 			provide: MAT_DIALOG_DEFAULT_OPTIONS,
 			useValue: {
@@ -143,7 +157,9 @@ const routes: Routes = [
 		ComputationsComponent,
 		ComputationsListComponent,
 		MaturityScoreListComponent,
-		ScoreEditComponent
+		ScoreEditComponent,
+		RecurringExpenditureComponent,
+		CapitalExpenditureComponent
 	]
 })
 export class ComputationsModule { }
