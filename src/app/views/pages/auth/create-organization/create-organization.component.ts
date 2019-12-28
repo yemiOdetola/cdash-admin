@@ -1,5 +1,5 @@
 // Angular
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // RxJS
@@ -15,7 +15,7 @@ import { AuthNoticeService, AuthService, Login } from '../../../../core/auth';
 	templateUrl: './create-organization.component.html',
 	encapsulation: ViewEncapsulation.None
 })
-export class CreateOrganizationComponent implements OnInit, OnDestroy {
+export class CreateOrganizationComponent implements OnInit {
 	// Public params
 	organizationForm: FormGroup;
 	loading = false;
@@ -48,16 +48,6 @@ export class CreateOrganizationComponent implements OnInit, OnDestroy {
 		this.route.queryParams.subscribe(params => {
 			this.returnUrl = params['returnUrl'] || '/';
 		});
-	}
-
-	/**
-	 * On destroy
-	 */
-	ngOnDestroy(): void {
-		this.authNoticeService.setNotice(null);
-		this.unsubscribe.next();
-		this.unsubscribe.complete();
-		this.loading = false;
 	}
 
 	/**

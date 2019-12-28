@@ -72,8 +72,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 	 */
 	ngOnInit(): void {
 		this.auth.checkOrganization().subscribe(response => {
-			if (response.status === true && localStorage.getItem('userToken')) {
-				this.router.navigate(['/cdash/dashboard']);
+			if (response.status === true) {
+				return;
 			} else {
 				this.router.navigate(['/auth/activate']);
 			}
@@ -101,14 +101,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 	 */
 	initLoginForm() {
 		this.loginForm = this.fb.group({
-			email: [DEMO_PARAMS.EMAIL, Validators.compose([
+			email: ['', Validators.compose([
 				Validators.required,
 				Validators.email,
 				Validators.minLength(3),
 				Validators.maxLength(320) // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
 			])
 			],
-			password: [DEMO_PARAMS.PASSWORD, Validators.compose([
+			password: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(3),
 				Validators.maxLength(100)
@@ -138,7 +138,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		};
 		this.auth
 			.login(authData.email, authData.password)
-			.subscribe( response => {
+			.subscribe(response => {
 				console.log(response);
 				const responseData = response['data'];
 				if (responseData.user_token) {
