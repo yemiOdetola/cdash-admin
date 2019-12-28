@@ -1,5 +1,5 @@
 <kt-portlet>
-	<kt-portlet-header [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	<kt-portlet-header title="Asset data" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 	</kt-portlet-header>
 	<kt-portlet-body>
 		<div class="list-ccover p-4">
@@ -65,14 +65,30 @@
 											</div>
 										</div>
 									</div>
-									<div *ngSwitchCase="'date'">
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="form-item">
-													<label class="label">{{form_elem.name}}</label>
-													<input type="date" placeholder="Enter {{form_elem.name}}"
-														formControlName="{{form_elem.id}}"
-														required="{{form_elem.required}}" />
+									<div *ngIf="form_elem.id === 'depreciation'">
+										<div *ngSwitchCase="'number'">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="form-item">
+														<label class="label">{{form_elem.name}}</label>
+														<input type="number" placeholder="Enter {{form_elem.name}}"
+															formControlName="{{form_elem.id}}" max="{{form_elem.max}}"
+															required="{{form_elem.required}}" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div *ngIf="form_elem.id !== 'depreciation'">
+										<div *ngSwitchCase="'date'">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="form-item">
+														<label class="label">{{form_elem.name}}</label>
+														<input type="date" placeholder="Enter {{form_elem.name}}"
+															formControlName="{{form_elem.id}}"
+															required="{{form_elem.required}}" />
+													</div>
 												</div>
 											</div>
 										</div>
@@ -84,13 +100,14 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<select formControlName="{{form_elem.id}}"
-														required="{{form_elem.required}}">
-														<option selected="selected">Select {{form_elem.name}}</option>
-														<option *ngFor="let opt of form_elem.options">
-															{{opt}}
-														</option>
-													</select>
-												</div>
+															required="{{form_elem.required}}">
+															<option selected="selected">Select {{form_elem.name}}
+															</option>
+															<option *ngFor="let opt of form_elem.options">
+																{{opt}}
+															</option>
+														</select>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -102,22 +119,27 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<select (change)="handleFormChange($event)">
-															<option value="" selected="selected">Select {{form_elem.name}}
+															<option value="" selected="selected">Select
+																{{form_elem.name}}
 															</option>
 															<option [value]="staff._id" *ngFor="let staff of staffs">
 																{{staff.name}}
 															</option>
-														</select> 
+														</select>
 													</div>
 													<div class="form-item">
-														<div class="users-list mt-3" *ngIf="myformsName && myformsName.length > 0">
-															<div class="each-user" *ngFor="let type of myformsName; let i = index;">
+														<div class="users-list mt-3"
+															*ngIf="myformsName && myformsName.length > 0">
+															<div class="each-user"
+																*ngFor="let type of myformsName; let i = index;">
 																<div class="name">
-																	<img src="./assets/media/icons/details-icon.svg" alt="">
+																	<img src="./assets/media/icons/details-icon.svg"
+																		alt="">
 																	{{type.name | titlecase}}
 																</div>
 																<div class="action ml-4" (click)="formRemove(type)">
-																	<img src="./assets/media/icons/delete-close.svg" alt="">
+																	<img src="./assets/media/icons/delete-close.svg"
+																		alt="">
 																</div>
 															</div>
 														</div>
@@ -194,54 +216,9 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-item">
-										<label class="label">2012</label>
-										<input type="number" placeholder="Enter 2012 expenditure"
-											formControlName="year12">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2013</label>
-										<input type="number" placeholder="Enter 2013 expenditure"
-											formControlName="year13">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2014</label>
-										<input type="number" placeholder="Enter 2014 expenditure"
-											formControlName="year14">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2015</label>
-										<input type="number" placeholder="Enter 2015 expenditure"
-											formControlName="year15">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2016</label>
-										<input type="number" placeholder="Enter 2016 expenditure"
-											formControlName="year16">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2017</label>
-										<input type="number" placeholder="Enter 2017 expenditure"
-											formControlName="year17">
+										<label class="label">2019</label>
+										<input type="number" placeholder="Enter 2019 expenditure"
+											formControlName="year19">
 									</div>
 								</div>
 							</div>
@@ -257,9 +234,54 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-item">
-										<label class="label">2019</label>
-										<input type="number" placeholder="Enter 2019 expenditure"
-											formControlName="year19">
+										<label class="label">2017</label>
+										<input type="number" placeholder="Enter 2017 expenditure"
+											formControlName="year17">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
+										<label class="label">2016</label>
+										<input type="number" placeholder="Enter 2016 expenditure"
+											formControlName="year16">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
+										<label class="label">2015</label>
+										<input type="number" placeholder="Enter 2015 expenditure"
+											formControlName="year15">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
+										<label class="label">2014</label>
+										<input type="number" placeholder="Enter 2014 expenditure"
+											formControlName="year14">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
+										<label class="label">2013</label>
+										<input type="number" placeholder="Enter 2013 expenditure"
+											formControlName="year13">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
+										<label class="label">2012</label>
+										<input type="number" placeholder="Enter 2012 expenditure"
+											formControlName="year12">
 									</div>
 								</div>
 							</div>
@@ -407,54 +429,9 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-item">
-										<label class="label">2012</label>
-										<input type="number" placeholder="Enter 2012 expenditure"
-											formControlName="year12">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2013</label>
-										<input type="number" placeholder="Enter 2013 expenditure"
-											formControlName="year13">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2014</label>
-										<input type="number" placeholder="Enter 2014 expenditure"
-											formControlName="year14">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2015</label>
-										<input type="number" placeholder="Enter 2015 expenditure"
-											formControlName="year15">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2016</label>
-										<input type="number" placeholder="Enter 2016 expenditure"
-											formControlName="year16">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2017</label>
-										<input type="number" placeholder="Enter 2017 expenditure"
-											formControlName="year17">
+										<label class="label">2019</label>
+										<input type="number" placeholder="Enter 2019 expenditure"
+											formControlName="year19">
 									</div>
 								</div>
 							</div>
@@ -470,9 +447,54 @@
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-item">
-										<label class="label">2019</label>
-										<input type="number" placeholder="Enter 2019 expenditure"
-											formControlName="year19">
+										<label class="label">2017</label>
+										<input type="number" placeholder="Enter 2017 expenditure"
+											formControlName="year17">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
+										<label class="label">2016</label>
+										<input type="number" placeholder="Enter 2016 expenditure"
+											formControlName="year16">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
+										<label class="label">2015</label>
+										<input type="number" placeholder="Enter 2015 expenditure"
+											formControlName="year15">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
+										<label class="label">2014</label>
+										<input type="number" placeholder="Enter 2014 expenditure"
+											formControlName="year14">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
+										<label class="label">2013</label>
+										<input type="number" placeholder="Enter 2013 expenditure"
+											formControlName="year13">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-item">
+										<label class="label">2012</label>
+										<input type="number" placeholder="Enter 2012 expenditure"
+											formControlName="year12">
 									</div>
 								</div>
 							</div>

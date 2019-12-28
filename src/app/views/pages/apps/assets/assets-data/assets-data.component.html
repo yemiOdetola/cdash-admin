@@ -29,7 +29,9 @@
 							<td>{{ asset.date_acquired | date: 'longDate'}}</td>
 							<td>{{ asset.cost ? asset.cost : 'not available' }}</td>
 							<td>{{ asset.business_purpose ? asset.business_purpose : 'not available' }}</td>
-							<td>{{ asset.type ? asset.type : 'not available' }}</td>
+							<td class="status">
+								<span class="plain">{{ asset.type ? asset.type : 'not available' }}</span>
+							</td>
 							<td>
 								<a routerLink="/cdash/assets/asset-details/{{asset._id}}" class="view">View</a>
 							</td>
