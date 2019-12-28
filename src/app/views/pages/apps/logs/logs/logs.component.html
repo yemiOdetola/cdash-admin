@@ -18,9 +18,11 @@
 					<tbody>
 						<tr className="each-row" *ngFor="let log of logs">
 							<td>{{log.name}}</td>
-							<td>{{log.date | date: 'fullDate'}}</td>
+							<td>{{log.date | date: 'medium'}}</td>
 							<td>{{log.module | titlecase}}</td>
-							<td>{{log.action | uppercase}}</td>
+							<td class="status">
+								<span class="plain">{{log.action | uppercase}}</span>
+							</td>
 							<!-- <td>
 								<a routerLink="/cdash/projects/log/{{log._id}}" class="view">View</a>
 							</td> -->

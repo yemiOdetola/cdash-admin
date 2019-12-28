@@ -155,7 +155,7 @@ export class StaffEditComponent implements OnInit {
 		if (this.fSelected) {
 			payload.append('image', this.fSelected, this.fSelected.name);
 		}
-		this.usersService.updateStaff(staff, this.staff._id).subscribe(
+		this.usersService.updateStaff(payload, this.staff._id).subscribe(
 			data => {
 				console.log('success reponse', data);
 				this.loadingSubject.next(false);
@@ -217,9 +217,8 @@ export class StaffEditComponent implements OnInit {
 
 	onFileChange(event) {
 		if (event.target.files.length > 0) {
-			const fileSelected: any = event.target.files[0];
 			this.fSelected = event.target.files[0];
-			this.fileName = fileSelected.name;
+			this.fileName = event.target.files[0].name;
 		}
 	}
 

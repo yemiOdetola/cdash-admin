@@ -2,8 +2,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 // Services and Models
-import { ProjectModel, ProjectsService } from '../../../../../core/projects';
-import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
+import { ProjectsService } from '../../../../../core/projects';
 
 
 @Component({
@@ -23,8 +22,7 @@ export class AllLogsComponent implements OnInit, OnDestroy {
 	disableNext: boolean;
 	editedProject;
 	constructor(
-		private projectsService: ProjectsService,
-		private layoutUtilsService: LayoutUtilsService) { }
+		private projectsService: ProjectsService,) { }
 
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
@@ -60,9 +58,8 @@ export class AllLogsComponent implements OnInit, OnDestroy {
 	}
 
 	itemNav() {
-		if (((this.pageIndex * 10) + 10) >= this.resultsLength) {
+		if (((this.pageIndex * 20) + 20) >= this.resultsLength) {
 			this.disableNext = true;
-			console.log('paste total numbers');
 			// return;
 		} else {
 			this.disableNext = false;

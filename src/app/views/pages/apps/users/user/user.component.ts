@@ -22,7 +22,7 @@ export class UserComponent implements OnInit {
 	roles = [];
 	roleId;
 	rolePerm;
-
+	roleName;
 	constructor(
 		private route: ActivatedRoute,
 		private usersService: UserService,
@@ -65,6 +65,7 @@ export class UserComponent implements OnInit {
 					if (this.userDetails.role === role._id) {
 						console.log(role, this.userDetails.role);
 						this.rolePerm = role.permissions;
+						this.roleName = role.name;
 					}
 				});
 				this.loadingSubject.next(false);
