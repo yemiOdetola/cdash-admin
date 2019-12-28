@@ -44,6 +44,16 @@ export class AssetsService {
 		});
 	}
 
+
+	getAssetsReccurentExp(assetData): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.post<any>(`${BASE_URL}/asset_data/count/recurring`, assetData, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken,
+			}
+		});
+	}
+
 	createAssetData(asset): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.post<any>(`${BASE_URL}/asset_data`, asset, {

@@ -1,3 +1,9 @@
+<kt-portlet-header
+[title]="pageTitle"
+[class]="'kt-portlet__head--lg'"
+[viewLoading$]="loading$"
+>
+</kt-portlet-header>
 <div class="row">
 	<div class="col-xl-4 col-sm-6">
 		<div class="each-stat">
@@ -45,12 +51,19 @@
 			<div class="top-header">
 				<div class="title">
 					<img src="./assets/media/icons/dashboard-campaigns.svg" alt="">
-					<span>Recurring Expenditure (%)</span>
+					<span>Recurring Expenditure</span>
 				</div>
-				<div class="link">View all</div>
+				<select class="ddown" (change)="getAssetsReccurent($event, 'id')" *ngIf="assetsArr && assetsArr.length !== 0">
+					<option value="null" selected>All assets</option> 
+					<option value="{{assAr._id}}" *ngFor="let assAr of assetsArr">{{assAr.name | titlecase}}</option>
+				</select>
+				<select class="ddown" (change)="getAssetsReccurent($event, 'currency')" *ngIf="assetsArr && assetsArr.length !== 0">
+					<option value="naira" selected>₦</option>
+					<option value="dollar">$</option>
+				</select>
 			</div>
 			<div class="chart text-center">
-				<circle-progress [percent]="44" subtitle="44%" [outerStrokeColor]="'#FAFAFA'"
+				<circle-progress [percent]="recExpPercent" subtitle="{{recExp | currency: reccCurrency}}" [outerStrokeColor]="'#FAFAFA'"
 					[outerStrokeGradientStopColor]="'#333333'"></circle-progress>
 			</div>
 		</div>

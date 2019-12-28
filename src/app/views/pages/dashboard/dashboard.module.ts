@@ -29,11 +29,11 @@ import { MatMenuModule, MatStepperModule } from '@angular/material';
 		]),
 		NgCircleProgressModule.forRoot({
 			// set defaults here
-			radius: 80,
-			outerStrokeWidth: 13,
+			radius: 90,
+			outerStrokeWidth: 12,
 			innerStrokeWidth: 8,
 			animationDuration: 300,
-			subtitleFontSize: '15',
+			subtitleFontSize: '13',
 			showInnerStroke: false,
 			showUnits: false,
 			unitsColor: '#000',

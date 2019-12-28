@@ -2,8 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LayoutUtilsService, MessageType } from '../../../core/_base/crud';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { select, Store } from '@ngrx/store';
-import { currentUser, Logout, User } from '../../../core/auth';
+import { Store } from '@ngrx/store';
+import { User } from '../../../core/auth';
 import { AppState } from '../../../core/reducers';
 // calender
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -44,7 +44,10 @@ export class DashboardComponent implements OnInit {
 	capExpPercent = 0;
 	assetPercent = 0;
 	capitalCurrency = '₦';
+	reccCurrency = '₦';
 	payload = {};
+	recExp = 0;
+	recExpPercent = 0;
 	constructor(
 		private mdTasksService: MdTasksService,
 		private usersService: UserService,
@@ -58,40 +61,48 @@ export class DashboardComponent implements OnInit {
 
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
-		this.loadingSubject.next(false);
+		this.loadingSubject.next(true);
 		this.getUsersCount();
 		this.getStaffsCount();
 		this.getMaturityScoreAverage();
 		this.getAllAssets();
 		this.initAssets();
+		this.initRecurrentExpenditure();
 		this.initCapitalExpenditure();
 		console.clear();
 	}
 
 	getUsersCount() {
+		this.loadingSubject.next(true);
 		this.usersService.getUsersCount().subscribe(
 			countResult => {
+				this.loadingSubject.next(false);
 				this.usersCount = countResult['data'];
 			}
 		);
 	}
 
 	getMaturityScoreAverage() {
+		this.loadingSubject.next(true);
 		this.computationsService.getScoreAverage().subscribe(
 			countResult => {
 				this.maturityAverage = countResult['average'];
+				this.loadingSubject.next(false);
 			}
 		);
 	}
 
 	getStaffsCount() {
+		this.loadingSubject.next(true);
 		this.usersService.getStaffsCount().subscribe(
 			countResult => {
 				this.staffsCount = countResult['data'];
+				this.loadingSubject.next(false);
 			}
 		);
 	}
 	initAssets() {
+		this.loadingSubject.next(true);
 		const payload = {
 			id: null
 		};
@@ -99,11 +110,13 @@ export class DashboardComponent implements OnInit {
 			assetsCountr => {
 				this.assetsCount = assetsCountr['all_data'];
 				this.assetPercent = 100;
+				this.loadingSubject.next(false);
 			}
 		);
 	}
 
 	initCapitalExpenditure() {
+		this.loadingSubject.next(true);
 		const payload = {
 			id: null
 		};
@@ -111,11 +124,13 @@ export class DashboardComponent implements OnInit {
 			assetsCountr => {
 				this.capExp = assetsCountr['total_amount'];
 				this.capExpPercent = 100;
+				this.loadingSubject.next(false);
 			}
 		);
 	}
 
 	getCapitalExpenditure(event, type) {
+		this.loadingSubject.next(true);
 		const val = event.target.value;
 		if (type === 'currency') {
 			this.payload['currency'] = event.target.value;
@@ -139,12 +154,57 @@ export class DashboardComponent implements OnInit {
 					this.capExp = expCountr['amount'];
 					this.capExpPercent = (expCountr['amount'] / expCountr['total_amount']) * 100;
 				}
+				this.loadingSubject.next(false);
+			});
+	}
+
+
+	initRecurrentExpenditure() {
+		this.loadingSubject.next(true);
+		const payload = {
+			id: null
+		};
+		this.assetsService.getAssetsReccurentExp(payload).subscribe(
+			assetsCountr => {
+				this.recExp = assetsCountr['total_amount'];
+				this.recExpPercent = 100;
+				this.loadingSubject.next(false);
+			}
+		);
+	}
+
+	getAssetsReccurent(event, type) {
+		this.loadingSubject.next(true);
+		const val = event.target.value;
+		if (type === 'currency') {
+			this.payload['currency'] = event.target.value;
+		}
+		if (type === 'id') {
+			this.payload['id'] = event.target.value;
+		}
+		if (val === 'null') {
+			this.payload['id'] = null;
+		}
+		this.assetsService.getAssetsReccurentExp(this.payload).subscribe(
+			recExpCountr => {
+				this.recExp = recExpCountr['total_amount'];
+				this.recExpPercent = 100;
+				if (recExpCountr['currency'] === 'dollar') {
+					this.reccCurrency = '$';
+				} else {
+					this.reccCurrency = '₦';
+				}
+				if (typeof recExpCountr['amount'] === 'number') {
+					this.recExp = recExpCountr['amount'];
+					this.recExpPercent = (recExpCountr['amount'] / recExpCountr['total_amount']) * 100;
+				}
+				this.loadingSubject.next(false);
 			}
 		);
 	}
 
 	getAllAssetCount(event) {
-		console.log(event.target.value);
+		this.loadingSubject.next(true);
 		const val = event.target.value;
 		let payload = { 'id': val };
 		if (val === 'null') {
@@ -158,14 +218,17 @@ export class DashboardComponent implements OnInit {
 					this.assetsCount = assetsCountr['data'];
 					this.assetPercent = (assetsCountr['data'] / assetsCountr['all_data']) * 100;
 				}
+				this.loadingSubject.next(false);
 			}
 		);
 	}
 
 	getAllAssets() {
+		this.loadingSubject.next(true);
 		this.assetsService.getAllAssets().subscribe(
 			assetsAll => {
 				this.assetsArr = assetsAll['data'];
+				this.loadingSubject.next(false);
 			}
 		);
 	}
