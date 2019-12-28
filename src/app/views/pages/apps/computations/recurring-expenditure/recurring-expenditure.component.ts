@@ -32,6 +32,11 @@ export class RecurringExpenditureComponent implements OnInit, OnDestroy {
 	pieChartData = [0, 0];
 	chartType = 'pie';
 	chartOptions;
+	selectedCurrency = '₦';
+	analyticss: {
+		total_amount: 0,
+		amount: 0
+	};
 	constructor(
 		private assetsService: AssetsService,
 		private reportsService: ReportsService,
@@ -94,13 +99,21 @@ export class RecurringExpenditureComponent implements OnInit, OnDestroy {
 		this.loadingSubject.next(true);
 		this.assetsService.getAssetsReccurentExp(this.recurringForm.value).subscribe(
 			response => {
-				this.analyticsData = response['data'];
-				console.log('this.reports', this.analyticsData);
+				this.analyticss = response;
+				if (response['currency'] === 'dollar') {
+					this.selectedCurrency = '$';
+				} else {
+					this.selectedCurrency = '₦';
+				}
 				this.pieChartLabels = [
 					'Total Assets',
 					'Selected asset'
 				];
-				this.pieChartData = [response['total_amount'], response['amount']];
+				let total = response['total_amount'];
+				if (response['amount'] >= response['total_amount']) {
+					total = 0;
+				}
+				this.pieChartData = [total, response['amount']];
 				this.loadingSubject.next(false);
 			},
 			error => {
@@ -116,6 +129,12 @@ export class RecurringExpenditureComponent implements OnInit, OnDestroy {
 		console.log('payload sent', payload);
 		this.assetsService.getAssetsReccurentExp(payload).subscribe(
 			response => {
+				this.analyticss = response;
+				if (response['currency'] === 'dollar') {
+					this.selectedCurrency = '$';
+				} else {
+					this.selectedCurrency = '₦';
+				}
 				this.analyticsData = response['total_amount'];
 				this.pieChartLabels = [
 					'Total Assets',

@@ -15,6 +15,7 @@ import { MaturityScoreListComponent } from './maturity-score/maturity-score-list
 import { ScoreEditComponent } from './score-edit/score-edit.component';
 import { RecurringExpenditureComponent } from './recurring-expenditure/recurring-expenditure.component';
 import { CapitalExpenditureComponent } from './capital-expenditure/capital-expenditure.component';
+import { ExpensesTurnoverComponent } from './expenses-turnover/expenses-turnover.component';
 
 import { ChartsModule } from 'ng2-charts';
 
@@ -159,7 +160,8 @@ const routes: Routes = [
 		MaturityScoreListComponent,
 		ScoreEditComponent,
 		RecurringExpenditureComponent,
-		CapitalExpenditureComponent
+		CapitalExpenditureComponent,
+		ExpensesTurnoverComponent
 	]
 })
 export class ComputationsModule { }

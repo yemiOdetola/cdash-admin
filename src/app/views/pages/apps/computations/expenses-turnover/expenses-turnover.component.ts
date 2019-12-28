@@ -15,11 +15,11 @@ const moment = _moment;
 
 @Component({
 	// tslint:disable-next-line:component-selector
-	selector: 'kt-reports-group',
-	templateUrl: './reports-group.component.html',
-	styleUrls: ['./reports-group.component.scss'],
+	selector: 'kt-expenses-turnover',
+	templateUrl: './expenses-turnover.component.html',
+	styleUrls: ['./expenses-turnover.component.scss'],
 })
-export class ReportsGroupComponent implements OnInit, OnDestroy {
+export class ExpensesTurnoverComponent implements OnInit, OnDestroy {
 	loading$: Observable<boolean>;
 	loadingSubject = new BehaviorSubject<boolean>(true);
 	reports: ReportModel[] = [];

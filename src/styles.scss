@@ -404,6 +404,11 @@ button[disabled] {
 			padding: 0 !important;
 		}
 	}
+	&.smallz {
+		input, textarea, select {
+			height: 2.5rem;
+		}
+	}
 	@media (min-width: 992px) {
 		width: 100%;
 		margin: 1.4rem 0;

@@ -54,6 +54,10 @@
 					</canvas>
 				</div>
 			</div>
+			<ul class="mt-5 detaiils" *ngIf="analyticss">
+				<li class="details" *ngIf="analyticss.total_amount">Total capital expenditure: {{analyticss.total_amount | currency: selectedCurrency}}</li>
+				<li class="details" *ngIf="analyticss.amount">Capital expenditure for asset selected: {{analyticss.amount | currency: selectedCurrency}}</li>
+			</ul>
 		</div>
 
 	</kt-portlet-body>
