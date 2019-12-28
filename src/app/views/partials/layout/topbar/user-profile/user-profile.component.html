@@ -1,10 +1,10 @@
 <div ngbDropdown placement="bottom-right" *ngIf="user$ | async as _user" class="kt-header__topbar-item kt-header__topbar-item--user">
 	<div ngbDropdownToggle class="kt-header__topbar-wrapper">
 		<div class="kt-header__topbar-user">
-			<span class="kt-header__topbar-welcome kt-hidden-mobile" *ngIf="showHi">Hi,</span>
-			<span class="kt-header__topbar-username kt-hidden-mobile" *ngIf="showName">{{_user.name|titlecase}}</span>
-			<img *ngIf="showAvatar" alt="Pic" [attr.src]="_user.pic">
-			<span *ngIf="showBadge && _user" class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">{{_user.name | firstLetter}}</span>
+			<!-- <span class="kt-header__topbar-welcome kt-hidden-mobile" *ngIf="showHi">Hi,</span>
+			<span class="kt-header__topbar-username kt-hidden-mobile" *ngIf="showName">{{_user.name|titlecase}}</span> -->
+			<img *ngIf="showAvatar" alt="Pic" src="./assets/media/icons/user.svg">
+			<span *ngIf="showBadge && userDetails" class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">{{userDetails.name | firstLetter}}</span>
 		</div>
 	</div>
 	<div ngbDropdownMenu class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
@@ -30,7 +30,7 @@
 					<i class="flaticon2-calendar-3 kt-font-success"></i>
 				</div>
 				<div class="kt-notification__item-details">
-					<div routerLink="/strada/profile" class="kt-notification__item-title kt-font-bold">
+					<div routerLink="/cdash/profile" class="kt-notification__item-title kt-font-bold">
 						My Profile
 					</div>
 				</div>
@@ -38,7 +38,7 @@
 
 			<div class="kt-notification__custom flex-us">
 				<a href="javascript:;" (click)="logout()" class="btn btn-outline-brand btn-upper btn-sm btn-bold">Sign Out</a>
-				<a href="javascript:;" (click)="changePassword()" class="btn btn-outline-brand btn-upper btn-sm btn-bold">Change Password</a>
+				<!-- <a href="javascript:;" (click)="changePassword()" class="btn btn-outline-brand btn-upper btn-sm btn-bold">Change Password</a> -->
 			</div>
 		</div>
 		<!--end: Navigation -->

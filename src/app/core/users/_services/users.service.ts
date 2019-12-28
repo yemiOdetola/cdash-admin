@@ -66,6 +66,15 @@ export class UserService {
 		});
 	}
 
+	profileEdit(user: any): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.put<any>(`${BASE_URL}/user/edit_profile`, user, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken,
+			}
+		});
+	}
+
 	countStaffs(): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.get<any>(`${BASE_URL}/staff/count`, {

@@ -57,6 +57,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	 * On init
 	 */
 	ngOnInit() {
+		this.auth.checkOrganization().subscribe(response => {
+			if (response.status === true && response.data.superAdmin) {
+				this.router.navigate(['/auth/login']);
+			}
+		});
 		this.initRegisterForm();
 	}
 
@@ -89,7 +94,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 				Validators.maxLength(320)
 			]),
 			],
-			username: ['', Validators.compose([
+			address: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(3),
 				Validators.maxLength(100)
@@ -139,7 +144,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 		const _user: User = new User();
 		_user.clear();
 		_user.email = controls['email'].value;
-		_user.username = controls['username'].value;
+		_user.address = controls['address'].value;
 		_user.name = controls['fullname'].value;
 		_user.password = controls['password'].value;
 		_user.roles = [];

@@ -7,7 +7,9 @@ import { select, Store } from '@ngrx/store';
 // State
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AppState } from '../../../../../core/reducers';
-import { currentUser, Logout, User } from '../../../../../core/auth';
+import { currentUser, User } from '../../../../../core/auth';
+import { UserService } from '../../../../../core/users';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
 
@@ -25,6 +27,9 @@ export class UserProfileComponent implements OnInit {
 	@Input() showBadge: boolean = true;
 	showName = true;
 	passwordDetails = {};
+	userDetails;
+	idParams = localStorage.getItem('loginId');
+
 
 	/**
 	 * Component constructor
@@ -33,7 +38,9 @@ export class UserProfileComponent implements OnInit {
 	 */
 	constructor(
 		private store: Store<AppState>,
-		public dialog: MatDialog
+		public dialog: MatDialog,
+		private usersService: UserService,
+		private router: Router,
 		) { }
 
 	/**
@@ -44,14 +51,28 @@ export class UserProfileComponent implements OnInit {
 	 * On init
 	 */
 	ngOnInit(): void {
+		this.getUserDetails();
 		this.user$ = this.store.pipe(select(currentUser));
 	}
+
+	getUserDetails() {
+		return this.usersService.getUserById(this.idParams).subscribe(
+			userDetails => {
+				this.userDetails = userDetails['data'];
+				return this.userDetails;
+			}
+		);
+	}
+
 
 	/**
 	 * Log out
 	 */
 	logout() {
-		this.store.dispatch(new Logout());
+		localStorage.setItem('userToken', '');
+		localStorage.setItem('loginId', '');
+		localStorage.setItem('loginData', '');
+		return this.router.navigate(['/auth/login']);
 	}
 
 

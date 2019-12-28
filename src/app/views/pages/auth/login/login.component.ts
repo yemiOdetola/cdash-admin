@@ -71,8 +71,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 	 * On init
 	 */
 	ngOnInit(): void {
+		this.auth.checkOrganization().subscribe(response => {
+			if (response.status === true && localStorage.getItem('userToken')) {
+				this.router.navigate(['/cdash/dashboard']);
+			} else {
+				this.router.navigate(['/auth/activate']);
+			}
+		});
 		this.initLoginForm();
-
 		// redirect back to the returnUrl before login
 		this.route.queryParams.subscribe(params => {
 			this.returnUrl = params['returnUrl'] || '/';

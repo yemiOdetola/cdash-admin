@@ -36,12 +36,14 @@ export class CreateOrganizationComponent implements OnInit, OnDestroy {
 	) { }
 
 	ngOnInit(): void {
+		this.auth.checkOrganization().subscribe(response => {
+			if (response.status === true && response.data._id) {
+				this.router.navigate(['/auth/register']);
+			}
+		});
 		if (localStorage.getItem('orgDetails')) {
 			this.router.navigate(['/cdash/dashboard']);
 		}
-		// if (localStorage.getItem('activated')) {
-		// 	this.router.navigate(['/auth/create-organization']);
-		// }
 		this.initOrganizationForm();
 		this.route.queryParams.subscribe(params => {
 			this.returnUrl = params['returnUrl'] || '/';

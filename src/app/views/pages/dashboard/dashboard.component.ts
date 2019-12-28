@@ -5,6 +5,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { User } from '../../../core/auth';
 import { AppState } from '../../../core/reducers';
+import { Router } from '@angular/router';
 // calender
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { MdTasksService } from '../../../core/md-tasks';
@@ -12,6 +13,7 @@ import { UserService } from '../../../core/users';
 import { LeadsService, LeadModel } from '../../../core/leads';
 import { ContactsService, ContactModel } from '../../../core/contacts';
 import { AssetsService } from '../../../core/assets';
+import { AuthService } from '../../../core/auth';
 import { ComputationsService } from '../../../core/computations';
 
 @Component({
@@ -50,16 +52,25 @@ export class DashboardComponent implements OnInit {
 	recExpPercent = 0;
 	constructor(
 		private mdTasksService: MdTasksService,
+		private auth: AuthService,
 		private usersService: UserService,
 		private leadsService: LeadsService,
 		private contactsService: ContactsService,
 		private assetsService: AssetsService,
 		private computationsService: ComputationsService,
 		private store: Store<AppState>,
+		private router: Router,
 		private layoutUtilsService: LayoutUtilsService
 	) { }
 
 	ngOnInit() {
+		this.auth.checkOrganization().subscribe(response => {
+			if (response.status === true && localStorage.getItem('userToken')) {
+				return;
+			} else {
+				this.router.navigate(['/auth/login']);
+			}
+		});
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
 		this.getUsersCount();

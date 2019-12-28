@@ -47,7 +47,7 @@ export class AuthService {
 	register(user: User): Observable<any> {
 		const httpHeaders = new HttpHeaders();
 		httpHeaders.set('Content-Type', 'application/json');
-		return this.http.post<User>(API_USERS_URL, user, { headers: httpHeaders })
+		return this.http.post<User>(`${BASE_URL}/user/register`, user, { headers: httpHeaders })
 			.pipe(
 				map((res: User) => {
 					return res;
