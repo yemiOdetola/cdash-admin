@@ -17,6 +17,7 @@ import { AssetComponent } from './asset/asset.component';
 import { AssetsDataComponent } from './assets-data/assets-data.component';
 import { AssetDataComponent } from './asset-data/asset-data.component';
 import { AssetDetailsComponent } from './asset-details/asset-details.component';
+import { AssetContainerComponent } from './asset-container/asset-container.component';
 
 // Core => utils
 import { HttpUtilsService,
@@ -85,6 +86,10 @@ const routes: Routes = [
 			{
 				path: 'manage/new-asset-data',
 				component: AssetDataComponent
+			},
+			{
+				path: 'manage/asset-data/:id',
+				component: AssetContainerComponent
 			},
 			{
 				path: 'new-asset-data/details/:id',
@@ -171,7 +176,8 @@ const routes: Routes = [
 		AssetComponent,
 		AssetsDataComponent,
 		AssetDataComponent,
-		AssetDetailsComponent
+		AssetDetailsComponent,
+		AssetContainerComponent
 	]
 })
 export class AssetsModule { }

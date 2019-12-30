@@ -43,8 +43,21 @@ export class AssetEditComponent implements OnInit {
 	formMap: any;
 	myForms: any;
 	stMap: any;
+	selectedType = 'text';
+	customName = '';
+	customForm;
 	assetForm: FormGroup;
 	currencies = ['naira', 'dollar'];
+	customTypes = ['text', 'number'];
+	customIndex = 1;
+	compulsoryFields = [
+		{ 'id': 'summary', 'name': 'Summary', 'type': 'text', 'required': 'true' },
+		{ 'id': 'date_acquired', 'name': 'Date acquired', 'type': 'date', 'required': 'true' },
+		{ 'id': 'cost', 'name': 'Cost of acquisition', 'type': 'number', 'required': 'true' },
+		{ 'id': 'business_purpose', 'name': 'Business purpose', 'type': 'text', 'required': 'true' },
+		{ 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Others'] },
+		{ 'id': 'depreciation', 'name': 'Depreciation per annum(%)', 'type': 'number', 'max': '100', 'required': 'true' },
+	];
 	constructor(
 
 		private activatedRoute: ActivatedRoute,
@@ -61,18 +74,20 @@ export class AssetEditComponent implements OnInit {
 		this.loadingSubject.next(true);
 		this.myForms = [];
 		this.formMap = {};
+		this.customForm = {};
 		this.initAssetForm();
 		if (this.activatedRoute.snapshot.params['id']) {
 			console.log('id found', this.activatedRoute.snapshot.params['id']);
 			this.idParams = this.activatedRoute.snapshot.params['id'];
 		}
 		this.formTypes = [
-			{ 'id': 'summary', 'name': 'Summary', 'type': 'text', 'required': 'true' },
-			{ 'id': 'date_acquired', 'name': 'Date acquired', 'type': 'date', 'required': 'true' },
-			{ 'id': 'cost', 'name': 'Cost of acquisition', 'type': 'number', 'required': 'true' },
-			{ 'id': 'business_purpose', 'name': 'Business purpose', 'type': 'text', 'required': 'true' },
-			{ 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Others']},
-			{ 'id': 'depreciation', 'name': 'Depreciation per annum(%)', 'type': 'number', 'max': '100', 'required': 'true' },
+			// { 'id': 'summary', 'name': 'Summary', 'type': 'text', 'required': 'true' },
+			// { 'id': 'date_acquired', 'name': 'Date acquired', 'type': 'date', 'required': 'true' },
+			// { 'id': 'cost', 'name': 'Cost of acquisition', 'type': 'number', 'required': 'true' },
+			// { 'id': 'business_purpose', 'name': 'Business purpose', 'type': 'text', 'required': 'true' },
+			// { 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Others']},
+			// { 'id': 'depreciation', 'name': 'Depreciation per annum(%)', 'type': 'number', 'max': '100', 'required': 'true' },
+			{ 'id': 'currency', 'name': 'Currency (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Naira', 'Dollar'] },
 			{ 'id': 'icon', 'name': 'Icon', 'type': 'file', 'required': 'true' },
 			{ 'id': 'business_owners', 'name': 'Business owners', 'type': 'select', 'required': 'true' },
 			{ 'id': 'recurrent_expenditure_year', 'name': 'Recurrent expenditure(year)', 'type': 'chart', 'required': 'true' },
@@ -104,9 +119,29 @@ export class AssetEditComponent implements OnInit {
 	initAssetForm(asset: any = {}) {
 		this.assetForm = this.fb.group({
 			name: [asset.name || '', Validators.required],
-			currency: [asset.name || '', Validators.required]
+			customName: [''],
+			customType: ['']
 		});
 
+	}
+
+	createCustom() {
+		if (this.customName === '') {
+			return this.layoutUtilsService.showActionNotification('Enter form name', MessageType.Create, 4000, true, true);
+		}
+		this.customIndex++;
+		this.customForm = {
+			'id': `custom${this.customIndex}`,
+			'name': this.customName,
+			'type': this.selectedType
+		};
+		this.myForms.push(this.customForm);
+		this.customName = '';
+		console.log('custom form', this.myForms);
+	}
+
+	passValue(event) {
+		this.selectedType = event.target.value;
 	}
 
 	handleFormChange(event) {
@@ -139,18 +174,6 @@ export class AssetEditComponent implements OnInit {
 			}
 		}
 	}
-
-	// roleRemove(role) {
-	// 	if (this.roleMap[role]) {
-	// 		let filtered = this.myRoles.filter(function(value, index, arr) {
-
-	// 			return value !== role;
-	// 		});
-	// 		this.myRoles = filtered;
-	// 		this.roleMap[role] = false;
-	// 	}
-	// }
-
 
 	getComponentTitle() {
 		return 'Asset form container';
@@ -253,7 +276,12 @@ export class AssetEditComponent implements OnInit {
 	onSubmit() {
 		this.loadingSubject.next(true);
 		const payload = this.assetForm.value;
+		console.log('before', this.myForms);
 		if (this.myForms.length > 0) {
+			this.compulsoryFields.forEach(field => {
+				this.myForms.push(field);
+			});
+			console.log('after', this.myForms);
 			payload.forms = this.myForms;
 			this.assetsService.createAsset(payload).subscribe(
 				data => {

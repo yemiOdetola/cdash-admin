@@ -26,6 +26,15 @@ export class AssetsService {
 		});
 	}
 
+	editAssetContainer(container, containerId): Observable <any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.post<any>(`${BASE_URL}/asset/${containerId}`, container, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken,
+			}
+		});
+	}
+
 	getAllAssetsCount(assetData): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.post<any>(`${BASE_URL}/asset_data/count`, assetData, {
@@ -188,10 +197,9 @@ export class AssetsService {
 	// delete a asset
 	deleteAsset(assetId: string): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.delete<any>(`${BASE_URL}/api/asset?asset_id=${assetId}`, {
+		return this.http.delete<any>(`${BASE_URL}/asset/${assetId}`, {
 			headers: {
-				'Authorization': 'Bearer ' + userToken,
-				'encrypted': 'true'
+				'Authorization': 'Bearer ' + userToken
 			}
 		});
 	}

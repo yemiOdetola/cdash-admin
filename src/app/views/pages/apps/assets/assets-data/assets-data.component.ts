@@ -36,7 +36,7 @@ export class AssetsDataComponent implements OnInit, OnDestroy {
 			assetsData => {
 				this.containerAssets = assetsData['data'];
 				localStorage.setItem('formElement', JSON.stringify(assetsData['data']));
-				console.log('this lead details oninit', this.containerAssets);
+				console.log('this form details oninit', this.containerAssets);
 				this.loadingSubject.next(false);
 			},
 			error => {

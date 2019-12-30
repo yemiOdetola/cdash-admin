@@ -402,6 +402,9 @@ button[disabled] {
 	&.no-padding {
 		input {
 			padding: 0 !important;
+			&:focus, &:active {
+				outline: none !important;
+			}
 		}
 	}
 	&.smallz {
@@ -476,6 +479,7 @@ button[disabled] {
 		outline: none !important;
 		&:active {
 			border: 1px solid #97979d;
+			outline: none !important;
 		}
 	}
 
@@ -490,7 +494,9 @@ button[disabled] {
 		border: 0.5px solid #97979d;
 		padding-left: 1rem;
 		background: none;
-
+		&:focus, &:active {
+			outline: none !important;
+		}
 		option {
 			background: none;
 			height: 2.8rem;

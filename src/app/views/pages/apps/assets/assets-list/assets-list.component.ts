@@ -1,13 +1,9 @@
 // Angular
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 // Services and Models
-import { AssetModel, AssetsService } from '../../../../../core/assets';
-
-// material for table
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { AssetsService } from '../../../../../core/assets';
+import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 
 @Component({
 	selector: 'kt-assets-list',
@@ -24,7 +20,10 @@ export class AssetsListComponent implements OnInit, OnDestroy {
 	disablePrev = true;
 	disableNext: boolean;
 	// dataSource = new MatTableDataSource(LEAD_DATA);
-	constructor(private assetsService: AssetsService) { }
+	constructor(
+		private assetsService: AssetsService,
+		private layoutUtilsService: LayoutUtilsService
+		) { }
 
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
@@ -98,6 +97,32 @@ export class AssetsListComponent implements OnInit, OnDestroy {
 		this.getAssets(skip, this.limit);
 		this.countAssets();
 		this.itemNav();
+	}
+
+	onDelete(assetId) {
+		const _title: string = 'Delete Asset';
+		const _description: string = 'Are you sure to permanently delete this asset and its data?';
+		const _waitDesciption: string = 'Asset will be deleted';
+		const _deleteMessage = `Succesful`;
+		const _errorDelete = 'Seems and Error Occured, Retry';
+
+		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
+		dialogRef.afterClosed().subscribe(res => {
+			console.log(res);
+			if (!res) {
+				return;
+			}
+			this.assetsService.deleteAsset(assetId).subscribe(
+				deleted => {
+					console.log('deleted', deleted);
+					this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+				},
+				error => {
+					console.log('error', error);
+					this.layoutUtilsService.showActionNotification(_errorDelete, MessageType.Delete);
+				}
+			);
+		});
 	}
 
 	ngOnDestroy() { }
