@@ -1,0 +1,27 @@
+.form-group {
+	width: 95%;
+	margin: 1.5rem auto;
+	@media(min-width: 992px) {
+		width: 40%;
+	}
+	label {
+		font-weight: 500;
+	}
+}
+.instructions {
+	font-size: 1.1rem;
+	color: #333;
+	.instruction {
+		margin: 0.4rem 0;
+	}
+}
+.form-items-cover {
+	display: flex;
+	width: 100%;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	.form-items {
+		width: 45%;
+		text-align: left;
+	}
+}
