@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AssetModel, AssetsService } from '../../../../../core/assets';
+import { Location } from '@angular/common';
 // Layout
 import { LayoutConfigService } from '../../../../../core/_base/layout';
 // CRUD
@@ -66,6 +67,7 @@ export class AssetEditComponent implements OnInit {
 		private layoutUtilsService: LayoutUtilsService,
 		private layoutConfigService: LayoutConfigService,
 		private fb: FormBuilder,
+		private _location: Location,
 		private assetsService: AssetsService
 	) { }
 
@@ -114,6 +116,10 @@ export class AssetEditComponent implements OnInit {
 		this.formTypes.forEach((e) => {
 			this.stMap[e.id] = e.name;
 		});
+	}
+
+	goBack() {
+		this._location.back();
 	}
 
 	initAssetForm(asset: any = {}) {

@@ -2,6 +2,10 @@
 	<kt-portlet-header title="Asset data" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 	</kt-portlet-header>
 	<kt-portlet-body>
+		<div class="goback" (click)="goBack()">
+			<img src="./assets/media/icons/backBtn.svg" alt="">
+			<span>Back</span>
+		</div>
 		<div class="list-ccover p-4">
 			<div class="menu mb-5">
 				<div [className]="selected === 'main_form' ? 'item active' : 'item'" (click)="selectMenu('main_form')">

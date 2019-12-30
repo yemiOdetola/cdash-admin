@@ -100,6 +100,13 @@ export class MenuConfig {
 					bullet: 'dot',
 					icon: 'flaticon-signs-1',
 				},
+				{
+					title: 'Socials',
+					// page: 'organizations',
+					root: true,
+					bullet: 'dot',
+					icon: 'flaticon-signs-1',
+				}
 			]
 		},
 	};

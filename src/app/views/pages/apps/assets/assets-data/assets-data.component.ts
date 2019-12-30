@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 // Services and Models
 import { AssetsService } from '../../../../../core/assets';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'kt-assets-data',
@@ -25,7 +26,8 @@ export class AssetsDataComponent implements OnInit, OnDestroy {
 	constructor(
 		private assetsService: AssetsService,
 		private route: ActivatedRoute,
-		private router: Router
+		private router: Router,
+		private _location: Location,
 	) { }
 
 	ngOnInit() {
@@ -46,6 +48,10 @@ export class AssetsDataComponent implements OnInit, OnDestroy {
 		);
 		let skip = this.pageIndex * this.limit;
 		this.getAssetsData(skip, this.limit, this.containerId);
+	}
+
+	goBack() {
+		this._location.back();
 	}
 
 	countAssets() {

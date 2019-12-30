@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { AssetsService } from '../../../../../core/assets';
+import { Location } from '@angular/common';
 // Layout
 import { LayoutConfigService } from '../../../../../core/_base/layout';
 // CRUD
@@ -65,7 +66,7 @@ export class AssetContainerComponent implements OnInit {
 		public dialog: MatDialog,
 		private route: ActivatedRoute,
 		private layoutUtilsService: LayoutUtilsService,
-		private layoutConfigService: LayoutConfigService,
+		private _location: Location,
 		private fb: FormBuilder,
 		private assetsService: AssetsService
 	) { }
@@ -135,6 +136,10 @@ export class AssetContainerComponent implements OnInit {
 		this.formTypes.forEach((e) => {
 			this.stMap[e.id] = e.name;
 		});
+	}
+
+	goBack() {
+		this._location.back();
 	}
 
 	initAssetForm(asset: any = {}) {

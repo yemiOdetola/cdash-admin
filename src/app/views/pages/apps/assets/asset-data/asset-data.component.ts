@@ -5,6 +5,7 @@ import { AssetsService } from '../../../../../core/assets';
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { UserService } from '../../../../../core/users';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'kt-asset-data',
@@ -55,6 +56,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	constructor(
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
+		private _location: Location,
 		private assetsService: AssetsService,
 		private layoutUtilsService: LayoutUtilsService,
 		private usersService: UserService,
@@ -92,6 +94,11 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		this.emptyReccurentMonthForm();
 		this.emptyHistoricalCost();
 	}
+
+	goBack() {
+		this._location.back();
+	}
+
 	getAssetDetails() {
 		this.loadingSubject.next(true);
 		this.assetsService.getAssetDataById(this.assetDataId).subscribe(

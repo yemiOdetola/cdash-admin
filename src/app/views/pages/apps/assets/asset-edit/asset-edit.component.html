@@ -2,6 +2,10 @@
 	<kt-portlet-header [title]="getComponentTitle()" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 	</kt-portlet-header>
 	<kt-portlet-body>
+		<div class="goback" (click)="goBack()">
+			<img src="./assets/media/icons/backBtn.svg" alt="">
+			<span>Back</span>
+		</div>
 		<form [formGroup]="assetForm">
 			<div class="form-group">
 				<div class="row">
