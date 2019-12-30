@@ -908,7 +908,10 @@ form {
 		}
 	}
 }
-
+.default-fields {
+	font-weight: 500;
+    color: #333;
+}
 .goback {
 	display: flex;
 	justify-content: flex-start;

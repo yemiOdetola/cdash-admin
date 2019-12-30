@@ -53,6 +53,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	myformsName: any;
 	sForm;
 	formTypes;
+	currencySelected = 'naira';
 	constructor(
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
@@ -147,94 +148,87 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	emptyReccurentForm() {
 		this.reccurentFormGroup = this.fb.group({
-			currency: ['' || 'naira'],
-			year12: [''],
-			year13: [''],
-			year14: [''],
-			year15: [''],
-			year16: [''],
-			year17: [''],
-			year18: [''],
-			year19: [''],
+			year12: [0],
+			year13: [0],
+			year14: [0],
+			year15: [0],
+			year16: [0],
+			year17: [0],
+			year18: [0],
+			year19: [0],
 		});
 	}
 
 	initReccurentForm(reccurentData) {
 		this.reccurentFormGroup = this.fb.group({
-			currency: ['' || 'naira'],
-			year12: [reccurentData[0].amount || ''],
-			year13: [reccurentData[1].amount || ''],
-			year14: [reccurentData[2].amount || ''],
-			year15: [reccurentData[3].amount || ''],
-			year16: [reccurentData[4].amount || ''],
-			year17: [reccurentData[5].amount || ''],
-			year18: [reccurentData[6].amount || ''],
-			year19: [reccurentData[7].amount || ''],
+			year12: [reccurentData[0].amount || 0],
+			year13: [reccurentData[1].amount || 0],
+			year14: [reccurentData[2].amount || 0],
+			year15: [reccurentData[3].amount || 0],
+			year16: [reccurentData[4].amount || 0],
+			year17: [reccurentData[5].amount || 0],
+			year18: [reccurentData[6].amount || 0],
+			year19: [reccurentData[7].amount || 0],
 		});
 	}
 
 	emptyHistoricalCost() {
 		this.historicalFormGroup = this.fb.group({
-			currency: ['' || 'naira'],
-			year12: [''],
-			year13: [''],
-			year14: [''],
-			year15: [''],
-			year16: [''],
-			year17: [''],
-			year18: [''],
-			year19: [''],
+			year12: [0],
+			year13: [0],
+			year14: [0],
+			year15: [0],
+			year16: [0],
+			year17: [0],
+			year18: [0],
+			year19: [0],
 		});
 	}
 
 	initHistoricalCost(historicalData) {
 		this.reccurentFormGroup = this.fb.group({
-			currency: ['' || 'naira'],
-			year12: [historicalData[0].amount || ''],
-			year13: [historicalData[1].amount || ''],
-			year14: [historicalData[2].amount || ''],
-			year15: [historicalData[3].amount || ''],
-			year16: [historicalData[4].amount || ''],
-			year17: [historicalData[5].amount || ''],
-			year18: [historicalData[6].amount || ''],
-			year19: [historicalData[7].amount || ''],
+			year12: [historicalData[0].amount || 0],
+			year13: [historicalData[1].amount || 0],
+			year14: [historicalData[2].amount || 0],
+			year15: [historicalData[3].amount || 0],
+			year16: [historicalData[4].amount || 0],
+			year17: [historicalData[5].amount || 0],
+			year18: [historicalData[6].amount || 0],
+			year19: [historicalData[7].amount || 0],
 		});
 	}
 
 	emptyReccurentMonthForm() {
 		this.reccurentMonthFormGroup = this.fb.group({
-			currency: ['' || 'naira'],
-			january: [''],
-			february: [''],
-			march: [''],
-			april: [''],
-			may: [''],
-			june: [''],
-			july: [''],
-			august: [''],
-			september: [''],
-			october: [''],
-			november: [''],
-			december: [''],
+			january: [0],
+			february: [0],
+			march: [0],
+			april: [0],
+			may: [0],
+			june: [0],
+			july: [0],
+			august: [0],
+			september: [0],
+			october: [0],
+			november: [0],
+			december: [0],
 		});
 	}
 
-
 	initReccurentMonthForm(reccurentData) {
 		this.reccurentMonthFormGroup = this.fb.group({
-			currency: [reccurentData[0].currency || 'naira'],
-			january: [reccurentData[1].january || ''],
-			february: [reccurentData[2].february || ''],
-			march: [reccurentData[3].march || ''],
-			april: [reccurentData[4].april || ''],
-			may: [reccurentData[5].may || ''],
-			june: [reccurentData[6].june || ''],
-			july: [reccurentData[7].july || ''],
-			august: [reccurentData[8].august || ''],
-			september: [reccurentData[9].september || ''],
-			october: [reccurentData[10].october || ''],
-			november: [reccurentData[11].november || ''],
-			december: [reccurentData[12].december || ''],
+			january: [reccurentData[1].january || 0],
+			february: [reccurentData[2].february || 0],
+			march: [reccurentData[3].march || 0],
+			april: [reccurentData[4].april || 0],
+			may: [reccurentData[5].may || 0],
+			june: [reccurentData[6].june || 0],
+			july: [reccurentData[7].july || 0],
+			august: [reccurentData[8].august || 0],
+			september: [reccurentData[9].september || 0],
+			october: [reccurentData[10].october || 0],
+			november: [reccurentData[11].november || 0],
+			december: [reccurentData[12].december || 0],
 		});
 	}
 
@@ -253,9 +247,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			return;
 		}
 		if (this.editAssetInit) {
-			console.log('lead has an Id');
-			let editedAsset = this.dataFormGroup.value;
-			console.log('lead to send', editedAsset);
 			this.updateAssetMainData();
 			return;
 		}
@@ -301,7 +292,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		const payload = {
 			data: formData,
 			type: formName,
-			currency: this.reccurentFormGroup.get('currency').value,
+			currency: this.currencySelected,
 			asset_data_id: localStorage.getItem('asset_data_id'),
 		};
 		this.assetsService.addCharts(payload).subscribe(
@@ -381,7 +372,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		const payload = {
 			data: formData,
 			type: formName,
-			currency: this.reccurentMonthFormGroup.get('currency').value,
+			currency: this.currencySelected,
 			asset_data_id: localStorage.getItem('asset_data_id'),
 		};
 		this.assetsService.addCharts(payload).subscribe(
@@ -441,7 +432,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		const payload = {
 			data: formData,
 			type: formName,
-			currency: this.historicalFormGroup.get('currency').value,
+			currency: this.currencySelected,
 			asset_data_id: localStorage.getItem('asset_data_id'),
 		};
 		this.assetsService.addCharts(payload).subscribe(

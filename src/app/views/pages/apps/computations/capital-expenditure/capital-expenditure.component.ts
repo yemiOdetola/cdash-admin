@@ -99,11 +99,11 @@ export class CapitalExpenditureComponent implements OnInit, OnDestroy {
 
 	generateAnalytics() {
 		this.loadingSubject.next(true);
-		let payload = this.recurringForm.value;
-		if (this.recurringForm.get('start_year').value === '') {
-			payload = null;
-		}
-		this.assetsService.getAssetsCapitalExp(payload).subscribe(
+		// let payload = this.recurringForm.value;
+		// if (this.recurringForm.get('start_year').value === '') {
+		// 	payload = null;
+		// }
+		this.assetsService.getAssetsCapitalExp(this.recurringForm.value).subscribe(
 			response => {
 				this.analyticss = response;
 				if (response['currency'] === 'dollar') {

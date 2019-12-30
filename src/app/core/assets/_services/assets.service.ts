@@ -28,7 +28,7 @@ export class AssetsService {
 
 	editAssetContainer(container, containerId): Observable <any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.post<any>(`${BASE_URL}/asset/${containerId}`, container, {
+		return this.http.put<any>(`${BASE_URL}/asset/${containerId}`, container, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 			}

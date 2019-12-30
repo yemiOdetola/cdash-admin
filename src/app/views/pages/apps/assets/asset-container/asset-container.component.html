@@ -55,8 +55,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="form-group">
-			<div class="users-list mt-3" *ngIf="myForms && myForms.length > 0">
+		<div class="form-group mt-3">
+			<div class="users-list" *ngIf="myForms && myForms.length > 0">
 				<div class="each-user" *ngFor="let type of myForms; let i = index;">
 					<div class="name">
 						<img src="./assets/media/icons/details-icon.svg" alt="">
@@ -66,9 +66,10 @@
 						<img src="./assets/media/icons/delete-close.svg" alt="">
 					</div>
 				</div>
-			</div>
+			</div> 
 		</div>
 		<div class="form-group">
+			<div class="default-fields">Default fields</div>
 			<div class="users-list">
 				<div class="each-user" *ngFor="let type of compulsoryFields; let i = index;">
 					<div class="name">

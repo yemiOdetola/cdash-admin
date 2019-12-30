@@ -89,19 +89,19 @@ export class AssetEditComponent implements OnInit {
 			// { 'id': 'business_purpose', 'name': 'Business purpose', 'type': 'text', 'required': 'true' },
 			// { 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Others']},
 			// { 'id': 'depreciation', 'name': 'Depreciation per annum(%)', 'type': 'number', 'max': '100', 'required': 'true' },
-			{ 'id': 'currency', 'name': 'Currency (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Naira', 'Dollar'] },
-			{ 'id': 'icon', 'name': 'Icon', 'type': 'file', 'required': 'true' },
-			{ 'id': 'business_owners', 'name': 'Business owners', 'type': 'select', 'required': 'true' },
-			{ 'id': 'recurrent_expenditure_year', 'name': 'Recurrent expenditure(year)', 'type': 'chart', 'required': 'true' },
-			{ 'id': 'recurrent_expenditure_month', 'name': 'Recurrent expenditure(month)', 'type': 'chart', 'required': 'true' },
-			{ 'id': 'location_of_deployment', 'name': 'Location of deployment', 'type': 'text', 'required': 'true' },
-			// { 'id': 'location_of_deployment_image', 'name': 'Location of deployment(image)', 'type': 'file', 'required': 'true' },
+			// { 'id': 'currency', 'name': 'Currency (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Naira', 'Dollar'] },
 			{ 'id': 'technical_details', 'name': 'Technical details', 'type': 'text', 'required': 'true' },
-			// { 'id': 'type_others', 'name': 'Type others(text)', 'type': 'text', 'required': 'true' },
-			{ 'id': 'historical_cost', 'name': 'Historical cost', 'type': 'chart', 'required': 'true' },
-			{ 'id': 'projected_cost', 'name': 'Projected cost', 'type': 'number', 'required': 'true' },
 			{ 'id': 'industrial_link', 'name': 'Industrial Link', 'type': 'file', 'required': 'true' },
 			{ 'id': 'diagram', 'name': 'Diagram/ Schematics', 'type': 'file', 'required': 'true' },
+			{ 'id': 'business_owners', 'name': 'Business owners', 'type': 'select', 'required': 'true' },
+			{ 'id': 'location_of_deployment', 'name': 'Location of deployment', 'type': 'text', 'required': 'true' },
+			{ 'id': 'icon', 'name': 'Icon', 'type': 'file', 'required': 'true' },
+			{ 'id': 'recurrent_expenditure_year', 'name': 'Recurrent expenditure(year)', 'type': 'chart', 'required': 'true' },
+			{ 'id': 'recurrent_expenditure_month', 'name': 'Recurrent expenditure(month)', 'type': 'chart', 'required': 'true' },
+			{ 'id': 'historical_cost', 'name': 'Historical cost', 'type': 'chart', 'required': 'true' },
+			{ 'id': 'projected_cost', 'name': 'Projected cost', 'type': 'number', 'required': 'true' },
+			// { 'id': 'location_of_deployment_image', 'name': 'Location of deployment(image)', 'type': 'file', 'required': 'true' },
+			// { 'id': 'type_others', 'name': 'Type others(text)', 'type': 'text', 'required': 'true' },
 		];
 		if (this.idParams) {
 			this.loadingSubject.next(true);
@@ -125,8 +125,6 @@ export class AssetEditComponent implements OnInit {
 	initAssetForm(asset: any = {}) {
 		this.assetForm = this.fb.group({
 			name: [asset.name || '', Validators.required],
-			customName: [''],
-			customType: ['']
 		});
 
 	}
@@ -143,7 +141,6 @@ export class AssetEditComponent implements OnInit {
 		};
 		this.myForms.push(this.customForm);
 		this.customName = '';
-		console.log('custom form', this.myForms);
 	}
 
 	passValue(event) {
@@ -151,7 +148,6 @@ export class AssetEditComponent implements OnInit {
 	}
 
 	handleFormChange(event) {
-		console.log(event.target.value);
 		if (event.target.value === '') {
 			return;
 		}
@@ -168,14 +164,11 @@ export class AssetEditComponent implements OnInit {
 			}
 			this.formMap[this.sForm] = true;
 		}
-		console.log('myforms', this.myForms);
 	}
 
 	formRemove(form) {
-		console.log('form', form);
 		for (let i = 0; i < this.myForms.length; i++) {
 			if (this.myForms[i].id === form.id) {
-				console.log(form.id);
 				this.myForms.splice(i, 1);
 			}
 		}
@@ -287,7 +280,6 @@ export class AssetEditComponent implements OnInit {
 			this.compulsoryFields.forEach(field => {
 				this.myForms.push(field);
 			});
-			console.log('after', this.myForms);
 			payload.forms = this.myForms;
 			this.assetsService.createAsset(payload).subscribe(
 				data => {
