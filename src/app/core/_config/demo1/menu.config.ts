@@ -41,6 +41,8 @@ export class MenuConfig {
 						},
 					]
 				},
+
+				// asset form element
 				{
 					title: 'Assets',
 					root: true,

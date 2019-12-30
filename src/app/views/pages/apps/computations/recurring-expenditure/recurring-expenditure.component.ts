@@ -96,8 +96,12 @@ export class RecurringExpenditureComponent implements OnInit, OnDestroy {
 	}
 
 	generateAnalytics() {
+		let payload = this.recurringForm.get('year').value;
+		if (this.recurringForm.get('start_year').value === '') {
+			payload = null;
+		}
 		this.loadingSubject.next(true);
-		this.assetsService.getAssetsReccurentExp(this.recurringForm.value).subscribe(
+		this.assetsService.getAssetsReccurentExp(payload).subscribe(
 			response => {
 				this.analyticss = response;
 				if (response['currency'] === 'dollar') {

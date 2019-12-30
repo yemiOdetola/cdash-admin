@@ -33,7 +33,7 @@ import { MatMenuModule, MatStepperModule } from '@angular/material';
 			outerStrokeWidth: 12,
 			innerStrokeWidth: 8,
 			animationDuration: 300,
-			subtitleFontSize: '13',
+			subtitleFontSize: '14',
 			showInnerStroke: false,
 			showUnits: false,
 			unitsColor: '#000',
