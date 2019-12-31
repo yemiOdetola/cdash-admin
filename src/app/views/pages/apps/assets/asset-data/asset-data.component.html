@@ -57,20 +57,47 @@
 						<div class="form-group">
 							<div *ngFor="let form_elem of forms">
 								<div [ngSwitch]="form_elem.type">
-									<div *ngSwitchCase="'text'">
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="form-item">
-													<label class="label">{{form_elem.name}}</label>
-													<input type="text" placeholder="Enter {{form_elem.name}}"
-														formControlName="{{form_elem.id}}"
-														required="{{form_elem.required}}" />
+									<div *ngIf="form_elem.custom === true">
+										<div *ngSwitchCase="'text'">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="form-item">
+														<label class="label">{{form_elem.name}}</label>
+       													<input type="text" placeholder="Enter {{form_elem.name}}" (change)="changeCustom($event, form_elem.id)" [(ngModel)]="customModels" [ngModelOptions]="{standalone: true}">
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-
-									<div *ngIf="form_elem.id !== 'depreciation'">
+									<div *ngIf="form_elem.custom !== true">
+										<div *ngSwitchCase="'text'">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="form-item">
+														<label class="label">{{form_elem.name}}</label>
+														<input type="text" placeholder="Enter {{form_elem.name}}"
+														formControlName="{{form_elem.id}}"
+														required="{{form_elem.required}}" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div *ngIf="form_elem.id !== 'depreciation' && form_elem.custom === true">
+										<div *ngSwitchCase="'number'">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="form-item">
+														<label class="label">{{form_elem.name}}</label>
+														<input type="number" placeholder="Enter {{form_elem.name}}"
+															[(ngModel)]="customModels.form_elem.id"
+															required="{{form_elem.required}}" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div *ngIf="form_elem.id !== 'depreciation' && form_elem.custom !== true">
 										<div *ngSwitchCase="'number'">
 											<div class="row">
 												<div class="col-lg-12">

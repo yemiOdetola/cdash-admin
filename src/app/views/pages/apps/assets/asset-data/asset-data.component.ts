@@ -54,6 +54,8 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	sForm;
 	formTypes;
 	currencySelected = 'naira';
+	customFields;
+	customModels: any;
 	constructor(
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
@@ -85,6 +87,14 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			if (field.id === 'historical_cost') {
 				this.showHistorical = true;
 			}
+			if (field.custom === true) {
+				this.customFields = [];
+				this.customModels = [];
+				this.customModels.push(field.id);
+				this.customFields.push(
+					{name: field['id'], value: ''}
+				);
+			}
 		});
 		this.loading$ = this.loadingSubject.asObservable();
 		this.assetDataId = this.route.snapshot.params['id'];
@@ -94,6 +104,18 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		this.emptyReccurentForm();
 		this.emptyReccurentMonthForm();
 		this.emptyHistoricalCost();
+	}
+
+	changeCustom(e, id) {
+		console.log(e.target.value, id);
+		let allCustoms = this.customFields;
+		allCustoms.forEach(custom => {
+			if (custom.name === id) {
+				console.log('found a match');
+				custom.value = e.target.value;
+			}
+		});
+		allCustoms = this.customFields;
 	}
 
 	goBack() {
@@ -134,7 +156,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				this.staffs = response['data'];
 				this.formTypes = response['data'];
 				this.loadingSubject.next(false);
-				console.log('all staffs returned', this.staffs);
 			},
 			error => {
 				console.log('error', error);
@@ -471,6 +492,9 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		if (this.fSelectedSchematics) {
 			payload.append('diagram_schematics', this.fSelectedSchematics, this.fSelectedSchematics.name);
 		}
+		if (this.customFields) {
+			payload.append('custom_data', JSON.stringify(this.customFields));
+		}
 		payload.append('name', this.assetName);
 		payload.append('asset_id', this.localForms._id);
 		console.log('payload', payload);
@@ -508,8 +532,10 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		}
 		this.dataFormGroup.patchValue({business_owners: this.myForms});
 		payload.append('name', this.assetName);
+		if (this.customFields) {
+			payload.append('custom_data', JSON.stringify(this.customFields));
+		}
 		console.log('payload', payload);
-		// payload.append('asset_id', this.localForms._id);
 		this.assetsService.updateAssetData(payload, this.assetDataId).subscribe(
 			data => {
 				this.loadingSubject.next(false);

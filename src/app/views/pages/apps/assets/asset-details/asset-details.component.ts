@@ -39,8 +39,10 @@ export class AssetDetailsComponent implements OnInit {
 			singleAsset => {
 				this.assetDetails = singleAsset['data'];
 				this.getAllStaffs();
-				this.biz_owners = this.assetDetails.business_owners[0];
-				this.normBiznez = this.biz_owners.split(',');
+				if (this.assetDetails.business_owners[0]) {
+					this.biz_owners = this.assetDetails.business_owners[0];
+					this.normBiznez = this.biz_owners.split(',');
+				}
 				console.log('this assetdata details oninit', this.assetDetails);
 				this.loadingSubject.next(false);
 				if (this.assetDetails.currency === 'naira') {
@@ -64,12 +66,12 @@ export class AssetDetailsComponent implements OnInit {
 		this.usersService.getStaffs(0, 999).subscribe(
 			response => {
 				this.staffs = response['data'];
-				for (let i = 0; i < this.normBiznez.length; i++) {
-					this.allStaffs.push(this.staffs[i]);
+				if (this.normBiznez && this.normBiznez.length > 0) {
+					for (let i = 0; i < this.normBiznez.length; i++) {
+						this.allStaffs.push(this.staffs[i]);
+					}
 				}
-				console.log('aaaaaaalllll staagggsgsgsgsg', this.allStaffs);
 				this.loadingSubject.next(false);
-				console.log('all staffs returned', this.staffs);
 			},
 			error => {
 				console.log('error', error);

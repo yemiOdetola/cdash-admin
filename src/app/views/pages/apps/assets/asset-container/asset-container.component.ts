@@ -159,6 +159,7 @@ export class AssetContainerComponent implements OnInit {
 		this.customForm = {
 			'id': `custom${this.customIndex}`,
 			'name': this.customName,
+			'custom': true,
 			'type': this.selectedType
 		};
 		this.myForms.push(this.customForm);

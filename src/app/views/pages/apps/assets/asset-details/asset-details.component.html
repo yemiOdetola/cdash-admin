@@ -57,7 +57,7 @@
 						<td class="label">Type</td>
 						<td class="value">{{assetDetails.type}}</td>
 					</tr>
-					<tr class="each-data" *ngIf="assetDetails.business_owners">
+					<tr class="each-data" *ngIf="assetDetails.business_owners && assetDetails.business_owners.length > 0">
 						<td class="label">Business owners</td>
 						<td class="value staffs"><span *ngFor="let staff of allStaffs" class="staff" routerLink="/cdash/users/staffs/{{staff._id}}">{{staff.name}}</span></td>
 					</tr>
