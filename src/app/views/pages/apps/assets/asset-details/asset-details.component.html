@@ -1,13 +1,14 @@
 <kt-portlet>
 	<kt-portlet-header [title]="pageTitle" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
-			<div class="details-action edit text-center" routerLink="/cdash/assets/new-asset-data/details/{{assetDataId}}">
+			<div class="details-action edit text-center"
+				routerLink="/cdash/assets/new-asset-data/details/{{assetDataId}}">
 				<img src="./assets/media/icons/details-edit.svg" alt="">
 				<span>Edit</span>
 			</div>
 			<div class="details-action delete text-center" (click)="onDelete()">
 				<img src="./assets/media/icons/details-delete.svg" alt="">
-				<span>Delete</span> 
+				<span>Delete</span>
 			</div>
 		</ng-container>
 	</kt-portlet-header>
@@ -57,9 +58,11 @@
 						<td class="label">Type</td>
 						<td class="value">{{assetDetails.type}}</td>
 					</tr>
-					<tr class="each-data" *ngIf="assetDetails.business_owners && assetDetails.business_owners.length > 0">
+					<tr class="each-data"
+						*ngIf="assetDetails.business_owners && assetDetails.business_owners.length > 0">
 						<td class="label">Business owners</td>
-						<td class="value staffs"><span *ngFor="let staff of allStaffs" class="staff" routerLink="/cdash/users/staffs/{{staff._id}}">{{staff.name}}</span></td>
+						<td class="value staffs"><span *ngFor="let staff of allStaffs" class="staff"
+								routerLink="/cdash/users/staffs/{{staff._id}}">{{staff.name}}</span></td>
 					</tr>
 					<tr class="each-data" *ngIf="assetDetails.industrial_link">
 						<td class="label">Industrial link</td>
@@ -81,6 +84,13 @@
 						<td class="label">Location of deployment</td>
 						<td class="value">{{assetDetails.location_of_deployment}}</td>
 					</tr>
+
+					<div class="customs" *ngIf="customData">
+						<tr class="each-data" *ngFor="let custom of customData">
+							<td class="label">{{custom.name}}</td>
+							<td class="value">{{custom.value}}</td>
+						</tr>
+					</div>
 				</table>
 			</div>
 			<div *ngIf="!assetDetails" class="mt-5 please-data text-center">Please Wait...</div>

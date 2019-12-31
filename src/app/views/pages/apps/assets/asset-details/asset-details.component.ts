@@ -24,6 +24,7 @@ export class AssetDetailsComponent implements OnInit {
 	biz_owners;
 	allStaffs = [];
 	normBiznez: any;
+	customData;
 	constructor(
 		private route: ActivatedRoute,
 		private assetsService: AssetsService,
@@ -42,6 +43,9 @@ export class AssetDetailsComponent implements OnInit {
 				if (this.assetDetails.business_owners[0]) {
 					this.biz_owners = this.assetDetails.business_owners[0];
 					this.normBiznez = this.biz_owners.split(',');
+				}
+				if (this.assetDetails.custom_data) {
+					this.customData = JSON.parse(this.assetDetails.custom_data[0]);
 				}
 				console.log('this assetdata details oninit', this.assetDetails);
 				this.loadingSubject.next(false);
