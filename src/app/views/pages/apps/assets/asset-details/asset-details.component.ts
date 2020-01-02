@@ -5,7 +5,7 @@ import { AssetsService } from '../../../../../core/assets';
 import { UserService } from '../../../../../core/users';
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 import { Location } from '@angular/common';
-
+// 5dfdd01afabafa20ae8c79e1
 @Component({
 	selector: 'kt-asset-details',
 	templateUrl: './asset-details.component.html',
@@ -17,7 +17,7 @@ export class AssetDetailsComponent implements OnInit {
 	proceedingOption: string;
 	assetDataId: string;
 	assetDetails: any;
-	pageTitle = 'Please wait...';
+	pageTitle = 'Asset details';
 	currency = '₦';
 	assetDataObjKeys = Object.keys;
 	staffs: any;
@@ -42,7 +42,9 @@ export class AssetDetailsComponent implements OnInit {
 				this.getAllStaffs();
 				if (this.assetDetails.business_owners[0]) {
 					this.biz_owners = this.assetDetails.business_owners[0];
-					this.normBiznez = this.biz_owners.split(',');
+					if (this.biz_owners.length > 1) {
+						this.normBiznez = this.biz_owners.split(',');
+					}
 				}
 				if (this.assetDetails.custom_data) {
 					this.customData = JSON.parse(this.assetDetails.custom_data[0]);
@@ -71,9 +73,14 @@ export class AssetDetailsComponent implements OnInit {
 			response => {
 				this.staffs = response['data'];
 				if (this.normBiznez && this.normBiznez.length > 0) {
-					for (let i = 0; i < this.normBiznez.length; i++) {
-						this.allStaffs.push(this.staffs[i]);
-					}
+					this.normBiznez.forEach(biz => {
+						this.staffs.forEach(staff => {
+							if (biz === staff._id) {
+								console.log('staff found', staff.name);
+								this.allStaffs.push(staff);
+							}
+						});
+					});
 				}
 				this.loadingSubject.next(false);
 			},
