@@ -48,6 +48,7 @@ export class AssetDetailsComponent implements OnInit {
 				}
 				if (this.assetDetails.custom_data) {
 					this.customData = JSON.parse(this.assetDetails.custom_data[0]);
+					console.log('custommmme', this.customData);
 				}
 				console.log('this assetdata details oninit', this.assetDetails);
 				this.loadingSubject.next(false);

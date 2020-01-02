@@ -85,7 +85,7 @@
 						<td class="value">{{assetDetails.location_of_deployment}}</td>
 					</tr>
 
-					<div class="customs" *ngIf="customData">
+					<div class="customs" *ngIf="customData && customData.value">
 						<tr class="each-data" *ngFor="let custom of customData">
 							<td class="label">{{custom.name}}</td>
 							<td class="value">{{custom.value}}</td>
