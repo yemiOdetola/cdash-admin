@@ -479,7 +479,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		for (let key in forms) {
 			payload.append(key, forms[key]);
 		}
-		this.dataFormGroup.patchValue({business_owners: this.myForms});
 		if (this.fSelectedIcon) {
 			payload.append('icon', this.fSelectedIcon, this.fSelectedIcon.name);
 		}
@@ -495,9 +494,9 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		if (this.customFields) {
 			payload.append('custom_data', JSON.stringify(this.customFields));
 		}
+		payload.append('business_owners', this.myForms);
 		payload.append('name', this.assetName);
 		payload.append('asset_id', this.localForms._id);
-		console.log('payload', payload);
 		this.assetsService.createAssetData(payload).subscribe(
 			data => {
 				this.loadingSubject.next(false);
@@ -535,7 +534,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		if (this.customFields) {
 			payload.append('custom_data', JSON.stringify(this.customFields));
 		}
-		console.log('payload', payload);
 		this.assetsService.updateAssetData(payload, this.assetDataId).subscribe(
 			data => {
 				this.loadingSubject.next(false);
