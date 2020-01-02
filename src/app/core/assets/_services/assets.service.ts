@@ -53,6 +53,15 @@ export class AssetsService {
 		});
 	}
 
+	getAllAssetsTurnover(assetData): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.post<any>(`${BASE_URL}/asset_data/count/turnover`, assetData, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken,
+			}
+		});
+	}
+
 
 	getAssetsReccurentExp(assetData): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);

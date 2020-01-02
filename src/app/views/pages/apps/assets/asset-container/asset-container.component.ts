@@ -81,10 +81,16 @@ export class AssetContainerComponent implements OnInit {
 				this.containerAssets = assetsData['data'];
 				this.initAssetForm(assetsData['data']);
 				this.containerAssets.form.forEach(field => {
-					if (this.formMap[field.id] === undefined || this.formMap[field.id] === false) {
-						this.myForms.push(field);
-						this.formMap[field.id] = true;
-					}
+					this.compulsoryFields.forEach(cField => {
+						if (field.id === cField.id) {
+							this.containerAssets.splice(field.id, 1);
+						} else {
+							if (this.formMap[field.id] === undefined || this.formMap[field.id] === false) {
+								this.myForms.push(field);
+								this.formMap[field.id] = true;
+							}
+						}
+					});
 				});
 				localStorage.setItem('formElement', JSON.stringify(assetsData['data']));
 				console.log('this myfirms unut', this.myForms);

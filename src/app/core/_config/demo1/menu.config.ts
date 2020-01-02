@@ -74,7 +74,7 @@ export class MenuConfig {
 						},
 						{
 							title: 'Expenses/TurnoverRatio',
-							// page: 'projects/projects',
+							page: 'computations/expenses-turnover',
 							root: true,
 							bullet: 'dot',
 							icon: 'flaticon-graphic-2',

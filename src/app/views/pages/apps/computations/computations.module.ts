@@ -80,6 +80,10 @@ const routes: Routes = [
 				component: RecurringExpenditureComponent
 			},
 			{
+				path: 'expenses-turnover',
+				component: ExpensesTurnoverComponent
+			},
+			{
 				path: 'capital-expenditure',
 				component: CapitalExpenditureComponent
 			},

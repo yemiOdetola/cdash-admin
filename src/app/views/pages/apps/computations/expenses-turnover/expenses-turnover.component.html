@@ -1,114 +1,94 @@
 <kt-portlet>
-	<kt-portlet-header title="All Reports" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	<kt-portlet-header title="Capital expenditure" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
-			<div class="details-action delete text-center" (click)="toggleForm()">
-				<span>Generate</span>
+			<div class="details-action options text-center" [matMenuTriggerFor]="menu">
+				<span>All assets</span>
 			</div>
-			<a routerLink="/strada/reports/manage" class="primary-button kt-margin-r-10" matTooltip="Add new campaign">
-				<i class="la la-plus"></i>
-				<span class="kt-hidden-mobile">New Report</span>
-			</a>
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item (click)="generateTurnover(asset._id)"
+					*ngFor="let asset of allAssets">
+					{{ asset.name }}
+				</button>
+			</mat-menu>
 		</ng-container>
 	</kt-portlet-header>
 	<kt-portlet-body>
-		<div class="contact-body mb-5">
-			<form [formGroup]="analyticsReportForm">
+		<!-- <div class="contact-body mb-5">
+			<form [formGroup]="recurringForm">
 				<div class="analytics">
-					<div class="titl" *ngIf="startD">{{startD | date: 'shortDate'}} -
-						{{endD | date: 'shortDate'}}</div>
-					<div class="row slide-in" *ngIf="showForm">
-						<div class="col-xl-6 col-lg-12 kt-margin-bottom-10-mobile date-shift">
-							<div class="form-item">
-								<label class="label">Users</label>
-								<select formControlName="queryUser">
-									<option value="">Select user</option>
-									<option value="{{user._id}}" *ngFor="let user of users;">{{user.name}}</option>
+					<div class="row slide-in">
+						<div class="col-lg-4 kt-margin-bottom-10-mobile date-shift">
+							<div class="form-item smallz" *ngIf="allAssets">
+								<label class="label">Assets</label>
+								<select formControlName="id">
+									<option value="">All assets</option>
+									<option value="{{asset._id}}" *ngFor="let asset of allAssets;">{{asset.name}}
+									</option>
 								</select>
 							</div>
 						</div>
-						<div class="col-xl-3 col-lg-6 date-shift kt-margin-bottom-10-mobile">
-							<div class="form-item">
-								<label class="label">Start</label>
-								<input type="date" placeholder="Choose start date" formControlName="start">
+						<div class="col-lg-2 kt-margin-bottom-10-mobile date-shift">
+							<div class="form-item smallz">
+								<label class="label">Start year</label>
+								<select formControlName="start_year">
+									<option value="">select year</option>
+									<option value="{{year}}" *ngFor="let year of years;">{{year}}
+									</option>
+								</select>
 							</div>
 						</div>
-						<div class="col-xl-3 col-lg-6 date-shift kt-margin-bottom-10-mobile">
-							<div class="form-item">
-								<label class="label">End</label>
-								<input type="date" [min]="analyticsReportForm.value.start" placeholder="Choose end date"
-									formControlName="end">
+						<div class="col-lg-2 kt-margin-bottom-10-mobile date-shift">
+							<div class="form-item smallz">
+								<label class="label">End year</label>
+								<select formControlName="end_year">
+									<option value="">All years</option>
+									<option value="{{year}}" *ngFor="let year of years;">{{year}}
+									</option>
+								</select>
 							</div>
 						</div>
-						<div class="col-md-12 mt-3">
-							<button class="btn btn-primary btn-md right d-block ml-auto"
-								[disabled]="!analyticsReportForm.valid" (click)="generateReport(0, 999)">Generate
-								report</button>
+						<div class="col-lg-2 kt-margin-bottom-10-mobile date-shift">
+							<div class="form-item smallz">
+								<label class="label">Currency</label>
+								<select formControlName="currency">
+									<option value="naira" selected>₦</option>
+									<option value="dollar">$</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-2 mt-4">
+							<div class="form-item">
+								<label class="label">&nbsp;</label>
+								<button class="btn btn-primary btn-sm" [disabled]="!recurringForm.valid"
+									(click)="generateAnalytics()">Submit</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</form>
-		</div>
-		<div class="vendor-body">
-			<table class="table-view" *ngIf="genRep">
+		</div> -->
+		<div class="stage-history">
+			<table class="table-view">
 				<thead>
 					<tr>
-						<th>S/N</th>
-						<th>Task</th>
-						<th>Remark</th>
-						<th>Date</th>
-						<th></th>
+						<th>Year</th> 
+						<th>Turnover</th>
+						<th>Expenses(naira)</th>
+						<th>Expenses(dollar)</th>
+						<th>Ratio</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr className="each-row" *ngFor="let report of generatedReports; let i = index;">
-						<td>{{(pageIndex * 10)+(i+1)}}</td>
-						<td>{{report.name | titlecase}}</td>
-						<td>{{(report.description.length > 50) ? (report.description | slice:0:50)+'...':(report.description)}}
-						</td>
-						<td>{{report.createdAt | date: 'fullDate'}}</td>
-						<td>
-							<a routerLink="/strada/reports/report/{{report._id}}" class="view">View</a>
-						</td>
+				<tbody *ngIf="expTurnovers">
+					<tr className="each-row" *ngFor="let year of years; let i = index;">
+						<td>{{year}}</td>
+						<td>{{ (expTurnovers.turnovers[i].amount ? expTurnovers.turnovers[i].amount : 0) | currency: naira}}</td>
+						<td>{{(expTurnovers.expenses[i].naira_amount ? expTurnovers.expenses[i].naira_amount : 0) | currency: naira}}</td>
+						<td>{{(expTurnovers.expenses[i].dollar_amount ? expTurnovers.expenses[i].dollar_amount : 0) | currency: dollar}}</td>
+						<td>{{expTurnovers.ratio[i].ratio ? expTurnovers.ratio[i].ratio : 'n/a'}}</td>
 					</tr>
+					
 				</tbody>
 			</table>
-			<div class="empty-list text-center" *ngIf="genRep && generatedReports.length == 0">
-				<img src="./assets/media/icons/empty-list.png" alt="">
-				<p>Sorry, no report sent on {{currentlyShowing | date: 'fullDate'}}</p>
-			</div>
-
-
-			<table class="table-view" *ngIf="!genRep">
-				<thead>
-					<tr>
-						<th>Date</th>
-						<th>Number of reports</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr className="each-row" *ngFor="let report of reports; let i = index;">
-						<td>{{report._id.day}}/{{report._id.month}}/{{report._id.year}}</td>
-						<td>{{report.count}}</td>
-						<!-- <td>{{report.created_at | date: 'fullDate'}}</td> -->
-						<td>
-							<a (click)="seeReports(report._id, i)" class="view">View</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="empty-list text-center" *ngIf="noReports && !genRep">
-				<img src="./assets/media/icons/empty-list.png" alt="">
-				<p>Sorry, no report sent on {{currentlyShowing | date: 'fullDate'}}</p>
-			</div>
 		</div>
-		<div class="my-pagination mt-5 mb-4" *ngIf="!genRep">
-			<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
-			<div class="btn-grp">
-				<button mat-raised-button (click)="getPrev()" color="primary" [disabled]="disablePrev">Previous</button>
-				<button mat-raised-button (click)="getNext()" color="primary" [disabled]="disableNext">Next</button>
-			</div>
-		</div>
-
 	</kt-portlet-body>
 </kt-portlet>

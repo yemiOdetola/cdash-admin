@@ -116,6 +116,8 @@ export class AssetsListComponent implements OnInit, OnDestroy {
 				deleted => {
 					console.log('deleted', deleted);
 					this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+					let skip = this.pageIndex * this.limit;
+					this.getAssets(skip, this.limit);
 				},
 				error => {
 					console.log('error', error);

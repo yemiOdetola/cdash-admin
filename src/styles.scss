@@ -1017,6 +1017,12 @@ form {
 			color: #fff;
 		}
 	}
+	&.options {
+		color: #333;
+		font-weight: 500;
+		border: 1px solid;
+		border-radius: 0.25rem;
+	}
 
 	&.edit {
 		color: #fff;
