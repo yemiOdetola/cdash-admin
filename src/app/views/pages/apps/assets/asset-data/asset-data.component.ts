@@ -111,7 +111,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		let allCustoms = this.customFields;
 		allCustoms.forEach(custom => {
 			if (custom.name === id) {
-				console.log('found a match');
 				custom.value = e.target.value;
 			}
 		});
