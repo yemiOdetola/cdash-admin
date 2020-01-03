@@ -39,14 +39,17 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	forms: any = this.localFields;
 	dataFormGroup: FormGroup;
 	reccurentFormGroup: FormGroup;
+	reccurentDollarFormGroup: FormGroup;
 	reccurentMonthFormGroup: FormGroup;
 	historicalFormGroup: FormGroup;
+	historicalDollarFormGroup: FormGroup;
 	selected = 'main_form';
 	showReccurentMonth = false;
 	showReccurentYear = false;
 	showHistorical = false;
 	editAssetInit = false;
 	assetName = '';
+	costDollar = '0';
 	staffs = [];
 	formMap: any;
 	myForms: any;
@@ -102,8 +105,10 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			this.getAssetDetails();
 		}
 		this.emptyReccurentForm();
+		this.emptyReccurentDollarForm();
 		this.emptyReccurentMonthForm();
 		this.emptyHistoricalCost();
+		this.emptyHistoricalDollarCost();
 	}
 
 	changeCustom(e, id) {
@@ -129,14 +134,17 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				console.log('this assetdata details oninit', this.assetDetails);
 				this.dataFormGroup.patchValue(this.assetDetails);
 				this.assetName = this.assetDetails.name;
+				this.costDollar = this.assetDetails.cost_dollar;
 				if (this.assetDetails.historical_data.length) {
 					this.initHistoricalCost(this.assetDetails.historical_data);
+					this.initHistoricalDollarCost(this.assetDetails.historical_data);
 				}
 				if (this.assetDetails.recurrent_month.length) {
 					this.initReccurentMonthForm(this.assetDetails.recurrent_month);
 				}
 				if (this.assetDetails.recurrent_year.length) {
 					this.initReccurentForm(this.assetDetails.recurrent_year);
+					this.initReccurentDollarForm(this.assetDetails.recurrent_year);
 				}
 				this.editAssetInit = true;
 				this.loadingSubject.next(false);
@@ -176,6 +184,25 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			year17: [0],
 			year18: [0],
 			year19: [0],
+			year20: [0],
+			gross_total_revenue: [0],
+			remark: ['']
+		});
+	}
+
+	emptyReccurentDollarForm() {
+		this.reccurentDollarFormGroup = this.fb.group({
+			year12: [0],
+			year13: [0],
+			year14: [0],
+			year15: [0],
+			year16: [0],
+			year17: [0],
+			year18: [0],
+			year19: [0],
+			year20: [0],
+			gross_total_revenue: [0],
+			remark: ['']
 		});
 	}
 
@@ -189,6 +216,26 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			year17: [reccurentData[5].amount || 0],
 			year18: [reccurentData[6].amount || 0],
 			year19: [reccurentData[7].amount || 0],
+			year20: [reccurentData[8].amount || 0],
+			gross_total_revenue: [reccurentData.gross_total_revenue || 0],
+			remark: [reccurentData.remark]
+		});
+	}
+
+
+	initReccurentDollarForm(reccurentData) {
+		this.reccurentDollarFormGroup = this.fb.group({
+			year12: [reccurentData[0].amount || 0],
+			year13: [reccurentData[1].amount || 0],
+			year14: [reccurentData[2].amount || 0],
+			year15: [reccurentData[3].amount || 0],
+			year16: [reccurentData[4].amount || 0],
+			year17: [reccurentData[5].amount || 0],
+			year18: [reccurentData[6].amount || 0],
+			year19: [reccurentData[7].amount || 0],
+			year20: [reccurentData[8].amount || 0],
+			gross_total_revenue: [reccurentData.gross_total_revenue || 0],
+			remark: [reccurentData.remark]
 		});
 	}
 
@@ -202,11 +249,26 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			year17: [0],
 			year18: [0],
 			year19: [0],
+			year20: [0]
+		});
+	}
+
+	emptyHistoricalDollarCost() {
+		this.historicalDollarFormGroup = this.fb.group({
+			year12: [0],
+			year13: [0],
+			year14: [0],
+			year15: [0],
+			year16: [0],
+			year17: [0],
+			year18: [0],
+			year19: [0],
+			year20: [0]
 		});
 	}
 
 	initHistoricalCost(historicalData) {
-		this.reccurentFormGroup = this.fb.group({
+		this.historicalFormGroup = this.fb.group({
 			year12: [historicalData[0].amount || 0],
 			year13: [historicalData[1].amount || 0],
 			year14: [historicalData[2].amount || 0],
@@ -215,6 +277,21 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			year17: [historicalData[5].amount || 0],
 			year18: [historicalData[6].amount || 0],
 			year19: [historicalData[7].amount || 0],
+			year20: [historicalData[8].amount || 0],
+		});
+	}
+
+	initHistoricalDollarCost(historicalData) {
+		this.historicalDollarFormGroup = this.fb.group({
+			year12: [historicalData[0].amount || 0],
+			year13: [historicalData[1].amount || 0],
+			year14: [historicalData[2].amount || 0],
+			year15: [historicalData[3].amount || 0],
+			year16: [historicalData[4].amount || 0],
+			year17: [historicalData[5].amount || 0],
+			year18: [historicalData[6].amount || 0],
+			year19: [historicalData[7].amount || 0],
+			year20: [historicalData[8].amount || 0],
 		});
 	}
 
@@ -308,11 +385,87 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				year: 2019,
 				amount: this.reccurentFormGroup.get('year19').value
 			},
+			{
+				year: 2020,
+				amount: this.reccurentFormGroup.get('year20').value
+			},
 		];
 		const payload = {
 			data: formData,
 			type: formName,
-			currency: this.currencySelected,
+			currency: 'naira',
+			gross_total_revenue: this.reccurentFormGroup.get('gross_total_revenue').value,
+			remark: this.reccurentFormGroup.get('remark').value,
+			asset_data_id: localStorage.getItem('asset_data_id'),
+		};
+		this.assetsService.addCharts(payload).subscribe(
+			data => {
+				this.loadingSubject.next(false);
+				const message = `Asset chart been successfully updated`;
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+				if (data.status === true && this.showReccurentMonth) {
+					this.selected = 'reccurent_month';
+				} else if (data.status === true && this.showHistorical) {
+					this.selected = 'historical_cost';
+				} else {
+					this.router.navigate([`/cdash/assets/data/${this.localForms._id}`]);
+				}
+			},
+			error => {
+				this.loadingSubject.next(false);
+				console.log('Error response', error);
+				const title = 'Please Retry';
+				const message = 'Sorry, Temporary Error Occured';
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			});
+	}
+
+	addReccurentDollarYear(formName) {
+		this.loadingSubject.next(true);
+		const formData = [
+			{
+				year: 2012,
+				amount: this.reccurentDollarFormGroup.get('year12').value
+			},
+			{
+				year: 2013,
+				amount: this.reccurentDollarFormGroup.get('year13').value
+			},
+			{
+				year: 2014,
+				amount: this.reccurentDollarFormGroup.get('year14').value
+			},
+			{
+				year: 2015,
+				amount: this.reccurentDollarFormGroup.get('year15').value
+			},
+			{
+				year: 2016,
+				amount: this.reccurentDollarFormGroup.get('year16').value
+			},
+			{
+				year: 2017,
+				amount: this.reccurentDollarFormGroup.get('year17').value
+			},
+			{
+				year: 2018,
+				amount: this.reccurentDollarFormGroup.get('year18').value
+			},
+			{
+				year: 2019,
+				amount: this.reccurentDollarFormGroup.get('year19').value
+			},
+			{
+				year: 2020,
+				amount: this.reccurentDollarFormGroup.get('year20').value
+			},
+		];
+		const payload = {
+			data: formData,
+			type: formName,
+			currency: 'dollar',
+			gross_total_revenue: this.reccurentFormGroup.get('gross_total_revenue').value,
+			remark: this.reccurentFormGroup.get('remark').value,
 			asset_data_id: localStorage.getItem('asset_data_id'),
 		};
 		this.assetsService.addCharts(payload).subscribe(
@@ -448,11 +601,77 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				year: 2019,
 				amount: this.historicalFormGroup.get('year19').value
 			},
+			{
+				year: 2020,
+				amount: this.historicalFormGroup.get('year20').value
+			},
 		];
 		const payload = {
 			data: formData,
 			type: formName,
-			currency: this.currencySelected,
+			currency: 'naira',
+			asset_data_id: localStorage.getItem('asset_data_id'),
+		};
+		this.assetsService.addCharts(payload).subscribe(
+			data => {
+				this.loadingSubject.next(false);
+				const message = `Asset chart been successfully updated`;
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+				this.router.navigate(['/cdash/assets/assets']);
+			},
+			error => {
+				this.loadingSubject.next(false);
+				console.log('Error response', error);
+				const title = 'Please Retry';
+				const message = 'Sorry, Temporary Error Occured';
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			});
+	}
+
+	addHistoricalDollarCost(formName) {
+		this.loadingSubject.next(true);
+		const formData = [
+			{
+				year: 2012,
+				amount: this.historicalDollarFormGroup.get('year12').value
+			},
+			{
+				year: 2013,
+				amount: this.historicalDollarFormGroup.get('year13').value
+			},
+			{
+				year: 2014,
+				amount: this.historicalDollarFormGroup.get('year14').value
+			},
+			{
+				year: 2015,
+				amount: this.historicalDollarFormGroup.get('year15').value
+			},
+			{
+				year: 2016,
+				amount: this.historicalDollarFormGroup.get('year16').value
+			},
+			{
+				year: 2017,
+				amount: this.historicalDollarFormGroup.get('year17').value
+			},
+			{
+				year: 2018,
+				amount: this.historicalDollarFormGroup.get('year18').value
+			},
+			{
+				year: 2019,
+				amount: this.historicalDollarFormGroup.get('year19').value
+			},
+			{
+				year: 2020,
+				amount: this.historicalDollarFormGroup.get('year20').value
+			},
+		];
+		const payload = {
+			data: formData,
+			type: formName,
+			currency: 'naira',
 			asset_data_id: localStorage.getItem('asset_data_id'),
 		};
 		this.assetsService.addCharts(payload).subscribe(
@@ -495,6 +714,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		}
 		payload.append('business_owners', this.myForms);
 		payload.append('name', this.assetName);
+		payload.append('cost_dollar', this.costDollar);
 		payload.append('asset_id', this.localForms._id);
 		this.assetsService.createAssetData(payload).subscribe(
 			data => {
@@ -530,6 +750,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		}
 		this.dataFormGroup.patchValue({business_owners: this.myForms});
 		payload.append('name', this.assetName);
+		payload.append('cost_dollar', this.costDollar);
 		if (this.customFields) {
 			payload.append('custom_data', JSON.stringify(this.customFields));
 		}
@@ -567,7 +788,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	}
 
 	onFileChange(event, type) {
-		if (type === 'diagram_schematics') {
+		if (type === 'diagram') {
 			if (event.target.files.length > 0) {
 				this.fSelectedSchematics = event.target.files[0];
 				console.log('on diagram schematics', this.fSelectedSchematics);

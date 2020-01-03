@@ -60,6 +60,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
 	initTurnoverForm(turnover) {
 		this.turnoverForm = this.fb.group({
+			currency: ['naira' || ''],
 			year12: [turnover[0].turnover || ''],
 			year13: [turnover[1].turnover || ''],
 			year14: [turnover[2].turnover || ''],
@@ -68,11 +69,13 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 			year17: [turnover[5].turnover || ''],
 			year18: [turnover[6].turnover || ''],
 			year19: [turnover[7].turnover || ''],
+			// year20: [turnover[8].turnover || ''],
 		});
 	}
 
 	emptyTurnoverForm() {
 		this.turnoverForm = this.fb.group({
+			currency: ['naira' || ''],
 			year12: [''],
 			year13: [''],
 			year14: [''],
@@ -81,6 +84,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 			year17: [''],
 			year18: [''],
 			year19: [''],
+			// year20: [''],
 		});
 	}
 
@@ -122,7 +126,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 	addTurnover() {
 		console.log('initialized add');
 		const turnovers = this.turnoverForm.value;
-		const payload = [
+		const turnover = [
 			{
 				'turnover': turnovers.year12,
 				'year': 2012
@@ -155,8 +159,16 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 				'turnover': turnovers.year19,
 				'year': 2019
 			},
+			{
+				'turnover': turnovers.year20,
+				'year': 2020
+			},
 		];
-		this.organizationsService.addTurnovers(payload).subscribe(
+		let ppayload = {
+			turnover: turnover,
+			currency: this.turnoverForm.get('currency').value
+		};
+		this.organizationsService.addTurnovers(ppayload).subscribe(
 			data => {
 				console.log('success reponse', data);
 				this.loadingSubject.next(false);
