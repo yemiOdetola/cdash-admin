@@ -119,6 +119,7 @@ export class CapitalExpenditureComponent implements OnInit, OnDestroy {
 				if (response['amount'] >= response['total_amount']) {
 					total = 0;
 				}
+				let selectedAsset = response['amount'] +  total;
 				this.pieChartData = [total, response['amount']];
 				this.loadingSubject.next(false);
 			},

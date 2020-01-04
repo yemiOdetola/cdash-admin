@@ -16,6 +16,7 @@ export class BrandComponent implements OnInit, AfterViewInit {
 	setBackground = '';
 	headerStickyLogo: string;
 	brandIcon = './assets/media/logos/logo.png';
+	orgDetails;
 	toggleOptions: ToggleOptions = {
 		target: 'body',
 		targetState: 'kt-aside--minimize',
@@ -40,16 +41,16 @@ export class BrandComponent implements OnInit, AfterViewInit {
 	 */
 	ngOnInit(): void {
 		setTimeout(() => {
-			if (!localStorage.getItem('orgLogo')) {
-				localStorage.setItem('orgLogo', this.brandIcon);
-				window.location.reload();
+			this.orgDetails = JSON.parse(localStorage.getItem('siteMeta'));
+			if (!JSON.parse(localStorage.getItem('siteMeta'))) {
+				localStorage.setItem('logo', this.brandIcon);
 			} else {
-				this.brandIcon = localStorage.getItem('orgLogo');
+				this.brandIcon = this.orgDetails.logo;
 			}
-			if (!localStorage.getItem('orgBg')) {
+			if (!JSON.parse(localStorage.getItem('siteMeta'))) {
 				localStorage.setItem('orgBg', '#1e1e2d');
 			} else {
-				this.setBackground = localStorage.getItem('orgBg');
+				this.setBackground = this.orgDetails.color;
 			}
 			this.headerLogo = this.layoutConfigService.getLogo();
 			this.headerStickyLogo = this.layoutConfigService.getStickyLogo();

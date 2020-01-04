@@ -11,8 +11,7 @@ import { OrganizationsService } from '../../../../core/organizations';
 @Component({
 	selector: 'kt-aside-left',
 	templateUrl: './aside-left.component.html',
-	styleUrls: ['./aside-left.component.scss'],
-	changeDetection: ChangeDetectionStrategy.OnPush
+	styleUrls: ['./aside-left.component.scss']
 })
 export class AsideLeftComponent implements OnInit, AfterViewInit {
 	organizationDetails;
@@ -21,7 +20,7 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 	currentRouteUrl: string = '';
 	insideTm: any;
 	outsideTm: any;
-
+	loginData = JSON.parse(localStorage.getItem('loginData'));
 	menuCanvasOptions: OffcanvasOptions = {
 		baseClass: 'kt-aside',
 		overlay: true,
@@ -51,8 +50,7 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 			expandAll: false // allow having multiple expanded accordions in the menu
 		}
 	};
-	setBackground = '';
-
+	setBackground = '#1a1a27';
 	constructor(
 		public htmlClassService: HtmlClassService,
 		public menuAsideService: MenuAsideService,
@@ -68,14 +66,13 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 	}
 
 	ngOnInit() {
-		if (!localStorage.getItem('orgBg')) {
-			localStorage.setItem('orgBg', '#1e1e2d');
-			window.location.reload();
+		if (this.loginData) {
+			this.setBackground = this.loginData['color'];
 		} else {
-			this.setBackground = localStorage.getItem('orgBg');
+			this.setBackground = '#1a1a27';
 		}
+		this.getOrganizationDetails();
 		this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
-
 		this.router.events
 			.pipe(filter(event => event instanceof NavigationEnd))
 			.subscribe(event => this.currentRouteUrl = this.router.url.split(/[?#]/)[0]);
@@ -91,24 +88,18 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 			// tslint:disable-next-line:max-line-length
 			this.render.setAttribute(this.asideMenu.nativeElement, 'data-ktmenu-dropdown-timeout', objectPath.get(config, 'aside.menu.submenu.dropdown.hover-timeout'));
 		}
-		setTimeout(() => {
-			const organizationId = localStorage.getItem('organizationId');
-			console.log('getOrgDetails aside', organizationId);
-			this.getOrganizationDetails(organizationId);
-		}, 30);
 	}
 
-	getOrganizationDetails(organizationId) {
+	getOrganizationDetails() {
 		this.organizationsService.getOrganization().subscribe(
 			singleOrganization => {
-				this.organizationDetails = singleOrganization['success'];
+				this.organizationDetails = singleOrganization['data'];
 				console.log('org details sssssidemenu aside', this.organizationDetails);
 				if (this.organizationDetails && this.organizationDetails.color) {
-					localStorage.setItem('orgBg', this.organizationDetails.color);
+					this.setBackground = this.organizationDetails.color;
 				}
-				if (this.organizationDetails && this.organizationDetails.image) {
-					localStorage.setItem('orgBg', this.organizationDetails.image);
-					this.setBackground = localStorage.getItem('orgBg');
+				if (this.organizationDetails && this.organizationDetails.logo) {
+					localStorage.setItem('siteMeta', JSON.stringify(this.organizationDetails));
 				}
 			},
 			error => {
