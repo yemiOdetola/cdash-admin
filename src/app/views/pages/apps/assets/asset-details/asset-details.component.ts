@@ -25,6 +25,8 @@ export class AssetDetailsComponent implements OnInit {
 	allStaffs = [];
 	normBiznez: any;
 	customData;
+	naira = '₦';
+	ty$Sign = '$';
 	constructor(
 		private route: ActivatedRoute,
 		private assetsService: AssetsService,

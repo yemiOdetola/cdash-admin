@@ -356,44 +356,71 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	addReccurentYear(formName) {
 		this.loadingSubject.next(true);
-		let formData = {
-			2012: {
-				naira: this.reccurentFormGroup.get('year12').value || 0,
-				dollar: this.reccurentFormGroup.get('year12_dollar').value || 0
+		let formData = [
+			{
+				year: 2012,
+				amount: {
+					naira: this.reccurentFormGroup.get('year12').value || 0,
+					dollar: this.reccurentFormGroup.get('year12_dollar').value || 0
+				}
 			},
-			2013: {
-				naira: this.reccurentFormGroup.get('year13').value || 0,
-				dollar: this.reccurentFormGroup.get('year13_dollar').value || 0
+			{
+				year: 2013,
+				amount: {
+					naira: this.reccurentFormGroup.get('year13').value || 0,
+					dollar: this.reccurentFormGroup.get('year13_dollar').value || 0
+				}
 			},
-			2014: {
-				naira: this.reccurentFormGroup.get('year14').value || 0,
-				dollar: this.reccurentFormGroup.get('year14_dollar').value || 0
+			{
+				year: 2014,
+				amount: {
+					naira: this.reccurentFormGroup.get('year14').value || 0,
+					dollar: this.reccurentFormGroup.get('year14_dollar').value || 0
+				}
 			},
-			2015: {
-				naira: this.reccurentFormGroup.get('year15').value || 0,
-				dollar: this.reccurentFormGroup.get('year15_dollar').value || 0
+			{
+				year: 2015,
+				amount: {
+					naira: this.reccurentFormGroup.get('year15').value || 0,
+					dollar: this.reccurentFormGroup.get('year15_dollar').value || 0
+				}
 			},
-			2016: {
-				naira: this.reccurentFormGroup.get('year16').value || 0,
-				dollar: this.reccurentFormGroup.get('year16_dollar').value || 0
+			{
+				year: 2016,
+				amount: {
+					naira: this.reccurentFormGroup.get('year16').value || 0,
+					dollar: this.reccurentFormGroup.get('year16_dollar').value || 0
+				}
 			},
-			2017: {
-				naira: this.reccurentFormGroup.get('year17').value || 0,
-				dollar: this.reccurentFormGroup.get('year17_dollar').value || 0
+			{
+				year: 2017,
+				amount: {
+					naira: this.reccurentFormGroup.get('year17').value || 0,
+					dollar: this.reccurentFormGroup.get('year17_dollar').value || 0
+				}
 			},
-			2018: {
-				naira: this.reccurentFormGroup.get('year18').value || 0,
-				dollar: this.reccurentFormGroup.get('year18_dollar').value || 0
+			{
+				year: 2018,
+				amount: {
+					naira: this.reccurentFormGroup.get('year18').value || 0,
+					dollar: this.reccurentFormGroup.get('year18_dollar').value || 0
+				}
 			},
-			2019: {
-				naira: this.reccurentFormGroup.get('year19').value || 0,
-				dollar: this.reccurentFormGroup.get('year19_dollar').value || 0
+			{
+				year: 2019,
+				amount: {
+					naira: this.reccurentFormGroup.get('year19').value || 0,
+					dollar: this.reccurentFormGroup.get('year19_dollar').value || 0
+				}
 			},
-			2020: {
-				naira: this.reccurentFormGroup.get('year20').value || 0,
-				dollar: this.reccurentFormGroup.get('year20_dollar').value || 0
-			}
-		};
+			{
+				year: 2020,
+				amount: {
+					naira: this.reccurentFormGroup.get('year20').value || 0,
+					dollar: this.reccurentFormGroup.get('year20_dollar').value || 0
+				}
+			},
+		];
 		let gross = {
 			naira: this.reccurentFormGroup.get('gross_naira').value || 0,
 			dollar: this.reccurentFormGroup.get('gross_dollar').value || 0,
@@ -506,44 +533,72 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	addHistoricalCost(formName) {
 		this.loadingSubject.next(true);
-		let formData = {
-			2012: {
-				naira: this.historicalFormGroup.get('year12').value || 0,
-				dollar: this.historicalFormGroup.get('year12_dollar').value || 0
+		let formData = [
+			{
+				year: 2012,
+				amount: {
+					naira: this.historicalDollarFormGroup.get('year12').value || 0,
+					dollar: this.historicalDollarFormGroup.get('year12_dollar').value || 0
+				}
 			},
-			2013: {
-				naira: this.historicalFormGroup.get('year13').value || 0,
-				dollar: this.historicalFormGroup.get('year13_dollar').value || 0
+			{
+				year: 2013,
+				amount: {
+					naira: this.historicalDollarFormGroup.get('year13').value || 0,
+					dollar: this.historicalDollarFormGroup.get('year13_dollar').value || 0
+				}
 			},
-			2014: {
-				naira: this.historicalFormGroup.get('year14').value || 0,
-				dollar: this.historicalFormGroup.get('year14_dollar').value || 0
+			{
+				year: 2014,
+				amount: {
+					naira: this.historicalDollarFormGroup.get('year14').value || 0,
+					dollar: this.historicalDollarFormGroup.get('year14_dollar').value || 0
+				}
 			},
-			2015: {
-				naira: this.historicalFormGroup.get('year15').value || 0,
-				dollar: this.historicalFormGroup.get('year15_dollar').value || 0
+			{
+				year: 2015,
+				amount: {
+					naira: this.historicalDollarFormGroup.get('year15').value || 0,
+					dollar: this.historicalDollarFormGroup.get('year15_dollar').value || 0
+				}
 			},
-			2016: {
-				naira: this.historicalFormGroup.get('year16').value || 0,
-				dollar: this.historicalFormGroup.get('year16_dollar').value || 0
+			{
+				year: 2016,
+				amount: {
+					naira: this.historicalDollarFormGroup.get('year16').value || 0,
+					dollar: this.historicalDollarFormGroup.get('year16_dollar').value || 0
+				}
 			},
-			2017: {
-				naira: this.historicalFormGroup.get('year17').value || 0,
-				dollar: this.historicalFormGroup.get('year17_dollar').value || 0
+			{
+				year: 2017,
+				amount: {
+					naira: this.historicalDollarFormGroup.get('year17').value || 0,
+					dollar: this.historicalDollarFormGroup.get('year17_dollar').value || 0
+				}
 			},
-			2018: {
-				naira: this.historicalFormGroup.get('year18').value || 0,
-				dollar: this.historicalFormGroup.get('year18_dollar').value || 0
+			{
+				year: 2018,
+				amount: {
+					naira: this.historicalDollarFormGroup.get('year18').value || 0,
+					dollar: this.historicalDollarFormGroup.get('year18_dollar').value || 0
+				}
 			},
-			2019: {
-				naira: this.historicalFormGroup.get('year19').value || 0,
-				dollar: this.historicalFormGroup.get('year19_dollar').value || 0
+			{
+				year: 2019,
+				amount: {
+					naira: this.historicalDollarFormGroup.get('year19').value || 0,
+					dollar: this.historicalDollarFormGroup.get('year19_dollar').value || 0
+				}
 			},
-			2020: {
-				naira: this.historicalFormGroup.get('year20').value || 0,
-				dollar: this.historicalFormGroup.get('year20_dollar').value || 0
-			}
-		};
+			{
+				year: 2020,
+				amount: {
+					naira: this.historicalDollarFormGroup.get('year20').value || 0,
+					dollar: this.historicalDollarFormGroup.get('year20_dollar').value || 0
+				}
+			},
+		];
+
 		const payload = {
 			data: formData,
 			type: formName,
@@ -593,13 +648,17 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		if (this.customFields) {
 			payload.append('custom_data', JSON.stringify(this.customFields));
 		}
-		if (this.projected_cost_dollar !== '0') {
-			payload.append('projected_cost_dollar', this.projected_cost_dollar);
+		if (this.dataFormGroup.get('projected_cost').value) {
+			let projected_cost = {
+				naira: this.dataFormGroup.get('projected_cost').value,
+				dollar: this.projected_cost_dollar
+			};
+			payload.set('projected_cost', JSON.stringify(projected_cost));
 		}
 		payload.set('business_owners', this.myForms);
+		payload.set('cost', JSON.stringify(cost));
 		payload.append('name', this.assetName);
 		payload.append('asset_id', this.localForms._id);
-		payload.append('cost', JSON.stringify(cost));
 		this.assetsService.createAssetData(payload).subscribe(
 			data => {
 				this.loadingSubject.next(false);
@@ -653,13 +712,17 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		if (this.customFields) {
 			payload.append('custom_data', JSON.stringify(this.customFields));
 		}
-		if (this.projected_cost_dollar !== '0') {
-			payload.append('projected_cost_dollar', this.projected_cost_dollar);
+		if (this.dataFormGroup.get('projected_cost').value) {
+			let projected_cost = {
+				naira: this.dataFormGroup.get('projected_cost').value,
+				dollar: this.projected_cost_dollar
+			};
+			payload.set('projected_cost', JSON.stringify(projected_cost));
 		}
 		payload.set('business_owners', this.myForms);
 		payload.append('name', this.assetName);
 		payload.append('asset_id', this.localForms._id);
-		payload.append('cost', JSON.stringify(cost));
+		payload.set('cost', JSON.stringify(cost));
 		this.assetsService.updateAssetData(payload, this.assetDataId).subscribe(
 			data => {
 				this.loadingSubject.next(false);

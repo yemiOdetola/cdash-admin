@@ -58,8 +58,7 @@
 						<td class="label">Type</td>
 						<td class="value">{{assetDetails.type}}</td>
 					</tr>
-					<tr class="each-data"
-						*ngIf="assetDetails.business_owners && assetDetails.business_owners.length > 0">
+					<tr class="each-data" *ngIf="assetDetails.business_owners && assetDetails.business_owners[0]">
 						<td class="label">Business owners</td>
 						<td class="value staffs"><span *ngFor="let staff of allStaffs" class="staff"
 								routerLink="/cdash/users/staffs/{{staff._id}}">{{staff.name}}</span></td>
@@ -83,6 +82,16 @@
 					<tr class="each-data" *ngIf="assetDetails.location_of_deployment">
 						<td class="label">Location of deployment</td>
 						<td class="value">{{assetDetails.location_of_deployment}}</td>
+					</tr>
+
+					<tr class="each-data" *ngIf="assetDetails.gross && assetDetails.gross.naira">
+						<td class="label">Gross total revenue({{naira}})</td>
+						<td class="value">{{assetDetails.gross.naira | currency: naira}}</td>
+					</tr>
+
+					<tr class="each-data" *ngIf="assetDetails.gross && assetDetails.gross.dollar">
+						<td class="label">Gross total revenue({{ty$Sign}})</td>
+						<td class="value">{{assetDetails.gross.naira | currency: ty$Sign}}</td>
 					</tr>
 
 					<div class="customs" *ngIf="customData && customData.value">
