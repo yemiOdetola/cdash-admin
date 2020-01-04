@@ -50,6 +50,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	editAssetInit = false;
 	assetName = '';
 	costDollar = '0';
+	projected_cost_dollar = '0';
 	staffs = [];
 	formMap: any;
 	myForms: any;
@@ -95,7 +96,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				this.customModels = [];
 				this.customModels.push(field.id);
 				this.customFields.push(
-					{name: field['id'], value: ''}
+					{ name: field['id'], value: '' }
 				);
 			}
 		});
@@ -105,10 +106,8 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			this.getAssetDetails();
 		}
 		this.emptyReccurentForm();
-		this.emptyReccurentDollarForm();
 		this.emptyReccurentMonthForm();
 		this.emptyHistoricalCost();
-		this.emptyHistoricalDollarCost();
 	}
 
 	changeCustom(e, id) {
@@ -137,14 +136,12 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				this.costDollar = this.assetDetails.cost_dollar;
 				if (this.assetDetails.historical_data.length) {
 					this.initHistoricalCost(this.assetDetails.historical_data);
-					this.initHistoricalDollarCost(this.assetDetails.historical_data);
 				}
 				if (this.assetDetails.recurrent_month.length) {
 					this.initReccurentMonthForm(this.assetDetails.recurrent_month);
 				}
 				if (this.assetDetails.recurrent_year.length) {
 					this.initReccurentForm(this.assetDetails.recurrent_year);
-					this.initReccurentDollarForm(this.assetDetails.recurrent_year);
 				}
 				this.editAssetInit = true;
 				this.loadingSubject.next(false);
@@ -176,122 +173,127 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	emptyReccurentForm() {
 		this.reccurentFormGroup = this.fb.group({
-			year12: [0],
-			year13: [0],
-			year14: [0],
-			year15: [0],
-			year16: [0],
-			year17: [0],
-			year18: [0],
-			year19: [0],
-			year20: [0],
-			gross_total_revenue: [0],
-			remark: ['']
+			year12: [''],
+			year12_dollar: [''],
+			year13: [''],
+			year13_dollar: [''],
+			year14: [''],
+			year14_dollar: [''],
+			year15: [''],
+			year15_dollar: [''],
+			year16: [''],
+			year16_dollar: [''],
+			year17: [''],
+			year17_dollar: [''],
+			year18: [''],
+			year18_dollar: [''],
+			year19: [''],
+			year19_dollar: [''],
+			year20: [''],
+			year20_dollar: [''],
+			gross_naira: [''],
+			gross_dollar: [''],
+			note: ['']
 		});
 	}
 
-	emptyReccurentDollarForm() {
-		this.reccurentDollarFormGroup = this.fb.group({
-			year12: [0],
-			year13: [0],
-			year14: [0],
-			year15: [0],
-			year16: [0],
-			year17: [0],
-			year18: [0],
-			year19: [0],
-			year20: [0],
-			gross_total_revenue: [0],
-			remark: ['']
-		});
-	}
 
 	initReccurentForm(reccurentData) {
 		this.reccurentFormGroup = this.fb.group({
-			year12: [reccurentData[0].amount || 0],
-			year13: [reccurentData[1].amount || 0],
-			year14: [reccurentData[2].amount || 0],
-			year15: [reccurentData[3].amount || 0],
-			year16: [reccurentData[4].amount || 0],
-			year17: [reccurentData[5].amount || 0],
-			year18: [reccurentData[6].amount || 0],
-			year19: [reccurentData[7].amount || 0],
-			year20: [reccurentData[8].amount || 0],
-			gross_total_revenue: [reccurentData.gross_total_revenue || 0],
-			remark: [reccurentData.remark]
-		});
-	}
+			year12: [reccurentData[0].amount || ''],
+			year12_dollar: [reccurentData[1].amount || ''],
 
+			year13: [reccurentData[2].amount || ''],
+			year13_dollar: [reccurentData[3].amount || ''],
 
-	initReccurentDollarForm(reccurentData) {
-		this.reccurentDollarFormGroup = this.fb.group({
-			year12: [reccurentData[0].amount || 0],
-			year13: [reccurentData[1].amount || 0],
-			year14: [reccurentData[2].amount || 0],
-			year15: [reccurentData[3].amount || 0],
-			year16: [reccurentData[4].amount || 0],
-			year17: [reccurentData[5].amount || 0],
-			year18: [reccurentData[6].amount || 0],
-			year19: [reccurentData[7].amount || 0],
-			year20: [reccurentData[8].amount || 0],
-			gross_total_revenue: [reccurentData.gross_total_revenue || 0],
-			remark: [reccurentData.remark]
+			year14: [reccurentData[4].amount || ''],
+			year14_dollar: [reccurentData[5].amount || ''],
+
+			year15: [reccurentData[6].amount || ''],
+			year15_dollar: [reccurentData[7].amount || ''],
+
+			year16: [reccurentData[8].amount || ''],
+			year16_dollar: [reccurentData[9].amount || ''],
+
+			year17: [reccurentData[10].amount || ''],
+			year17_dollar: [reccurentData[11].amount || ''],
+
+			year18: [reccurentData[12].amount || ''],
+			year18_dollar: [reccurentData[13].amount || ''],
+
+			year19: [reccurentData[14].amount || ''],
+			year19_dollar: [reccurentData[15].amount || ''],
+
+			year20: [reccurentData[16].amount || ''],
+			year20_dollar: [reccurentData[17].amount || ''],
+
+			gross_naira: [reccurentData.gross.naira || ''],
+			gross_dollar: [reccurentData.gross.dollar || ''],
+			note: [reccurentData.note]
 		});
 	}
 
 	emptyHistoricalCost() {
 		this.historicalFormGroup = this.fb.group({
-			year12: [0],
-			year13: [0],
-			year14: [0],
-			year15: [0],
-			year16: [0],
-			year17: [0],
-			year18: [0],
-			year19: [0],
-			year20: [0]
-		});
-	}
+			year12: [''],
+			year12_dollar: [''],
 
-	emptyHistoricalDollarCost() {
-		this.historicalDollarFormGroup = this.fb.group({
-			year12: [0],
-			year13: [0],
-			year14: [0],
-			year15: [0],
-			year16: [0],
-			year17: [0],
-			year18: [0],
-			year19: [0],
-			year20: [0]
+			year13: [''],
+			year13_dollar: [''],
+
+			year14: [''],
+			year14_dollar: [''],
+
+			year15: [''],
+			year15_dollar: [''],
+
+			year16: [''],
+			year16_dollar: [''],
+
+			year17: [''],
+			year17_dollar: [''],
+
+			year18: [''],
+			year18_dollar: [''],
+
+			year19: [''],
+			year19_dollar: [''],
+
+			year20: [''],
+			year20_dollar: [''],
+
 		});
 	}
 
 	initHistoricalCost(historicalData) {
 		this.historicalFormGroup = this.fb.group({
-			year12: [historicalData[0].amount || 0],
-			year13: [historicalData[1].amount || 0],
-			year14: [historicalData[2].amount || 0],
-			year15: [historicalData[3].amount || 0],
-			year16: [historicalData[4].amount || 0],
-			year17: [historicalData[5].amount || 0],
-			year18: [historicalData[6].amount || 0],
-			year19: [historicalData[7].amount || 0],
-			year20: [historicalData[8].amount || 0],
-		});
-	}
+			year12: [historicalData[0].amount || ''],
+			year12_dollar: [historicalData[0].amount || ''],
 
-	initHistoricalDollarCost(historicalData) {
-		this.historicalDollarFormGroup = this.fb.group({
-			year12: [historicalData[0].amount || 0],
-			year13: [historicalData[1].amount || 0],
-			year14: [historicalData[2].amount || 0],
-			year15: [historicalData[3].amount || 0],
-			year16: [historicalData[4].amount || 0],
-			year17: [historicalData[5].amount || 0],
-			year18: [historicalData[6].amount || 0],
-			year19: [historicalData[7].amount || 0],
-			year20: [historicalData[8].amount || 0],
+			year13: [historicalData[1].amount || ''],
+			year13_dollar: [historicalData[1].amount || ''],
+
+			year14: [historicalData[2].amount || ''],
+			year14_dollar: [historicalData[2].amount || ''],
+
+			year15: [historicalData[3].amount || ''],
+			year15_dollar: [historicalData[3].amount || ''],
+
+			year16: [historicalData[4].amount || ''],
+			year16_dollar: [historicalData[4].amount || ''],
+
+			year17: [historicalData[5].amount || ''],
+			year17_dollar: [historicalData[5].amount || ''],
+
+			year18: [historicalData[6].amount || ''],
+			year18_dollar: [historicalData[6].amount || ''],
+
+			year19: [historicalData[7].amount || ''],
+			year19_dollar: [historicalData[7].amount || ''],
+
+			year20: [historicalData[8].amount || ''],
+			year20_dollar: [historicalData[8].amount || ''],
+
 		});
 	}
 
@@ -352,120 +354,54 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	addReccurentYear(formName) {
 		this.loadingSubject.next(true);
-		const formData = [
-			{
-				year: 2012,
-				amount: this.reccurentFormGroup.get('year12').value
+		let formData = {
+			2012: {
+				naira: this.reccurentFormGroup.get('year12').value || 0,
+				dollar: this.reccurentFormGroup.get('year12_dollar').value || 0
 			},
-			{
-				year: 2013,
-				amount: this.reccurentFormGroup.get('year13').value
+			2013: {
+				naira: this.reccurentFormGroup.get('year13').value || 0,
+				dollar: this.reccurentFormGroup.get('year13_dollar').value || 0
 			},
-			{
-				year: 2014,
-				amount: this.reccurentFormGroup.get('year14').value
+			2014: {
+				naira: this.reccurentFormGroup.get('year14').value || 0,
+				dollar: this.reccurentFormGroup.get('year14_dollar').value || 0
 			},
-			{
-				year: 2015,
-				amount: this.reccurentFormGroup.get('year15').value
+			2015: {
+				naira: this.reccurentFormGroup.get('year15').value || 0,
+				dollar: this.reccurentFormGroup.get('year15_dollar').value || 0
 			},
-			{
-				year: 2016,
-				amount: this.reccurentFormGroup.get('year16').value
+			2016: {
+				naira: this.reccurentFormGroup.get('year16').value || 0,
+				dollar: this.reccurentFormGroup.get('year16_dollar').value || 0
 			},
-			{
-				year: 2017,
-				amount: this.reccurentFormGroup.get('year17').value
+			2017: {
+				naira: this.reccurentFormGroup.get('year17').value || 0,
+				dollar: this.reccurentFormGroup.get('year17_dollar').value || 0
 			},
-			{
-				year: 2018,
-				amount: this.reccurentFormGroup.get('year18').value
+			2018: {
+				naira: this.reccurentFormGroup.get('year18').value || 0,
+				dollar: this.reccurentFormGroup.get('year18_dollar').value || 0
 			},
-			{
-				year: 2019,
-				amount: this.reccurentFormGroup.get('year19').value
+			2019: {
+				naira: this.reccurentFormGroup.get('year19').value || 0,
+				dollar: this.reccurentFormGroup.get('year19_dollar').value || 0
 			},
-			{
-				year: 2020,
-				amount: this.reccurentFormGroup.get('year20').value
-			},
-		];
+			2020: {
+				naira: this.reccurentFormGroup.get('year20').value || 0,
+				dollar: this.reccurentFormGroup.get('year20_dollar').value || 0
+			}
+		};
+		let gross = {
+			naira: this.reccurentFormGroup.get('gross_naira').value || 0,
+			dollar: this.reccurentFormGroup.get('gross_dollar').value || 0,
+			note: this.reccurentFormGroup.get('note').value,
+		};
 		const payload = {
 			data: formData,
 			type: formName,
 			currency: 'naira',
-			gross_total_revenue: this.reccurentFormGroup.get('gross_total_revenue').value,
-			remark: this.reccurentFormGroup.get('remark').value,
-			asset_data_id: localStorage.getItem('asset_data_id'),
-		};
-		this.assetsService.addCharts(payload).subscribe(
-			data => {
-				this.loadingSubject.next(false);
-				const message = `Asset chart been successfully updated`;
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-				if (data.status === true && this.showReccurentMonth) {
-					this.selected = 'reccurent_month';
-				} else if (data.status === true && this.showHistorical) {
-					this.selected = 'historical_cost';
-				} else {
-					this.router.navigate([`/cdash/assets/data/${this.localForms._id}`]);
-				}
-			},
-			error => {
-				this.loadingSubject.next(false);
-				console.log('Error response', error);
-				const title = 'Please Retry';
-				const message = 'Sorry, Temporary Error Occured';
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-			});
-	}
-
-	addReccurentDollarYear(formName) {
-		this.loadingSubject.next(true);
-		const formData = [
-			{
-				year: 2012,
-				amount: this.reccurentDollarFormGroup.get('year12').value
-			},
-			{
-				year: 2013,
-				amount: this.reccurentDollarFormGroup.get('year13').value
-			},
-			{
-				year: 2014,
-				amount: this.reccurentDollarFormGroup.get('year14').value
-			},
-			{
-				year: 2015,
-				amount: this.reccurentDollarFormGroup.get('year15').value
-			},
-			{
-				year: 2016,
-				amount: this.reccurentDollarFormGroup.get('year16').value
-			},
-			{
-				year: 2017,
-				amount: this.reccurentDollarFormGroup.get('year17').value
-			},
-			{
-				year: 2018,
-				amount: this.reccurentDollarFormGroup.get('year18').value
-			},
-			{
-				year: 2019,
-				amount: this.reccurentDollarFormGroup.get('year19').value
-			},
-			{
-				year: 2020,
-				amount: this.reccurentDollarFormGroup.get('year20').value
-			},
-		];
-		const payload = {
-			data: formData,
-			type: formName,
-			currency: 'dollar',
-			gross_total_revenue: this.reccurentFormGroup.get('gross_total_revenue').value,
-			remark: this.reccurentFormGroup.get('remark').value,
+			gross: gross,
 			asset_data_id: localStorage.getItem('asset_data_id'),
 		};
 		this.assetsService.addCharts(payload).subscribe(
@@ -568,106 +504,44 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	addHistoricalCost(formName) {
 		this.loadingSubject.next(true);
-		const formData = [
-			{
-				year: 2012,
-				amount: this.historicalFormGroup.get('year12').value
+		let formData = {
+			2012: {
+				naira: this.historicalFormGroup.get('year12').value || 0,
+				dollar: this.historicalFormGroup.get('year12_dollar').value || 0
 			},
-			{
-				year: 2013,
-				amount: this.historicalFormGroup.get('year13').value
+			2013: {
+				naira: this.historicalFormGroup.get('year13').value || 0,
+				dollar: this.historicalFormGroup.get('year13_dollar').value || 0
 			},
-			{
-				year: 2014,
-				amount: this.historicalFormGroup.get('year14').value
+			2014: {
+				naira: this.historicalFormGroup.get('year14').value || 0,
+				dollar: this.historicalFormGroup.get('year14_dollar').value || 0
 			},
-			{
-				year: 2015,
-				amount: this.historicalFormGroup.get('year15').value
+			2015: {
+				naira: this.historicalFormGroup.get('year15').value || 0,
+				dollar: this.historicalFormGroup.get('year15_dollar').value || 0
 			},
-			{
-				year: 2016,
-				amount: this.historicalFormGroup.get('year16').value
+			2016: {
+				naira: this.historicalFormGroup.get('year16').value || 0,
+				dollar: this.historicalFormGroup.get('year16_dollar').value || 0
 			},
-			{
-				year: 2017,
-				amount: this.historicalFormGroup.get('year17').value
+			2017: {
+				naira: this.historicalFormGroup.get('year17').value || 0,
+				dollar: this.historicalFormGroup.get('year17_dollar').value || 0
 			},
-			{
-				year: 2018,
-				amount: this.historicalFormGroup.get('year18').value
+			2018: {
+				naira: this.historicalFormGroup.get('year18').value || 0,
+				dollar: this.historicalFormGroup.get('year18_dollar').value || 0
 			},
-			{
-				year: 2019,
-				amount: this.historicalFormGroup.get('year19').value
+			2019: {
+				naira: this.historicalFormGroup.get('year19').value || 0,
+				dollar: this.historicalFormGroup.get('year19_dollar').value || 0
 			},
-			{
-				year: 2020,
-				amount: this.historicalFormGroup.get('year20').value
-			},
-		];
-		const payload = {
-			data: formData,
-			type: formName,
-			currency: 'naira',
-			asset_data_id: localStorage.getItem('asset_data_id'),
+			2020: {
+				naira: this.historicalFormGroup.get('year20').value || 0,
+				dollar: this.historicalFormGroup.get('year20_dollar').value || 0
+			}
 		};
-		this.assetsService.addCharts(payload).subscribe(
-			data => {
-				this.loadingSubject.next(false);
-				const message = `Asset chart been successfully updated`;
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-				this.router.navigate(['/cdash/assets/assets']);
-			},
-			error => {
-				this.loadingSubject.next(false);
-				console.log('Error response', error);
-				const title = 'Please Retry';
-				const message = 'Sorry, Temporary Error Occured';
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-			});
-	}
-
-	addHistoricalDollarCost(formName) {
-		this.loadingSubject.next(true);
-		const formData = [
-			{
-				year: 2012,
-				amount: this.historicalDollarFormGroup.get('year12').value
-			},
-			{
-				year: 2013,
-				amount: this.historicalDollarFormGroup.get('year13').value
-			},
-			{
-				year: 2014,
-				amount: this.historicalDollarFormGroup.get('year14').value
-			},
-			{
-				year: 2015,
-				amount: this.historicalDollarFormGroup.get('year15').value
-			},
-			{
-				year: 2016,
-				amount: this.historicalDollarFormGroup.get('year16').value
-			},
-			{
-				year: 2017,
-				amount: this.historicalDollarFormGroup.get('year17').value
-			},
-			{
-				year: 2018,
-				amount: this.historicalDollarFormGroup.get('year18').value
-			},
-			{
-				year: 2019,
-				amount: this.historicalDollarFormGroup.get('year19').value
-			},
-			{
-				year: 2020,
-				amount: this.historicalDollarFormGroup.get('year20').value
-			},
-		];
 		const payload = {
 			data: formData,
 			type: formName,
@@ -694,6 +568,10 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		this.loadingSubject.next(true);
 		let payload = new FormData();
 		let forms = this.dataFormGroup.value;
+		let cost = {
+			naira: this.dataFormGroup.get('cost').value,
+			dollar: this.costDollar
+		};
 		for (let key in forms) {
 			payload.append(key, forms[key]);
 		}
@@ -712,10 +590,13 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		if (this.customFields) {
 			payload.append('custom_data', JSON.stringify(this.customFields));
 		}
-		payload.append('business_owners', this.myForms);
+		if (this.projected_cost_dollar !== '0') {
+			payload.append('projected_cost_dollar', this.projected_cost_dollar);
+		}
+		payload.set('business_owners', this.myForms);
 		payload.append('name', this.assetName);
-		payload.append('cost_dollar', this.costDollar);
 		payload.append('asset_id', this.localForms._id);
+		payload.append('cost', JSON.stringify(cost));
 		this.assetsService.createAssetData(payload).subscribe(
 			data => {
 				this.loadingSubject.next(false);
@@ -748,7 +629,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		for (let key in forms) {
 			payload.append(key, forms[key]);
 		}
-		this.dataFormGroup.patchValue({business_owners: this.myForms});
+		this.dataFormGroup.patchValue({ business_owners: this.myForms });
 		payload.append('name', this.assetName);
 		payload.append('cost_dollar', this.costDollar);
 		if (this.customFields) {

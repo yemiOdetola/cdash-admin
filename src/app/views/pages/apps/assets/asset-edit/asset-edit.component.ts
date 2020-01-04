@@ -52,9 +52,9 @@ export class AssetEditComponent implements OnInit {
 	customTypes = ['text', 'number'];
 	customIndex = 1;
 	compulsoryFields = [
+		{ 'id': 'cost', 'name': 'Cost of acquisition (naira)', 'type': 'number', 'required': 'true' },
 		{ 'id': 'summary', 'name': 'Summary', 'type': 'text', 'required': 'true' },
 		{ 'id': 'date_acquired', 'name': 'Date acquired', 'type': 'date', 'required': 'true' },
-		{ 'id': 'cost', 'name': 'Cost of acquisition', 'type': 'number', 'required': 'true' },
 		{ 'id': 'business_purpose', 'name': 'Business purpose', 'type': 'text', 'required': 'true' },
 		{ 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Others'] },
 		{ 'id': 'depreciation', 'name': 'Depreciation per annum(%)', 'type': 'number', 'max': '100', 'required': 'true' },

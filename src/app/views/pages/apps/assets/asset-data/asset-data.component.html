@@ -14,14 +14,14 @@
 				</div>
 				<div [className]="selected === 'reccurent_year' ? 'item active' : 'item'"
 					(click)="selectMenu('reccurent_year')" *ngIf="showReccurentYear">
-					<div class="selected">Reccurent expenditure (naira)</div>
+					<div class="selected">Reccurent expenditure</div>
 					<div class="active"></div>
 				</div>
-				<div [className]="selected === 'reccurent_year_dollar' ? 'item active' : 'item'"
+				<!-- <div [className]="selected === 'reccurent_year_dollar' ? 'item active' : 'item'"
 					(click)="selectMenu('reccurent_year_dollar')" *ngIf="showReccurentYear">
-					<div class="selected">Reccurent expenditure (dollar)</div>
+					<div class="selected">Reccurent expenditure ()</div>
 					<div class="active"></div>
-				</div>
+				</div> -->
 				<!-- <div [className]="selected === 'reccurent_month' ? 'item active' : 'item'"
 					(click)="selectMenu('reccurent_month')" *ngIf="showReccurentMonth">
 					<div class="selected">Reccurent expenditure (month)</div>
@@ -29,14 +29,14 @@
 				</div> -->
 				<div [className]="selected === 'historical_cost' ? 'item active' : 'item'"
 					(click)="selectMenu('historical_cost')" *ngIf="showHistorical">
-					<div class="selected">Historical cost (naira)</div>
+					<div class="selected">Historical cost</div>
 					<div class="active"></div>
 				</div>
-				<div [className]="selected === 'historical_cost_dollar' ? 'item active' : 'item'"
+				<!-- <div [className]="selected === 'historical_cost_dollar' ? 'item active' : 'item'"
 					(click)="selectMenu('historical_cost_dollar')" *ngIf="showHistorical">
 					<div class="selected">Historical cost (dollar)</div>
 					<div class="active"></div>
-				</div>
+				</div> -->
 			</div>
 			<div class="roles-table slide-in" *ngIf="selected === 'main_form'">
 				<div class="role-body">
@@ -46,15 +46,6 @@
 								<div class="form-item">
 									<label class="label">Asset name/title</label>
 									<input type="text" placeholder="Enter asset name" [(ngModel)]="assetName"
-										required="required" />
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="form-item">
-									<label class="label">Cost of acquisition (dollar)</label>
-									<input type="text" placeholder="Enter cost in dollars" [(ngModel)]="costDollar"
 										required="required" />
 								</div>
 							</div>
@@ -70,7 +61,10 @@
 												<div class="col-lg-12">
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
-       													<input type="text" placeholder="Enter {{form_elem.name}}" (change)="changeCustom($event, form_elem.id)" [(ngModel)]="form_elem.id === customModels[i] ? customModels[i] : customModels[0]" [ngModelOptions]="{standalone: true}">
+														<input type="text" placeholder="Enter {{form_elem.name}}"
+															(change)="changeCustom($event, form_elem.id)"
+															[(ngModel)]="form_elem.id === customModels[i] ? customModels[i] : customModels[0]"
+															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
 											</div>
@@ -83,8 +77,8 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-														formControlName="{{form_elem.id}}"
-														required="{{form_elem.required}}" />
+															formControlName="{{form_elem.id}}"
+															required="{{form_elem.required}}" />
 													</div>
 												</div>
 											</div>
@@ -99,6 +93,32 @@
 														<input type="number" placeholder="Enter {{form_elem.name}}"
 															[(ngModel)]="customModels.form_elem.id"
 															required="{{form_elem.required}}" />
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div *ngIf="form_elem.id === 'cost'">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="form-item">
+													<label class="label">Cost of acquisition (dollar)</label>
+													<input type="text" placeholder="Enter cost in dollars"
+														[(ngModel)]="costDollar" required="required"
+														[ngModelOptions]="{standalone: true}" />
+												</div>
+											</div>
+										</div>
+									</div>
+									<div *ngIf="form_elem.id === 'projected_cost'">
+										<div *ngSwitchCase="'number'">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="form-item">
+														<label class="label">Projected cost (dollar)</label>
+														<input type="number" placeholder="Enter cost in dollars"
+															[(ngModel)]="projected_cost_dollar"
+															[ngModelOptions]="{standalone: true}" />
 													</div>
 												</div>
 											</div>
@@ -209,8 +229,9 @@
 													<input type="file" id="{{form_elem.id}}"
 														(change)="onFileChange($event, form_elem.id)" accept="image/*">
 													<div class="placeholder"
-														*ngIf="form_elem.id === 'icon' && !fileNameIcon">Upload {{form_elem.name}}</div>
-														
+														*ngIf="form_elem.id === 'icon' && !fileNameIcon">Upload
+														{{form_elem.name}}</div>
+
 													<div class="placeholder"
 														*ngIf="form_elem.id === 'diagram' && !fileNameSchematics">
 														Upload {{form_elem.name}}</div>
@@ -260,8 +281,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2020</label>
-										<input type="number" placeholder="Enter 2020 expenditure"
+										<input type="number" placeholder="Expenditure in naira"
 											formControlName="year20">
+										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
+											formControlName="year12_dollar">
 									</div>
 								</div>
 							</div>
@@ -269,8 +292,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2019</label>
-										<input type="number" placeholder="Enter 2019 expenditure"
+										<input type="number" placeholder="Expenditure in naira"
 											formControlName="year19">
+										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
+											formControlName="year19_dollar">
 									</div>
 								</div>
 							</div>
@@ -278,8 +303,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2018</label>
-										<input type="number" placeholder="Enter 2018 expenditure"
+										<input type="number" placeholder="Expenditure in naira"
 											formControlName="year18">
+										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
+											formControlName="year18_dollar">
 									</div>
 								</div>
 							</div>
@@ -287,8 +314,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2017</label>
-										<input type="number" placeholder="Enter 2017 expenditure"
+										<input type="number" placeholder="Expenditure in naira"
 											formControlName="year17">
+										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
+											formControlName="year17_dollar">
 									</div>
 								</div>
 							</div>
@@ -296,8 +325,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2016</label>
-										<input type="number" placeholder="Enter 2016 expenditure"
+										<input type="number" placeholder="Expenditure in naira"
 											formControlName="year16">
+										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
+											formControlName="year16_dollar">
 									</div>
 								</div>
 							</div>
@@ -305,8 +336,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2015</label>
-										<input type="number" placeholder="Enter 2015 expenditure"
+										<input type="number" placeholder="Expenditure in naira"
 											formControlName="year15">
+										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
+											formControlName="year15_dollar">
 									</div>
 								</div>
 							</div>
@@ -314,8 +347,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2014</label>
-										<input type="number" placeholder="Enter 2014 expenditure"
+										<input type="number" placeholder="Expenditure in naira"
 											formControlName="year14">
+										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
+											formControlName="year14_dollar">
 									</div>
 								</div>
 							</div>
@@ -323,8 +358,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2013</label>
-										<input type="number" placeholder="Enter 2013 expenditure"
+										<input type="number" placeholder="Expenditure in naira"
 											formControlName="year13">
+										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
+											formControlName="year13_dollar">
 									</div>
 								</div>
 							</div>
@@ -332,8 +369,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2012</label>
-										<input type="number" placeholder="Enter 2012 expenditure"
+										<input type="number" placeholder="Expenditure in naira"
 											formControlName="year12">
+										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
+											formControlName="year12_dollar">
 									</div>
 								</div>
 							</div>
@@ -342,16 +381,19 @@
 									<div class="form-item">
 										<label class="label">Gross total revenue</label>
 										<input type="number" placeholder="Enter gross total revenue"
-											formControlName="gross_total_revenue">
+											formControlName="gross_naira">
+										<input type="number" class="mt-2" placeholder="Enter 2020 expenditure"
+											formControlName="gross_dollar">
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-12">
 									<div class="form-item">
-										<label class="label">Remark</label>
-										<input type="text" placeholder="Enter remark"
-											formControlName="remark">
+										<label class="label">Notes</label>
+										<textarea rows="5" placeholder="Enter additional notes"
+											formControlName="note"></textarea>
+										<!-- <input type="text" placeholder="Enter additional notes" formControlName="note"> -->
 									</div>
 								</div>
 							</div>
@@ -365,122 +407,6 @@
 						<button class="reset" (click)="reset()">Reset</button>
 						<button class="submit" type="button"
 							(click)="addReccurentYear('recurrent_expenditure_year')">Submit</button>
-					</div>
-				</div>
-			</div>
-			<div class="roles-table slide-in" *ngIf="selected === 'reccurent_year_dollar'">
-				<div class="role-body">
-					<form [formGroup]="reccurentDollarFormGroup">
-						<div class="form-group">
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2020</label>
-										<input type="number" placeholder="Enter 2020 expenditure"
-											formControlName="year20">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2019</label>
-										<input type="number" placeholder="Enter 2019 expenditure"
-											formControlName="year19">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2018</label>
-										<input type="number" placeholder="Enter 2018 expenditure"
-											formControlName="year18">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2017</label>
-										<input type="number" placeholder="Enter 2017 expenditure"
-											formControlName="year17">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2016</label>
-										<input type="number" placeholder="Enter 2016 expenditure"
-											formControlName="year16">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2015</label>
-										<input type="number" placeholder="Enter 2015 expenditure"
-											formControlName="year15">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2014</label>
-										<input type="number" placeholder="Enter 2014 expenditure"
-											formControlName="year14">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2013</label>
-										<input type="number" placeholder="Enter 2013 expenditure"
-											formControlName="year13">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2012</label>
-										<input type="number" placeholder="Enter 2012 expenditure"
-											formControlName="year12">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">Gross total revenue</label>
-										<input type="number" placeholder="Enter gross total revenue"
-											formControlName="gross_total_revenue">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">Remark</label>
-										<input type="text" placeholder="Enter remark"
-											formControlName="remark">
-									</div>
-								</div>
-							</div>
-						</div>
-						<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
-							(close)="onAlertClose($event)">
-							Oops! Form is not filled correctly. Change a few things up and try submitting again.
-						</kt-alert>
-					</form>
-					<div class="form-submit mt-5 mb-4">
-						<button class="reset" (click)="reset()">Reset</button>
-						<button class="submit" type="button"
-							(click)="addReccurentDollarYear('recurrent_expenditure_year')">Submit</button>
 					</div>
 				</div>
 			</div>
@@ -616,8 +542,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2020</label>
-										<input type="number" placeholder="Enter 2020 expenditure"
+										<input type="number" placeholder="historical cost in naira"
 											formControlName="year20">
+										<input type="number" class="mt-2" placeholder="historical cost in dollar"
+											formControlName="year20_dollar">
 									</div>
 								</div>
 							</div>
@@ -625,8 +553,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2019</label>
-										<input type="number" placeholder="Enter 2019 expenditure"
+										<input type="number" placeholder="historical cost in naira"
 											formControlName="year19">
+										<input type="number" class="mt-2" placeholder="historical cost in dollar"
+											formControlName="year19_dollar">
 									</div>
 								</div>
 							</div>
@@ -634,8 +564,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2018</label>
-										<input type="number" placeholder="Enter 2018 expenditure"
+										<input type="number" placeholder="historical cost in naira"
 											formControlName="year18">
+										<input type="number" class="mt-2" placeholder="historical cost in dollar"
+											formControlName="year18_dollar">
 									</div>
 								</div>
 							</div>
@@ -643,8 +575,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2017</label>
-										<input type="number" placeholder="Enter 2017 expenditure"
+										<input type="number" placeholder="historical cost in naira"
 											formControlName="year17">
+										<input type="number" class="mt-2" placeholder="historical cost in dollar"
+											formControlName="year17_dollar">
 									</div>
 								</div>
 							</div>
@@ -652,8 +586,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2016</label>
-										<input type="number" placeholder="Enter 2016 expenditure"
+										<input type="number" placeholder="historical cost in naira"
 											formControlName="year16">
+										<input type="number" class="mt-2" placeholder="historical cost in dollar"
+											formControlName="year16_dollar">
 									</div>
 								</div>
 							</div>
@@ -661,8 +597,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2015</label>
-										<input type="number" placeholder="Enter 2015 expenditure"
+										<input type="number" placeholder="historical cost in naira"
 											formControlName="year15">
+										<input type="number" class="mt-2" placeholder="historical cost in dollar"
+											formControlName="year15_dollar">
 									</div>
 								</div>
 							</div>
@@ -670,8 +608,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2014</label>
-										<input type="number" placeholder="Enter 2014 expenditure"
+										<input type="number" placeholder="historical cost in naira"
 											formControlName="year14">
+										<input type="number" class="mt-2" placeholder="historical cost in dollar"
+											formControlName="year14_dollar">
 									</div>
 								</div>
 							</div>
@@ -679,8 +619,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2013</label>
-										<input type="number" placeholder="Enter 2013 expenditure"
+										<input type="number" placeholder="historical cost in naira"
 											formControlName="year13">
+										<input type="number" class="mt-2" placeholder="historical cost in dollar"
+											formControlName="year13_dollar">
 									</div>
 								</div>
 							</div>
@@ -688,8 +630,10 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2012</label>
-										<input type="number" placeholder="Enter 2012 expenditure"
+										<input type="number" placeholder="historical cost in naira"
 											formControlName="year12">
+										<input type="number" class="mt-2" placeholder="historical cost in dollar"
+											formControlName="year12_dollar">
 									</div>
 								</div>
 							</div>
@@ -703,104 +647,6 @@
 						<button class="reset" (click)="reset()">Reset</button>
 						<button class="submit" type="button"
 							(click)="addHistoricalCost('historical_cost')">Submit</button>
-					</div>
-				</div>
-			</div>
-			<div class="roles-table slide-in" *ngIf="selected === 'historical_cost_dollar'">
-				<div class="role-body">
-					<form [formGroup]="historicalDollarFormGroup">
-						<div class="form-group">
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2020</label>
-										<input type="number" placeholder="Enter 2020 expenditure"
-											formControlName="year20">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2019</label>
-										<input type="number" placeholder="Enter 2019 expenditure"
-											formControlName="year19">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2018</label>
-										<input type="number" placeholder="Enter 2018 expenditure"
-											formControlName="year18">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2017</label>
-										<input type="number" placeholder="Enter 2017 expenditure"
-											formControlName="year17">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2016</label>
-										<input type="number" placeholder="Enter 2016 expenditure"
-											formControlName="year16">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2015</label>
-										<input type="number" placeholder="Enter 2015 expenditure"
-											formControlName="year15">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2014</label>
-										<input type="number" placeholder="Enter 2014 expenditure"
-											formControlName="year14">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2013</label>
-										<input type="number" placeholder="Enter 2013 expenditure"
-											formControlName="year13">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-lg-12">
-									<div class="form-item">
-										<label class="label">2012</label>
-										<input type="number" placeholder="Enter 2012 expenditure"
-											formControlName="year12">
-									</div>
-								</div>
-							</div>
-						</div>
-						<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
-							(close)="onAlertClose($event)">
-							Oops! Form is not filled correctly. Change a few things up and try submitting again.
-						</kt-alert>
-					</form>
-					<div class="form-submit mt-5 mb-4">
-						<button class="reset" (click)="reset()">Reset</button>
-						<button class="submit" type="button"
-							(click)="addHistoricalDollarCost('historical_cost')">Submit</button>
 					</div>
 				</div>
 			</div>
