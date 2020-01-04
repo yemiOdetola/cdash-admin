@@ -99,7 +99,7 @@ export class AssetEditComponent implements OnInit {
 			{ 'id': 'recurrent_expenditure_year', 'name': 'Recurrent expenditure(year)', 'type': 'chart', 'required': 'true' },
 			{ 'id': 'recurrent_expenditure_month', 'name': 'Recurrent expenditure(month)', 'type': 'chart', 'required': 'true' },
 			{ 'id': 'historical_cost', 'name': 'Historical cost', 'type': 'chart', 'required': 'true' },
-			{ 'id': 'projected_cost', 'name': 'Projected cost', 'type': 'number', 'required': 'true' },
+			{ 'id': 'projected_cost', 'name': 'Projected cost (naira)', 'type': 'number', 'required': 'true' },
 			// { 'id': 'location_of_deployment_image', 'name': 'Location of deployment(image)', 'type': 'file', 'required': 'true' },
 			// { 'id': 'type_others', 'name': 'Type others(text)', 'type': 'text', 'required': 'true' },
 		];

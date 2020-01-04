@@ -55,7 +55,7 @@ export class AssetContainerComponent implements OnInit {
 	compulsoryFields = [
 		{ 'id': 'summary', 'name': 'Summary', 'type': 'text', 'required': 'true' },
 		{ 'id': 'date_acquired', 'name': 'Date acquired', 'type': 'date', 'required': 'true' },
-		{ 'id': 'cost', 'name': 'Cost of acquisition', 'type': 'number', 'required': 'true' },
+		{ 'id': 'cost', 'name': 'Cost of acquisition(naira)', 'type': 'number', 'required': 'true' },
 		{ 'id': 'business_purpose', 'name': 'Business purpose', 'type': 'text', 'required': 'true' },
 		{ 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Others'] },
 		{ 'id': 'depreciation', 'name': 'Depreciation per annum(%)', 'type': 'number', 'max': '100', 'required': 'true' },
@@ -117,7 +117,7 @@ export class AssetContainerComponent implements OnInit {
 			// { 'id': 'depreciation', 'name': 'Depreciation per annum(%)', 'type': 'number', 'max': '100', 'required': 'true' },
 			// { 'id': 'currency', 'name': 'Currency (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Naira', 'Dollar'] },
 			{ 'id': 'industrial_link', 'name': 'Industrial Link', 'type': 'file', 'required': 'true' },
-			{ 'id': 'projected_cost', 'name': 'Projected cost', 'type': 'number', 'required': 'true' },
+			{ 'id': 'projected_cost', 'name': 'Projected cost (naira)', 'type': 'number', 'required': 'true' },
 			{ 'id': 'business_owners', 'name': 'Business owners', 'type': 'select', 'required': 'true' },
 			{ 'id': 'recurrent_expenditure_year', 'name': 'Recurrent expenditure(year)', 'type': 'chart', 'required': 'true' },
 			{ 'id': 'recurrent_expenditure_month', 'name': 'Recurrent expenditure(month)', 'type': 'chart', 'required': 'true' },
