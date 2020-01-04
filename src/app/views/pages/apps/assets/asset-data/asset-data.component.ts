@@ -104,6 +104,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		this.assetDataId = this.route.snapshot.params['id'];
 		if (this.assetDataId) {
 			this.getAssetDetails();
+			this.editAssetInit = true;
 		}
 		this.emptyReccurentForm();
 		this.emptyReccurentMonthForm();
@@ -348,8 +349,9 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		if (this.editAssetInit) {
 			this.updateAssetMainData();
 			return;
+		} else {
+			this.addAssetMainData();
 		}
-		this.addAssetMainData();
 	}
 
 	addReccurentYear(formName) {
@@ -565,6 +567,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	}
 
 	addAssetMainData() {
+		console.log('calling add new');
 		this.loadingSubject.next(true);
 		let payload = new FormData();
 		let forms = this.dataFormGroup.value;
@@ -624,17 +627,39 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	}
 
 	updateAssetMainData() {
+		console.log('calling edit');
+		this.loadingSubject.next(true);
 		let payload = new FormData();
 		let forms = this.dataFormGroup.value;
+		let cost = {
+			naira: this.dataFormGroup.get('cost').value,
+			dollar: this.costDollar
+		};
 		for (let key in forms) {
 			payload.append(key, forms[key]);
 		}
-		this.dataFormGroup.patchValue({ business_owners: this.myForms });
-		payload.append('name', this.assetName);
-		payload.append('cost_dollar', this.costDollar);
+		if (this.fSelectedIcon) {
+			payload.append('icon', this.fSelectedIcon, this.fSelectedIcon.name);
+		}
+		if (this.fSelectedIndustrial) {
+			payload.append('industrial_link', this.fSelectedIndustrial, this.fSelectedIndustrial.name);
+		}
+		if (this.fSelectedLocation) {
+			payload.append('location_of_deployment_image', this.fSelectedLocation, this.fSelectedLocation.name);
+		}
+		if (this.fSelectedSchematics) {
+			payload.append('diagram_schematics', this.fSelectedSchematics, this.fSelectedSchematics.name);
+		}
 		if (this.customFields) {
 			payload.append('custom_data', JSON.stringify(this.customFields));
 		}
+		if (this.projected_cost_dollar !== '0') {
+			payload.append('projected_cost_dollar', this.projected_cost_dollar);
+		}
+		payload.set('business_owners', this.myForms);
+		payload.append('name', this.assetName);
+		payload.append('asset_id', this.localForms._id);
+		payload.append('cost', JSON.stringify(cost));
 		this.assetsService.updateAssetData(payload, this.assetDataId).subscribe(
 			data => {
 				this.loadingSubject.next(false);
