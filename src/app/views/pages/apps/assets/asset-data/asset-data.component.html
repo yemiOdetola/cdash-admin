@@ -103,7 +103,7 @@
 											<div class="col-lg-12">
 												<div class="form-item">
 													<label class="label">Cost of acquisition (dollar)</label>
-													<input type="text" placeholder="Enter cost in dollars"
+													<input type="text" placeholder="Enter cost in dollar"
 														[(ngModel)]="costDollar" required="required"
 														[ngModelOptions]="{standalone: true}" />
 												</div>
@@ -116,7 +116,7 @@
 												<div class="col-lg-12">
 													<div class="form-item">
 														<label class="label">Projected cost (dollar)</label>
-														<input type="number" placeholder="Enter cost in dollars"
+														<input type="number" placeholder="Enter cost in dollar"
 															[(ngModel)]="projected_cost_dollar"
 															[ngModelOptions]="{standalone: true}" />
 													</div>
@@ -281,10 +281,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2020</label>
-										<input type="number" placeholder="Expenditure in naira"
-											formControlName="year20">
-										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
-											formControlName="year12_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="Expenditure in naira"
+												formControlName="year20">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="Expenditure in dollar"
+												formControlName="year12_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -292,10 +298,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2019</label>
-										<input type="number" placeholder="Expenditure in naira"
-											formControlName="year19">
-										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
-											formControlName="year19_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="Expenditure in naira"
+												formControlName="year19">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="Expenditure in dollar"
+												formControlName="year19_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -303,10 +315,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2018</label>
-										<input type="number" placeholder="Expenditure in naira"
-											formControlName="year18">
-										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
-											formControlName="year18_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="Expenditure in naira"
+												formControlName="year18">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="Expenditure in dollar"
+												formControlName="year18_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -314,10 +332,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2017</label>
-										<input type="number" placeholder="Expenditure in naira"
-											formControlName="year17">
-										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
-											formControlName="year17_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="Expenditure in naira"
+												formControlName="year17">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="Expenditure in dollar"
+												formControlName="year17_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -325,10 +349,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2016</label>
-										<input type="number" placeholder="Expenditure in naira"
-											formControlName="year16">
-										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
-											formControlName="year16_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="Expenditure in naira"
+												formControlName="year16">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="Expenditure in dollar"
+												formControlName="year16_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -336,10 +366,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2015</label>
-										<input type="number" placeholder="Expenditure in naira"
-											formControlName="year15">
-										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
-											formControlName="year15_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="Expenditure in naira"
+												formControlName="year15">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="Expenditure in dollar"
+												formControlName="year15_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -347,10 +383,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2014</label>
-										<input type="number" placeholder="Expenditure in naira"
-											formControlName="year14">
-										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
-											formControlName="year14_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="Expenditure in naira"
+												formControlName="year14">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="Expenditure in dollar"
+												formControlName="year14_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -358,10 +400,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2013</label>
-										<input type="number" placeholder="Expenditure in naira"
-											formControlName="year13">
-										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
-											formControlName="year13_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="Expenditure in naira"
+												formControlName="year13">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="Expenditure in dollar"
+												formControlName="year13_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -369,10 +417,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2012</label>
-										<input type="number" placeholder="Expenditure in naira"
-											formControlName="year12">
-										<input type="number" class="mt-2" placeholder="Expenditure in dollars"
-											formControlName="year12_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="Expenditure in naira"
+												formControlName="year12">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="Expenditure in dollar"
+												formControlName="year12_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -380,10 +434,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">Gross total revenue</label>
-										<input type="number" placeholder="Enter gross total revenue"
-											formControlName="gross_naira">
-										<input type="number" class="mt-2" placeholder="Enter 2020 expenditure"
-											formControlName="gross_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="total revenue in naira"
+												formControlName="gross_naira">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="total revenue in dollar"
+												formControlName="gross_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -406,7 +466,7 @@
 					<div class="form-submit mt-5 mb-4">
 						<button class="reset" (click)="reset()">Reset</button>
 						<button class="submit" type="button"
-							(click)="addReccurentYear('recurrent_expenditure_year')">Submit</button>
+							(click)="addReccurentYear('recurrent_year')">Submit</button>
 					</div>
 				</div>
 			</div>
@@ -542,10 +602,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2020</label>
-										<input type="number" placeholder="historical cost in naira"
-											formControlName="year20">
-										<input type="number" class="mt-2" placeholder="historical cost in dollar"
-											formControlName="year20_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="historical cost in naira"
+												formControlName="year20">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="historical cost in dollar"
+												formControlName="year20_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -553,10 +619,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2019</label>
-										<input type="number" placeholder="historical cost in naira"
-											formControlName="year19">
-										<input type="number" class="mt-2" placeholder="historical cost in dollar"
-											formControlName="year19_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="historical cost in naira"
+												formControlName="year19">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="historical cost in dollar"
+												formControlName="year19_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -564,10 +636,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2018</label>
-										<input type="number" placeholder="historical cost in naira"
-											formControlName="year18">
-										<input type="number" class="mt-2" placeholder="historical cost in dollar"
-											formControlName="year18_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="historical cost in naira"
+												formControlName="year18">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="historical cost in dollar"
+												formControlName="year18_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -575,10 +653,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2017</label>
-										<input type="number" placeholder="historical cost in naira"
-											formControlName="year17">
-										<input type="number" class="mt-2" placeholder="historical cost in dollar"
-											formControlName="year17_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="historical cost in naira"
+												formControlName="year17">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="historical cost in dollar"
+												formControlName="year17_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -586,10 +670,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2016</label>
-										<input type="number" placeholder="historical cost in naira"
-											formControlName="year16">
-										<input type="number" class="mt-2" placeholder="historical cost in dollar"
-											formControlName="year16_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="historical cost in naira"
+												formControlName="year16">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="historical cost in dollar"
+												formControlName="year16_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -597,10 +687,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2015</label>
-										<input type="number" placeholder="historical cost in naira"
-											formControlName="year15">
-										<input type="number" class="mt-2" placeholder="historical cost in dollar"
-											formControlName="year15_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="historical cost in naira"
+												formControlName="year15">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="historical cost in dollar"
+												formControlName="year15_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -608,10 +704,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2014</label>
-										<input type="number" placeholder="historical cost in naira"
-											formControlName="year14">
-										<input type="number" class="mt-2" placeholder="historical cost in dollar"
-											formControlName="year14_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="historical cost in naira"
+												formControlName="year14">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="historical cost in dollar"
+												formControlName="year14_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -619,10 +721,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2013</label>
-										<input type="number" placeholder="historical cost in naira"
-											formControlName="year13">
-										<input type="number" class="mt-2" placeholder="historical cost in dollar"
-											formControlName="year13_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="historical cost in naira"
+												formControlName="year13">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="historical cost in dollar"
+												formControlName="year13_dollar">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -630,10 +738,16 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">2012</label>
-										<input type="number" placeholder="historical cost in naira"
-											formControlName="year12">
-										<input type="number" class="mt-2" placeholder="historical cost in dollar"
-											formControlName="year12_dollar">
+										<div class="with-tag">
+											<span>₦</span>
+											<input type="number" placeholder="historical cost in naira"
+												formControlName="year12">
+										</div>
+										<div class="with-tag">
+											<span class="mt-2">$</span>
+											<input type="number" class="mt-2" placeholder="historical cost in dollar"
+												formControlName="year12_dollar">
+										</div>
 									</div>
 								</div>
 							</div>

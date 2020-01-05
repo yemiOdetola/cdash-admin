@@ -94,6 +94,11 @@
 						<td class="value">{{assetDetails.gross.naira | currency: ty$Sign}}</td>
 					</tr>
 
+					<tr class="each-data" *ngIf="assetDetails.gross && assetDetails.gross.note">
+						<td class="label">Additional notes</td>
+						<td class="value">{{assetDetails.gross.note}}</td>
+					</tr>
+
 					<div class="customs" *ngIf="customData && customData.value">
 						<tr class="each-data" *ngFor="let custom of customData">
 							<td class="label">{{custom.name}}</td>

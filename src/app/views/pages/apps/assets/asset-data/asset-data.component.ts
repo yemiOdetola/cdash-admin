@@ -601,7 +601,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 		const payload = {
 			data: formData,
-			type: formName,
+			type: 'historical_cost',
 			currency: 'naira',
 			asset_data_id: localStorage.getItem('asset_data_id'),
 		};
