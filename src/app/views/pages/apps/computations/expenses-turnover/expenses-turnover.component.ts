@@ -24,7 +24,9 @@ export class ExpensesTurnoverComponent implements OnInit, OnDestroy {
 	allUsers;
 	expTurnovers;
 	naira = '₦';
+	passedCurrency = '₦';
 	dollar = '$';
+	selectedName = 'All assets';
 	years = [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011];
 
 	constructor(
@@ -50,12 +52,18 @@ export class ExpensesTurnoverComponent implements OnInit, OnDestroy {
 	}
 
 
-	generateTurnover(id) {
-		let payload = {id};
+	generateTurnover(name, id) {
+		let payload = { id };
+		this.selectedName = name;
 		this.loadingSubject.next(true);
 		this.assetsService.getAllAssetsTurnover(payload).subscribe(
 			response => {
 				this.expTurnovers = response;
+				if (this.expTurnovers.expenses[0].currenct === 'naira') {
+					this.passedCurrency = '₦';
+				} else {
+					this.passedCurrency = '$';
+				}
 				this.loadingSubject.next(false);
 			},
 			error => {

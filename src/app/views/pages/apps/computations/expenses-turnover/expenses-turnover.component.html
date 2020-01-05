@@ -1,11 +1,11 @@
 <kt-portlet>
-	<kt-portlet-header title="Capital expenditure" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	<kt-portlet-header title="Total expenses/ Turnover ratio" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
 			<div class="details-action options text-center" [matMenuTriggerFor]="menu">
-				<span>All assets</span>
+				<span>{{selectedName}}</span>
 			</div>
 			<mat-menu #menu="matMenu">
-				<button mat-menu-item (click)="generateTurnover(asset._id)"
+				<button mat-menu-item (click)="generateTurnover(asset.name, asset._id)"
 					*ngFor="let asset of allAssets">
 					{{ asset.name }}
 				</button>
@@ -13,68 +13,13 @@
 		</ng-container>
 	</kt-portlet-header>
 	<kt-portlet-body>
-		<!-- <div class="contact-body mb-5">
-			<form [formGroup]="recurringForm">
-				<div class="analytics">
-					<div class="row slide-in">
-						<div class="col-lg-4 kt-margin-bottom-10-mobile date-shift">
-							<div class="form-item smallz" *ngIf="allAssets">
-								<label class="label">Assets</label>
-								<select formControlName="id">
-									<option value="">All assets</option>
-									<option value="{{asset._id}}" *ngFor="let asset of allAssets;">{{asset.name}}
-									</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-2 kt-margin-bottom-10-mobile date-shift">
-							<div class="form-item smallz">
-								<label class="label">Start year</label>
-								<select formControlName="start_year">
-									<option value="">select year</option>
-									<option value="{{year}}" *ngFor="let year of years;">{{year}}
-									</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-2 kt-margin-bottom-10-mobile date-shift">
-							<div class="form-item smallz">
-								<label class="label">End year</label>
-								<select formControlName="end_year">
-									<option value="">All years</option>
-									<option value="{{year}}" *ngFor="let year of years;">{{year}}
-									</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-2 kt-margin-bottom-10-mobile date-shift">
-							<div class="form-item smallz">
-								<label class="label">Currency</label>
-								<select formControlName="currency">
-									<option value="naira" selected>₦</option>
-									<option value="dollar">$</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-lg-2 mt-4">
-							<div class="form-item">
-								<label class="label">&nbsp;</label>
-								<button class="btn btn-primary btn-sm" [disabled]="!recurringForm.valid"
-									(click)="generateAnalytics()">Submit</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form>
-		</div> -->
 		<div class="stage-history">
-			<table class="table-view">
+			<table class="table-view" *ngIf="expTurnovers">
 				<thead>
 					<tr>
 						<th>Year</th> 
 						<th>Turnover</th>
-						<th>Expenses(naira)</th>
-						<th>Expenses(dollar)</th>
+						<th>Expenses({{passedCurrency}})</th>
 						<th>Ratio</th>
 					</tr>
 				</thead>
@@ -82,8 +27,7 @@
 					<tr className="each-row" *ngFor="let year of years; let i = index;">
 						<td>{{year}}</td>
 						<td>{{ (expTurnovers.turnovers[i].amount ? expTurnovers.turnovers[i].amount : 0) | currency: naira}}</td>
-						<td>{{(expTurnovers.expenses[i].naira_amount ? expTurnovers.expenses[i].naira_amount : 0) | currency: naira}}</td>
-						<td>{{(expTurnovers.expenses[i].dollar_amount ? expTurnovers.expenses[i].dollar_amount : 0) | currency: dollar}}</td>
+						<td>{{(expTurnovers.expenses[i].amount ? expTurnovers.expenses[i].amount : 0) | currency: passedCurrency}}</td>
 						<td>{{expTurnovers.ratio[i].ratio ? expTurnovers.ratio[i].ratio : 'n/a'}}</td>
 					</tr>
 					

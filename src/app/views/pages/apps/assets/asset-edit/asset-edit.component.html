@@ -19,7 +19,7 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="form-item">
-							<label for="title" class="label">Form elements</label>
+							<label for="title" class="label">Asset form fields</label>
 							<select (change)="handleFormChange($event)">
 								<option value="" selected="true">Select element</option>
 								<option [value]="type.id" *ngFor="let type of formTypes;">{{type.name}}</option>
@@ -33,13 +33,13 @@
 			<div class="row">
 				<div class="col-lg-6">
 					<div class="form-item">
-						<label for="title" class="label">Custom form name</label>
+						<label for="title" class="label">Asset custom form name</label>
 						<input type="text" [(ngModel)]="customName" placeholder="Enter custom name" />
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="form-item">
-						<label for="title" class="label">Form type</label>
+						<label for="title" class="label">Asset form type</label>
 						<select (change)="passValue($event)">
 							<option value="{{customType}}" *ngFor="let customType of customTypes;">
 								{{customType | titlecase}}

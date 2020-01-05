@@ -3,7 +3,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 // Services and Models
-import { ReportsService } from '../../../../../core/reports';
 import { AssetsService } from '../../../../../core/assets';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
@@ -28,9 +27,13 @@ export class CapitalExpenditureComponent implements OnInit, OnDestroy {
 	year;
 	years = [];
 	analyticsData;
-	pieChartLabels = ['All assets', 'Selected asset'];
-	pieChartData = [0, 0];
-	chartType = 'pie';
+	barChartLabels = ['total amount($)', 'total amount(₦)'];
+	barChartData = [{
+		data: [0, 0],
+		label: 'Amount'
+	}];
+	// barChartLegend = true;
+	barChartType = 'bar';
 	chartOptions;
 	selectedCurrency = '₦';
 	analyticss: {
@@ -40,7 +43,6 @@ export class CapitalExpenditureComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private assetsService: AssetsService,
-		private reportsService: ReportsService,
 		private router: Router,
 		private fb: FormBuilder) { }
 
@@ -56,18 +58,21 @@ export class CapitalExpenditureComponent implements OnInit, OnDestroy {
 		}
 		this.initForm();
 		this.chartOptions = {
-			scaleShowVerticalLines: false,
-			responsive: true,
-			legend: {
-				display: true
-			},
-			layout: {
-				padding: {
-					left: 0,
-					right: 0,
-					top: 0,
-					bottom: 0
-				}
+			scales: {
+				xAxes: [{
+					barThickness: 20,
+					maxBarThickness: 26,
+					gridLines: {
+						display: true,
+						color: '#ffffff'
+					}
+				}],
+				yAxes: [{
+					gridLines: {
+						display: true,
+						ticks: true
+					}
+				}],
 			},
 		};
 	}
@@ -86,23 +91,13 @@ export class CapitalExpenditureComponent implements OnInit, OnDestroy {
 		this.recurringForm = this.fb.group({
 			id: [''],
 			start_year: [''],
-			end_year: [''],
-			currency: ['']
+			end_year: ['']
 		});
 	}
 
 
-	seeReports(dateObj, i) {
-		localStorage.setItem('groupDate', JSON.stringify(dateObj));
-		this.router.navigate([`/strada/reports/reports/${i}`]);
-	}
-
 	generateAnalytics() {
 		this.loadingSubject.next(true);
-		// let payload = this.recurringForm.value;
-		// if (this.recurringForm.get('start_year').value === '') {
-		// 	payload = null;
-		// }
 		this.assetsService.getAssetsCapitalExp(this.recurringForm.value).subscribe(
 			response => {
 				this.analyticss = response;
@@ -111,16 +106,16 @@ export class CapitalExpenditureComponent implements OnInit, OnDestroy {
 				} else {
 					this.selectedCurrency = '₦';
 				}
-				this.pieChartLabels = [
-					'Total Assets',
-					'Selected asset'
-				];
+				this.barChartLabels = ['total amount($)', 'total amount(₦)', 'Selected asset(₦)', 'Selected asset($)'];
+				this.barChartData = [{
+					data: [response['total_amount_dollar'], response['total_amount_naira'], response['amount_naira'], response['amount_dollar']],
+					label: 'Amount'
+				}];
 				let total = response['total_amount'];
 				if (response['amount'] >= response['total_amount']) {
 					total = 0;
 				}
-				let selectedAsset = response['amount'] +  total;
-				this.pieChartData = [total, response['amount']];
+				let selectedAsset = response['amount'] + total;
 				this.loadingSubject.next(false);
 			},
 			error => {
@@ -133,7 +128,6 @@ export class CapitalExpenditureComponent implements OnInit, OnDestroy {
 	initAnalytics() {
 		this.loadingSubject.next(true);
 		const payload = null;
-		console.log('payload sent', payload);
 		this.assetsService.getAssetsCapitalExp(payload).subscribe(
 			response => {
 				this.analyticss = response;
@@ -143,12 +137,11 @@ export class CapitalExpenditureComponent implements OnInit, OnDestroy {
 					this.selectedCurrency = '₦';
 				}
 				console.log('analytics oninit', this.analyticss);
-				this.analyticsData = response['total_amount'];
-				this.pieChartLabels = [
-					'Total Assets',
-					'Selected asset'
-				];
-				this.pieChartData = [response['total_amount'], response['amount']];
+				this.barChartLabels = ['total amount($)', 'total amount(₦)'];
+				this.barChartData = [{
+					data: [response['total_amount_dollar'], response['total_amount_naira']],
+					label: 'Amount'
+				}];
 				this.loadingSubject.next(false);
 			},
 			error => {

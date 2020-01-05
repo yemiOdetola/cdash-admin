@@ -50,6 +50,8 @@ export class DashboardComponent implements OnInit {
 	payload = {};
 	recExp = 0;
 	recExpPercent = 0;
+	recurrentData;
+	capEprData;
 	constructor(
 		private mdTasksService: MdTasksService,
 		private auth: AuthService,
@@ -133,7 +135,12 @@ export class DashboardComponent implements OnInit {
 		};
 		this.assetsService.getAllAssetsCapital(payload).subscribe(
 			assetsCountr => {
-				this.capExp = assetsCountr['total_amount'];
+				if (this.capitalCurrency === '₦') {
+					this.capExp = assetsCountr['total_amount_naira'];
+				} else {
+					this.capExp = assetsCountr['total_amount_dollar'];
+				}
+				// this.capExp = assetsCountr['total_amount'];
 				this.capExpPercent = 100;
 				this.loadingSubject.next(false);
 			}
@@ -144,23 +151,38 @@ export class DashboardComponent implements OnInit {
 		this.loadingSubject.next(true);
 		const val = event.target.value;
 		if (type === 'currency') {
-			this.payload['currency'] = event.target.value;
+			if (event.target.value === 'naira') {
+				this.capitalCurrency = '₦';
+				return this.capExp = this.capEprData.total_amount_naira;
+			} else {
+				this.capitalCurrency = '$';
+				return this.capExp = this.capEprData.total_amount_dollar;
+			}
 		}
 		if (type === 'id') {
 			this.payload['id'] = event.target.value;
+			if (event.target.value === 'naira') {
+				this.capitalCurrency = '₦';
+				return this.capExp = this.capEprData.total_amount_naira;
+			} else {
+				this.capitalCurrency = '$';
+				return this.capExp = this.capEprData.total_amount_dollar;
+			}
 		}
+		// if (type === 'currency') {
+		// 	this.payload['currency'] = event.target.value;
+		// }
+		// if (type === 'id') {
+		// 	this.payload['id'] = event.target.value;
+		// }
 		if (val === 'null') {
 			this.payload['id'] = null;
 		}
 		this.assetsService.getAllAssetsCapital(this.payload).subscribe(
 			expCountr => {
+				this.capEprData = expCountr;
 				this.capExp = expCountr['total_amount'];
 				this.capExpPercent = 100;
-				if (expCountr['currency'] === 'dollar') {
-					this.capitalCurrency = '$';
-				} else {
-					this.capitalCurrency = '₦';
-				}
 				if (typeof expCountr['amount'] === 'number') {
 					this.capExp = expCountr['amount'];
 					this.capExpPercent = (expCountr['amount'] / expCountr['total_amount']) * 100;
@@ -177,7 +199,12 @@ export class DashboardComponent implements OnInit {
 		};
 		this.assetsService.getAssetsReccurentExp(payload).subscribe(
 			assetsCountr => {
-				this.recExp = assetsCountr['total_amount'];
+				this.recurrentData = assetsCountr;
+				if (this.reccCurrency === '₦') {
+					this.recExp = assetsCountr['total_amount_naira'];
+				} else {
+					this.recExp = assetsCountr['total_amount_dollar'];
+				}
 				this.recExpPercent = 100;
 				this.loadingSubject.next(false);
 			}
@@ -188,10 +215,23 @@ export class DashboardComponent implements OnInit {
 		this.loadingSubject.next(true);
 		const val = event.target.value;
 		if (type === 'currency') {
-			this.payload['currency'] = event.target.value;
+			if (event.target.value === 'naira') {
+				this.reccCurrency = '₦';
+				return this.recExp = this.recurrentData.total_amount_naira;
+			} else {
+				this.reccCurrency = '$';
+				return this.recExp = this.recurrentData.total_amount_dollar;
+			}
 		}
 		if (type === 'id') {
 			this.payload['id'] = event.target.value;
+			if (event.target.value === 'naira') {
+				this.reccCurrency = '₦';
+				return this.recExp = this.recurrentData.total_amount_naira;
+			} else {
+				this.reccCurrency = '$';
+				return this.recExp = this.recurrentData.total_amount_dollar;
+			}
 		}
 		if (val === 'null') {
 			this.payload['id'] = null;

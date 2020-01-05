@@ -28,9 +28,13 @@ export class RecurringExpenditureComponent implements OnInit, OnDestroy {
 	year;
 	years = [];
 	analyticsData;
-	pieChartLabels = ['All assets', 'Selected asset'];
-	pieChartData = [0, 0];
-	chartType = 'pie';
+	barChartLabels = ['total amount($)', 'total amount(₦)'];
+	barChartData = [{
+		data: [0, 0],
+		label: 'Amount'
+	}];
+	// barChartLegend = true;
+	barChartType = 'bar';
 	chartOptions;
 	selectedCurrency = '₦';
 	analyticss: {
@@ -54,19 +58,22 @@ export class RecurringExpenditureComponent implements OnInit, OnDestroy {
 			this.years.push(this.year--);
 		}
 		this.initForm();
-		this.chartOptions  = {
-			scaleShowVerticalLines: false,
-			responsive: true,
-			legend: {
-				display: true
-			},
-			layout: {
-				padding: {
-					left: 0,
-					right: 0,
-					top: 0,
-					bottom: 0
-				}
+		this.chartOptions = {
+			scales: {
+				xAxes: [{
+					barThickness: 20,
+					maxBarThickness: 26,
+					gridLines: {
+						display: true,
+						color: '#ffffff'
+					}
+				}],
+				yAxes: [{
+					gridLines: {
+						display: true,
+						ticks: true
+					}
+				}],
 			},
 		};
 	}
@@ -84,7 +91,6 @@ export class RecurringExpenditureComponent implements OnInit, OnDestroy {
 	initForm() {
 		this.recurringForm = this.fb.group({
 			id: [''],
-			currency: [''],
 			year: [''],
 		});
 	}
@@ -109,15 +115,17 @@ export class RecurringExpenditureComponent implements OnInit, OnDestroy {
 				} else {
 					this.selectedCurrency = '₦';
 				}
-				this.pieChartLabels = [
-					'Total Assets',
-					'Selected asset'
-				];
+
+				this.barChartLabels = ['total amount($)', 'total amount(₦)', 'Selected asset(₦)', 'Selected asset($)'];
+				this.barChartData = [{
+					data: [response['total_amount_dollar'], response['total_amount_naira'], response['amount_naira'], response['amount_dollar']],
+					label: 'Amount'
+				}];
+
 				let total = response['total_amount'];
 				if (response['amount'] >= response['total_amount']) {
 					total = 0;
 				}
-				this.pieChartData = [total, response['amount']];
 				this.loadingSubject.next(false);
 			},
 			error => {
@@ -140,11 +148,11 @@ export class RecurringExpenditureComponent implements OnInit, OnDestroy {
 					this.selectedCurrency = '₦';
 				}
 				this.analyticsData = response['total_amount'];
-				this.pieChartLabels = [
-					'Total Assets',
-					'Selected asset'
-				];
-				this.pieChartData = [response['total_amount'], response['amount']];
+				this.barChartLabels = ['total amount($)', 'total amount(₦)'];
+				this.barChartData = [{
+					data: [response['total_amount_dollar'], response['total_amount_naira']],
+					label: 'Amount'
+				}];
 				this.loadingSubject.next(false);
 			},
 			error => {
