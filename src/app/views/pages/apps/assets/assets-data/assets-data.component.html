@@ -20,7 +20,8 @@
 							<th>Asset name</th>
 							<th>Summary</th>
 							<th>Date acquired</th>
-							<th>Acquisition cost</th>
+							<th>Acquisition cost (₦)</th>
+							<th>Acquisition cost ($)</th>
 							<th>Business purpose</th>
 							<th>Type</th>
 							<th></th>
@@ -31,7 +32,8 @@
 							<td>{{ asset.name }}</td>
 							<td>{{ asset.summary ? asset.summary : 'not available' }}</td>
 							<td>{{ asset.date_acquired | date: 'longDate'}}</td>
-							<td>{{ asset.cost ? asset.cost : 'not available' }}</td>
+							<td>{{ (asset.cost && asset.cost.naira ? asset.cost.naira : 'not available' ) | currency: naira}}</td>
+							<td>{{ (asset.cost && asset.cost.dollar ? asset.cost.dollar : 'not available' ) | currency: ty$sign}}</td>
 							<td>{{ asset.business_purpose ? asset.business_purpose : 'not available' }}</td>
 							<td class="status">
 								<span class="plain">{{ asset.type ? asset.type : 'not available' }}</span>

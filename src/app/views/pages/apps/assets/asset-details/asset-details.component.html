@@ -17,97 +17,162 @@
 			<img src="./assets/media/icons/backBtn.svg" alt="">
 			<span>Back</span>
 		</div>
-		<div class="lead-body" *ngIf="assetDetails">
-			<div class="item-details maxed pt-0 pb-5">
-				<table class="ml-5 details-table">
-					<tr class="each-data" *ngIf="assetDetails.name">
-						<td class="label">Name/ Title</td>
-						<td class="value">{{assetDetails.name}}</td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.projected_cost">
-						<td class="label">Projected cost</td>
-						<td class="value">{{assetDetails.projected_cost | currency : currency}}</td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.icon">
-						<td class="label">Icon</td>
-						<td class="images smallz">
-							<img src="{{assetDetails.icon}}" alt="{{assetDetails.name}}'s icon'">
-						</td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.summary">
-						<td class="label">Summary</td>
-						<td class="value">{{assetDetails.summary}}</td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.date_acquired">
-						<td class="label">Date acquired</td>
-						<td class="value">{{assetDetails.date_acquired | date: 'longDate'}}</td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.cost">
-						<td class="label">Acquisition cost</td>
-						<td class="value">{{assetDetails.cost | currency : currency}}</td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.depreciation">
-						<td class="label">Depreciation per annum</td>
-						<td class="value">{{assetDetails.depreciation }}%</td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.business_purpose">
-						<td class="label">Business purpose</td>
-						<td class="value">{{assetDetails.business_purpose}}</td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.type">
-						<td class="label">Type</td>
-						<td class="value">{{assetDetails.type}}</td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.business_owners && assetDetails.business_owners[0]">
-						<td class="label">Business owners</td>
-						<td class="value staffs"><span *ngFor="let staff of allStaffs" class="staff"
-								routerLink="/cdash/users/staffs/{{staff._id}}">{{staff.name}}</span></td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.industrial_link">
-						<td class="label">Industrial link</td>
-						<td class="value">
-							<img src="{{assetDetails.industrial_link}}" alt="{{assetDetails.name}}'s industrial link">
-						</td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.diagram">
-						<td class="label">Diagram/ Schematics</td>
-						<td class="value">
-							<img src="{{assetDetails.industrial_link}}" alt="{{assetDetails.name}}'s industrial link">
-						</td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.technical_details">
-						<td class="label">Technical details</td>
-						<td class="value">{{assetDetails.technical_details}}</td>
-					</tr>
-					<tr class="each-data" *ngIf="assetDetails.location_of_deployment">
-						<td class="label">Location of deployment</td>
-						<td class="value">{{assetDetails.location_of_deployment}}</td>
-					</tr>
-
-					<tr class="each-data" *ngIf="assetDetails.gross && assetDetails.gross.naira">
-						<td class="label">Gross total revenue({{naira}})</td>
-						<td class="value">{{assetDetails.gross.naira | currency: naira}}</td>
-					</tr>
-
-					<tr class="each-data" *ngIf="assetDetails.gross && assetDetails.gross.dollar">
-						<td class="label">Gross total revenue({{ty$Sign}})</td>
-						<td class="value">{{assetDetails.gross.naira | currency: ty$Sign}}</td>
-					</tr>
-
-					<tr class="each-data" *ngIf="assetDetails.gross && assetDetails.gross.note">
-						<td class="label">Additional notes</td>
-						<td class="value">{{assetDetails.gross.note}}</td>
-					</tr>
-
-					<div class="customs" *ngIf="customData && customData.value">
-						<tr class="each-data" *ngFor="let custom of customData">
-							<td class="label">{{custom.name}}</td>
-							<td class="value">{{custom.value}}</td>
+		<div class="list-ccover p-4">
+			<div class="menu">
+				<div [className]="selected === 'details' ? 'item active' : 'item'" (click)="selectMenu('details')">
+					<div class="selected">Asset details</div>
+					<div class="active"></div>
+				</div>
+				<div [className]="selected === 'recurrent' ? 'item active' : 'item'" (click)="selectMenu('recurrent')">
+					<div class="selected">Recurrent expenditure</div>
+					<div class="active"></div>
+				</div>
+				<div [className]="selected === 'historical' ? 'item active' : 'item'"
+					(click)="selectMenu('historical')">
+					<div class="selected">Historical cost</div>
+					<div class="active"></div>
+				</div>
+			</div>
+		</div>
+		<div class="covver" *ngIf="assetDetails">
+			<div class="lead-body">
+				<div class="item-details maxed pt-0 pb-5" *ngIf="selected === 'details'">
+					<table class="ml-5 details-table">
+						<tr class="each-data" *ngIf="assetDetails.name">
+							<td class="label">Name/ Title</td>
+							<td class="value">{{assetDetails.name}}</td>
 						</tr>
-					</div>
+						<tr class="each-data" *ngIf="projectedCost && projectedCost.naira">
+							<td class="label">Projected cost (naira)</td>
+							<td class="value">{{projectedCost.naira | currency : naira}}</td>
+						</tr>
+						<tr class="each-data" *ngIf="projectedCost && projectedCost.dollar">
+							<td class="label">Projected cost (dollar)</td>
+							<td class="value">{{projectedCost.dollar | currency : ty$Sign}}</td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.icon">
+							<td class="label">Icon</td>
+							<td class="images smallz">
+								<img src="{{assetDetails.icon}}" alt="{{assetDetails.name}}'s icon'">
+							</td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.summary">
+							<td class="label">Summary</td>
+							<td class="value">{{assetDetails.summary}}</td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.date_acquired">
+							<td class="label">Date acquired</td>
+							<td class="value">{{assetDetails.date_acquired | date: 'longDate'}}</td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.cost.naira">
+							<td class="label">Acquisition cost (naira)</td>
+							<td class="value">{{assetDetails.cost.naira | currency : naira}}</td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.cost.dollar">
+							<td class="label">Acquisition cost (dollar)</td>
+							<td class="value">{{assetDetails.cost.dollar | currency : ty$Sign}}</td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.depreciation">
+							<td class="label">Depreciation per annum</td>
+							<td class="value">{{assetDetails.depreciation }}%</td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.business_purpose">
+							<td class="label">Business purpose</td>
+							<td class="value">{{assetDetails.business_purpose}}</td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.type">
+							<td class="label">Type</td>
+							<td class="value">{{assetDetails.type}}</td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.business_owners && assetDetails.business_owners[0]">
+							<td class="label">Business owners</td>
+							<td class="value staffs"><span *ngFor="let staff of allStaffs" class="staff"
+									routerLink="/cdash/users/staffs/{{staff._id}}">{{staff.name}}</span></td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.industrial_link">
+							<td class="label">Industrial link</td>
+							<td class="value">
+								<img src="{{assetDetails.industrial_link}}"
+									alt="{{assetDetails.name}}'s industrial link">
+							</td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.diagram">
+							<td class="label">Diagram/ Schematics</td>
+							<td class="value">
+								<img src="{{assetDetails.industrial_link}}"
+									alt="{{assetDetails.name}}'s industrial link">
+							</td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.technical_details">
+							<td class="label">Technical details</td>
+							<td class="value">{{assetDetails.technical_details}}</td>
+						</tr>
+						<tr class="each-data" *ngIf="assetDetails.location_of_deployment">
+							<td class="label">Location of deployment</td>
+							<td class="value">{{assetDetails.location_of_deployment}}</td>
+						</tr>
+
+						<tr class="each-data" *ngIf="assetDetails.gross && assetDetails.gross.naira">
+							<td class="label">Gross total revenue({{naira}})</td>
+							<td class="value">{{assetDetails.gross.naira | currency: naira}}</td>
+						</tr>
+
+						<tr class="each-data" *ngIf="assetDetails.gross && assetDetails.gross.dollar">
+							<td class="label">Gross total revenue({{ty$Sign}})</td>
+							<td class="value">{{assetDetails.gross.naira | currency: ty$Sign}}</td>
+						</tr>
+
+						<tr class="each-data" *ngIf="assetDetails.gross && assetDetails.gross.note">
+							<td class="label">Additional notes</td>
+							<td class="value">{{assetDetails.gross.note}}</td>
+						</tr>
+
+						<div class="customs" *ngIf="customData && customData.value">
+							<tr class="each-data" *ngFor="let custom of customData">
+								<td class="label">{{custom.name}}</td>
+								<td class="value">{{custom.value}}</td>
+							</tr>
+						</div>
+					</table>
+				</div>
+			</div>
+			<div class="stage-history" *ngIf="selected === 'historical'">
+				<table class="table-view" *ngIf="historicalCost">
+					<thead>
+						<tr>
+							<th>Year</th>
+							<th>Historical cost(₦)</th>
+							<th>Historical cost($)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let cost of historicalCost; let i = index;">
+							<td>{{ cost.year }}</td>
+							<td>{{ cost.amount.naira | currency: naira}}</td>
+							<td>{{ cost.amount.dollar | currency: ty$Sign}}</td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
-			<div *ngIf="!assetDetails" class="mt-5 please-data text-center">Please Wait...</div>
+			<div class="stage-history" *ngIf="selected === 'recurrent'">
+				<table class="table-view" *ngIf="recurrentData">
+					<thead>
+						<tr>
+							<th>Year</th>
+							<th>Recurrent cost(₦)</th>
+							<th>Recurrent cost($)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr className="each-row" *ngFor="let recurrent of recurrentData">
+							<td>{{ recurrent.year }}</td>
+							<td>{{ recurrent.amount.naira | currency: naira}}</td>
+							<td>{{ recurrent.amount.dollar | currency: ty$Sign}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
+		<div *ngIf="!assetDetails" class="mt-5 please-data text-center">Please Wait...</div>
 	</kt-portlet-body>
 </kt-portlet>

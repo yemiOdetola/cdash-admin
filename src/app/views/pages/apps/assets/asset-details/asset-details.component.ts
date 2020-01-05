@@ -27,6 +27,10 @@ export class AssetDetailsComponent implements OnInit {
 	customData;
 	naira = '₦';
 	ty$Sign = '$';
+	projectedCost;
+	selected = 'details';
+	historicalCost = [];
+	recurrentData = [];
 	constructor(
 		private route: ActivatedRoute,
 		private assetsService: AssetsService,
@@ -48,9 +52,18 @@ export class AssetDetailsComponent implements OnInit {
 						this.normBiznez = this.biz_owners.split(',');
 					}
 				}
+				if (this.assetDetails.historical_data) {
+					this.historicalCost = this.assetDetails.historical_data;
+				}
+				if (this.assetDetails.recurrent_year) {
+					this.recurrentData = this.assetDetails.recurrent_year;
+				}
 				if (this.assetDetails.custom_data) {
 					this.customData = JSON.parse(this.assetDetails.custom_data[0]);
 					console.log('custommmme', this.customData);
+				}
+				if (this.assetDetails.projected_cost) {
+					this.projectedCost = this.assetDetails.projected_cost;
 				}
 				console.log('this assetdata details oninit', this.assetDetails);
 				this.loadingSubject.next(false);
@@ -67,6 +80,10 @@ export class AssetDetailsComponent implements OnInit {
 			}
 		);
 		console.log('id returned', this.route.snapshot.params['id']);
+	}
+
+	selectMenu(menu) {
+		this.selected = menu;
 	}
 
 	getAllStaffs() {

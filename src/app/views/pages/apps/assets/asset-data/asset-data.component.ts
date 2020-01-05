@@ -60,6 +60,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	currencySelected = 'naira';
 	customFields;
 	customModels: any;
+	grossData;
 	constructor(
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
@@ -131,12 +132,16 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		this.assetsService.getAssetDataById(this.assetDataId).subscribe(
 			singleAsset => {
 				this.assetDetails = singleAsset['data'];
-				console.log('this assetdata details oninit', this.assetDetails);
 				this.dataFormGroup.patchValue(this.assetDetails);
 				this.assetName = this.assetDetails.name;
-				this.costDollar = this.assetDetails.cost_dollar;
-				if (this.assetDetails.historical_data.length) {
-					this.initHistoricalCost(this.assetDetails.historical_data);
+				if (this.assetDetails.cost.dollar) {
+					this.costDollar = this.assetDetails.cost.dollar;
+				}
+				if (this.assetDetails.projected_cost.dollar) {
+					this.projected_cost_dollar = this.assetDetails.projected_cost.dollar;
+				}
+				if (this.assetDetails.gross) {
+					this.grossData = this.assetDetails.gross;
 				}
 				if (this.assetDetails.recurrent_month.length) {
 					this.initReccurentMonthForm(this.assetDetails.recurrent_month);
@@ -144,8 +149,12 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				if (this.assetDetails.recurrent_year.length) {
 					this.initReccurentForm(this.assetDetails.recurrent_year);
 				}
+				console.log('gross', this.grossData);
 				this.editAssetInit = true;
 				this.loadingSubject.next(false);
+				if (this.assetDetails.historical_data.length) {
+					this.initHistoricalCost(this.assetDetails.historical_data);
+				}
 			},
 			error => {
 				console.log('error occured', error);
@@ -201,36 +210,36 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	initReccurentForm(reccurentData) {
 		this.reccurentFormGroup = this.fb.group({
-			year12: [reccurentData[0].amount || ''],
-			year12_dollar: [reccurentData[1].amount || ''],
+			year12: [reccurentData[0].amount.naira || ''],
+			year12_dollar: [reccurentData[0].amount.dollar || ''],
 
-			year13: [reccurentData[2].amount || ''],
-			year13_dollar: [reccurentData[3].amount || ''],
+			year13: [reccurentData[1].amount.naira || ''],
+			year13_dollar: [reccurentData[1].amount.dollar || ''],
 
-			year14: [reccurentData[4].amount || ''],
-			year14_dollar: [reccurentData[5].amount || ''],
+			year14: [reccurentData[2].amount.naira || ''],
+			year14_dollar: [reccurentData[2].amount.dollar || ''],
 
-			year15: [reccurentData[6].amount || ''],
-			year15_dollar: [reccurentData[7].amount || ''],
+			year15: [reccurentData[3].amount.naira || ''],
+			year15_dollar: [reccurentData[3].amount.dollar || ''],
 
-			year16: [reccurentData[8].amount || ''],
-			year16_dollar: [reccurentData[9].amount || ''],
+			year16: [reccurentData[4].amount.naira || ''],
+			year16_dollar: [reccurentData[4].amount.dollar || ''],
 
-			year17: [reccurentData[10].amount || ''],
-			year17_dollar: [reccurentData[11].amount || ''],
+			year17: [reccurentData[5].amount.naira || ''],
+			year17_dollar: [reccurentData[5].amount.dollar || ''],
 
-			year18: [reccurentData[12].amount || ''],
-			year18_dollar: [reccurentData[13].amount || ''],
+			year18: [reccurentData[6].amount.naira || ''],
+			year18_dollar: [reccurentData[6].amount.dollar || ''],
 
-			year19: [reccurentData[14].amount || ''],
-			year19_dollar: [reccurentData[15].amount || ''],
+			year19: [reccurentData[7].amount.naira || ''],
+			year19_dollar: [reccurentData[7].amount.dollar || ''],
 
-			year20: [reccurentData[16].amount || ''],
-			year20_dollar: [reccurentData[17].amount || ''],
+			year20: [reccurentData[8].amount.naira || ''],
+			year20_dollar: [reccurentData[8].amount.dollar || ''],
 
-			gross_naira: [reccurentData.gross.naira || ''],
-			gross_dollar: [reccurentData.gross.dollar || ''],
-			note: [reccurentData.note]
+			gross_naira: [this.grossData.naira || ''],
+			gross_dollar: [this.grossData.dollar || ''],
+			note: [this.grossData.note]
 		});
 	}
 
@@ -268,32 +277,32 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	initHistoricalCost(historicalData) {
 		this.historicalFormGroup = this.fb.group({
-			year12: [historicalData[0].amount || ''],
-			year12_dollar: [historicalData[0].amount || ''],
+			year12: [historicalData[0].amount.naira || ''],
+			year12_dollar: [historicalData[0].amount.dollar || ''],
 
-			year13: [historicalData[1].amount || ''],
-			year13_dollar: [historicalData[1].amount || ''],
+			year13: [historicalData[1].amount.naira || ''],
+			year13_dollar: [historicalData[1].amount.dollar || ''],
 
-			year14: [historicalData[2].amount || ''],
-			year14_dollar: [historicalData[2].amount || ''],
+			year14: [historicalData[2].amount.naira || ''],
+			year14_dollar: [historicalData[2].amount.dollar || ''],
 
-			year15: [historicalData[3].amount || ''],
-			year15_dollar: [historicalData[3].amount || ''],
+			year15: [historicalData[3].amount.naira || ''],
+			year15_dollar: [historicalData[3].amount.dollar || ''],
 
-			year16: [historicalData[4].amount || ''],
-			year16_dollar: [historicalData[4].amount || ''],
+			year16: [historicalData[4].amount.naira || ''],
+			year16_dollar: [historicalData[4].amount.dollar || ''],
 
-			year17: [historicalData[5].amount || ''],
-			year17_dollar: [historicalData[5].amount || ''],
+			year17: [historicalData[5].amount.naira || ''],
+			year17_dollar: [historicalData[5].amount.dollar || ''],
 
-			year18: [historicalData[6].amount || ''],
-			year18_dollar: [historicalData[6].amount || ''],
+			year18: [historicalData[6].amount.naira || ''],
+			year18_dollar: [historicalData[6].amount.dollar || ''],
 
-			year19: [historicalData[7].amount || ''],
-			year19_dollar: [historicalData[7].amount || ''],
+			year19: [historicalData[7].amount.naira || ''],
+			year19_dollar: [historicalData[7].amount.dollar || ''],
 
-			year20: [historicalData[8].amount || ''],
-			year20_dollar: [historicalData[8].amount || ''],
+			year20: [historicalData[8].amount.naira || ''],
+			year20_dollar: [historicalData[8].amount.dollar || ''],
 
 		});
 	}
@@ -537,64 +546,64 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			{
 				year: 2012,
 				amount: {
-					naira: this.historicalDollarFormGroup.get('year12').value || 0,
-					dollar: this.historicalDollarFormGroup.get('year12_dollar').value || 0
+					naira: this.historicalFormGroup.get('year12').value || 0,
+					dollar: this.historicalFormGroup.get('year12_dollar').value || 0
 				}
 			},
 			{
 				year: 2013,
 				amount: {
-					naira: this.historicalDollarFormGroup.get('year13').value || 0,
-					dollar: this.historicalDollarFormGroup.get('year13_dollar').value || 0
+					naira: this.historicalFormGroup.get('year13').value || 0,
+					dollar: this.historicalFormGroup.get('year13_dollar').value || 0
 				}
 			},
 			{
 				year: 2014,
 				amount: {
-					naira: this.historicalDollarFormGroup.get('year14').value || 0,
-					dollar: this.historicalDollarFormGroup.get('year14_dollar').value || 0
+					naira: this.historicalFormGroup.get('year14').value || 0,
+					dollar: this.historicalFormGroup.get('year14_dollar').value || 0
 				}
 			},
 			{
 				year: 2015,
 				amount: {
-					naira: this.historicalDollarFormGroup.get('year15').value || 0,
-					dollar: this.historicalDollarFormGroup.get('year15_dollar').value || 0
+					naira: this.historicalFormGroup.get('year15').value || 0,
+					dollar: this.historicalFormGroup.get('year15_dollar').value || 0
 				}
 			},
 			{
 				year: 2016,
 				amount: {
-					naira: this.historicalDollarFormGroup.get('year16').value || 0,
-					dollar: this.historicalDollarFormGroup.get('year16_dollar').value || 0
+					naira: this.historicalFormGroup.get('year16').value || 0,
+					dollar: this.historicalFormGroup.get('year16_dollar').value || 0
 				}
 			},
 			{
 				year: 2017,
 				amount: {
-					naira: this.historicalDollarFormGroup.get('year17').value || 0,
-					dollar: this.historicalDollarFormGroup.get('year17_dollar').value || 0
+					naira: this.historicalFormGroup.get('year17').value || 0,
+					dollar: this.historicalFormGroup.get('year17_dollar').value || 0
 				}
 			},
 			{
 				year: 2018,
 				amount: {
-					naira: this.historicalDollarFormGroup.get('year18').value || 0,
-					dollar: this.historicalDollarFormGroup.get('year18_dollar').value || 0
+					naira: this.historicalFormGroup.get('year18').value || 0,
+					dollar: this.historicalFormGroup.get('year18_dollar').value || 0
 				}
 			},
 			{
 				year: 2019,
 				amount: {
-					naira: this.historicalDollarFormGroup.get('year19').value || 0,
-					dollar: this.historicalDollarFormGroup.get('year19_dollar').value || 0
+					naira: this.historicalFormGroup.get('year19').value || 0,
+					dollar: this.historicalFormGroup.get('year19_dollar').value || 0
 				}
 			},
 			{
 				year: 2020,
 				amount: {
-					naira: this.historicalDollarFormGroup.get('year20').value || 0,
-					dollar: this.historicalDollarFormGroup.get('year20_dollar').value || 0
+					naira: this.historicalFormGroup.get('year20').value || 0,
+					dollar: this.historicalFormGroup.get('year20_dollar').value || 0
 				}
 			},
 		];

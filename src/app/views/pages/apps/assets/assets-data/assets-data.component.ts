@@ -23,6 +23,8 @@ export class AssetsDataComponent implements OnInit, OnDestroy {
 	containerId = '';
 	assetsId;
 	containerAssets;
+	naira = '₦';
+	ty$sign = '$';
 	constructor(
 		private assetsService: AssetsService,
 		private route: ActivatedRoute,
