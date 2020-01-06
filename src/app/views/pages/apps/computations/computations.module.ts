@@ -16,6 +16,7 @@ import { ScoreEditComponent } from './score-edit/score-edit.component';
 import { RecurringExpenditureComponent } from './recurring-expenditure/recurring-expenditure.component';
 import { CapitalExpenditureComponent } from './capital-expenditure/capital-expenditure.component';
 import { ExpensesTurnoverComponent } from './expenses-turnover/expenses-turnover.component';
+import { TurnoverChartComponent } from './turnover-chart/turnover-chart.component';
 
 import { ChartsModule } from 'ng2-charts';
 
@@ -82,6 +83,10 @@ const routes: Routes = [
 			{
 				path: 'expenses-turnover',
 				component: ExpensesTurnoverComponent
+			},
+			{
+				path: 'expenses-turnover/chart',
+				component: TurnoverChartComponent
 			},
 			{
 				path: 'capital-expenditure',
@@ -165,7 +170,8 @@ const routes: Routes = [
 		ScoreEditComponent,
 		RecurringExpenditureComponent,
 		CapitalExpenditureComponent,
-		ExpensesTurnoverComponent
+		ExpensesTurnoverComponent,
+		TurnoverChartComponent
 	]
 })
 export class ComputationsModule { }

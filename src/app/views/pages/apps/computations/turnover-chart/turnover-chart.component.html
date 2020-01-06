@@ -1,0 +1,22 @@
+<kt-portlet>
+	<kt-portlet-header title="Expenses/Turnover chart data" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+		<ng-container ktPortletTools>
+		</ng-container>
+	</kt-portlet-header>
+	<kt-portlet-body>
+		<div class="goback" (click)="goBack()">
+			<img src="./assets/media/icons/backBtn.svg" alt="">
+			<span>Back</span>
+		</div>
+		<div class="mt-5 mb-5 chart">
+			<div class="row">
+				<div class="col-lg-8 mx-auto">
+					<canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="chartOptions"
+						[legend]="false" [chartType]="barChartType">
+					</canvas>
+				</div>
+			</div>
+		</div>
+
+	</kt-portlet-body>
+</kt-portlet>

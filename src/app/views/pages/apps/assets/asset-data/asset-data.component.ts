@@ -127,11 +127,13 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		this._location.back();
 	}
 
+
 	getAssetDetails() {
 		this.loadingSubject.next(true);
 		this.assetsService.getAssetDataById(this.assetDataId).subscribe(
 			singleAsset => {
 				this.assetDetails = singleAsset['data'];
+				localStorage.setItem('asset_data_id', this.assetDetails._id);
 				this.dataFormGroup.patchValue(this.assetDetails);
 				this.assetName = this.assetDetails.name;
 				if (this.assetDetails.cost.dollar) {

@@ -1,0 +1,53 @@
+table {
+	width: 100%;
+}
+
+.analytics {
+	width: 90%;
+	margin: auto;
+	.hover {
+		cursor: pointer;
+	}
+	.titl {
+		color: #000;
+		font-weight: 500;
+	}
+	.date-shift {
+		@media(min-width: 1200px) {
+			position: relative;
+			top: 1.5rem;
+		}
+	}
+	.button-r {
+		float: right;
+	}
+}
+
+.my-pagination {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	.pg {
+		font-size: 1.25rem;
+		color: #222;
+	}
+	// margin-right: 3rem;
+	.btn-grp {
+		display: flex;
+	}
+	button {
+		margin-left: 2rem;
+	}
+}
+.hidde {
+	visibility: hidden !important;
+}
+
+.detaiils {
+	.details {
+		color: #555;
+		font-weight: 500;
+		font-size: 1.125rem;
+		margin: 0.5rem 0;
+	}
+}
