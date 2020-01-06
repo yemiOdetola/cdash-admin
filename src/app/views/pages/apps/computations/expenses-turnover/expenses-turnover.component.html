@@ -21,6 +21,7 @@
 						<th>Turnover</th>
 						<th>Expenses({{passedCurrency}})</th>
 						<th>Ratio</th>
+						<!-- <th></th> -->
 					</tr>
 				</thead>
 				<tbody *ngIf="expTurnovers">
@@ -29,8 +30,8 @@
 						<td>{{ (expTurnovers.turnovers[i].amount ? expTurnovers.turnovers[i].amount : 0) | currency: naira}}</td>
 						<td>{{(expTurnovers.expenses[i].amount ? expTurnovers.expenses[i].amount : 0) | currency: passedCurrency}}</td>
 						<td>{{expTurnovers.ratio[i].ratio ? expTurnovers.ratio[i].ratio : 'n/a'}}</td>
+						<!-- <td><a routerLink="/cdash/computations/expenses-turnover/ratio-chart" class="view">View ratio chart</a></td> -->
 					</tr>
-					
 				</tbody>
 			</table>
 		</div>

@@ -27,7 +27,8 @@ export class ExpensesTurnoverComponent implements OnInit, OnDestroy {
 	passedCurrency = '₦';
 	dollar = '$';
 	selectedName = 'All assets';
-	years = [2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011];
+	year;
+	years = [];
 
 	constructor(
 		private assetsService: AssetsService,
@@ -36,6 +37,11 @@ export class ExpensesTurnoverComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.initAnalytics();
+		const fullDate = new Date();
+		this.year = fullDate.getFullYear();
+		for (let i = 0; i < 9; i++) {
+			this.years.push(this.year--);
+		}
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
 		this.getAllAssets();

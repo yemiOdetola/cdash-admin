@@ -69,7 +69,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 			year17: [turnover[5].turnover || ''],
 			year18: [turnover[6].turnover || ''],
 			year19: [turnover[7].turnover || ''],
-			// year20: [turnover[8].turnover || ''],
+			year20: [turnover[8].turnover || ''],
 		});
 	}
 
@@ -84,7 +84,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 			year17: [''],
 			year18: [''],
 			year19: [''],
-			// year20: [''],
+			year20: [''],
 		});
 	}
 
@@ -219,6 +219,10 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 			{
 				'turnover': turnovers.year19,
 				'year': 2019
+			},
+			{
+				'turnover': turnovers.year20,
+				'year': 2020
 			},
 		];
 		this.organizationsService.addTurnovers(payload).subscribe(

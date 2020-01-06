@@ -36,9 +36,10 @@ export class CapitalExpenditureComponent implements OnInit, OnDestroy {
 	barChartType = 'bar';
 	chartOptions;
 	selectedCurrency = '₦';
-	naira =  '₦';
-	ty$sign = '$';
-	analyticss;
+	analyticss: {
+		total_amount: 0,
+		amount: 0
+	};
 
 	constructor(
 		private assetsService: AssetsService,

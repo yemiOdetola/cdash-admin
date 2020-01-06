@@ -37,10 +37,9 @@ export class RecurringExpenditureComponent implements OnInit, OnDestroy {
 	barChartType = 'bar';
 	chartOptions;
 	selectedCurrency = '₦';
-	analyticss: {
-		total_amount: 0,
-		amount: 0
-	};
+	analyticss;
+	naira =  '₦';
+	ty$sign = '$';
 	constructor(
 		private assetsService: AssetsService,
 		private reportsService: ReportsService,

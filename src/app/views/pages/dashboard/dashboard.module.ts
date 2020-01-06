@@ -40,7 +40,7 @@ import { MatMenuModule, MatStepperModule } from '@angular/material';
 			subtitleColor: '#444',
 			showTitle: false,
 			showSubtitle: true,
-			animation: true,
+			animation: false,
 			outerStrokeGradient: true
 		}),
 	],

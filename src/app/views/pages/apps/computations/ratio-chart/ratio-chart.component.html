@@ -58,16 +58,12 @@
 				</div>
 			</form>
 		</div>
-		<ul class="mt-5 detaiils" *ngIf="analyticss">
-			<li class="details" *ngIf="analyticss.total_amount_naira > -1">Total capital expenditure (naira):&nbsp;
-				{{analyticss.total_amount_naira  | currency: naira}}</li>
-			<li class="details" *ngIf="analyticss.total_amount_dollar > -1">Total capital expenditure (dollar):&nbsp;
-				{{analyticss.total_amount_dollar  | currency: ty$sign}}</li>
-			<li class="details" *ngIf="analyticss.amount_naira > -1">Capital expenditure for asset selected (naira):&nbsp;
-				{{analyticss.amount_naira | currency: naira}}</li>
-			<li class="details" *ngIf="analyticss.amount_dollar > -1">Capital expenditure for asset selected (dollar):&nbsp;
-				{{analyticss.amount_dollar | currency: ty$sign}}</li>
-		</ul>
+		<!-- <ul class="mt-5 detaiils" *ngIf="analyticss">
+			<li class="details" *ngIf="analyticss.total_amount > -1">Total capital expenditure:
+				{{analyticss.total_amount  | currency: selectedCurrency}}</li>
+			<li class="details" *ngIf="analyticss.amount > -1">Capital expenditure for asset selected:
+				{{analyticss.amount | currency: selectedCurrency}}</li>
+		</ul> -->
 		<div class="mt-5 mb-5 chart">
 			<div class="row">
 				<div class="col-lg-8 mx-auto">
