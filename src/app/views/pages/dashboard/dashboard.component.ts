@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
 	user$: Observable<User>;
 	leadsCount = '...';
 	contactsCount = '...';
-	assetsCount: any = '...';
+	assetsCount = 0;
 	vendorsCount = '...';
 	maturityAverage = '...';
 	usersCount = '...';
@@ -75,11 +75,11 @@ export class DashboardComponent implements OnInit {
 		});
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
+		this.initAssets();
 		this.getUsersCount();
 		this.getStaffsCount();
 		this.getMaturityScoreAverage();
 		this.getAllAssets();
-		this.initAssets();
 		this.initRecurrentExpenditure();
 		this.initCapitalExpenditure();
 		console.clear();
@@ -140,8 +140,6 @@ export class DashboardComponent implements OnInit {
 				} else {
 					this.capExp = assetsCountr['total_amount_dollar'];
 				}
-				// this.capExp = assetsCountr['total_amount'];
-				this.capExpPercent = 100;
 				this.loadingSubject.next(false);
 			}
 		);
@@ -153,39 +151,27 @@ export class DashboardComponent implements OnInit {
 		if (type === 'currency') {
 			if (event.target.value === 'naira') {
 				this.capitalCurrency = '₦';
+				this.loadingSubject.next(false);
 				return this.capExp = this.capEprData.total_amount_naira;
 			} else {
 				this.capitalCurrency = '$';
+				this.loadingSubject.next(false);
 				return this.capExp = this.capEprData.total_amount_dollar;
 			}
 		}
 		if (type === 'id') {
 			this.payload['id'] = event.target.value;
-			if (event.target.value === 'naira') {
-				this.capitalCurrency = '₦';
-				return this.capExp = this.capEprData.total_amount_naira;
-			} else {
-				this.capitalCurrency = '$';
-				return this.capExp = this.capEprData.total_amount_dollar;
-			}
 		}
-		// if (type === 'currency') {
-		// 	this.payload['currency'] = event.target.value;
-		// }
-		// if (type === 'id') {
-		// 	this.payload['id'] = event.target.value;
-		// }
 		if (val === 'null') {
 			this.payload['id'] = null;
 		}
 		this.assetsService.getAllAssetsCapital(this.payload).subscribe(
 			expCountr => {
 				this.capEprData = expCountr;
-				this.capExp = expCountr['total_amount'];
-				this.capExpPercent = 100;
-				if (typeof expCountr['amount'] === 'number') {
-					this.capExp = expCountr['amount'];
-					this.capExpPercent = (expCountr['amount'] / expCountr['total_amount']) * 100;
+				if (this.capitalCurrency === '₦') {
+					this.capExp = expCountr['amount_naira'] || 0;
+				} else {
+					this.capExp = expCountr['amount_dollar'] || 0;
 				}
 				this.loadingSubject.next(false);
 			});
@@ -217,37 +203,26 @@ export class DashboardComponent implements OnInit {
 		if (type === 'currency') {
 			if (event.target.value === 'naira') {
 				this.reccCurrency = '₦';
+				this.loadingSubject.next(false);
 				return this.recExp = this.recurrentData.total_amount_naira;
 			} else {
 				this.reccCurrency = '$';
+				this.loadingSubject.next(false);
 				return this.recExp = this.recurrentData.total_amount_dollar;
 			}
 		}
 		if (type === 'id') {
 			this.payload['id'] = event.target.value;
-			if (event.target.value === 'naira') {
-				this.reccCurrency = '₦';
-				return this.recExp = this.recurrentData.total_amount_naira;
-			} else {
-				this.reccCurrency = '$';
-				return this.recExp = this.recurrentData.total_amount_dollar;
-			}
 		}
 		if (val === 'null') {
 			this.payload['id'] = null;
 		}
 		this.assetsService.getAssetsReccurentExp(this.payload).subscribe(
 			recExpCountr => {
-				this.recExp = recExpCountr['total_amount'];
-				this.recExpPercent = 100;
-				if (recExpCountr['currency'] === 'dollar') {
-					this.reccCurrency = '$';
+				if (this.reccCurrency === '₦') {
+					this.recExp = recExpCountr['amount_naira'];
 				} else {
-					this.reccCurrency = '₦';
-				}
-				if (typeof recExpCountr['amount'] === 'number') {
-					this.recExp = recExpCountr['amount'];
-					this.recExpPercent = (recExpCountr['amount'] / recExpCountr['total_amount']) * 100;
+					this.recExp = recExpCountr['amount_dollar'];
 				}
 				this.loadingSubject.next(false);
 			}
@@ -326,60 +301,5 @@ export class DashboardComponent implements OnInit {
 				console.log('error occured', error);
 			}
 		);
-	}
-
-	getMyTasksEvery() {
-		this.loading$ = this.loadingSubject.asObservable();
-		this.loadingSubject.next(true);
-		this.mdTasksService.getMyTaskEvery().subscribe(
-			responseData => {
-				this.allTasks = responseData['success'];
-				let calObj = {};
-				let allTasksArray = [];
-				let tasksCal = this.allTasks;
-				tasksCal.forEach(task => {
-					allTasksArray.push({
-						title: task.name,
-						date: task.created_at
-					});
-					this.events = allTasksArray;
-				});
-				this.loadingSubject.next(false);
-			},
-			error => {
-				console.log('error', error);
-			});
-	}
-
-	getLeadDetails(id) {
-		this.leadsService.getLeadById(id).subscribe(
-			responseData => {
-				this.editedLead = responseData;
-			},
-			error => {
-				console.log('error occures', error);
-			}
-		);
-	}
-	updateLead(lead, id) {
-		this.leadsService.updateLead(lead, id).subscribe(
-			data => {
-				console.log('success reponse', data);
-				const message = `Successfully Updated`;
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-				this.getAllLeads(0, 10);
-			},
-			error => {
-				console.log('Error response', error);
-				const title = 'Please Retry';
-				const message = 'Sorry, Temporary Error Occured';
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-			});
-	}
-	changed(status, id) {
-		this.loadingSubject.next(true);
-		this.getLeadDetails(id);
-		this.updateLead({ status }, id);
-		this.loadingSubject.next(false);
 	}
 }

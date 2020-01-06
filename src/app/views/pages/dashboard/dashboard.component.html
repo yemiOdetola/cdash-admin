@@ -1,7 +1,4 @@
-<kt-portlet-header
-[class]="'kt-portlet__head--lg'"
-[viewLoading$]="loading$"
->
+<kt-portlet-header [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 </kt-portlet-header>
 <div class="row">
 	<div class="col-xl-4 col-sm-6">
@@ -12,15 +9,24 @@
 					<span>Assets</span>
 				</div>
 				<select class="ddown" (change)="getAllAssetCount($event)" *ngIf="assetsArr && assetsArr.length !== 0">
-					<option value="null" selected>All assets</option> 
+					<option value="null" selected>All assets</option>
 					<option value="{{assAr._id}}" *ngFor="let assAr of assetsArr">{{assAr.name | titlecase}}</option>
 				</select>
 				<div class="link" routerLink="/cdash/assets">View all</div>
 			</div>
 			<div class="chart text-center">
-				<circle-progress [percent]="assetPercent" subtitle="{{assetsCount}}" [outerStrokeColor]="'#9C27B0'"
-					[outerStrokeGradientStopColor]="'#3F51B5'"></circle-progress>
+				<div class="player">
+					<div class="player-icon"></div>
+					<div class="progress">
+						<div class="right-side"></div>
+						<div class="left-side"></div>
+					</div>
+					<div class="player-text">{{assetsCount}}</div>
+				</div>
+				<!-- <circle-progress [percent]="assetPercent" subtitle="{{assetsCount}}" [outerStrokeColor]="'#9C27B0'"
+					[outerStrokeGradientStopColor]="'#3F51B5'"></circle-progress> -->
 			</div>
+
 		</div>
 	</div>
 	<div class="col-xl-4 col-sm-6">
@@ -30,18 +36,28 @@
 					<img src="./assets/media/icons/dashboard-assets.svg" alt="">
 					<span>Capital expenditure</span>
 				</div>
-				<select class="ddown" (change)="getCapitalExpenditure($event, 'id')" *ngIf="assetsArr && assetsArr.length !== 0">
-					<option value="null" selected>All assets</option> 
+				<select class="ddown" (change)="getCapitalExpenditure($event, 'id')"
+					*ngIf="assetsArr && assetsArr.length !== 0">
+					<option value="null" selected>All assets</option>
 					<option value="{{assAr._id}}" *ngFor="let assAr of assetsArr">{{assAr.name | titlecase}}</option>
 				</select>
-				<select class="ddown" (change)="getCapitalExpenditure($event, 'currency')" *ngIf="assetsArr && assetsArr.length !== 0">
+				<select class="ddown" (change)="getCapitalExpenditure($event, 'currency')"
+					*ngIf="assetsArr && assetsArr.length !== 0">
 					<option value="naira" selected>₦</option>
 					<option value="dollar">$</option>
 				</select>
 			</div>
 			<div class="chart text-center">
-				<circle-progress [percent]="capExpPercent" subtitle="{{capExp | currency: capitalCurrency}}" [outerStrokeColor]="'#1F7772'"
-					[outerStrokeGradientStopColor]="'#44faf0'"></circle-progress>
+				<div class="player">
+					<div class="player-icon"></div>
+					<div class="progress">
+						<div class="right-side five"></div>
+						<div class="left-side five"></div>
+					</div>
+					<div class="player-text">{{capExp | currency: capitalCurrency}}</div>
+				</div>
+				<!-- <circle-progress [percent]="capExpPercent" subtitle="{{capExp | currency: capitalCurrency}}"
+					[outerStrokeColor]="'#1F7772'" [outerStrokeGradientStopColor]="'#44faf0'"></circle-progress> -->
 			</div>
 		</div>
 	</div>
@@ -52,18 +68,28 @@
 					<img src="./assets/media/icons/dashboard-campaigns.svg" alt="">
 					<span>Recurring Expenditure</span>
 				</div>
-				<select class="ddown" (change)="getAssetsReccurent($event, 'id')" *ngIf="assetsArr && assetsArr.length !== 0">
-					<option value="null" selected>All assets</option> 
+				<select class="ddown" (change)="getAssetsReccurent($event, 'id')"
+					*ngIf="assetsArr && assetsArr.length !== 0">
+					<option value="null" selected>All assets</option>
 					<option value="{{assAr._id}}" *ngFor="let assAr of assetsArr">{{assAr.name | titlecase}}</option>
 				</select>
-				<select class="ddown" (change)="getAssetsReccurent($event, 'currency')" *ngIf="assetsArr && assetsArr.length !== 0">
+				<select class="ddown" (change)="getAssetsReccurent($event, 'currency')"
+					*ngIf="assetsArr && assetsArr.length !== 0">
 					<option value="naira" selected>₦</option>
 					<option value="dollar">$</option>
 				</select>
 			</div>
 			<div class="chart text-center">
-				<circle-progress [percent]="recExpPercent" subtitle="{{recExp | currency: reccCurrency}}" [outerStrokeColor]="'#FAFAFA'"
-					[outerStrokeGradientStopColor]="'#333333'"></circle-progress>
+				<div class="player">
+					<div class="player-icon"></div>
+					<div class="progress">
+						<div class="right-side four"></div>
+						<div class="left-side four"></div>
+					</div>
+					<div class="player-text">{{recExp | currency: reccCurrency}}</div>
+				</div>
+				<!-- <circle-progress [percent]="recExpPercent" subtitle="{{recExp | currency: reccCurrency}}"
+					[outerStrokeColor]="'#FAFAFA'" [outerStrokeGradientStopColor]="'#333333'"></circle-progress> -->
 			</div>
 		</div>
 	</div>
@@ -81,8 +107,16 @@
 				<div class="link" routerLink="/cdash/users/staffs">View all</div>
 			</div>
 			<div class="chart text-center">
-				<circle-progress [percent]="100" subtitle="{{staffsCount}}" [outerStrokeColor]="'#77efff'"
-					[outerStrokeGradientStopColor]="'#5773ff'"></circle-progress>
+				<div class="player">
+					<div class="player-icon"></div>
+					<div class="progress">
+						<div class="right-side three"></div>
+						<div class="left-side three"></div>
+					</div>
+					<div class="player-text">{{staffsCount}}</div>
+				</div>
+				<!-- <circle-progress [percent]="100" subtitle="{{staffsCount}}" [outerStrokeColor]="'#77efff'"
+					[outerStrokeGradientStopColor]="'#5773ff'"></circle-progress> -->
 			</div>
 		</div>
 	</div>
@@ -96,8 +130,16 @@
 				<div class="link" routerLink="/cdash/users">View all</div>
 			</div>
 			<div class="chart text-center">
-				<circle-progress [percent]="100" subtitle="{{usersCount}}" [outerStrokeColor]="'#CDDC39'"
-					[outerStrokeGradientStopColor]="'#8BC34A'"></circle-progress>
+				<div class="player">
+					<div class="player-icon"></div>
+					<div class="progress">
+						<div class="right-side two"></div>
+						<div class="left-side two"></div>
+					</div>
+					<div class="player-text">{{usersCount}}</div>
+				</div>
+				<!-- <circle-progress [percent]="100" subtitle="{{usersCount}}" [outerStrokeColor]="'#CDDC39'"
+					[outerStrokeGradientStopColor]="'#8BC34A'"></circle-progress> -->
 			</div>
 		</div>
 	</div>
@@ -111,8 +153,16 @@
 				<div class="link" routerLink="/cdash/computations/maturity-scores">View all</div>
 			</div>
 			<div class="chart text-center">
-				<circle-progress [percent]="100" subtitle="{{maturityAverage}}" [outerStrokeColor]="'#FFC107'"
-					[outerStrokeGradientStopColor]="'#CB1313'"></circle-progress>
+				<div class="player">
+					<div class="player-icon"></div>
+					<div class="progress">
+						<div class="right-side one"></div>
+						<div class="left-side one"></div>
+					</div>
+					<div class="player-text">{{maturityAverage}}</div>
+				</div>
+				<!-- <circle-progress [percent]="100" subtitle="{{maturityAverage}}" [outerStrokeColor]="'#FFC107'"
+					[outerStrokeGradientStopColor]="'#CB1313'"></circle-progress> -->
 			</div>
 		</div>
 	</div>

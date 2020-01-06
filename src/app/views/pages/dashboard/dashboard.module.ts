@@ -9,8 +9,9 @@ import { CoreModule } from '../../../core/core.module';
 import { PartialsModule } from '../../partials/partials.module';
 import { DashboardComponent } from './dashboard.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { NgCircleProgressModule } from 'ng-circle-progress';
 import { MatMenuModule, MatStepperModule } from '@angular/material';
+import { NgCircleProgressModule } from 'ng-circle-progress';
+// import { GtoLvlCircleComponent } from '@gto/lvl-circle';
 
 @NgModule({
 	imports: [
@@ -46,7 +47,7 @@ import { MatMenuModule, MatStepperModule } from '@angular/material';
 	],
 	providers: [],
 	declarations: [
-		DashboardComponent,
+		DashboardComponent
 	]
 })
 

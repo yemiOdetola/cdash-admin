@@ -110,3 +110,74 @@
     position: relative;
 	bottom: 0.35rem;
 }
+
+.player {
+    width: 180px;
+    height: 180px;
+    // background: #eee;
+    position: relative;
+    border-radius: 50%;
+    overflow: visible;
+	margin: 0.75rem auto;
+	.progress {
+		background-color: unset !important;
+	}
+}
+
+.player:hover {
+    opacity: .8;
+}
+
+.left-side {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;    
+    border: 0.875rem solid #4beade;
+    border-left-color: transparent;
+    border-bottom-color: transparent;
+	transform: rotate(225deg) !important;
+	&.one {border: 0.875rem solid rgb(189, 51, 189);}
+	&.two {border: 0.875rem solid #1F7772;}
+	&.three {border: 0.875rem solid rgb(55, 172, 65);}
+	&.four {border: 0.875rem solid #2900e2;}
+	&.five {border: 0.875rem solid #FFC107;}
+}
+
+.left-side.fill {
+    border-color: transparent;
+    border-left-color: #4beade;
+    border-bottom-color: #4beade;
+}
+
+.right-side {
+    transform: rotate(45deg);
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 50%;    
+    border: 0.875rem solid #4beade;
+    border-left-color: #eee;
+	border-bottom-color: #eee;
+	&.one {border: 0.875rem solid #3F51B5;}
+	&.two {border: 0.875rem solid #1F7772;}
+	&.three {border: 0.875rem solid #CDDC39;}
+	&.four {border: 0.875rem solid #2900e2;}
+	&.five {border: 0.875rem solid #FFC107;}
+}
+
+.player-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: #555;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+// .player-title {
+//     position: absolute;
+//     left: 0; right: 0;
+//     top: calc(50% + 55px);
+//     text-align: center;
+//     color: #999;
+// }
