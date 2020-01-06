@@ -60,7 +60,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
 	initTurnoverForm(turnover) {
 		this.turnoverForm = this.fb.group({
-			currency: ['naira' || ''],
+			currency: [this.organizationDetails.currency || 'naira'],
 			year12: [turnover[0].turnover || ''],
 			year13: [turnover[1].turnover || ''],
 			year14: [turnover[2].turnover || ''],

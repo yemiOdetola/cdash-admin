@@ -17,16 +17,6 @@
 					<div class="selected">Reccurent expenditure</div>
 					<div class="active"></div>
 				</div>
-				<!-- <div [className]="selected === 'reccurent_year_dollar' ? 'item active' : 'item'"
-					(click)="selectMenu('reccurent_year_dollar')" *ngIf="showReccurentYear">
-					<div class="selected">Reccurent expenditure ()</div>
-					<div class="active"></div>
-				</div> -->
-				<!-- <div [className]="selected === 'reccurent_month' ? 'item active' : 'item'"
-					(click)="selectMenu('reccurent_month')" *ngIf="showReccurentMonth">
-					<div class="selected">Reccurent expenditure (month)</div>
-					<div class="active"></div>
-				</div> -->
 				<div [className]="selected === 'historical_cost' ? 'item active' : 'item'"
 					(click)="selectMenu('historical_cost')" *ngIf="showHistorical">
 					<div class="selected">Historical cost</div>
@@ -63,7 +53,7 @@
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
 															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="form_elem.id === customModels[i] ? customModels[i] : customModels[0]"
+															[(ngModel)]="form_elem.id"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>

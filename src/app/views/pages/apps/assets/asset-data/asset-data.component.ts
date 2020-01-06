@@ -81,7 +81,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			group[input_template.id] = new FormControl('');
 		});
 		this.dataFormGroup = new FormGroup(group);
-		console.log('data form groupp', this.dataFormGroup);
 		this.localFields.forEach(field => {
 			if (field.id === 'recurrent_expenditure_year') {
 				this.showReccurentYear = true;
@@ -93,12 +92,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				this.showHistorical = true;
 			}
 			if (field.custom === true) {
-				this.customFields = [];
-				this.customModels = [];
-				this.customModels.push(field.id);
-				this.customFields.push(
-					{ name: field['id'], value: '' }
-				);
+				console.log('fieldssss', field);
 			}
 		});
 		this.loading$ = this.loadingSubject.asObservable();
@@ -135,6 +129,12 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				this.assetDetails = singleAsset['data'];
 				localStorage.setItem('asset_data_id', this.assetDetails._id);
 				this.dataFormGroup.patchValue(this.assetDetails);
+				if (this.assetDetails.cost && this.assetDetails.cost.naira) {
+					this.dataFormGroup.get('cost').patchValue(this.assetDetails.cost.naira);
+				}
+				if (this.assetDetails.projected_cost && this.assetDetails.projected_cost.naira) {
+					this.dataFormGroup.get('projected_cost').patchValue(this.assetDetails.projected_cost.naira);
+				}
 				this.assetName = this.assetDetails.name;
 				if (this.assetDetails.cost.dollar) {
 					this.costDollar = this.assetDetails.cost.dollar;
@@ -151,12 +151,11 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				if (this.assetDetails.recurrent_year.length) {
 					this.initReccurentForm(this.assetDetails.recurrent_year);
 				}
-				console.log('gross', this.grossData);
 				this.editAssetInit = true;
-				this.loadingSubject.next(false);
 				if (this.assetDetails.historical_data.length) {
 					this.initHistoricalCost(this.assetDetails.historical_data);
 				}
+				this.loadingSubject.next(false);
 			},
 			error => {
 				console.log('error occured', error);

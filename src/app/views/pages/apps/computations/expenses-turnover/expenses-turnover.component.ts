@@ -86,6 +86,11 @@ export class ExpensesTurnoverComponent implements OnInit, OnDestroy {
 		this.assetsService.getAllAssetsTurnover(payload).subscribe(
 			response => {
 				this.expTurnovers = response;
+				if (this.expTurnovers.expenses[0].currency === 'naira') {
+					this.passedCurrency = '₦';
+				} else {
+					this.passedCurrency = '$';
+				}
 				console.log('analytics oninit', this.expTurnovers);
 				this.loadingSubject.next(false);
 			},
