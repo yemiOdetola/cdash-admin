@@ -35,6 +35,7 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 	appID = '';
 	customerKey = '';
 	customerSecret = '';
+	callbackUrl = '';
 	appURL = '';
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -102,6 +103,10 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 		this.loadingSubject.next(true);
 		let payload;
 		if (this.ssocial === 'facebook') {
+			if (this.appID === '') {
+				const message = 'appID is compulsory';
+				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			}
 			localStorage.setItem('fbkID', this.appID);
 			payload = {
 				type: 'facebook',
@@ -110,12 +115,16 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 				}
 			};
 		} else {
+			if (this.customerKey === '' || this.customerSecret === '' || this.callbackUrl === '') {
+				const message = 'All fields are compulsory';
+				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			}
 			payload = {
 				type: 'twitter',
 				data: {
 					consumerKey: this.customerKey,
 					consumerSecret: this.customerSecret,
-					callbackUrl: `${this.BASE_URL}/social/twitter/callback`
+					callbackUrl: this.callbackUrl
 				}
 			};
 		}

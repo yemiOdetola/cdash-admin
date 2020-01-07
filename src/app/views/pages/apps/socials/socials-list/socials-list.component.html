@@ -1,5 +1,5 @@
 <kt-portlet>
-	<kt-portlet-header title="All Social Media Campaigns" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
+	<kt-portlet-header title="Social Accounts" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
 			<a routerLink="/cdash/socials/manage/social" class="primary-button kt-margin-r-10" matTooltip="Add social media">
 				<i class="la la-plus"></i>
@@ -12,7 +12,7 @@
 			</div>
 			<mat-menu #menu="matMenu">
 				<button mat-menu-item (click)="signInWithFB()">Facebook</button>
-				<a href="http://142.93.6.250/v1/social/twitter?url=http://localhost:4200/cdash/socials/socials" mat-menu-item (click)="initTwitterr()">Twitter</a>
+				<a href="{{validTwitter ? validURL : ''}}" mat-menu-item (click)="initTwitterr()">Twitter</a>
 			</mat-menu>
 		</ng-container>
 	</kt-portlet-header>
@@ -29,20 +29,12 @@
 				</thead>
 				<tbody>
 					<tr className="each-row" *ngFor="let account of socialls">
-						<td>{{account.data.screen_name}}</td>
-						<td>twitter</td>
+						<td>{{account.data.screen_name ? account.data.screen_name : account.data.name}}</td>
+						<td>{{account.type}}</td>
 						<td class="status">
-							<span class="plain">{{account.data.name}}</span>
+							<span class="plain">{{account.data.name ? account.data.name : account.data.email}}</span>
 						</td>
 						<td><a routerLink="/cdash/socials/{{account._id}}" class="view">View</a></td>
-					</tr>
-					<tr className="each-row" *ngIf="fbkDetails">
-						<td>{{fbkDetails.name}}</td>
-						<td>Facebook</td>
-						<td class="status">
-							<span class="plain">{{fbkDetails.email}}</span>
-						</td>
-						<td><a routerLink="/cdash/socials/facebook" class="view">View</a></td>
 					</tr>
 					<!-- <tr className="each-row">
 						<td>Twitter</td>

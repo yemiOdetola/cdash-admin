@@ -37,6 +37,15 @@ export class SocialsService {
 		});
 	}
 
+	addNewSocial(social): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.post<any>(`${BASE_URL}/social/social`, social, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
 	getSocial(url): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.get<any>(`${BASE_URL}/social/twitter?url=${url}`, {
@@ -68,6 +77,15 @@ export class SocialsService {
 	getAllSocials(): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.get<any>(`${BASE_URL}/social`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+	getSocialSetup(): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<any>(`${BASE_URL}/social/social-setup`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken
 			}

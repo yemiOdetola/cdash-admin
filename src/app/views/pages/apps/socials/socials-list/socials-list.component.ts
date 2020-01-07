@@ -24,13 +24,17 @@ export class SocialsListComponent implements OnInit, OnDestroy {
 	redURL = window.location.href;
 	socialls;
 	fbkDetails;
+	setupSocials;
+	validTwitter = false;
+	validURL = '';
 	constructor(
 		private authService: AuthService,
 		private socialsService: SocialsService,
 		private layoutUtilsService: LayoutUtilsService,
-		private router: Router,) { }
+		private router: Router, ) { }
 
 	ngOnInit() {
+		this.getSocialSetup();
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
 		this.fbkDetails = JSON.parse(localStorage.getItem('facebookDetails'));
@@ -40,39 +44,96 @@ export class SocialsListComponent implements OnInit, OnDestroy {
 		});
 		this.getAllSocials();
 		this.loadingSubject.next(false);
+		const urrl = window.location.href;
+		this.validURL = `http://142.93.6.250/v1/social/twitter?url=${urrl}`;
+	}
+
+	getSocialSetup() {
+		this.loadingSubject.next(true);
+		this.socialsService.getSocialSetup().subscribe(
+			socialss => {
+				this.loadingSubject.next(false);
+				this.setupSocials = socialss['data'];
+				this.setupSocials.forEach(social => {
+					if (social.type === 'facebook') {
+						localStorage.setItem('fbkID', social.data.app_id);
+					}
+					if (social.type === 'twitter') {
+						this.validTwitter = true;
+					}
+				});
+			}
+		);
 	}
 
 	signInWithFB(): void {
-		const fbkID = localStorage.getItem('fbkID');
-		if (!localStorage.getItem('fbkID')) {
-			return alert('Add facebook credentials before signing in');
-		}
-		FacebookLoginProvider.PROVIDER_ID = fbkID;
-		this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(response => {
-			this.layoutUtilsService.showActionNotification('Facebook signin successful', MessageType.Create, 10000, true, true);
-			localStorage.setItem('facebookDetails', JSON.stringify(response));
-			this.fbkDetails = JSON.parse(localStorage.getItem('facebookDetails'));
+		this.setupSocials.forEach(social => {
+			if (social.type === 'facebook') {
+				const fbkID = social.data.app_id;
+				FacebookLoginProvider.PROVIDER_ID = fbkID;
+				this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(response => {
+					this.layoutUtilsService.showActionNotification('Facebook signin successful', MessageType.Create, 10000, true, true);
+					localStorage.setItem('facebookDetails', JSON.stringify(response));
+					this.fbkDetails = JSON.parse(localStorage.getItem('facebookDetails'));
+					this.addSocial(this.fbkDetails.name, this.fbkDetails.email, localStorage.getItem('fbkID'));
+				});
+			} else {
+				const message = `Add facebook credentials before signing in`;
+				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			}
 		});
 	}
 
 	initTwitterr() {
-		if (!localStorage.getItem('registeredTwitter')) {
-			return alert('Add twitter credentials before signing in');
-		}
-		let url = window.location.href;
-		this.socialsService.getSocial(url).subscribe(
+		this.setupSocials.forEach(social => {
+			if (social.type === 'twitter') {
+				let url = window.location.href;
+				console.log('callback url', url);
+				this.socialsService.getSocial(url).subscribe(
+					data => {
+						this.loadingSubject.next(false);
+						console.log('success reponse', data);
+						const message = `Success`;
+						localStorage.setItem('registeredTwitter', 'true');
+						this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+					}, error => {
+						this.loadingSubject.next(false);
+						console.log('Error response', error);
+						const title = 'Please Retry';
+						const message = 'Sorry, Temporary Error Occured';
+						this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+					});
+			} else {
+				const message = `Add twitter credentials before signing in`;
+				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			}
+		});
+	}
+
+
+	addSocial(name, email, app_id) {
+		this.loadingSubject.next(true);
+		let payload = {
+			type: 'facebook',
+			data: {
+				name: name,
+				email: email,
+				lol: app_id
+			}
+		};
+		this.socialsService.addNewSocial(payload).subscribe(
 			data => {
 				this.loadingSubject.next(false);
 				console.log('success reponse', data);
-				const message = `Social account has been Successfully added`;
-				localStorage.setItem('registeredTwitter', 'true');
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+				const message = `Success`;
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 3000, true, true);
+				this.getAllSocials();
 			}, error => {
 				this.loadingSubject.next(false);
 				console.log('Error response', error);
 				const title = 'Please Retry';
 				const message = 'Sorry, Temporary Error Occured';
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 4000, true, true);
 			});
 	}
 
