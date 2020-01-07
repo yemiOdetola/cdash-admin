@@ -38,6 +38,7 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 	customerSecret = '';
 	callbackUrl = '';
 	appURL = '';
+	setupSocials;
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private router: Router,
@@ -50,6 +51,7 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 	) { }
 
 	ngOnInit() {
+		this.getSocialSetup();
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
 		this.appURL = window.location.href;
@@ -76,6 +78,27 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 				console.log('retrieving social with pipe', this.social);
 				return this.social;
 			})
+		);
+	}
+
+	getSocialSetup() {
+		this.loadingSubject.next(true);
+		this.socialsService.getSocialSetup().subscribe(
+			socialss => {
+				this.loadingSubject.next(false);
+				this.setupSocials = socialss['data'];
+				this.setupSocials.forEach(social => {
+					if (social.type === 'facebook') {
+						localStorage.setItem('fbkID', social.data.app_id);
+						this.appID = social.data.app_id;
+					}
+					if (social.type === 'twitter') {
+						this.customerKey = social.data.consumerKey;
+						this.customerSecret = social.data.consumerSecret;
+						this.callbackUrl = social.data.callbackUrl;
+					}
+				});
+			}
 		);
 	}
 
