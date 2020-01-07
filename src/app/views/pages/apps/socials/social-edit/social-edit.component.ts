@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { SocialModel, SocialsService } from '../../../../../core/socials';
+import { SocialsService } from '../../../../../core/socials';
 // Layout
 import { LayoutConfigService } from '../../../../../core/_base/layout';
 // CRUD
@@ -11,6 +11,7 @@ import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud'
 import { MatDialog } from '@angular/material';
 import { tap, map } from 'rxjs/operators';
 import { environment } from '../../../../../../environments/environment';
+import { Location } from '@angular/common';
 
 // url
 
@@ -41,6 +42,7 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 		private activatedRoute: ActivatedRoute,
 		private router: Router,
 		public dialog: MatDialog,
+		private _location: Location,
 		private layoutUtilsService: LayoutUtilsService,
 		private layoutConfigService: LayoutConfigService,
 		private fb: FormBuilder,
@@ -60,6 +62,10 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 			this.headerMargin = parseInt(style.height, 0);
 		};
 		this.loadingSubject.next(false);
+	}
+
+	goBack() {
+		this._location.back();
 	}
 
 	getSocialDetails() {
