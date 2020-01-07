@@ -4,41 +4,40 @@
 		</ng-container>
 	</kt-portlet-header>
 	<kt-portlet-body>
-		<form [formGroup]="socialForm">
+		<form>
 			<div class="form-group">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="form-item">
-							<label class="label">Post caption</label>
-							<input type="text" placeholder="Enter post's caption" formControlName="title">
+							<label for="title" class="label">Status</label>
+							<select (change)="passSocial($event)">
+								<option value="facebook">Facebook</option>
+								<option value="twitter">Twitter</option>
+							</select>
 						</div>
 					</div>
 				</div>
-				<div class="row">
+				<div class="row" *ngIf="ssocial === 'facebook'">
 					<div class="col-lg-12">
-						<div class="form-item">
-							<label class="label">URL</label>
-							<input type="url" placeholder="Enter a valid url (www.google.com)" formControlName="link">
+						<div class="form-item slide-in">
+							<label class="label">facebook APP ID</label>
+							<input type="text" placeholder="Enter Facebook developer" name="appID" [(ngModel)]="appID">
 						</div>
 					</div>
 				</div>
-				<div class="row">
-						<div class="col-lg-12">
-							<div class="form-item upload">
-								<label class="label" for="upload">
-									<img src="./assets/media/icons/upload-all.svg" alt="">
-								</label>
-								<input type="file" id="upload" (change)="onFileChange($event)" accept="image/*">
-								<div class="placeholder" *ngIf="!fileName">Upload image</div>
-								<div class="placeholder slide-in" *ngIf="fileName">{{fileName}}</div>
-							</div>
+				<div class="row" *ngIf="ssocial === 'twitter'">
+					<div class="col-lg-12">
+						<div class="form-item slide-in">
+							<label class="label">Customer key</label>
+							<input type="url" placeholder="Enter Customer key" name="customerKey" [(ngModel)]="customerKey">
 						</div>
 					</div>
-				<div class="row">
+				</div>
+				<div class="row" *ngIf="ssocial === 'twitter'">
 					<div class="col-lg-12">
-						<div class="form-item">
-							<label class="label">Target</label>
-							<input type="number" placeholder="Target posts views/clicks" formControlName="target">
+						<div class="form-item slide-in">
+							<label class="label">Customer secret</label>
+							<input type="url" placeholder="Enter Customer secret" name="customerSecret" [(ngModel)]="customerSecret">
 						</div>
 					</div>
 				</div>

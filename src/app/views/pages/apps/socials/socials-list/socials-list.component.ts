@@ -1,13 +1,13 @@
 // Angular
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
 // Services and Models
-import { SocialModel, SocialsService } from '../../../../../core/socials';
-
-// material for table
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { AuthService } from 'angularx-social-login';
+import { SocialUser } from 'angularx-social-login';
+import { FacebookLoginProvider } from 'angularx-social-login';
+import { SocialsService } from '../../../../../core/socials';
+import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
+import { Router } from '@angular/router';
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -18,89 +18,77 @@ import { MatTableDataSource } from '@angular/material/table';
 export class SocialsListComponent implements OnInit, OnDestroy {
 	loading$: Observable<boolean>;
 	loadingSubject = new BehaviorSubject<boolean>(true);
-	links: any[];
-	proceedingColumns: string[] = ['Title', 'Link'];
-	dataSource: any;
-	pageIndex = 0;
-	limit = 10;
-	resultsLength: number = 0;
-	disablePrev = true;
-	disableNext: boolean;
-	constructor(private socialsService: SocialsService) { }
+	user: SocialUser;
+	showTwitterForm = false;
+	token = '';
+	redURL = window.location.href;
+	socialls;
+	fbkDetails;
+	constructor(
+		private authService: AuthService,
+		private socialsService: SocialsService,
+		private layoutUtilsService: LayoutUtilsService,
+		private router: Router,) { }
 
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
-		this.socialsService.getLinksCount().subscribe(
-			countResult => {
-				this.resultsLength = countResult['count'];
-				if (this.resultsLength <= 10) {
-					this.disableNext = true;
-				} else {
-					this.disableNext = false;
-				}
-			}
-		);
-		let skip = this.pageIndex * this.limit;
-		this.getAllSocials(skip, this.limit);
+		this.fbkDetails = JSON.parse(localStorage.getItem('facebookDetails'));
+		this.authService.authState.subscribe((user) => {
+			this.user = user;
+			console.log('logged in user', user);
+		});
+		this.getAllSocials();
+		this.loadingSubject.next(false);
 	}
 
-	countAllSocials() {
-		this.socialsService.getLinksCount().subscribe(
-			countResult => {
-				this.resultsLength = countResult['count'];
-				if (this.pageIndex > 0) {
-					this.disablePrev = false;
-				}
-			}
-		);
+	signInWithFB(): void {
+		const fbkID = localStorage.getItem('fbkID');
+		if (!localStorage.getItem('fbkID')) {
+			return alert('Add facebook credentials before signing in');
+		}
+		FacebookLoginProvider.PROVIDER_ID = fbkID;
+		this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(response => {
+			this.layoutUtilsService.showActionNotification('Facebook signin successful', MessageType.Create, 10000, true, true);
+			localStorage.setItem('facebookDetails', JSON.stringify(response));
+			this.fbkDetails = JSON.parse(localStorage.getItem('facebookDetails'));
+		});
 	}
 
-	getAllSocials(skip, limit) {
-		this.loading$ = this.loadingSubject.asObservable();
-		this.loadingSubject.next(true);
-		this.socialsService.getLinks(skip, limit).subscribe(
-			responseData => {
-				this.links = responseData['success'];
-				this.dataSource = new MatTableDataSource<SocialModel>(this.links);
+	initTwitterr() {
+		if (!localStorage.getItem('registeredTwitter')) {
+			return alert('Add twitter credentials before signing in');
+		}
+		let url = window.location.href;
+		this.socialsService.getSocial(url).subscribe(
+			data => {
 				this.loadingSubject.next(false);
-				console.log('all links returned', this.links);
-			},
-			error => {
-				console.log('error', error);
+				console.log('success reponse', data);
+				const message = `Social account has been Successfully added`;
+				localStorage.setItem('registeredTwitter', 'true');
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			}, error => {
+				this.loadingSubject.next(false);
+				console.log('Error response', error);
+				const title = 'Please Retry';
+				const message = 'Sorry, Temporary Error Occured';
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 			});
 	}
 
-	itemNav() {
-		if (((this.pageIndex * 10) + 10) >= this.resultsLength) {
-			this.disableNext = true;
-			console.log('paste total numbers');
-			// return;
-		} else {
-			this.disableNext = false;
-		}
-		if (this.pageIndex === 0) {
-			this.disablePrev = true;
-			console.log('last page');
-			// return;
-		} else {
-			this.disablePrev = false;
-		}
-	}
-	getNext() {
-		this.pageIndex = this.pageIndex + 1;
-		let skip = this.pageIndex * this.limit;
-		this.getAllSocials(skip, this.limit);
-		this.countAllSocials();
-		this.itemNav();
+	getAllSocials() {
+		this.loadingSubject.next(true);
+		this.socialsService.getAllSocials().subscribe(
+			socialss => {
+				console.log('sosocialls', socialss);
+				this.loadingSubject.next(false);
+				this.socialls = socialss['data'];
+			}
+		);
 	}
 
-	getPrev() {
-		this.pageIndex = this.pageIndex - 1;
-		let skip = this.pageIndex * this.limit;
-		this.getAllSocials(skip, this.limit);
-		this.countAllSocials();
-		this.itemNav();
+	toggleTwitter() {
+		this.showTwitterForm = !this.showTwitterForm;
 	}
 
 	ngOnDestroy() { }

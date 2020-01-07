@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { HttpUtilsService } from '../../_base/crud';
 
 // Model
-import { SocialModel } from '../_models/social.model';
 import { environment } from '../../../../environments/environment';
 
 // url
@@ -19,9 +18,9 @@ export class SocialsService {
 
 
 	// creates new contacts
-	createLink(social): Observable<SocialModel> {
+	createLink(social): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.post<SocialModel>(`${BASE_URL}/api/link`, social, {
+		return this.http.post<any>(`${BASE_URL}/api/link`, social, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -29,10 +28,57 @@ export class SocialsService {
 		});
 	}
 
-	// get all contacts
-	getLinks(skip, limit): Observable<SocialModel[]> {
+	addSocial(social): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<SocialModel[]>(`${BASE_URL}/api/link/all`, {
+		return this.http.post<any>(`${BASE_URL}/social/social-setup`, social, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+	getSocial(url): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<any>(`${BASE_URL}/social/twitter?url=${url}`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+	deleteAccount(id): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.delete<any>(`${BASE_URL}/social/${id}`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+
+	getSingleSocial(id): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<any>(`${BASE_URL}/social/${id}`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+	getAllSocials(): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<any>(`${BASE_URL}/social`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+
+	// get all contacts
+	getLinks(skip, limit): Observable<any[]> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<any[]>(`${BASE_URL}/api/link/all`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -43,9 +89,9 @@ export class SocialsService {
 			}
 		});
 	}
-	getLinksCount(): Observable<SocialModel[]> {
+	getLinksCount(): Observable<any[]> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<SocialModel[]>(`${BASE_URL}/api/link/all?count=${1}`, {
+		return this.http.get<any[]>(`${BASE_URL}/api/link/all?count=${1}`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -54,9 +100,9 @@ export class SocialsService {
 	}
 
 	// get a contact
-	getLinkById(code: string): Observable<SocialModel> {
+	getLinkById(code: string): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.get<SocialModel>(`${BASE_URL}/api/link?code=${code}`, {
+		return this.http.get<any>(`${BASE_URL}/api/link?code=${code}`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -87,7 +133,7 @@ export class SocialsService {
 	// update a contact
 	updateLink(link: any, code: string) {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.put<SocialModel>(`${BASE_URL}/api/link?code=${code}`, link, {
+		return this.http.put<any>(`${BASE_URL}/api/link?code=${code}`, link, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'
@@ -96,9 +142,9 @@ export class SocialsService {
 	}
 
 	// delete a contact
-	deleteLink(code: string): Observable<SocialModel> {
+	deleteLink(code: string): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
-		return this.http.delete<SocialModel>(`${BASE_URL}/api/link?code=${code}`, {
+		return this.http.delete<any>(`${BASE_URL}/api/link?code=${code}`, {
 			headers: {
 				'Authorization': 'Bearer ' + userToken,
 				'encrypted': 'true'

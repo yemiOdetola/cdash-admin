@@ -104,7 +104,7 @@ export class MenuConfig {
 				},
 				{
 					title: 'Socials',
-					// page: 'organizations',
+					page: 'socials',
 					root: true,
 					bullet: 'dot',
 					icon: 'flaticon-signs-1',

@@ -17,3 +17,41 @@ table {
 		margin-left: 2rem;
 	}
 }
+.title {
+	color: #333;
+	font-size: 1.125rem;
+	font-weight: 500;
+}
+
+.buttons {
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
+
+.form-group {
+	.hover {
+		&:hover {
+			cursor: pointer;
+		}
+	}
+	width: 95%;
+	margin: 1.5rem auto;
+	@media(min-width: 992px) {
+		width: 40%;
+	}
+	.image-upload > input {
+		display: none;
+	}
+	.image-upload img {
+		width: 70px;
+		cursor: pointer;
+	}
+	.file-input {
+		width: 100%;
+		img {
+			margin: auto;
+			display: flex;
+		}
+	}
+}

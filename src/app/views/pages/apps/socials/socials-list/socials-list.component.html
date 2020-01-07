@@ -1,39 +1,69 @@
 <kt-portlet>
 	<kt-portlet-header title="All Social Media Campaigns" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
-			<a routerLink="/strada/socials/manage" class="primary-button kt-margin-r-10" matTooltip="Add new campaign">
+			<a routerLink="/cdash/socials/manage/social" class="primary-button kt-margin-r-10" matTooltip="Add social media">
 				<i class="la la-plus"></i>
-				<span class="kt-hidden-mobile">New campaign</span>
+				<span class="kt-hidden-mobile">Add social media</span>
 			</a>
+			<div class="details-action approve text-center" [matMenuTriggerFor]="menu">
+				<img src="./assets/media/icons/button-down.svg" alt="">
+				&nbsp;
+				<span>Signin</span>
+			</div>
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item (click)="signInWithFB()">Facebook</button>
+				<a href="http://142.93.6.250/v1/social/twitter?url=http://localhost:4200/cdash/socials/socials" mat-menu-item (click)="initTwitterr()">Twitter</a>
+			</mat-menu>
 		</ng-container>
 	</kt-portlet-header>
 	<kt-portlet-body>
-		<div class="vendor-body">
+		<div class="stage-history">
 			<table class="table-view">
 				<thead>
 					<tr>
-						<th>Post Caption</th>
-						<th>Post URL</th>
+						<th>Account name</th>
+						<th>Account type</th>
+						<th>Others</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr className="each-row" *ngFor="let link of links">
-						<td>{{(link.title.length > 30) ? (link.title | slice:0:30)+'...' : (link.title)}}</td>
-						<td>{{link.link}}</td>
-						<td>
-							<a routerLink="/strada/socials/link/{{link.code}}" class="view">View</a>
+					<tr className="each-row" *ngFor="let account of socialls">
+						<td>{{account.data.screen_name}}</td>
+						<td>twitter</td>
+						<td class="status">
+							<span class="plain">{{account.data.name}}</span>
 						</td>
+						<td><a routerLink="/cdash/socials/{{account._id}}" class="view">View</a></td>
 					</tr>
+					<tr className="each-row" *ngIf="fbkDetails">
+						<td>{{fbkDetails.name}}</td>
+						<td>Facebook</td>
+						<td class="status">
+							<span class="plain">{{fbkDetails.email}}</span>
+						</td>
+						<td><a routerLink="/cdash/socials/facebook" class="view">View</a></td>
+					</tr>
+					<!-- <tr className="each-row">
+						<td>Twitter</td>
+						<td>
+							<a href="http://142.93.6.250/v1/social/twitter?url=http://localhost:4200/cdash/socials/socials" class="btn btn-primary btn-md" (click)="initTwitterr()">
+								Twitter signin
+							</a>
+						</td>
+						<td><a routerLink="/cdash/socials/twitter" class="view">View details</a></td>
+					</tr> -->
+					<!-- <tr className="each-row">
+						<td>LinkedIn</td>
+						<td>
+							<button class="btn btn-secondary btn-md" (click)="signInWithFB()">
+								LinkedIn signin
+							</button>
+						</td>
+						<td><a routerLink="/cdash/socials/linkedin" class="view">View</a></td>
+					</tr> -->
 				</tbody>
 			</table>
-		</div>
-		<div class="my-pagination mt-5 mb-4">
-			<div class="pg">Page: <b>{{pageIndex + 1}}</b></div>
-			<div class="btn-grp">
-				<button mat-raised-button (click)="getPrev()" color="primary" [disabled]="disablePrev">Previous</button>
-				<button mat-raised-button (click)="getNext()" color="primary" [disabled]="disableNext">Next</button>
-			</div>
 		</div>
 
 	</kt-portlet-body>

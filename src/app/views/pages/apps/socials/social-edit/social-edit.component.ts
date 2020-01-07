@@ -10,6 +10,9 @@ import { LayoutConfigService } from '../../../../../core/_base/layout';
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 import { MatDialog } from '@angular/material';
 import { tap, map } from 'rxjs/operators';
+import { environment } from '../../../../../../environments/environment';
+
+// url
 
 @Component({
 	// tslint:disable-next-line:component-selector
@@ -18,20 +21,21 @@ import { tap, map } from 'rxjs/operators';
 	styleUrls: ['./social-edit.component.scss']
 })
 export class SocialEditComponent implements OnInit, OnDestroy {
-	social: SocialModel;
+	social;
 	image: any;
 	loading$: Observable<boolean>;
 	loadingSubject = new BehaviorSubject<boolean>(true);
-	oldCSocial: SocialModel;
 	socialForm: FormGroup;
 	hasFormErrors: boolean = false;
 	headerMargin: number;
 	selectedTab: number = 0;
-	selectedFile: File = null;
 	idParams: string;
-	fSelected;
-	fileName = '';
-	urlRegex = `(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?`;
+	ssocial = 'facebook';
+	BASE_URL = environment.BASE_URL;
+	appID = '';
+	customerKey = '';
+	customerSecret = '';
+	appURL = '';
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private router: Router,
@@ -45,28 +49,20 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
-		this.initSocialForm();
+		this.appURL = window.location.href;
 		if (this.activatedRoute.snapshot.params['id']) {
 			console.log('id found', this.activatedRoute.snapshot.params['id']);
 			this.idParams = this.activatedRoute.snapshot.params['id'];
-		}
-		if (this.idParams) {
-			this.getSocialDetails().subscribe(socialData => this.initSocialForm(socialData));
-			this.loadingSubject.next(true);
-		} else {
-			this.social = this.socialForm.value;
-			this.loadingSubject.next(false);
 		}
 		window.onload = () => {
 			const style = getComputedStyle(document.getElementById('kt_header'));
 			this.headerMargin = parseInt(style.height, 0);
 		};
-		console.log(this.socialForm.value);
-		console.log('form control', this.socialForm.controls);
+		this.loadingSubject.next(false);
 	}
 
 	getSocialDetails() {
-	return this.socialsService.getLinkById(this.idParams).pipe(
+		return this.socialsService.getLinkById(this.idParams).pipe(
 			map(socialDetails => {
 				this.social = socialDetails;
 				this.loadingSubject.next(false);
@@ -76,13 +72,8 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	initSocialForm(social: any = {}) {
-		this.socialForm = this.fb.group({
-			link: [social.link || '', Validators.required],
-			title: [social.title || '', Validators.required],
-			target: [social.target || '', Validators.required],
-			file: ['']
-		});
+	passSocial(event) {
+		this.ssocial = event.target.value;
 	}
 
 	getComponentTitle() {
@@ -97,35 +88,74 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 
 	onSubmit() {
 		this.hasFormErrors = false;
-		const controls = this.socialForm.controls;
 		this.loadingSubject.next(true);
 		/** check form */
-		if (this.socialForm.invalid) {
-			this.loadingSubject.next(false);
-			Object.keys(controls).forEach(controlName =>
-				controls[controlName].markAsTouched()
-			);
-			this.hasFormErrors = true;
-			this.selectedTab = 0;
+		if (this.social) {
+			this.updateSocial();
 			return;
 		}
-		if (this.social && this.social.code) {
-			console.log('Social has an Id');
-			let editedSocial = this.socialForm.value;
-			console.log('Social to send', editedSocial);
-			this.updateSocial(editedSocial);
-			return;
-		}
-		this.addSocial(this.socialForm.value);
+		this.addSocial();
 	}
 
-	updateSocial(social) {
-		let updPayload = new FormData();
-		updPayload.append('link', this.socialForm.get('link').value);
-		updPayload.append('title', this.socialForm.get('title').value);
-		updPayload.append('target', this.socialForm.get('target').value);
-		updPayload.append('file', this.fSelected, this.fSelected.name);
-		this.socialsService.updateLink(updPayload, this.social.code).subscribe(
+
+	addSocial() {
+		this.loadingSubject.next(true);
+		let payload;
+		if (this.ssocial === 'facebook') {
+			localStorage.setItem('fbkID', this.appID);
+			payload = {
+				type: 'facebook',
+				data: {
+					app_id: this.appID
+				}
+			};
+		} else {
+			payload = {
+				type: 'twitter',
+				data: {
+					consumerKey: this.customerKey,
+					consumerSecret: this.customerSecret,
+					callbackUrl: `${this.BASE_URL}/social/twitter/callback`
+				}
+			};
+		}
+		this.socialsService.addSocial(payload).subscribe(
+			data => {
+				this.loadingSubject.next(false);
+				console.log('success reponse', data);
+				const message = `Social account has been Successfully added`;
+				localStorage.setItem('registeredTwitter', 'true');
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+				this.router.navigate(['/cdash/socials/socials']);
+			}, error => {
+				this.loadingSubject.next(false);
+				console.log('Error response', error);
+				const title = 'Please Retry';
+				const message = 'Sorry, Temporary Error Occured';
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			});
+	}
+
+	updateSocial() {
+		let payload;
+		if (this.ssocial === 'facebook') {
+			payload = {
+				type: 'facebook',
+				data: {
+					app_id: this.appID
+				}
+			};
+		} else {
+			payload = {
+				type: 'twitter',
+				data: {
+					consumerKey: this.customerKey,
+					consumerSecret: this.customerSecret,
+					callbackUrl: this.BASE_URL
+				}
+			};
+		}
+		this.socialsService.updateLink(payload, this.social.code).subscribe(
 			data => {
 				console.log('success reponse', data);
 				this.loadingSubject.next(false);
@@ -141,51 +171,12 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 			});
 	}
-	/**
-	 * Add Social
-	 *
-	 * @param _social: SocialModel
-	 * @param withBack: boolean
-	 */
-	addSocial(_social: SocialModel) {
-		this.loadingSubject.next(true);
-		let updPayload = new FormData();
-		updPayload.append('link', this.socialForm.get('link').value);
-		updPayload.append('title', this.socialForm.get('title').value);
-		updPayload.append('target', this.socialForm.get('target').value);
-		updPayload.append('file', this.fSelected, this.fSelected.name);
-		this.socialsService.createLink(updPayload).subscribe(
-			data => {
-				this.loadingSubject.next(false);
-				console.log('success reponse', data);
-				const message = `Social has been Successfully Created`;
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-				this.router.navigate(['/strada/socials/socials']);
-			}, error => {
-				this.loadingSubject.next(false);
-				console.log('Error response', error);
-				const title = 'Please Retry';
-				const message = 'Sorry, Temporary Error Occured';
-				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-			});
-	}
 
-	onFileChange(event) {
-		if (event.target.files.length > 0) {
-			const fileSelected: File = event.target.files[0];
-			this.fSelected = fileSelected;
-			this.fileName = fileSelected.name;
-			console.log('fileSelected', fileSelected['originFileObj']);
-		}
-	}
 
 	reset() {
-		this.social = Object.assign({}, this.oldCSocial);
-		this.initSocialForm();
-		this.hasFormErrors = false;
-		this.socialForm.markAsPristine();
-		this.socialForm.markAsUntouched();
-		this.socialForm.updateValueAndValidity();
+		this.appID = '';
+		this.customerKey = '';
+		this.customerSecret = '';
 	}
 
 	/**

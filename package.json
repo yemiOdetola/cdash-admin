@@ -38,6 +38,7 @@
     "@types/lodash": "^4.14.122",
     "angular-google-charts": "^0.1.6",
     "angular-in-memory-web-api": "^0.8.0",
+    "angularx-social-login": "^2.2.1",
     "chart.js": "^2.9.2",
     "chartist": "^0.11.0",
     "classlist.js": "^1.1.20150312",

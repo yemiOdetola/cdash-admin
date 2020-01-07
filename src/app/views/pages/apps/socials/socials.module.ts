@@ -15,11 +15,26 @@ import { SocialsListComponent } from './socials-list/socials-list.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { SocialEditComponent } from './social-edit/social-edit.component';
 import { SocialComponent } from './social/social.component';
+import { SocialLoginModule } from 'angularx-social-login';
+import { AuthServiceConfig, FacebookLoginProvider } from 'angularx-social-login';
 
-// social share
+let fbkID = localStorage.getItem('fbkID');
+FacebookLoginProvider.PROVIDER_ID = fbkID;
+const config = new AuthServiceConfig([
+	{
+		id: FacebookLoginProvider.PROVIDER_ID,
+		provider: new FacebookLoginProvider(fbkID)
+	},
+
+]);
+
+export function provideConfig() {
+	return config;
+}
 
 // Core => utils
-import { HttpUtilsService,
+import {
+	HttpUtilsService,
 	TypesUtilsService,
 	InterceptService,
 	LayoutUtilsService
@@ -74,11 +89,11 @@ const routes: Routes = [
 				component: SocialsListComponent,
 			},
 			{
-				path: 'manage',
-				component: SocialEditComponent
+				path: ':media',
+				component: SocialComponent
 			},
 			{
-				path: 'manage/:id',
+				path: 'manage/social',
 				component: SocialEditComponent
 			},
 			{
@@ -119,7 +134,6 @@ const routes: Routes = [
 		MatTooltipModule,
 		MatStepperModule,
 		NgCircleProgressModule.forRoot({
-			// set defaults here
 			radius: 65,
 			outerStrokeWidth: 16,
 			innerStrokeWidth: 8,
@@ -133,6 +147,7 @@ const routes: Routes = [
 			animation: true,
 			outerStrokeGradient: true
 		}),
+		SocialLoginModule
 	],
 	providers: [
 		ModuleGuard,
@@ -141,10 +156,10 @@ const routes: Routes = [
 		InterceptService,
 		LayoutUtilsService,
 		{
-        	provide: HTTP_INTERCEPTORS,
-       	 	useClass: InterceptService,
-        	multi: true
-      	},
+			provide: HTTP_INTERCEPTORS,
+			useClass: InterceptService,
+			multi: true
+		},
 		{
 			provide: MAT_DIALOG_DEFAULT_OPTIONS,
 			useValue: {
@@ -154,7 +169,11 @@ const routes: Routes = [
 				width: '900px'
 			}
 		},
-		SocialsService
+		SocialsService,
+		{
+			provide: AuthServiceConfig,
+			useFactory: provideConfig
+		}
 	],
 	entryComponents: [
 		ActionNotificationComponent,
