@@ -78,7 +78,7 @@ export class SocialsListComponent implements OnInit, OnDestroy {
 					this.addSocial(this.fbkDetails.name, this.fbkDetails.email, localStorage.getItem('fbkID'));
 				});
 			} else {
-				const message = `Add facebook credentials before signing in`;
+				const message = `Please wait...`;
 				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 			}
 		});
@@ -104,7 +104,7 @@ export class SocialsListComponent implements OnInit, OnDestroy {
 						this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 					});
 			} else {
-				const message = `Add twitter credentials before signing in`;
+				const message = `Please wait...`;
 				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 			}
 		});
