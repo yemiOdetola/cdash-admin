@@ -59,13 +59,11 @@ export class AssetDetailsComponent implements OnInit {
 					this.recurrentData = this.assetDetails.recurrent_year;
 				}
 				if (this.assetDetails.custom_data) {
-					this.customData = JSON.parse(this.assetDetails.custom_data[0]);
-					console.log('custommmme', this.customData);
+					this.customData = JSON.parse(this.assetDetails.custom_data);
 				}
 				if (this.assetDetails.projected_cost) {
 					this.projectedCost = this.assetDetails.projected_cost;
 				}
-				console.log('this assetdata details oninit', this.assetDetails);
 				this.loadingSubject.next(false);
 				if (this.assetDetails.currency === 'naira') {
 					this.currency = '₦';

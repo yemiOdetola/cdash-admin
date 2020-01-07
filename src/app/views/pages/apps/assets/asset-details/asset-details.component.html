@@ -127,9 +127,9 @@
 							<td class="value">{{assetDetails.gross.note}}</td>
 						</tr>
 
-						<div class="customs" *ngIf="customData && customData.value">
+						<div class="customs" *ngIf="customData">
 							<tr class="each-data" *ngFor="let custom of customData">
-								<td class="label">{{custom.name}}</td>
+								<td class="label">{{custom.id}}</td>
 								<td class="value">{{custom.value}}</td>
 							</tr>
 						</div>

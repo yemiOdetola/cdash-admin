@@ -61,6 +61,27 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	customFields;
 	customModels: any;
 	grossData;
+	customsContainer;
+	custom1 = '';
+	custom2 = '';
+	custom3 = '';
+	custom4 = '';
+	custom5 = '';
+	custom6 = '';
+	custom7 = '';
+	custom8 = '';
+	custom9 = '';
+	custom10 = '';
+	custom11 = '';
+	custom12 = '';
+	custom13 = '';
+	custom14 = '';
+	custom15 = '';
+	custom16 = '';
+	custom17 = '';
+	custom18 = '';
+	custom19 = '';
+	custom20 = '';
 	constructor(
 		private route: ActivatedRoute,
 		private fb: FormBuilder,
@@ -77,6 +98,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		this.formMap = {};
 		this.myForms = [];
 		this.myformsName = [];
+		this.customsContainer = [];
 		this.localFields.forEach(input_template => {
 			group[input_template.id] = new FormControl('');
 		});
@@ -92,8 +114,13 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				this.showHistorical = true;
 			}
 			if (field.custom === true) {
-				console.log('fieldssss', field);
+				this.customsContainer.push({
+					name: field.id,
+					id: field.name,
+					value: ''
+				});
 			}
+			console.log('containercustom', this.customsContainer);
 		});
 		this.loading$ = this.loadingSubject.asObservable();
 		this.assetDataId = this.route.snapshot.params['id'];
@@ -107,14 +134,12 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	}
 
 	changeCustom(e, id) {
-		console.log(e.target.value, id);
-		let allCustoms = this.customFields;
-		allCustoms.forEach(custom => {
+		this.customsContainer.forEach(custom => {
 			if (custom.name === id) {
 				custom.value = e.target.value;
 			}
 		});
-		allCustoms = this.customFields;
+		console.log(this.customsContainer);
 	}
 
 	goBack() {
@@ -151,6 +176,52 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				if (this.assetDetails.recurrent_year.length) {
 					this.initReccurentForm(this.assetDetails.recurrent_year);
 				}
+				if (JSON.parse(this.assetDetails.custom_data)) {
+					let recustom = JSON.parse(this.assetDetails.custom_data);
+					for (let i = 0; i < this.customsContainer.length; i++) {
+						recustom.forEach(custom => {
+							if (custom.name === this.customsContainer[i].name) {
+								this.customsContainer[i].value = custom.value;
+							}
+						});
+					}
+					console.log(this.customsContainer);
+					this.customsContainer.forEach(custom => {
+						if (custom.name === 'custom1') {
+							console.log('custom.value', custom.value);
+							this.custom1 = custom.value;
+						}
+						if (custom.name === 'custom2') {
+							console.log('custom.value', custom.value);
+							this.custom2 = custom.value;
+						}
+						if (custom.name === 'custom3') {
+							this.custom3 = custom.value;
+						}
+						if (custom.name === 'custom4') {
+							this.custom4 = custom.value;
+						}
+						if (custom.name === 'custom5') {
+							this.custom5 = custom.value;
+						}
+						if (custom.name === 'custom6') {
+							this.custom6 = custom.value;
+						}
+						if (custom.name === 'custom7') {
+							this.custom7 = custom.value;
+						}
+						if (custom.name === 'custom8') {
+							this.custom8 = custom.value;
+						}
+						if (custom.name === 'custom9') {
+							this.custom9 = custom.value;
+						}
+						if (custom.name === 'custom10') {
+							this.custom10 = custom.value;
+						}
+					});
+				}
+				console.log('custom, this.custom1', this.custom1);
 				this.editAssetInit = true;
 				if (this.assetDetails.historical_data.length) {
 					this.initHistoricalCost(this.assetDetails.historical_data);
@@ -655,9 +726,10 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		if (this.fSelectedSchematics) {
 			payload.append('diagram_schematics', this.fSelectedSchematics, this.fSelectedSchematics.name);
 		}
-		if (this.customFields) {
-			payload.append('custom_data', JSON.stringify(this.customFields));
+		if (this.customsContainer.length > 0) {
+			payload.append('custom_data', JSON.stringify(this.customsContainer));
 		}
+
 		if (this.dataFormGroup.get('projected_cost').value) {
 			let projected_cost = {
 				naira: this.dataFormGroup.get('projected_cost').value,
@@ -719,8 +791,8 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		if (this.fSelectedSchematics) {
 			payload.append('diagram_schematics', this.fSelectedSchematics, this.fSelectedSchematics.name);
 		}
-		if (this.customFields) {
-			payload.append('custom_data', JSON.stringify(this.customFields));
+		if (this.customsContainer.length > 0) {
+			payload.append('custom_data', JSON.stringify(this.customsContainer));
 		}
 		if (this.dataFormGroup.get('projected_cost').value) {
 			let projected_cost = {
