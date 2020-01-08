@@ -31,6 +31,8 @@ export class AssetDetailsComponent implements OnInit {
 	selected = 'details';
 	historicalCost = [];
 	recurrentData = [];
+	showRecurrent = false;
+	showHistorical = false;
 	constructor(
 		private route: ActivatedRoute,
 		private assetsService: AssetsService,
@@ -54,6 +56,12 @@ export class AssetDetailsComponent implements OnInit {
 				}
 				if (this.assetDetails.historical_data) {
 					this.historicalCost = this.assetDetails.historical_data;
+				}
+				if (this.assetDetails.historical_data && this.assetDetails.historical_data.length) {
+					this.showHistorical = true;
+				}
+				if (this.assetDetails.recurrent_year && this.assetDetails.recurrent_year.length) {
+					this.showRecurrent = true;
 				}
 				if (this.assetDetails.recurrent_year) {
 					this.recurrentData = this.assetDetails.recurrent_year;

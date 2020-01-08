@@ -23,12 +23,12 @@
 					<div class="selected">Asset details</div>
 					<div class="active"></div>
 				</div>
-				<div [className]="selected === 'recurrent' ? 'item active' : 'item'" (click)="selectMenu('recurrent')">
+				<div [className]="selected === 'recurrent' ? 'item active' : 'item'" *ngIf="showRecurrent" (click)="selectMenu('recurrent')">
 					<div class="selected">Recurrent expenditure</div>
 					<div class="active"></div>
 				</div>
 				<div [className]="selected === 'historical' ? 'item active' : 'item'"
-					(click)="selectMenu('historical')">
+					(click)="selectMenu('historical')" *ngIf="showHistorical"> 
 					<div class="selected">Historical cost</div>
 					<div class="active"></div>
 				</div>
