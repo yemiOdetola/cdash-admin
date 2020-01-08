@@ -1,14 +1,19 @@
 <kt-portlet>
 	<kt-portlet-header title="Social Accounts" [class]="'kt-portlet__head--lg'" [viewLoading$]="loading$">
 		<ng-container ktPortletTools>
-			<a routerLink="/cdash/socials/manage/social" class="primary-button kt-margin-r-10" matTooltip="Add social media">
-				<i class="la la-plus"></i>
-				<span class="kt-hidden-mobile">Add social media</span>
-			</a>
-			<div class="details-action approve text-center" [matMenuTriggerFor]="menu">
-				<img src="./assets/media/icons/button-down.svg" alt="">
+			<!-- <a routerLink="/cdash/socials/manage/social" class="primary-button kt-margin-r-10" matTooltip="Add social media">
+				<i class="la la-cog"></i>
+				<span class="kt-hidden-mobile">Configure social network</span>
+			</a> -->
+			<div routerLink="/cdash/socials/manage/social" class="details-action edit text-center" [matMenuTriggerFor]="menu">
+				<i class="la la-cog"></i>
 				&nbsp;
-				<span>Signin</span>
+				<span>Configure social network</span>
+			</div>
+			<div class="details-action approve text-center" [matMenuTriggerFor]="menu">
+				<i class="la la-plus"></i>
+				&nbsp;
+				<span>Add social account</span>
 			</div>
 			<mat-menu #menu="matMenu">
 				<button mat-menu-item (click)="signInWithFB()">Facebook</button>

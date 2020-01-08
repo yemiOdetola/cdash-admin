@@ -108,11 +108,7 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 
 	getComponentTitle() {
 		let result = 'Please Wait';
-		if (!this.social || !this.social.code) {
-			result = 'Add Social Media Campaign';
-			return result;
-		}
-		result = `Edit Social Media Campaign`;
+		result = `Configure social network`;
 		return result;
 	}
 
@@ -161,7 +157,7 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 			data => {
 				this.loadingSubject.next(false);
 				console.log('success reponse', data);
-				const message = `Social account has been Successfully added`;
+				const message = `Successfull`;
 				localStorage.setItem('registeredTwitter', 'true');
 				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 				this.router.navigate(['/cdash/socials/socials']);

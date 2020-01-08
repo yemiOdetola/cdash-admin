@@ -729,13 +729,14 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		if (this.customsContainer.length > 0) {
 			payload.append('custom_data', JSON.stringify(this.customsContainer));
 		}
-
-		if (this.dataFormGroup.get('projected_cost').value) {
-			let projected_cost = {
-				naira: this.dataFormGroup.get('projected_cost').value,
-				dollar: this.projected_cost_dollar
-			};
-			payload.set('projected_cost', JSON.stringify(projected_cost));
+		if (this.projected_cost_dollar !== '') {
+			if (this.dataFormGroup.get('projected_cost')) {
+				let projected_cost = {
+					naira: this.dataFormGroup.get('projected_cost').value,
+					dollar: this.projected_cost_dollar
+				};
+				payload.set('projected_cost', JSON.stringify(projected_cost));
+			}
 		}
 		payload.set('business_owners', this.myForms);
 		payload.set('cost', JSON.stringify(cost));
