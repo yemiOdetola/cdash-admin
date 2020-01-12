@@ -11,12 +11,13 @@
 		<form>
 			<div class="form-group">
 				<div class="row">
-					<div class="col-lg-12">
+					<div class="col-lg-12" *ngIf="ssocial !== 'instagram'">
 						<div class="form-item">
 							<label for="title" class="label">Select social media</label>
 							<select (change)="passSocial($event)">
 								<option value="facebook">Facebook</option>
 								<option value="twitter">Twitter</option>
+								<option value="linkedin">LinkedIn</option>
 							</select>
 						</div>
 					</div>
@@ -29,6 +30,8 @@
 						</div>
 					</div>
 				</div>
+
+
 				<div class="row" *ngIf="ssocial === 'twitter'">
 					<div class="col-lg-12">
 						<div class="form-item slide-in">
@@ -49,7 +52,41 @@
 					<div class="col-lg-12">
 						<div class="form-item slide-in">
 							<label class="label">Callback URL</label>
-							<input type="url" placeholder="http://api.cdash.local/v1/social/twitter/callback" name="callbackUrl" [(ngModel)]="callbackUrl">
+							<input type="url" placeholder="http://142.93.6.250/v1/social/twitter/callback" name="callbackUrl" [(ngModel)]="callbackUrl">
+						</div>
+					</div>
+				</div>
+
+				<div class="row" *ngIf="ssocial === 'instagram'">
+					<div class="col-lg-12">
+						<div class="form-item slide-in">
+							<label class="label">Add instagram handle</label>
+							<input type="url" placeholder="jabbawockeez" name="gramName" [(ngModel)]="gramName">
+						</div>
+					</div>
+				</div>
+
+				<div class="row" *ngIf="ssocial === 'linkedin'">
+					<div class="col-lg-12">
+						<div class="form-item slide-in">
+							<label class="label">Client ID</label>
+							<input type="url" placeholder="04u09dff80e6v9" name="clientId" [(ngModel)]="clientId">
+						</div>
+					</div>
+				</div>
+				<div class="row" *ngIf="ssocial === 'linkedin'">
+					<div class="col-lg-12">
+						<div class="form-item slide-in">
+							<label class="label">Client secret</label>
+							<input type="url" placeholder="sp918AcrdwjNAF90" name="clientSecret" [(ngModel)]="clientSecret">
+						</div>
+					</div>
+				</div>
+				<div class="row" *ngIf="ssocial === 'linkedin'">
+					<div class="col-lg-12">
+						<div class="form-item slide-in">
+							<label class="label">Callback URL</label>
+							<input type="url" placeholder="http://142.93.6.250/v1/social/twitter/callback" name="callbackUrl" [(ngModel)]="callbackUrlLinkedin">
 						</div>
 					</div>
 				</div>
@@ -60,7 +97,8 @@
 			</kt-alert>
 			<div class="form-submit mt-3 mb-4">
 				<button class="reset" (click)="reset()">Reset</button>
-				<button class="submit" (click)="onSubmit()">Submit</button>
+				<button class="submit" *ngIf="ssocial !== 'instagram'" (click)="onSubmit()">Submit</button>
+				<button class="submit" *ngIf="ssocial === 'instagram'" (click)="addInsta()">Submit</button>
 			</div>
 		</form>
 	</kt-portlet-body>

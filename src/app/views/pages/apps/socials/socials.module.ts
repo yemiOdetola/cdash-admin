@@ -97,6 +97,10 @@ const routes: Routes = [
 				component: SocialEditComponent
 			},
 			{
+				path: 'manage/social/:id',
+				component: SocialEditComponent
+			},
+			{
 				path: 'link/:id',
 				component: SocialComponent,
 			},

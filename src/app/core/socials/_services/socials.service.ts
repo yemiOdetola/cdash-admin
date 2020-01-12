@@ -55,6 +55,33 @@ export class SocialsService {
 		});
 	}
 
+	getSocialLinkedin(url, code): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.get<any>(`${BASE_URL}/social/linkedin?url=${url}?code=${code}`, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+	getSocialInstagram(payload): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.post<any>(`${BASE_URL}/social/instagram`, payload, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
+	addInstagram(payload): Observable<any> {
+		const userToken = localStorage.getItem(environment.authTokenKey);
+		return this.http.post<any>(`${BASE_URL}/social/instagram`, payload, {
+			headers: {
+				'Authorization': 'Bearer ' + userToken
+			}
+		});
+	}
+
 	deleteAccount(id): Observable<any> {
 		const userToken = localStorage.getItem(environment.authTokenKey);
 		return this.http.delete<any>(`${BASE_URL}/social/${id}`, {

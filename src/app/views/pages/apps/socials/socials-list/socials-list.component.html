@@ -17,7 +17,9 @@
 			</div>
 			<mat-menu #menu="matMenu">
 				<button mat-menu-item (click)="signInWithFB()">Facebook</button>
-				<a href="{{validTwitter ? validURL : ''}}" mat-menu-item (click)="initTwitterr()">Twitter</a>
+				<button mat-menu-item (click)="initLinkedIn()">LinkedIn</button>
+				<button mat-menu-item routerLink="/cdash/socials/manage/social/instagram">Instagram</button>
+				<a mat-menu-item (click)="initTwitterr()">Twitter</a>
 			</mat-menu>
 		</ng-container>
 	</kt-portlet-header>
@@ -34,31 +36,13 @@
 				</thead>
 				<tbody>
 					<tr className="each-row" *ngFor="let account of socialls">
-						<td>{{account.data.screen_name ? account.data.screen_name : account.data.name}}</td>
+						<td>{{account.data.screen_name ? account.data.screen_name : account.data.name || account.data.username}}</td>
 						<td>{{account.type}}</td>
 						<td class="status">
-							<span class="plain">{{account.data.name ? account.data.name : account.data.email}}</span>
+							<span class="plain">{{account.data.name ? account.data.name : account.data.email || account.data.full_name}}</span>
 						</td>
 						<td><a routerLink="/cdash/socials/{{account._id}}" class="view">View</a></td>
 					</tr>
-					<!-- <tr className="each-row">
-						<td>Twitter</td>
-						<td>
-							<a href="http://142.93.6.250/v1/social/twitter?url=http://localhost:4200/cdash/socials/socials" class="btn btn-primary btn-md" (click)="initTwitterr()">
-								Twitter signin
-							</a>
-						</td>
-						<td><a routerLink="/cdash/socials/twitter" class="view">View details</a></td>
-					</tr> -->
-					<!-- <tr className="each-row">
-						<td>LinkedIn</td>
-						<td>
-							<button class="btn btn-secondary btn-md" (click)="signInWithFB()">
-								LinkedIn signin
-							</button>
-						</td>
-						<td><a routerLink="/cdash/socials/linkedin" class="view">View</a></td>
-					</tr> -->
 				</tbody>
 			</table>
 		</div>

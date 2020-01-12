@@ -27,6 +27,10 @@ export class SocialsListComponent implements OnInit, OnDestroy {
 	setupSocials;
 	validTwitter = false;
 	validURL = '';
+	linkedInUrl = '';
+	linkedInCode = '';
+	windowsUrl = '';
+	instaUsername = '';
 	constructor(
 		private authService: AuthService,
 		private socialsService: SocialsService,
@@ -45,6 +49,7 @@ export class SocialsListComponent implements OnInit, OnDestroy {
 		this.getAllSocials();
 		this.loadingSubject.next(false);
 		const urrl = window.location.href;
+		this.windowsUrl = urrl;
 		this.validURL = `http://142.93.6.250/v1/social/twitter?url=${urrl}`;
 	}
 
@@ -78,7 +83,7 @@ export class SocialsListComponent implements OnInit, OnDestroy {
 					this.addSocial(this.fbkDetails.name, this.fbkDetails.email, localStorage.getItem('fbkID'));
 				});
 			} else {
-				const message = `Please wait...`;
+				const message = `Facebook account is not configured`;
 				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 			}
 		});
@@ -88,6 +93,7 @@ export class SocialsListComponent implements OnInit, OnDestroy {
 		this.setupSocials.forEach(social => {
 			if (social.type === 'twitter') {
 				let url = window.location.href;
+				window.open(this.validURL, '_blank');
 				console.log('callback url', url);
 				this.socialsService.getSocial(url).subscribe(
 					data => {
@@ -104,7 +110,64 @@ export class SocialsListComponent implements OnInit, OnDestroy {
 						this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 					});
 			} else {
-				const message = `Please wait...`;
+				const message = `Twitter account is not configured`;
+				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			}
+		});
+	}
+
+	initLinkedIn()  {
+		this.setupSocials.forEach(social => {
+			if (social.type === 'linkedin') {
+				let url = window.location.href;
+				this.linkedInCode = 'lol';
+				this.linkedInUrl = `http://142.93.6.250/v1/social/linkedin?url=${url}`;
+				window.open(this.linkedInUrl, '_blank');
+				this.socialsService.getSocialLinkedin(url, this.linkedInCode).subscribe(
+					data => {
+						this.loadingSubject.next(false);
+						console.log('success reponse', data);
+						const message = `Success`;
+						this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+					}, error => {
+						this.loadingSubject.next(false);
+						console.log('Error response', error);
+						const title = 'Please Retry';
+						const message = 'Sorry, Temporary Error Occured';
+						this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+					});
+			} else {
+				const message = `LinkedIn social network is not configured`;
+				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			}
+		});
+	}
+
+	initInstagram()  {
+		this.setupSocials.forEach(social => {
+			if (social.type === 'instagram') {
+				let url = window.location.href;
+				this.linkedInCode = 'lol';
+				this.linkedInUrl = `http://142.93.6.250/v1/social/linkedin?url=${url}`;
+				window.open(this.linkedInUrl, '_blank');
+				let payload = {
+					username: this.instaUsername
+				};
+				this.socialsService.getSocialInstagram(payload).subscribe(
+					data => {
+						this.loadingSubject.next(false);
+						console.log('success reponse', data);
+						const message = `Success`;
+						this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+					}, error => {
+						this.loadingSubject.next(false);
+						console.log('Error response', error);
+						const title = 'Please Retry';
+						const message = 'Sorry, Temporary Error Occured';
+						this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+					});
+			} else {
+				const message = `Instagram social network is not configured`;
 				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 			}
 		});

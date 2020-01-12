@@ -38,6 +38,10 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 	customerSecret = '';
 	callbackUrl = '';
 	appURL = '';
+	clientId = '';
+	clientSecret = '';
+	callbackUrlLinkedin = '';
+	gramName = '';
 	setupSocials;
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -58,6 +62,10 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 		if (this.activatedRoute.snapshot.params['id']) {
 			console.log('id found', this.activatedRoute.snapshot.params['id']);
 			this.idParams = this.activatedRoute.snapshot.params['id'];
+			if (this.idParams === 'instagram') {
+				console.log('its insta');
+				this.ssocial = 'instagram';
+			}
 		}
 		window.onload = () => {
 			const style = getComputedStyle(document.getElementById('kt_header'));
@@ -96,6 +104,11 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 						this.customerKey = social.data.consumerKey;
 						this.customerSecret = social.data.consumerSecret;
 						this.callbackUrl = social.data.callbackUrl;
+					}
+					if (social.type === 'linkedin') {
+						this.clientId = social.data.clientId;
+						this.clientSecret = social.data.clientSec;
+						this.callbackUrlLinkedin = social.data.callbackUrl;
 					}
 				});
 			}
@@ -139,7 +152,8 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 					app_id: this.appID
 				}
 			};
-		} else {
+		}
+		if (this.ssocial === 'twitter') {
 			if (this.customerKey === '' || this.customerSecret === '' || this.callbackUrl === '') {
 				const message = 'All fields are compulsory';
 				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
@@ -153,12 +167,59 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 				}
 			};
 		}
+		if (this.ssocial === 'linkedin') {
+			if (this.clientId === '' || this.clientSecret === '' || this.callbackUrlLinkedin === '') {
+				const message = 'All fields are compulsory';
+				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			}
+			payload = {
+				type: 'linkedin',
+				data: {
+					clientId: this.clientId,
+					clientSec: this.clientSecret,
+					callbackUrl: this.callbackUrlLinkedin
+				}
+			};
+		}
+		if (this.ssocial === 'instagram') {
+			if (this.gramName === '') {
+				const message = 'Instagram handle is compulsory';
+				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 5000, true, true);
+			}
+			payload = {
+				username: this.gramName,
+			};
+		}
 		this.socialsService.addSocial(payload).subscribe(
 			data => {
 				this.loadingSubject.next(false);
 				console.log('success reponse', data);
 				const message = `Successfull`;
-				localStorage.setItem('registeredTwitter', 'true');
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+				this.router.navigate(['/cdash/socials/socials']);
+			}, error => {
+				this.loadingSubject.next(false);
+				console.log('Error response', error);
+				const title = 'Please Retry';
+				const message = 'Sorry, Temporary Error Occured';
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			});
+	}
+
+	addInsta() {
+		if (this.gramName === '') {
+			const message = 'Instagram handle is compulsory';
+			return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 5000, true, true);
+		}
+		let payload = {
+			username: this.gramName,
+		};
+
+		this.socialsService.addInstagram(payload).subscribe(
+			data => {
+				this.loadingSubject.next(false);
+				console.log('success reponse', data);
+				const message = `Successfull`;
 				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 				this.router.navigate(['/cdash/socials/socials']);
 			}, error => {
@@ -172,6 +233,21 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 
 	updateSocial() {
 		let payload;
+		if (this.ssocial === 'linkedin') {
+			if (this.clientId === '' || this.clientSecret === '' || this.callbackUrlLinkedin === '') {
+				const message = 'All fields are compulsory';
+				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+			}
+			payload = {
+				type: 'linkedin',
+				data: {
+					clientId: this.clientId,
+					clientSec: this.clientSecret,
+					callbackUrl: this.callbackUrlLinkedin
+				}
+			};
+		}
+
 		if (this.ssocial === 'facebook') {
 			payload = {
 				type: 'facebook',
@@ -179,7 +255,9 @@ export class SocialEditComponent implements OnInit, OnDestroy {
 					app_id: this.appID
 				}
 			};
-		} else {
+		}
+
+		if (this.ssocial === 'twitter') {
 			payload = {
 				type: 'twitter',
 				data: {
