@@ -145,6 +145,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 					this.store.dispatch(new Login({ authToken: responseData.user_token }));
 					localStorage.setItem('userToken', responseData.user_token);
 					localStorage.setItem('loginId', responseData.user_id);
+					localStorage.setItem('userId', responseData.user_id);
 					localStorage.setItem('orgDetails', JSON.stringify(responseData.organization));
 					this.userData = responseData.organization;
 					localStorage.setItem('loginData', JSON.stringify(this.userData));

@@ -30,16 +30,14 @@
 					<tr>
 						<th>Account name</th>
 						<th>Account type</th>
-						<th>Others</th>
 						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr className="each-row" *ngFor="let account of socialls">
-						<td>{{account.data.screen_name ? account.data.screen_name : account.data.name || account.data.username}}</td>
-						<td>{{account.type}}</td>
+						<td>{{account.data.screen_name ? account.data.screen_name : account.data.name || account.data.username || (account.data.firstName + ' ' + account.data.lastName)}}</td>
 						<td class="status">
-							<span class="plain">{{account.data.name ? account.data.name : account.data.email || account.data.full_name}}</span>
+							<span class="leadInitiated">{{account.type}}</span>
 						</td>
 						<td><a routerLink="/cdash/socials/{{account._id}}" class="view">View</a></td>
 					</tr>

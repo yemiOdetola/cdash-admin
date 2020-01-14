@@ -19,6 +19,10 @@
 						<td class="label">Name</td>
 						<td class="value">{{ socialDetails.name || socialDetails.full_name}}</td>
 					</tr>
+					<tr class="each-data" *ngIf="socialDetails.firstName">
+						<td class="label">Name</td>
+						<td class="value">{{ socialDetails.firstName + ' ' + socialDetails.lastName}}</td>
+					</tr>
 					<tr class="each-data" *ngIf="socialDetails.biography">
 						<td class="label">Biography</td>
 						<td class="value">{{ socialDetails.biography}}</td>
