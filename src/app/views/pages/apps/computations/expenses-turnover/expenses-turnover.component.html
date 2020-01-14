@@ -8,6 +8,7 @@
 				<span>{{selectedName}}</span>
 			</div>
 			<mat-menu #menu="matMenu">
+				<button mat-menu-item (click)="getAllAssets()">All assets</button>
 				<button mat-menu-item (click)="generateTurnover(asset.name, asset._id)"
 					*ngFor="let asset of allAssets">
 					{{ asset.name }}

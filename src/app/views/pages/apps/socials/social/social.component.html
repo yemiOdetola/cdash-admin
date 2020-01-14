@@ -23,9 +23,13 @@
 						<td class="label">Biography</td>
 						<td class="value">{{ socialDetails.biography}}</td>
 					</tr>
-					<tr class="each-data" *ngIf="socialDetails.edge_followed_by.count">
-						<td class="label">Followers count</td>
+					<tr class="each-data" *ngIf="socialDetails.edge_followed_by && socialDetails.edge_followed_by.count">
+						<td class="label">Followers</td>
 						<td class="value">{{ socialDetails.edge_followed_by.count}}</td>
+					</tr>
+					<tr class="each-data" *ngIf="socialDetails.edge_follow && socialDetails.edge_follow.count">
+						<td class="label">Following</td>
+						<td class="value">{{ socialDetails.edge_follow.count}}</td>
 					</tr>
 					<tr class="each-data" *ngIf="socialDetails.email">
 						<td class="label">Email address</td>
@@ -52,9 +56,15 @@
 						</td>
 					</tr>
 					<tr class="each-data" *ngIf="socialDetails.followers_count">
-						<td class="label">Number of followers</td>
+						<td class="label">followers</td>
 						<td class="value">
 							<span class="plain">{{socialDetails.followers_count}}</span>
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="socialDetails.friends_count">
+						<td class="label">Following</td>
+						<td class="value">
+							<span class="plain">{{socialDetails.friends_count}}</span>
 						</td>
 					</tr>
 					<tr class="each-data" *ngIf="socialDetails.statuses_count">
