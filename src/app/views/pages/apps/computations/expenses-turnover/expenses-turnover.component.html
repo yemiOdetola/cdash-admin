@@ -8,7 +8,7 @@
 				<span>{{selectedName}}</span>
 			</div>
 			<mat-menu #menu="matMenu">
-				<button mat-menu-item (click)="getAllAssets()">All assets</button>
+				<button mat-menu-item (click)="initAnalytics()">All assets</button>
 				<button mat-menu-item (click)="generateTurnover(asset.name, asset._id)"
 					*ngFor="let asset of allAssets">
 					{{ asset.name }}
@@ -28,12 +28,12 @@
 						<!-- <th></th> -->
 					</tr>
 				</thead>
-				<tbody *ngIf="expTurnovers">
+				<tbody>
 					<tr className="each-row" *ngFor="let year of years; let i = index;">
 						<td>{{year}}</td>
-						<td>{{ (expTurnovers.turnovers[i].amount ? expTurnovers.turnovers[i].amount : 0) | currency: passedCurrency}}</td>
-						<td>{{ (expTurnovers.expenses[i].amount ? expTurnovers.expenses[i].amount : 0) | currency: passedCurrency}}</td>
-						<td>{{expTurnovers.ratio[i].ratio ? expTurnovers.ratio[i].ratio : 'n/a'}}</td>
+						<td>{{ (expTurnovers.turnovers[0] && expTurnovers.turnovers[i].amount > 0 ? expTurnovers.turnovers[i].amount : 0) | currency: passedCurrency}}</td>
+						<td>{{ (expTurnovers.expenses[0] && expTurnovers.expenses[i].amount > 0 ? expTurnovers.expenses[i].amount : 0) | currency: passedCurrency}}</td>
+						<td>{{expTurnovers.ratio[i].ratio !== null ? expTurnovers.ratio[i].ratio : 'n/a'}}</td>
 						<!-- <td><a routerLink="/cdash/computations/expenses-turnover/ratio-chart" class="view">View ratio chart</a></td> -->
 					</tr>
 				</tbody>

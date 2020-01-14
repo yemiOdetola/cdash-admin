@@ -1,7 +1,7 @@
 // Angular
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { Router } from '@angular/router';
+import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 // Services and Models
 import { AssetsService } from '../../../../../core/assets';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -30,10 +30,7 @@ export class ExpensesTurnoverComponent implements OnInit, OnDestroy {
 	year;
 	years = [];
 
-	constructor(
-		private assetsService: AssetsService,
-		private router: Router,
-		private fb: FormBuilder) { }
+	constructor(private assetsService: AssetsService, private layoutUtilsService: LayoutUtilsService,) { }
 
 	ngOnInit() {
 		this.initAnalytics();
@@ -64,15 +61,21 @@ export class ExpensesTurnoverComponent implements OnInit, OnDestroy {
 		this.loadingSubject.next(true);
 		this.assetsService.getAllAssetsTurnover(payload).subscribe(
 			response => {
+				this.loadingSubject.next(false);
 				this.expTurnovers = response;
-				if (this.expTurnovers.expenses[0].currenct === 'naira') {
+				console.log('call made response', this.expTurnovers);
+				if (this.expTurnovers.expenses[0] && this.expTurnovers.expenses[0].currency === 'naira') {
 					this.passedCurrency = '₦';
 				} else {
 					this.passedCurrency = '$';
 				}
-				this.loadingSubject.next(false);
 			},
 			error => {
+				if (error.status === 404) {
+					const message = `Asset's data is not found`;
+					this.layoutUtilsService.showActionNotification(message, MessageType.Create, 5000, true, true);
+				}
+				this.loadingSubject.next(false);
 				console.log('error', error);
 			}
 		);
