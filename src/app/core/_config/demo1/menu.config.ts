@@ -107,7 +107,7 @@ export class MenuConfig {
 					page: 'socials',
 					root: true,
 					bullet: 'dot',
-					icon: 'flaticon-signs-1',
+					icon: 'flaticon2-browser-2',
 				}
 			]
 		},

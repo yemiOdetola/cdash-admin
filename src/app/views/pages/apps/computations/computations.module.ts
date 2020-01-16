@@ -29,6 +29,7 @@ import {
 } from '../../../../core/_base/crud';
 
 // Core => service
+import { FinanceGuardService } from '../../../../core/guard';
 import { ComputationsService } from '../../../../core/computations';
 import {
 	ActionNotificationComponent,
@@ -66,6 +67,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: ComputationsComponent,
+		canActivate: [FinanceGuardService],
 		children: [
 			{
 				path: '',
@@ -155,7 +157,8 @@ const routes: Routes = [
 				width: '900px'
 			}
 		},
-		ComputationsService
+		ComputationsService,
+		FinanceGuardService
 	],
 	entryComponents: [
 		ActionNotificationComponent,

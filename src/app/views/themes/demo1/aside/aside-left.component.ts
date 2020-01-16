@@ -20,7 +20,7 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 	currentRouteUrl: string = '';
 	insideTm: any;
 	outsideTm: any;
-	loginData = JSON.parse(localStorage.getItem('loginData'));
+	loginData = '';
 	menuCanvasOptions: OffcanvasOptions = {
 		baseClass: 'kt-aside',
 		overlay: true,
@@ -66,6 +66,9 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 	}
 
 	ngOnInit() {
+		if (localStorage.getItem('loginData')) {
+			this.loginData = JSON.parse(localStorage.getItem('loginData'));
+		}
 		if (this.loginData) {
 			this.setBackground = this.loginData['color'];
 		} else {

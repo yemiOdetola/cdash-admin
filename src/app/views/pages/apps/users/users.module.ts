@@ -47,6 +47,7 @@ import {
 import { UserService } from '../../../../core/users';
 import { RolesService } from '../../../../core/roles';
 import { ClaimsService } from '../../../../core/claims';
+import { AuthGuardService } from '../../../../core/guard';
 import {
 	ActionNotificationComponent,
 	DeleteEntityDialogComponent,
@@ -93,6 +94,7 @@ const routes: Routes = [
 			{
 				path: 'users',
 				component: UsersListComponent,
+				canActivate: [AuthGuardService]
 			},
 			{
 				path: 'staffs',
@@ -101,6 +103,7 @@ const routes: Routes = [
 			{
 				path: 'roles',
 				component: RolesListComponent,
+				canActivate: [AuthGuardService]
 			},
 			{
 				path: 'claims',
@@ -116,11 +119,13 @@ const routes: Routes = [
 			},
 			{
 				path: 'roles/add',
-				component: RoleEditComponent
+				component: RoleEditComponent,
+				canActivate: [AuthGuardService]
 			},
 			{
 				path: 'roles/add/:id',
-				component: RoleEditComponent
+				component: RoleEditComponent,
+				canActivate: [AuthGuardService]
 			},
 			{
 				path: 'claims/add',
@@ -128,7 +133,8 @@ const routes: Routes = [
 			},
 			{
 				path: 'staff/manage',
-				component: StaffEditComponent
+				component: StaffEditComponent,
+				canActivate: [AuthGuardService]
 			},
 			{
 				path: 'staffs/:id',
@@ -136,11 +142,13 @@ const routes: Routes = [
 			},
 			{
 				path: 'staff/manage/:id',
-				component: StaffEditComponent
+				component: StaffEditComponent,
+				canActivate: [AuthGuardService]
 			},
 			{
 				path: 'manage/:id',
-				component: UserEditComponent
+				component: UserEditComponent,
+				canActivate: [AuthGuardService]
 			},
 			{
 				path: 'profile-edit',
@@ -214,7 +222,8 @@ const routes: Routes = [
 			}
 		},
 		UserService, RolesService, ClaimsService, LeadsService,
-		ContactsService, CampaignsService, MeetingsService, ProjectsService
+		ContactsService, CampaignsService, MeetingsService, ProjectsService,
+		AuthGuardService
 	],
 	entryComponents: [
 		ActionNotificationComponent,

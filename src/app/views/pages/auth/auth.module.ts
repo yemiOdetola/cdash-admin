@@ -23,6 +23,7 @@ import { AuthNoticeComponent } from './auth-notice/auth-notice.component';
 import { InputTokenComponent } from './input-token/input-token.component';
 // Auth
 import { AuthEffects, AuthGuard, authReducer, AuthService } from '../../../core/auth';
+import { RolesService } from '../../../core/roles';
 import { CreateOrganizationComponent } from './create-organization/create-organization.component';
 
 const routes: Routes = [
@@ -107,6 +108,7 @@ export class AuthModule {
 			ngModule: AuthModule,
 			providers: [
 				AuthService,
+				RolesService,
 				AuthGuard
 			]
 		};

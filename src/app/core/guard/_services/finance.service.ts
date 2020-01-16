@@ -2,11 +2,10 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 
 @Injectable()
-export class AuthGuardService implements CanActivate {
+export class FinanceGuardService implements CanActivate {
 	constructor(public router: Router) { }
 	canActivate(): boolean {
 		let roles = localStorage.getItem('roles');
-		console.log(roles);
 		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
 		if (roles) {
 			let rolesArr = roles.split(',');

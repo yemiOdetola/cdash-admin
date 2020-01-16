@@ -11,6 +11,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 // Auth
 import { AuthNoticeService, AuthService, Login } from '../../../../core/auth';
+import { RolesService } from '../../../../core/roles';
 
 /**
  * ! Just example => Should be removed in development
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	isLoggedIn$: Observable<boolean>;
 	errors: any = [];
 	userData: any;
+	roles;
 	private unsubscribe: Subject<any>;
 
 	private returnUrl: any;
@@ -53,6 +55,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	constructor(
 		private router: Router,
 		private auth: AuthService,
+		private rolesService: RolesService,
 		private authNoticeService: AuthNoticeService,
 		private translate: TranslateService,
 		private store: Store<AppState>,
@@ -141,14 +144,20 @@ export class LoginComponent implements OnInit, OnDestroy {
 			.subscribe(response => {
 				console.log(response);
 				const responseData = response['data'];
+				if (response['status'] === false) {
+					this.loading = false;
+					return this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'danger');
+				}
 				if (responseData.user_token) {
 					this.store.dispatch(new Login({ authToken: responseData.user_token }));
 					localStorage.setItem('userToken', responseData.user_token);
 					localStorage.setItem('loginId', responseData.user_id);
 					localStorage.setItem('userId', responseData.user_id);
+					localStorage.setItem('userDetails', JSON.stringify(responseData));
 					localStorage.setItem('orgDetails', JSON.stringify(responseData.organization));
 					this.userData = responseData.organization;
 					localStorage.setItem('loginData', JSON.stringify(this.userData));
+					this.getAllRoles();
 					this.router.navigateByUrl(this.returnUrl); // Main page
 				} else {
 					this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'danger');
@@ -157,6 +166,24 @@ export class LoginComponent implements OnInit, OnDestroy {
 			});
 	}
 
+	getAllRoles() {
+		localStorage.setItem('roles', '');
+		this.rolesService.getRoles(0, 999).subscribe(
+			responseData => {
+				let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+				this.roles = responseData['data'];
+				this.roles.forEach(role => {
+					if (userDetails.role === role._id) {
+						console.log(role, userDetails.role);
+						localStorage.setItem('roles', role.permissions);
+					}
+				});
+			},
+			error => {
+				console.log('error', error);
+			}
+		);
+	}
 	// togettingtoken
 
 

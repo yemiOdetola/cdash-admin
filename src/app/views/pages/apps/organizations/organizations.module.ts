@@ -23,6 +23,7 @@ import { HttpUtilsService,
 } from '../../../../core/_base/crud';
 
 // Core => service
+import { AuthGuardService } from '../../../../core/guard';
 import { OrganizationsService } from '../../../../core/organizations';
 import {
 	ActionNotificationComponent,
@@ -60,6 +61,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: OrganizationsComponent,
+		canActivate: [AuthGuardService],
 		children: [
 			{
 				path: '',
@@ -141,7 +143,8 @@ const routes: Routes = [
 				width: '900px'
 			}
 		},
-		OrganizationsService
+		OrganizationsService,
+		AuthGuardService
 	],
 	entryComponents: [
 		ActionNotificationComponent,

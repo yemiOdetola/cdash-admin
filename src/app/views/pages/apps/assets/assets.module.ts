@@ -1,7 +1,7 @@
 // Angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // Auth
@@ -28,6 +28,8 @@ import { HttpUtilsService,
 
 // Core => service
 import { AssetsService } from '../../../../core/assets';
+import { AuthGuardService } from '../../../../core/guard';
+
 import {
 	ActionNotificationComponent,
 	DeleteEntityDialogComponent,
@@ -81,19 +83,23 @@ const routes: Routes = [
 			},
 			{
 				path: 'manage',
-				component: AssetEditComponent
+				component: AssetEditComponent,
+				canActivate: [AuthGuardService]
 			},
 			{
 				path: 'manage/new-asset-data',
-				component: AssetDataComponent
+				component: AssetDataComponent,
+				canActivate: [AuthGuardService]
 			},
 			{
 				path: 'manage/asset-data/:id',
-				component: AssetContainerComponent
+				component: AssetContainerComponent,
+				canActivate: [AuthGuardService]
 			},
 			{
 				path: 'new-asset-data/details/:id',
-				component: AssetDataComponent
+				component: AssetDataComponent,
+				canActivate: [AuthGuardService]
 			},
 			{
 				path: 'asset-details/:id',
@@ -101,7 +107,8 @@ const routes: Routes = [
 			},
 			{
 				path: 'manage/:id',
-				component: AssetEditComponent
+				component: AssetEditComponent,
+				canActivate: [AuthGuardService]
 			},
 			{
 				path: 'asset/:id',
@@ -161,7 +168,8 @@ const routes: Routes = [
 				width: '900px'
 			}
 		},
-		AssetsService
+		AssetsService,
+		AuthGuardService
 	],
 	entryComponents: [
 		ActionNotificationComponent,

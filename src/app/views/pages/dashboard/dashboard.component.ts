@@ -82,7 +82,7 @@ export class DashboardComponent implements OnInit {
 		this.getAllAssets();
 		this.initRecurrentExpenditure();
 		this.initCapitalExpenditure();
-		console.clear();
+		// console.clear();
 	}
 
 	getUsersCount() {

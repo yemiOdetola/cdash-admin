@@ -23,6 +23,7 @@ import { HttpUtilsService,
 } from '../../../../core/_base/crud';
 
 import { ProjectsService } from '../../../../core/projects';
+import { LogsGuardService } from '../../../../core/guard';
 import {
 	ActionNotificationComponent,
 	DeleteEntityDialogComponent,
@@ -59,6 +60,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: LogsComponent,
+		canActivate: [LogsGuardService],
 		children: [
 			{
 				path: '',
@@ -125,7 +127,8 @@ const routes: Routes = [
 				width: '900px'
 			}
 		},
-		ProjectsService
+		ProjectsService,
+		LogsGuardService
 	],
 	entryComponents: [
 		ActionNotificationComponent,
@@ -138,4 +141,4 @@ const routes: Routes = [
 		AllLogsComponent
 	]
 })
-export class LogsModule { } 
+export class LogsModule { }
