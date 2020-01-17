@@ -67,9 +67,10 @@ export class DashboardComponent implements OnInit {
 
 	ngOnInit() {
 		this.auth.checkOrganization().subscribe(response => {
-			if (response.status === true && localStorage.getItem('userToken')) {
+			if (response.status === true && response.data !== null && response.data.superAdmin !== false) {
 				return;
 			} else {
+				localStorage.clear();
 				this.router.navigate(['/auth/login']);
 			}
 		});
@@ -82,7 +83,6 @@ export class DashboardComponent implements OnInit {
 		this.getAllAssets();
 		this.initRecurrentExpenditure();
 		this.initCapitalExpenditure();
-		// console.clear();
 	}
 
 	getUsersCount() {

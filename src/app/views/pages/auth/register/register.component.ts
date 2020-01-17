@@ -58,7 +58,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	 */
 	ngOnInit() {
 		this.auth.checkOrganization().subscribe(response => {
-			if (response.status === true && response.data.superAdmin) {
+			if (response.status === true && response.data !== null && response.data.superAdmin !== false) {
 				this.router.navigate(['/auth/login']);
 			}
 		});
@@ -147,6 +147,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 		_user.address = controls['address'].value;
 		_user.name = controls['fullname'].value;
 		_user.password = controls['password'].value;
+		_user.type = 'superadmin',
 		_user.roles = [];
 		this.auth.register(_user).pipe(
 			tap(user => {

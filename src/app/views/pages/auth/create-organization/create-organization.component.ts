@@ -22,6 +22,7 @@ export class CreateOrganizationComponent implements OnInit {
 	isLoggedIn$: Observable<boolean>;
 	errors: any = [];
 	userData: any;
+	orgResponse;
 	private returnUrl: any;
 	private unsubscribe: Subject<any>;
 	fSelected;
@@ -36,19 +37,22 @@ export class CreateOrganizationComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
+		this.initOrganizationForm();
 		this.auth.checkOrganization().subscribe(response => {
-			if (response.status === true && response.data._id) {
+			if (response.status === true && response.data !== null) {
+				this.orgResponse = response;
 				this.router.navigate(['/auth/register']);
 			}
 		});
-		if (localStorage.getItem('orgDetails')) {
+		if (this.orgResponse.status === true && this.orgResponse.data._id) {
 			this.router.navigate(['/cdash/dashboard']);
 		}
-		this.initOrganizationForm();
 		this.route.queryParams.subscribe(params => {
 			this.returnUrl = params['returnUrl'] || '/';
 		});
 	}
+
+	// superAdmin: true/false, activated: true/false,
 
 	/**
 	 * Form initalization
@@ -66,37 +70,32 @@ export class CreateOrganizationComponent implements OnInit {
 	 * Form Submit
 	 */
 	submit() {
-		const controls = this.organizationForm.controls;
-		/** check form */
-		if (this.organizationForm.invalid) {
-			Object.keys(controls).forEach(controlName =>
-				controls[controlName].markAsTouched()
-			);
-			return;
-		}
-
-		this.loading = true;
-		const payload = new FormData();
-		payload.append('name', this.organizationForm.get('name').value);
-		payload.append('color', this.organizationForm.get('color').value);
-		payload.append('address', this.organizationForm.get('address').value);
-		if (this.fSelected) {
-			payload.append('image', this.fSelected, this.fSelected.name);
-		}
-		this.auth.createOrganization(payload)
+		if (this.organizationForm.get('name').value !== '' && this.organizationForm.get('color').value !== '' && this.organizationForm.get('address').value !== '' && this.fSelected) {
+			this.loading = true;
+			const payload = new FormData();
+			payload.append('name', this.organizationForm.get('name').value);
+			payload.append('color', this.organizationForm.get('color').value);
+			payload.append('address', this.organizationForm.get('address').value);
+			if (this.fSelected) {
+				payload.append('logo', this.fSelected, this.fSelected.name);
+			}
+			this.auth.createOrganization(payload)
 			.subscribe(response => {
 				console.log(response);
 				const responseData = response['data'];
-				if (response.status !== true) {
+				if (responseData.user_token) {
 					localStorage.setItem('userToken', responseData.user_token);
 					this.router.navigate(['/cdash/dashboard']);
-				} else if (localStorage.getItem('orgDetails')) {
+				} else {
+					this.authNoticeService.setNotice('Some error occured, please retry', 'danger');
 					this.loading = false;
-					this.router.navigate(['/cdash/dashboard']);
 				}
 			});
+		} else {
+			this.loading = false;
+			return this.authNoticeService.setNotice('All fields are compulsory', 'danger');
+		}
 	}
-
 	// togettingtoken
 
 
@@ -118,9 +117,8 @@ export class CreateOrganizationComponent implements OnInit {
 
 	onFileChange(event) {
 		if (event.target.files.length > 0) {
-			const fileSelected: File = event.target.files[0];
-			this.fSelected = fileSelected;
-			this.fileName = fileSelected.name;
+			this.fSelected = event.target.files[0];
+			this.fileName = event.target.files[0].name;
 		}
 	}
 }

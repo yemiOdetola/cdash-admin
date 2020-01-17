@@ -16,6 +16,7 @@ export class User extends BaseModel {
 	companyName: string;
 	phone: string;
     address: Address;
+    type: string;
     socialNetworks: SocialNetworks;
 	organization_id: string;
 
