@@ -34,7 +34,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	oldAssetData: FormGroup;
 	assetData: any;
 	formFields = [];
-	localForms = JSON.parse(localStorage.getItem('formElement'));
+	localForms;
 	localFields = this.localForms.form;
 	forms: any = this.localFields;
 	dataFormGroup: FormGroup;
@@ -92,6 +92,9 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		private router: Router) { }
 
 	ngOnInit() {
+		if (localStorage.getItem('formElement')) {
+			this.localForms = JSON.parse(localStorage.getItem('formElement'));
+		}
 		this.getAllStaffs();
 		console.clear();
 		let group = {};
@@ -176,7 +179,7 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				if (this.assetDetails.recurrent_year.length) {
 					this.initReccurentForm(this.assetDetails.recurrent_year);
 				}
-				if (JSON.parse(this.assetDetails.custom_data)) {
+				if (this.assetDetails.custom_data) {
 					let recustom = JSON.parse(this.assetDetails.custom_data);
 					for (let i = 0; i < this.customsContainer.length; i++) {
 						recustom.forEach(custom => {

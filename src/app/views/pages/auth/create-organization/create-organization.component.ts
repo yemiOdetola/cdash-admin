@@ -44,8 +44,10 @@ export class CreateOrganizationComponent implements OnInit {
 				this.router.navigate(['/auth/register']);
 			}
 		});
-		if (this.orgResponse.status === true && this.orgResponse.data._id) {
-			this.router.navigate(['/cdash/dashboard']);
+		if (this.orgResponse) {
+			if (this.orgResponse.status === true && this.orgResponse.data._id) {
+				this.router.navigate(['/cdash/dashboard']);
+			}
 		}
 		this.route.queryParams.subscribe(params => {
 			this.returnUrl = params['returnUrl'] || '/';

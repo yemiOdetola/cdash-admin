@@ -48,7 +48,10 @@ export class ReportsListComponent implements OnInit, OnDestroy {
 		private fb: FormBuilder) { }
 
 	ngOnInit() {
-		let setDate: any = JSON.parse(localStorage.getItem('groupDate'));
+		let setDate;
+		if (localStorage.getItem('groupDate')) {
+			setDate = JSON.parse(localStorage.getItem('groupDate'));
+		}
 		console.log('setDate', setDate);
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
@@ -177,7 +180,7 @@ export class ReportsListComponent implements OnInit, OnDestroy {
 		this.showForm = false;
 		console.log(event, 'event target');
 		this.loadingSubject.next(true);
-		const date =  this.reportDate;
+		const date = this.reportDate;
 		let startHours = new Date(date).setHours(0);
 		let startMins = new Date(startHours).setMinutes(0);
 		let startSecs = new Date(startMins).setSeconds(0);

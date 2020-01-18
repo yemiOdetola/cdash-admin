@@ -21,19 +21,21 @@ export class ProfileComponent implements OnInit {
 	awaitError = 'Please Wait...';
 	constructor(
 		private store: Store<AppState>,
-		private usersService: UserService) {}
+		private usersService: UserService) { }
 
 	ngOnInit() {
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
 		this.userId = localStorage.getItem('loginId');
-		this.companyDetails = JSON.parse(localStorage.getItem('loginData'));
+		if (localStorage.getItem('loginData')) {
+			this.companyDetails = JSON.parse(localStorage.getItem('loginData'));
+		}
 		this.getUserDetails(this.userId);
 	}
 
 	getUserDetails(id) {
 		this.loadingSubject.next(true);
-			this.usersService.getUserById(id).subscribe(
+		this.usersService.getUserById(id).subscribe(
 			singleUser => {
 				this.userDetails = singleUser['data'];
 			},

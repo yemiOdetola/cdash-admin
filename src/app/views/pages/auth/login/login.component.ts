@@ -74,16 +74,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 	 * On init
 	 */
 	ngOnInit(): void {
+		this.initLoginForm();
 		this.auth.checkOrganization().subscribe(response => {
 			if (response.status === true && response.data !== null) {
-				console.log('staying');
 				return;
 			} else {
-				console.log('redirecting');
 				this.router.navigate(['/auth/create-organization']);
 			}
 		});
-		this.initLoginForm();
 		// redirect back to the returnUrl before login
 		this.route.queryParams.subscribe(params => {
 			this.returnUrl = params['returnUrl'] || '/';
@@ -172,7 +170,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 		localStorage.setItem('roles', '');
 		this.rolesService.getRoles(0, 999).subscribe(
 			responseData => {
-				let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+				let userDetails;
+				if (localStorage.getItem('userDetails')) {
+					userDetails = JSON.parse(localStorage.getItem('userDetails'));
+				}
 				this.roles = responseData['data'];
 				this.roles.forEach(role => {
 					if (userDetails.role === role._id) {

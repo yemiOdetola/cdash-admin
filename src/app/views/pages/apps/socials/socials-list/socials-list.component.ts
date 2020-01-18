@@ -41,7 +41,9 @@ export class SocialsListComponent implements OnInit, OnDestroy {
 		this.getSocialSetup();
 		this.loading$ = this.loadingSubject.asObservable();
 		this.loadingSubject.next(true);
-		this.fbkDetails = JSON.parse(localStorage.getItem('facebookDetails'));
+		if (localStorage.getItem('facebookDetails')) {
+			this.fbkDetails = JSON.parse(localStorage.getItem('facebookDetails'));
+		}
 		this.authService.authState.subscribe((user) => {
 			this.user = user;
 			console.log('logged in user', user);
@@ -79,7 +81,9 @@ export class SocialsListComponent implements OnInit, OnDestroy {
 				this.authService.signIn(FacebookLoginProvider.PROVIDER_ID).then(response => {
 					this.layoutUtilsService.showActionNotification('Facebook signin successful', MessageType.Create, 10000, true, true);
 					localStorage.setItem('facebookDetails', JSON.stringify(response));
-					this.fbkDetails = JSON.parse(localStorage.getItem('facebookDetails'));
+					if (localStorage.getItem('facebookDetails')) {
+						this.fbkDetails = JSON.parse(localStorage.getItem('facebookDetails'));
+					}
 					this.addSocial(this.fbkDetails.name, this.fbkDetails.email, localStorage.getItem('fbkID'));
 				});
 			} else {

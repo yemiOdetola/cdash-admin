@@ -7,7 +7,10 @@ export class AuthGuardService implements CanActivate {
 	canActivate(): boolean {
 		let roles = localStorage.getItem('roles');
 		console.log(roles);
-		let userDetails = JSON.parse(localStorage.getItem('userDetails'));
+		let userDetails;
+		if (localStorage.getItem('userDetails')) {
+			userDetails = JSON.parse(localStorage.getItem('userDetails'));
+		}
 		if (roles) {
 			let rolesArr = roles.split(',');
 			console.log('allem', rolesArr);

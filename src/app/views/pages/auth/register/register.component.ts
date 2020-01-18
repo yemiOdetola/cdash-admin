@@ -17,7 +17,6 @@ import { ConfirmPasswordValidator } from './confirm-password.validator';
 @Component({
 	selector: 'kt-register',
 	templateUrl: './register.component.html',
-	encapsulation: ViewEncapsulation.None
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 	registerForm: FormGroup;
@@ -57,12 +56,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	 * On init
 	 */
 	ngOnInit() {
+		this.initRegisterForm();
 		this.auth.checkOrganization().subscribe(response => {
 			if (response.status === true && response.data !== null && response.data.superAdmin !== false) {
 				this.router.navigate(['/auth/login']);
 			}
 		});
-		this.initRegisterForm();
 	}
 
 	/*
@@ -135,19 +134,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
 		this.loading = true;
 
 		if (!controls['agree'].value) {
-			// you must agree the terms and condition
-			// checkbox cannot work inside mat-form-field https://github.com/angular/material2/issues/7891
 			this.authNoticeService.setNotice('You must agree the terms and condition', 'danger');
 			return;
 		}
 
 		const _user: User = new User();
 		_user.clear();
+		_user.type = 'superadmin',
 		_user.email = controls['email'].value;
 		_user.address = controls['address'].value;
 		_user.name = controls['fullname'].value;
 		_user.password = controls['password'].value;
-		_user.type = 'superadmin',
 		_user.roles = [];
 		this.auth.register(_user).pipe(
 			tap(user => {
