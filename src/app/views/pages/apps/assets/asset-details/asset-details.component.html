@@ -48,7 +48,7 @@
 						</tr>
 						<tr class="each-data" *ngIf="projectedCost && projectedCost.dollar">
 							<td class="label">Projected cost (dollar)</td>
-							<td class="value">{{projectedCost.dollar | currency : ty$Sign}}</td>
+							<td class="value">{{projectedCost.dollar | currency : dollarSign}}</td>
 						</tr>
 						<tr class="each-data" *ngIf="assetDetails.icon">
 							<td class="label">Icon</td>
@@ -70,7 +70,7 @@
 						</tr>
 						<tr class="each-data" *ngIf="assetDetails.cost.dollar">
 							<td class="label">Acquisition cost (dollar)</td>
-							<td class="value">{{assetDetails.cost.dollar | currency : ty$Sign}}</td>
+							<td class="value">{{assetDetails.cost.dollar | currency : dollarSign}}</td>
 						</tr>
 						<tr class="each-data" *ngIf="assetDetails.depreciation">
 							<td class="label">Depreciation per annum</td>
@@ -118,8 +118,8 @@
 						</tr>
 
 						<tr class="each-data" *ngIf="assetDetails.gross && assetDetails.gross.dollar">
-							<td class="label">Gross total revenue({{ty$Sign}})</td>
-							<td class="value">{{assetDetails.gross.naira | currency: ty$Sign}}</td>
+							<td class="label">Gross total revenue({{ dollarSign }})</td>
+							<td class="value">{{assetDetails.gross.naira | currency: dollarSign}}</td>
 						</tr>
 
 						<tr class="each-data" *ngIf="assetDetails.gross && assetDetails.gross.note">
@@ -149,7 +149,7 @@
 						<tr className="each-row" *ngFor="let cost of historicalCost; let i = index;">
 							<td>{{ cost.year }}</td>
 							<td>{{ cost.amount.naira | currency: naira}}</td>
-							<td>{{ cost.amount.dollar | currency: ty$Sign}}</td>
+							<td>{{ cost.amount.dollar | currency: dollarSign}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -167,7 +167,7 @@
 						<tr className="each-row" *ngFor="let recurrent of recurrentData">
 							<td>{{ recurrent.year }}</td>
 							<td>{{ recurrent.amount.naira | currency: naira}}</td>
-							<td>{{ recurrent.amount.dollar | currency: ty$Sign}}</td>
+							<td>{{ recurrent.amount.dollar | currency: dollarSign}}</td>
 						</tr>
 					</tbody>
 				</table>

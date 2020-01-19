@@ -26,7 +26,7 @@ export class AssetDetailsComponent implements OnInit {
 	normBiznez: any;
 	customData;
 	naira = '₦';
-	ty$Sign = '$';
+	dollarSign = '$';
 	projectedCost;
 	selected = 'details';
 	historicalCost = [];

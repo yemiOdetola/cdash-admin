@@ -109,13 +109,6 @@ export class AssetContainerComponent implements OnInit {
 			this.idParams = this.activatedRoute.snapshot.params['id'];
 		}
 		this.formTypes = [
-			// { 'id': 'summary', 'name': 'Summary', 'type': 'text', 'required': 'true' },
-			// { 'id': 'date_acquired', 'name': 'Date acquired', 'type': 'date', 'required': 'true' },
-			// { 'id': 'cost', 'name': 'Cost of acquisition', 'type': 'number', 'required': 'true' },
-			// { 'id': 'business_purpose', 'name': 'Business purpose', 'type': 'text', 'required': 'true' },
-			// { 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Others']},
-			// { 'id': 'depreciation', 'name': 'Depreciation per annum(%)', 'type': 'number', 'max': '100', 'required': 'true' },
-			// { 'id': 'currency', 'name': 'Currency (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Naira', 'Dollar'] },
 			{ 'id': 'industrial_link', 'name': 'Industrial Link', 'type': 'file', 'required': 'true' },
 			{ 'id': 'projected_cost', 'name': 'Projected cost (naira)', 'type': 'number', 'required': 'true' },
 			{ 'id': 'business_owners', 'name': 'Business owners', 'type': 'select', 'required': 'true' },
@@ -123,9 +116,7 @@ export class AssetContainerComponent implements OnInit {
 			{ 'id': 'recurrent_expenditure_month', 'name': 'Recurrent expenditure(month)', 'type': 'chart', 'required': 'true' },
 			{ 'id': 'icon', 'name': 'Icon', 'type': 'file', 'required': 'true' },
 			{ 'id': 'location_of_deployment', 'name': 'Location of deployment', 'type': 'text', 'required': 'true' },
-			// { 'id': 'location_of_deployment_image', 'name': 'Location of deployment(image)', 'type': 'file', 'required': 'true' },
 			{ 'id': 'technical_details', 'name': 'Technical details', 'type': 'text', 'required': 'true' },
-			// { 'id': 'type_others', 'name': 'Type others(text)', 'type': 'text', 'required': 'true' },
 			{ 'id': 'historical_cost', 'name': 'Historical cost', 'type': 'chart', 'required': 'true' },
 			{ 'id': 'diagram', 'name': 'Diagram/ Schematics', 'type': 'file', 'required': 'true' },
 		];

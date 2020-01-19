@@ -3,11 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { AssetModel, AssetsService } from '../../../../../core/assets';
+import { AssetsService } from '../../../../../core/assets';
 import { Location } from '@angular/common';
-// Layout
 import { LayoutConfigService } from '../../../../../core/_base/layout';
-// CRUD
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 import { MatDialog } from '@angular/material';
 import { tap, map } from 'rxjs/operators';
@@ -16,7 +14,6 @@ import { tap, map } from 'rxjs/operators';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import * as _moment from 'moment';
-// tslint:disable-next-line:no-duplicate-imports
 
 const moment = _moment;
 
@@ -30,6 +27,7 @@ const moment = _moment;
 		{ provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
 	],
 })
+
 export class AssetEditComponent implements OnInit {
 	loading$: Observable<boolean>;
 	loadingSubject = new BehaviorSubject<boolean>(true);
@@ -83,13 +81,6 @@ export class AssetEditComponent implements OnInit {
 			this.idParams = this.activatedRoute.snapshot.params['id'];
 		}
 		this.formTypes = [
-			// { 'id': 'summary', 'name': 'Summary', 'type': 'text', 'required': 'true' },
-			// { 'id': 'date_acquired', 'name': 'Date acquired', 'type': 'date', 'required': 'true' },
-			// { 'id': 'cost', 'name': 'Cost of acquisition', 'type': 'number', 'required': 'true' },
-			// { 'id': 'business_purpose', 'name': 'Business purpose', 'type': 'text', 'required': 'true' },
-			// { 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Others']},
-			// { 'id': 'depreciation', 'name': 'Depreciation per annum(%)', 'type': 'number', 'max': '100', 'required': 'true' },
-			// { 'id': 'currency', 'name': 'Currency (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Naira', 'Dollar'] },
 			{ 'id': 'technical_details', 'name': 'Technical details', 'type': 'text', 'required': 'true' },
 			{ 'id': 'industrial_link', 'name': 'Industrial Link', 'type': 'file', 'required': 'true' },
 			{ 'id': 'diagram', 'name': 'Diagram/ Schematics', 'type': 'file', 'required': 'true' },
@@ -99,9 +90,7 @@ export class AssetEditComponent implements OnInit {
 			{ 'id': 'recurrent_expenditure_year', 'name': 'Recurrent expenditure(year)', 'type': 'chart', 'required': 'true' },
 			{ 'id': 'recurrent_expenditure_month', 'name': 'Recurrent expenditure(month)', 'type': 'chart', 'required': 'true' },
 			{ 'id': 'historical_cost', 'name': 'Historical cost', 'type': 'chart', 'required': 'true' },
-			{ 'id': 'projected_cost', 'name': 'Projected cost (naira)', 'type': 'number', 'required': 'true' },
-			// { 'id': 'location_of_deployment_image', 'name': 'Location of deployment(image)', 'type': 'file', 'required': 'true' },
-			// { 'id': 'type_others', 'name': 'Type others(text)', 'type': 'text', 'required': 'true' },
+			{ 'id': 'projected_cost', 'name': 'Projected cost (naira)', 'type': 'number', 'required': 'true' }
 		];
 		if (this.idParams) {
 			this.loadingSubject.next(true);

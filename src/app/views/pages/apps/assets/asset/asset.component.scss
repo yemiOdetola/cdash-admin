@@ -17,8 +17,6 @@
 	}
 	.details-table {
 		padding: 2rem;
-		// border-right: 0.05rem solid #495dbe;
-		// border-left: 0.05rem solid #495dbe;
 	}
 	.form-body {
 		&.with-flex {
@@ -31,11 +29,6 @@
 		@media(min-width: 992px ) {
 			width: 80%;
 		}
-		// .submit {
-		// 	button {
-		// 		float: right;
-		// 	}
-		// }
 	}
 	.notes-added {
 		.proceeding {
@@ -74,10 +67,10 @@ animation: slideIn 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes slideIn {
-from {
-	transform: translateY(1rem);
-}
-to {
-	transform: translateY(0);
-}
+	from {
+		transform: translateY(1rem);
+	}
+	to {
+		transform: translateY(0);
+	}
 }

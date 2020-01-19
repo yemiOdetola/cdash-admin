@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssetsService } from '../../../../../core/assets';
@@ -12,10 +12,8 @@ import { Location } from '@angular/common';
 	templateUrl: './asset-data.component.html',
 	styleUrls: ['./asset-data.component.scss']
 })
-// recurrent_month
-// recurrent_expenditure_year
-// historical_data
-export class AssetDataComponent implements OnInit, OnDestroy {
+
+export class AssetDataComponent implements OnInit {
 	loading$: Observable<boolean>;
 	loadingSubject = new BehaviorSubject<boolean>(true);
 	proceedingOption: string;
@@ -224,7 +222,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 						}
 					});
 				}
-				console.log('custom, this.custom1', this.custom1);
 				this.editAssetInit = true;
 				if (this.assetDetails.historical_data.length) {
 					this.initHistoricalCost(this.assetDetails.historical_data);
@@ -232,7 +229,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 				this.loadingSubject.next(false);
 			},
 			error => {
-				console.log('error occured', error);
 				this.loadingSubject.next(false);
 			}
 		);
@@ -421,7 +417,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		this.hasFormErrors = false;
 		const controls = this.dataFormGroup.controls;
 		this.loadingSubject.next(true);
-		/** check form */
 		if (this.dataFormGroup.invalid) {
 			this.loadingSubject.next(false);
 			Object.keys(controls).forEach(controlName =>
@@ -706,7 +701,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	}
 
 	addAssetMainData() {
-		console.log('calling add new');
 		this.loadingSubject.next(true);
 		let payload = new FormData();
 		let forms = this.dataFormGroup.value;
@@ -772,7 +766,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	}
 
 	updateAssetMainData() {
-		console.log('calling edit');
 		this.loadingSubject.next(true);
 		let payload = new FormData();
 		let forms = this.dataFormGroup.value;
@@ -835,7 +828,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 
 	reset() {
 		this.assetData = Object.assign({}, this.oldAssetData);
-		// this.initAssetForm();
 		this.hasFormErrors = false;
 		this.dataFormGroup.markAsPristine();
 		this.dataFormGroup.markAsUntouched();
@@ -846,7 +838,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 		if (type === 'diagram') {
 			if (event.target.files.length > 0) {
 				this.fSelectedSchematics = event.target.files[0];
-				console.log('on diagram schematics', this.fSelectedSchematics);
 				this.fileNameSchematics = event.target.files[0].name;
 			}
 		}
@@ -854,21 +845,18 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			if (event.target.files.length > 0) {
 				this.fSelectedIndustrial = event.target.files[0];
 				this.fileNameIndustrial = event.target.files[0].name;
-				console.log('on diagram schematics', this.fSelectedIndustrial);
 			}
 		}
 		if (type === 'location_of_deployment_image') {
 			if (event.target.files.length > 0) {
 				this.fSelectedLocation = event.target.files[0];
 				this.fileNameLocation = event.target.files[0].name;
-				console.log('on diagram schematics', this.fSelectedLocation);
 			}
 		}
 		if (type === 'icon') {
 			if (event.target.files.length > 0) {
 				this.fSelectedIcon = event.target.files[0];
 				this.fileNameIcon = event.target.files[0].name;
-				console.log('on diagram schematics', this.fSelectedIcon);
 			}
 		}
 	}
@@ -878,7 +866,6 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 	}
 
 	handleFormChange(event) {
-		console.log(event.target.value);
 		if (event.target.value === '') {
 			return;
 		}
@@ -896,25 +883,18 @@ export class AssetDataComponent implements OnInit, OnDestroy {
 			}
 			this.formMap[this.sForm] = true;
 		}
-		console.log('myforms', this.myForms);
-		console.log('myforms', this.myformsName);
 	}
 
 	formRemove(form) {
-		console.log('form', form);
 		for (let i = 0; i < this.myForms.length; i++) {
 			if (this.myForms[i].id === form.id) {
-				console.log(form.id);
 				this.myForms.splice(i, 1);
 			}
 		}
 		for (let i = 0; i < this.myformsName.length; i++) {
 			if (this.myformsName[i].id === form.id) {
-				console.log(form.id);
 				this.myformsName.splice(i, 1);
 			}
 		}
 	}
-
-	ngOnDestroy() { }
 }
