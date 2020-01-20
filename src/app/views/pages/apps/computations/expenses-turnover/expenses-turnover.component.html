@@ -33,7 +33,7 @@
 						<td>{{year}}</td>
 						<td>{{ (expTurnovers.turnovers[0] && expTurnovers.turnovers[i].amount > 0 ? expTurnovers.turnovers[i].amount : 0) | currency: passedCurrency}}</td>
 						<td>{{ (expTurnovers.expenses[0] && expTurnovers.expenses[i].amount > 0 ? expTurnovers.expenses[i].amount : 0) | currency: passedCurrency}}</td>
-						<td>{{expTurnovers.ratio[i].ratio !== null ? expTurnovers.ratio[i].ratio : 'n/a'}}</td>
+						<td *ngIf="expTurnovers.ratio">{{ expTurnovers.ratio[i].ratio !== null ? expTurnovers.ratio[i].ratio : 'n/a'}}</td>
 						<!-- <td><a routerLink="/cdash/computations/expenses-turnover/ratio-chart" class="view">View ratio chart</a></td> -->
 					</tr>
 				</tbody>

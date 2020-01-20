@@ -70,7 +70,6 @@ export class DashboardComponent implements OnInit {
 			if (response.status === true && response.data !== null && response.data.superAdmin !== false) {
 				return;
 			} else {
-				localStorage.clear();
 				this.router.navigate(['/auth/login']);
 			}
 		});
