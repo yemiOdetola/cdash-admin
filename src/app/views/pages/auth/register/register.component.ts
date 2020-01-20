@@ -60,6 +60,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
 		this.auth.checkOrganization().subscribe(response => {
 			if (response.status === true && response.data !== null && response.data.superAdmin !== false) {
 				this.router.navigate(['/auth/login']);
+			} else {
+				return;
 			}
 		});
 	}

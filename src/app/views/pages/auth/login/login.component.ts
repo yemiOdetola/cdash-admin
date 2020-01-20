@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	ngOnInit(): void {
 		this.initLoginForm();
 		this.auth.checkOrganization().subscribe(response => {
-			if (response.status === true && response.data !== null) {
+			if (response.status === true && response.data !== null && response.data.superAdmin === true) {
 				return;
 			} else {
 				this.router.navigate(['/auth/create-organization']);
