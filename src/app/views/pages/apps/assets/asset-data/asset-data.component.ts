@@ -32,7 +32,7 @@ export class AssetDataComponent implements OnInit {
 	oldAssetData: FormGroup;
 	assetData: any;
 	formFields = [];
-	localForms;
+	localForms = JSON.parse(localStorage.getItem('formElement'));
 	localFields = this.localForms.form;
 	forms: any = this.localFields;
 	dataFormGroup: FormGroup;
@@ -791,7 +791,7 @@ export class AssetDataComponent implements OnInit {
 		if (this.customsContainer.length > 0) {
 			payload.append('custom_data', JSON.stringify(this.customsContainer));
 		}
-		if (this.dataFormGroup.get('projected_cost').value) {
+		if (this.dataFormGroup.get('projected_cost')) {
 			let projected_cost = {
 				naira: this.dataFormGroup.get('projected_cost').value,
 				dollar: this.projected_cost_dollar
