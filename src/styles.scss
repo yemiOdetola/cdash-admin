@@ -573,21 +573,31 @@ button[disabled] {
 		text-overflow: ellipsis;
 
 		.label {
-			width: 12rem;
+			width: 6rem;
 			color: #97979d;
 			text-align: right;
+			@media(min-width: 992px) {
+				width: 12rem;
+			}
 		}
 		.images {
 			img {
 				width: 250px;
+				@media(max-width: 767px) {
+					width: 90%;
+					margin: auto;
+				}
 			}
 		}
 		.value {
 			word-break: normal;
-			width: 20rem;
+			width: 15rem;
 			float: none;
 			color: #000000;
 			margin-left: 1.5rem;
+			@media(min-width: 768px) {
+				width: 20rem;
+			}
 			img {
 				display: inline-block;
 				width: 20px;

@@ -191,8 +191,9 @@ export class SocialsListComponent implements OnInit, OnDestroy {
 	initInstagram() {
 		if (this.setupSocials) {
 			if (!this.fbkAvailable) {
-				const message = `Instagram account is not configured`;
-				return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+				this.router.navigateByUrl('/cdash/socials/manage/social');
+				// const message = `Instagram account is not configured`;
+				// return this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 			}
 			this.setupSocials.forEach(social => {
 				if (social.type === 'instagram') {

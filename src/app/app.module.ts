@@ -45,15 +45,9 @@ import { AuthService, PermissionEffects, permissionsReducer, RoleEffects, rolesR
 // CRUD
 import { HttpUtilsService, LayoutUtilsService, TypesUtilsService } from './core/_base/crud';
 // push messaging
-import { MessagingService } from './core/push-notification/messaging.service';
 // Config
 import { LayoutConfig } from './core/_config/demo1/layout.config';
 
-// push notifications
-import { AngularFireMessagingModule } from '@angular/fire/messaging';
-import { AngularFireDatabaseModule } from '@angular/fire/database';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireModule } from '@angular/fire';
 // Highlight JS
 import { HIGHLIGHT_OPTIONS, HighlightLanguage } from 'ngx-highlightjs';
 import * as typescript from 'highlight.js/lib/languages/typescript';
@@ -107,10 +101,6 @@ export function hljsLanguages(): HighlightLanguage[] {
 		TranslateModule.forRoot(),
 		MatProgressSpinnerModule,
 		InlineSVGModule.forRoot(),
-		AngularFireDatabaseModule,
-		AngularFireAuthModule,
-		AngularFireMessagingModule,
-		AngularFireModule.initializeApp(environment.firebase)
 	],
 	exports: [],
 	providers: [
@@ -145,8 +135,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		MenuAsideService,
 		HttpUtilsService,
 		TypesUtilsService,
-		LayoutUtilsService,
-		MessagingService
+		LayoutUtilsService
 	],
 	bootstrap: [AppComponent]
 })

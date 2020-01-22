@@ -7,7 +7,6 @@ import { LayoutConfigService, SplashScreenService } from './core/_base/layout';
 // Layout
 import { TranslationService } from './core/_base/layout';
 // Push notification
-import { MessagingService } from './core/push-notification/messaging.service';
 
 import { select, Store } from '@ngrx/store';
 import { currentUser, User } from './core/auth';
@@ -48,7 +47,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 		private router: Router,
 		private layoutConfigService: LayoutConfigService,
 		private splashScreenService: SplashScreenService,
-		private messagingService: MessagingService,
 		private store: Store<AppState>,
 	) {
 
