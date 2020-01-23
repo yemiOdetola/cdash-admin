@@ -14,6 +14,7 @@ export class HeaderMobileComponent implements OnInit {
 	setBackground = '';
 	brandIcon = './assets/media/logos/logo.png';
 	asideDisplay: boolean;
+	orgDetails;
 
 	toggleOptions: ToggleOptions = {
 		target: 'body',
@@ -37,18 +38,20 @@ export class HeaderMobileComponent implements OnInit {
 	 * On init
 	 */
 	ngOnInit() {
-		if (!localStorage.getItem('orgLogo')) {
-			localStorage.setItem('orgLogo', this.brandIcon);
-			window.location.reload();
-		} else {
-			this.brandIcon = localStorage.getItem('orgLogo');
-		}
-		if (!localStorage.getItem('orgBg')) {
-			localStorage.setItem('orgBg', '#1e1e2d');
-		} else {
-			this.setBackground = localStorage.getItem('orgBg');
-		}
-		this.headerLogo = this.layoutConfigService.getLogo();
-		this.asideDisplay = this.layoutConfigService.getConfig('aside.self.display');
+		setTimeout(() => {
+			this.orgDetails = JSON.parse(localStorage.getItem('siteMeta'));
+			if (!JSON.parse(localStorage.getItem('siteMeta'))) {
+				localStorage.setItem('logo', this.brandIcon);
+			} else {
+				this.brandIcon = this.orgDetails.logo;
+			}
+			if (!JSON.parse(localStorage.getItem('siteMeta'))) {
+				localStorage.setItem('orgBg', '#1e1e2d');
+			} else {
+				this.setBackground = this.orgDetails.color;
+			}
+			this.headerLogo = this.layoutConfigService.getLogo();
+			this.asideDisplay = this.layoutConfigService.getConfig('aside.self.display');
+		}, 200);
 	}
 }

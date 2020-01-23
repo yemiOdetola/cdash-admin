@@ -54,7 +54,7 @@ export class BrandComponent implements OnInit, AfterViewInit {
 			}
 			this.headerLogo = this.layoutConfigService.getLogo();
 			this.headerStickyLogo = this.layoutConfigService.getStickyLogo();
-		}, 20);
+		}, 200);
 	}
 
 	/**
