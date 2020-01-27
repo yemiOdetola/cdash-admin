@@ -80,6 +80,32 @@
 						</div>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Alignment score(max value is 5)</label>
+							<input type="number" placeholder="Enter staff's score" [ngModelOptions]="{standalone: true}" (change)="onScoreChange($event)" [(ngModel)]="alignment_score">
+							<span *ngIf="showScoreError" class="slide-in scoreError">Score should not be more than 5</span>
+						</div>
+					</div>
+				</div> 
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Salary</label>
+							<input type="number" placeholder="Enter staff's salary" formControlName="salary">
+						</div>
+					</div>
+				</div> 
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label class="label">Experiences</label>
+							<textarea placeholder="Experiences" formControlName="experiences"></textarea>
+						</div>
+					</div>
+				</div> 
+				
 			</div>
 			<kt-alert *ngIf="hasFormErrors" type="warn" [showCloseButton]="true" [duration]="10000"
 				(close)="onAlertClose($event)">

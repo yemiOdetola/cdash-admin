@@ -33,7 +33,9 @@ export class StaffEditComponent implements OnInit {
 	idParams: string;
 	fSelected;
 	fileName;
+	alignment_score;
 	titles = ['Mrs.', 'Mr.', 'Dr.', 'Chief', 'Miss', 'Prof'];
+	showScoreError = false;
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private router: Router,
@@ -84,8 +86,10 @@ export class StaffEditComponent implements OnInit {
 			email: [staff.email || '', Validators.required],
 			tel: [staff.tel || '', Validators.required],
 			date_joined: [new Date(staff.date_joined) || '', Validators.required],
-			position: [staff.position || '', Validators.required],
-			summary: [staff.summary || '', Validators.required],
+			position: [staff.position || ''],
+			summary: [staff.summary || ''],
+			salary: [staff.salary || ''],
+			experiences: [staff.experiences || ''],
 		});
 	}
 
@@ -96,8 +100,10 @@ export class StaffEditComponent implements OnInit {
 			email: ['', Validators.required],
 			tel: ['', Validators.required],
 			date_joined: ['', Validators.required],
-			position: ['', Validators.required],
-			summary: ['', Validators.required],
+			position: [''],
+			summary: [''],
+			experiences: [''],
+			salary: [''],
 		});
 	}
 
@@ -152,6 +158,9 @@ export class StaffEditComponent implements OnInit {
 		payload.append('tel', this.staffForm.get('tel').value);
 		payload.append('date_joined', this.staffForm.get('date_joined').value);
 		payload.append('summary', this.staffForm.get('summary').value);
+		payload.append('alignment_score', this.alignment_score);
+		payload.append('salary', this.staffForm.get('salary').value);
+		payload.append('experiences', this.staffForm.get('experiences').value);
 		if (this.fSelected) {
 			payload.append('image', this.fSelected, this.fSelected.name);
 		}
@@ -171,6 +180,15 @@ export class StaffEditComponent implements OnInit {
 				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 			});
 	}
+
+	onScoreChange(e) {
+		if (e.target.value > 5) {
+			this.showScoreError = true;
+		}
+		if (e.target.value <= 5) {
+			this.showScoreError = false;
+		}
+	}
 	/**
 	 * Add staff
 	 *
@@ -187,6 +205,9 @@ export class StaffEditComponent implements OnInit {
 		payload.append('tel', this.staffForm.get('tel').value);
 		payload.append('date_joined', this.staffForm.get('date_joined').value);
 		payload.append('summary', this.staffForm.get('summary').value);
+		payload.append('alignment_score', this.alignment_score);
+		payload.append('salary', this.staffForm.get('salary').value);
+		payload.append('experiences', this.staffForm.get('experiences').value);
 		if (this.fSelected) {
 			payload.append('image', this.fSelected, this.fSelected.name);
 		}

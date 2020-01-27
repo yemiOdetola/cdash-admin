@@ -57,6 +57,24 @@
 							{{ staffDetails.summary  }}
 						</td>
 					</tr>
+					<tr class="each-data" *ngIf="staffDetails.alignment_score">
+						<td class="label">Alignment score</td>
+						<td class="value">
+							{{ staffDetails.alignment_score  }}
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="staffDetails.salary">
+						<td class="label">Salary</td>
+						<td class="value">
+							{{ staffDetails.salary | currency: nairaSign  }}
+						</td>
+					</tr>
+					<tr class="each-data" *ngIf="staffDetails.experiences">
+						<td class="label">Experiences</td>
+						<td class="value">
+							{{ staffDetails.experiences  }}
+						</td>
+					</tr>
 				</table>
 			</div>
 			<div *ngIf="!staffDetails" class="mt-5 please-data text-center">Please retry...</div>
