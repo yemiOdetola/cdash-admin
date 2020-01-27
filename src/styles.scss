@@ -99,7 +99,7 @@
 
 .instruction {
 	font-family: "Poppins";
-	font-size: 1.1rem;
+	font-size: 1.125rem;
 	color: #333;
 	padding: 1.2rem;
 	background: #f1f1f1;
@@ -145,7 +145,7 @@ button[disabled] {
 		tr {
 			height: 5rem;
 			color: #fafafa;
-			font-size: 0.875rem;
+			font-size: 0.935rem;
 			th {
 				padding-left: 2.7rem;
 			}
@@ -221,7 +221,7 @@ button[disabled] {
 						width: max-content;
 						text-align: center;
 						display: block;
-						font-size: 0.735rem;
+						font-size: 0.875rem;
 						font-weight: 600;
 						border-radius: 0.25rem;
 						padding: 0.4rem 1rem;
@@ -327,7 +327,7 @@ button[disabled] {
 
 	p {
 		color: #97979d;
-		font-size: 0.87rem;
+		font-size: 0.935rem;
 	}
 }
 
@@ -482,7 +482,7 @@ button[disabled] {
 
 	label {
 		color: #14141e;
-		font-size: 0.875rem;
+		font-size: 0.935rem;
 		margin-bottom: 0.875rem;
 		display: block;
 	}
@@ -569,7 +569,7 @@ button[disabled] {
 		display: flex;
 		justify-content: space-between;
 		margin: 1.5rem 0 0;
-		font-size: 0.875rem;
+		font-size: 0.935rem;
 		text-overflow: ellipsis;
 
 		.label {
@@ -608,7 +608,7 @@ button[disabled] {
 					width: max-content;
 					text-align: center;
 					display: block;
-					font-size: 0.735rem;
+					font-size: 0.875rem;
 					font-weight: 600;
 					border-radius: 0.25rem;
 					padding: 0.4rem 1rem;
@@ -688,7 +688,7 @@ button[disabled] {
 		.form-types {
 			display: flex;
 			justify-content: space-between;
-			font-size: 0.875rem;
+			font-size: 0.935rem;
 			font-weight: 500;
 			margin-bottom: 2.5rem;
 
@@ -720,7 +720,7 @@ button[disabled] {
 					padding: 0.5rem 1.5rem;
 					font-weight: 600;
 					border-radius: 1.75rem;
-					font-size: 0.75rem;
+					font-size: 0.875rem;
 					position: relative;
 					bottom: 0.25rem;
 
@@ -762,7 +762,7 @@ button[disabled] {
 
 						.into {
 							color: #97979d;
-							font-size: 0.75rem;
+							font-size: 0.875rem;
 						}
 					}
 
@@ -853,7 +853,7 @@ form {
 			.img-text {
 				margin: auto;
 				color: #97979d;
-				font-size: 0.75rem;
+				font-size: 0.875rem;
 				text-align: center;
 			}
 		}
@@ -983,8 +983,8 @@ form {
 			}
 		}
 		.permission {
-			color: #97979D;
-			font-size: 0.875rem;
+			color: rgb(107, 107, 107);
+			font-size: 0.935rem;
 		}
 
 		.action {
@@ -1016,7 +1016,7 @@ form {
 
 	span {
 		font-weight: 500;
-		font-size: 0.875rem;
+		font-size: 0.935rem;
 	}
 
 	img {
