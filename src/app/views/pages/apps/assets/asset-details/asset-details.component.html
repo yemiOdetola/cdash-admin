@@ -92,8 +92,7 @@
 						<tr class="each-data" *ngIf="assetDetails.industrial_link">
 							<td class="label">Industrial link</td>
 							<td class="value">
-								<img src="{{assetDetails.industrial_link}}"
-									alt="{{assetDetails.name}}'s industrial link">
+								<a href="{{assetDetails.industrial_link}}" target="_blank">{{assetDetails.industrial_link}}</a>
 							</td>
 						</tr>
 						<tr class="each-data" *ngIf="assetDetails.diagram">

@@ -124,6 +124,7 @@ export class AssetDataComponent implements OnInit {
 			console.log('containercustom', this.customsContainer);
 		});
 		this.loading$ = this.loadingSubject.asObservable();
+		this.loadingSubject.next(true);
 		this.assetDataId = this.route.snapshot.params['id'];
 		if (this.assetDataId) {
 			this.getAssetDetails();
@@ -229,6 +230,7 @@ export class AssetDataComponent implements OnInit {
 				this.loadingSubject.next(false);
 			},
 			error => {
+				console.log(error);
 				this.loadingSubject.next(false);
 			}
 		);
@@ -244,6 +246,7 @@ export class AssetDataComponent implements OnInit {
 			},
 			error => {
 				console.log('error', error);
+				this.loadingSubject.next(false);
 			}
 		);
 	}

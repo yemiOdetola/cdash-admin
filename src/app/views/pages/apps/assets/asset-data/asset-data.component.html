@@ -12,8 +12,8 @@
 					<div class="selected">Asset details</div>
 					<div class="active"></div>
 				</div>
-				<div [className]="selected === 'reccurent_year' ? 'item active' : 'item'"
-					(click)="selectMenu('reccurent_year')" *ngIf="showReccurentYear">
+				<div [className]="selected === 'reccurent_year' ? 'item active' : 'item'" (click)="selectMenu('reccurent_year')"
+					*ngIf="showReccurentYear">
 					<div class="selected">Reccurent expenditure</div>
 					<div class="active"></div>
 				</div>
@@ -30,8 +30,7 @@
 							<div class="col-lg-12">
 								<div class="form-item">
 									<label class="label">Asset name/title</label>
-									<input type="text" placeholder="Enter asset name" [(ngModel)]="assetName"
-										required="required" />
+									<input type="text" placeholder="Enter asset name" [(ngModel)]="assetName" required="required" />
 								</div>
 							</div>
 						</div>
@@ -47,8 +46,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom1"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom1"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -60,8 +58,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom1"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom1"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -75,8 +72,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom2"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom2"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -88,8 +84,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom2"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom2"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -103,8 +98,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom3"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom3"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -116,8 +110,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom3"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom3"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -131,8 +124,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom4"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom4"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -144,8 +136,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom4"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom4"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -159,8 +150,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom5"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom5"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -172,8 +162,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom5"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom5"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -187,8 +176,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom6"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom6"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -200,8 +188,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom6"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom6"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -215,8 +202,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom7"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom7"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -228,8 +214,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom7"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom7"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -243,8 +228,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom8"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom8"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -256,8 +240,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom8"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom8"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -271,8 +254,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom9"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom9"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -284,8 +266,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom9"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom9"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -299,8 +280,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom10"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom10"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -312,8 +292,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="text" placeholder="Enter {{form_elem.name}}"
-															(change)="changeCustom($event, form_elem.id)"
-															[(ngModel)]="custom10"
+															(change)="changeCustom($event, form_elem.id)" [(ngModel)]="custom10"
 															[ngModelOptions]="{standalone: true}">
 													</div>
 												</div>
@@ -327,8 +306,7 @@
 												<div class="col-lg-12">
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
-														<input type="text" placeholder="Enter {{form_elem.name}}"
-															formControlName="{{form_elem.id}}"
+														<input type="text" placeholder="Enter {{form_elem.name}}" formControlName="{{form_elem.id}}"
 															required="{{form_elem.required}}" />
 													</div>
 												</div>
@@ -342,8 +320,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="number" placeholder="Enter {{form_elem.name}}"
-															[(ngModel)]="customsContainer[form_elem.id].value"
-															required="{{form_elem.required}}" />
+															[(ngModel)]="customsContainer[form_elem.id].value" required="{{form_elem.required}}" />
 													</div>
 												</div>
 											</div>
@@ -354,9 +331,8 @@
 											<div class="col-lg-12">
 												<div class="form-item">
 													<label class="label">Cost of acquisition (dollar)</label>
-													<input type="text" placeholder="Enter cost in dollar"
-														[(ngModel)]="costDollar" required="required"
-														[ngModelOptions]="{standalone: true}" />
+													<input type="text" placeholder="Enter cost in dollar" [(ngModel)]="costDollar"
+														required="required" [ngModelOptions]="{standalone: true}" />
 												</div>
 											</div>
 										</div>
@@ -367,8 +343,7 @@
 												<div class="col-lg-12">
 													<div class="form-item">
 														<label class="label">Projected cost (dollar)</label>
-														<input type="number" placeholder="Enter cost in dollar"
-															[(ngModel)]="projected_cost_dollar"
+														<input type="number" placeholder="Enter cost in dollar" [(ngModel)]="projected_cost_dollar"
 															[ngModelOptions]="{standalone: true}" />
 													</div>
 												</div>
@@ -382,8 +357,7 @@
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
 														<input type="number" placeholder="Enter {{form_elem.name}}"
-															formControlName="{{form_elem.id}}"
-															required="{{form_elem.required}}" />
+															formControlName="{{form_elem.id}}" required="{{form_elem.required}}" />
 													</div>
 												</div>
 											</div>
@@ -408,8 +382,7 @@
 											<div class="col-lg-12">
 												<div class="form-item">
 													<label class="label">{{form_elem.name}}</label>
-													<input type="date" placeholder="Enter {{form_elem.name}}"
-														formControlName="{{form_elem.id}}"
+													<input type="date" placeholder="Enter {{form_elem.name}}" formControlName="{{form_elem.id}}"
 														required="{{form_elem.required}}" />
 												</div>
 											</div>
@@ -421,8 +394,7 @@
 												<div class="col-lg-12">
 													<div class="form-item">
 														<label class="label">{{form_elem.name}}</label>
-														<select formControlName="{{form_elem.id}}"
-															required="{{form_elem.required}}">
+														<select formControlName="{{form_elem.id}}" required="{{form_elem.required}}">
 															<option selected="selected">Select {{form_elem.name}}
 															</option>
 															<option *ngFor="let opt of form_elem.options">
@@ -450,18 +422,14 @@
 														</select>
 													</div>
 													<div class="form-item">
-														<div class="users-list mt-3"
-															*ngIf="myformsName && myformsName.length > 0">
-															<div class="each-user"
-																*ngFor="let type of myformsName; let i = index;">
+														<div class="users-list mt-3" *ngIf="myformsName && myformsName.length > 0">
+															<div class="each-user" *ngFor="let type of myformsName; let i = index;">
 																<div class="name">
-																	<img src="./assets/media/icons/details-icon.svg"
-																		alt="">
+																	<img src="./assets/media/icons/details-icon.svg" alt="">
 																	{{type.name | titlecase}}
 																</div>
 																<div class="action ml-4" (click)="formRemove(type)">
-																	<img src="./assets/media/icons/delete-close.svg"
-																		alt="">
+																	<img src="./assets/media/icons/delete-close.svg" alt="">
 																</div>
 															</div>
 														</div>
@@ -470,45 +438,60 @@
 											</div>
 										</div>
 									</div>
-									<div *ngSwitchCase="'file'">
-										<div class="row" *ngIf="!assetDataId">
-											<div class="col-lg-12">
-												<div class="form-item upload">
-													<label class="label" for="{{form_elem.id}}">
-														<img src="./assets/media/icons/upload-all.svg" alt="">
-													</label>
-													<input type="file" id="{{form_elem.id}}"
-														(change)="onFileChange($event, form_elem.id)" accept="image/*">
-													<div class="placeholder"
-														*ngIf="form_elem.id === 'icon' && !fileNameIcon">Upload
-														{{form_elem.name}}</div>
+									<div *ngIf="form_elem.id === 'industrial_link'">
+										<div *ngSwitchCase="'file'">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="form-item upload">
+														<label class="label" for="{{form_elem.id}}">
+															<img src="./assets/media/icons/upload-all.svg" alt="">
+														</label>
+														<input type="file" id="{{form_elem.id}}" (change)="onFileChange($event, form_elem.id)"
+															accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf">
 
-													<div class="placeholder"
-														*ngIf="form_elem.id === 'diagram' && !fileNameSchematics">
-														Upload {{form_elem.name}}</div>
+														<div class="placeholder" *ngIf="form_elem.id === 'industrial_link' && !fileNameIndustrial">
+															Upload {{form_elem.name}}</div>
 
-													<div class="placeholder"
-														*ngIf="form_elem.id === 'industrial_link' && !fileNameIndustrial">
-														Upload {{form_elem.name}}</div>
+														<div class="placeholder slide-in" *ngIf="form_elem.id === 'industrial_link'">
+															{{fileNameIndustrial}}</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div *ngSwitchCase="'file'">
+											<div class="row" *ngIf="!assetDataId && form_elem.id !== 'industrial_link'">
+												<div class="col-lg-12">
+													<div class="form-item upload">
+														<label class="label" for="{{form_elem.id}}">
+															<img src="./assets/media/icons/upload-all.svg" alt="">
+														</label>
+														<input type="file" id="{{form_elem.id}}" (change)="onFileChange($event, form_elem.id)"
+															accept="image/*">
+														<div class="placeholder" *ngIf="form_elem.id === 'icon' && !fileNameIcon">Upload
+															{{form_elem.name}}</div>
 
-													<div class="placeholder"
-														*ngIf="form_elem.id === 'location_of_deployment_image' && !fileNameLocation">
-														Upload {{form_elem.name}}</div>
+														<div class="placeholder" *ngIf="form_elem.id === 'diagram' && !fileNameSchematics">
+															Upload {{form_elem.name}}</div>
 
-													<div class="placeholder slide-in" *ngIf="form_elem.id === 'icon'">
-														{{fileNameIcon}}</div>
+														<div class="placeholder" *ngIf="form_elem.id === 'industrial_link' && !fileNameIndustrial">
+															Upload {{form_elem.name}}</div>
 
-													<div class="placeholder slide-in"
-														*ngIf="form_elem.id === 'diagram'">
-														{{fileNameSchematics}}</div>
+														<div class="placeholder"
+															*ngIf="form_elem.id === 'location_of_deployment_image' && !fileNameLocation">
+															Upload {{form_elem.name}}</div>
 
-													<div class="placeholder slide-in"
-														*ngIf="form_elem.id === 'industrial_link'">
-														{{fileNameIndustrial}}</div>
+														<div class="placeholder slide-in" *ngIf="form_elem.id === 'icon'">
+															{{fileNameIcon}}</div>
 
-													<div class="placeholder slide-in"
-														*ngIf="form_elem.id === 'location_of_deployment_image'">
-														{{fileNameLocation}}
+														<div class="placeholder slide-in" *ngIf="form_elem.id === 'diagram'">
+															{{fileNameSchematics}}</div>
+
+														<div class="placeholder slide-in" *ngIf="form_elem.id === 'industrial_link'">
+															{{fileNameIndustrial}}</div>
+
+														<div class="placeholder slide-in" *ngIf="form_elem.id === 'location_of_deployment_image'">
+															{{fileNameLocation}}
+														</div>
 													</div>
 												</div>
 											</div>
@@ -534,8 +517,7 @@
 										<label class="label">2020</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="Expenditure in naira"
-												formControlName="year20">
+											<input type="number" placeholder="Expenditure in naira" formControlName="year20">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -551,8 +533,7 @@
 										<label class="label">2019</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="Expenditure in naira"
-												formControlName="year19">
+											<input type="number" placeholder="Expenditure in naira" formControlName="year19">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -568,8 +549,7 @@
 										<label class="label">2018</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="Expenditure in naira"
-												formControlName="year18">
+											<input type="number" placeholder="Expenditure in naira" formControlName="year18">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -585,8 +565,7 @@
 										<label class="label">2017</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="Expenditure in naira"
-												formControlName="year17">
+											<input type="number" placeholder="Expenditure in naira" formControlName="year17">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -602,8 +581,7 @@
 										<label class="label">2016</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="Expenditure in naira"
-												formControlName="year16">
+											<input type="number" placeholder="Expenditure in naira" formControlName="year16">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -619,8 +597,7 @@
 										<label class="label">2015</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="Expenditure in naira"
-												formControlName="year15">
+											<input type="number" placeholder="Expenditure in naira" formControlName="year15">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -636,8 +613,7 @@
 										<label class="label">2014</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="Expenditure in naira"
-												formControlName="year14">
+											<input type="number" placeholder="Expenditure in naira" formControlName="year14">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -653,8 +629,7 @@
 										<label class="label">2013</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="Expenditure in naira"
-												formControlName="year13">
+											<input type="number" placeholder="Expenditure in naira" formControlName="year13">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -670,8 +645,7 @@
 										<label class="label">2012</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="Expenditure in naira"
-												formControlName="year12">
+											<input type="number" placeholder="Expenditure in naira" formControlName="year12">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -687,8 +661,7 @@
 										<label class="label">Gross total revenue</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="total revenue in naira"
-												formControlName="gross_naira">
+											<input type="number" placeholder="total revenue in naira" formControlName="gross_naira">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -702,8 +675,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">Notes</label>
-										<textarea rows="5" placeholder="Enter additional notes"
-											formControlName="note"></textarea>
+										<textarea rows="5" placeholder="Enter additional notes" formControlName="note"></textarea>
 										<!-- <input type="text" placeholder="Enter additional notes" formControlName="note"> -->
 									</div>
 								</div>
@@ -729,8 +701,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">January</label>
-										<input type="number" placeholder="Enter january expenditure"
-											formControlName="january">
+										<input type="number" placeholder="Enter january expenditure" formControlName="january">
 									</div>
 								</div>
 							</div>
@@ -738,8 +709,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">February</label>
-										<input type="number" placeholder="Enter february expenditure"
-											formControlName="february">
+										<input type="number" placeholder="Enter february expenditure" formControlName="february">
 									</div>
 								</div>
 							</div>
@@ -747,8 +717,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">March</label>
-										<input type="number" placeholder="Enter march expenditure"
-											formControlName="march">
+										<input type="number" placeholder="Enter march expenditure" formControlName="march">
 									</div>
 								</div>
 							</div>
@@ -756,8 +725,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">April</label>
-										<input type="number" placeholder="Enter april expenditure"
-											formControlName="april">
+										<input type="number" placeholder="Enter april expenditure" formControlName="april">
 									</div>
 								</div>
 							</div>
@@ -773,8 +741,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">June</label>
-										<input type="number" placeholder="Enter june expenditure"
-											formControlName="june">
+										<input type="number" placeholder="Enter june expenditure" formControlName="june">
 									</div>
 								</div>
 							</div>
@@ -782,8 +749,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">July</label>
-										<input type="number" placeholder="Enter july expenditure"
-											formControlName="july">
+										<input type="number" placeholder="Enter july expenditure" formControlName="july">
 									</div>
 								</div>
 							</div>
@@ -791,8 +757,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">August</label>
-										<input type="number" placeholder="Enter august expenditure"
-											formControlName="august">
+										<input type="number" placeholder="Enter august expenditure" formControlName="august">
 									</div>
 								</div>
 							</div>
@@ -800,8 +765,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">September</label>
-										<input type="number" placeholder="Enter september expenditure"
-											formControlName="september">
+										<input type="number" placeholder="Enter september expenditure" formControlName="september">
 									</div>
 								</div>
 							</div>
@@ -809,8 +773,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">October</label>
-										<input type="number" placeholder="Enter october expenditure"
-											formControlName="october">
+										<input type="number" placeholder="Enter october expenditure" formControlName="october">
 									</div>
 								</div>
 							</div>
@@ -818,8 +781,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">November</label>
-										<input type="number" placeholder="Enter november expenditure"
-											formControlName="november">
+										<input type="number" placeholder="Enter november expenditure" formControlName="november">
 									</div>
 								</div>
 							</div>
@@ -827,8 +789,7 @@
 								<div class="col-lg-12">
 									<div class="form-item">
 										<label class="label">December</label>
-										<input type="number" placeholder="Enter december expenditure"
-											formControlName="december">
+										<input type="number" placeholder="Enter december expenditure" formControlName="december">
 									</div>
 								</div>
 							</div>
@@ -855,8 +816,7 @@
 										<label class="label">2020</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="historical cost in naira"
-												formControlName="year20">
+											<input type="number" placeholder="historical cost in naira" formControlName="year20">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -872,8 +832,7 @@
 										<label class="label">2019</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="historical cost in naira"
-												formControlName="year19">
+											<input type="number" placeholder="historical cost in naira" formControlName="year19">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -889,8 +848,7 @@
 										<label class="label">2018</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="historical cost in naira"
-												formControlName="year18">
+											<input type="number" placeholder="historical cost in naira" formControlName="year18">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -906,8 +864,7 @@
 										<label class="label">2017</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="historical cost in naira"
-												formControlName="year17">
+											<input type="number" placeholder="historical cost in naira" formControlName="year17">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -923,8 +880,7 @@
 										<label class="label">2016</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="historical cost in naira"
-												formControlName="year16">
+											<input type="number" placeholder="historical cost in naira" formControlName="year16">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -940,8 +896,7 @@
 										<label class="label">2015</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="historical cost in naira"
-												formControlName="year15">
+											<input type="number" placeholder="historical cost in naira" formControlName="year15">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -957,8 +912,7 @@
 										<label class="label">2014</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="historical cost in naira"
-												formControlName="year14">
+											<input type="number" placeholder="historical cost in naira" formControlName="year14">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -974,8 +928,7 @@
 										<label class="label">2013</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="historical cost in naira"
-												formControlName="year13">
+											<input type="number" placeholder="historical cost in naira" formControlName="year13">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -991,8 +944,7 @@
 										<label class="label">2012</label>
 										<div class="with-tag">
 											<span>₦</span>
-											<input type="number" placeholder="historical cost in naira"
-												formControlName="year12">
+											<input type="number" placeholder="historical cost in naira" formControlName="year12">
 										</div>
 										<div class="with-tag">
 											<span class="mt-2">$</span>
@@ -1010,8 +962,7 @@
 					</form>
 					<div class="form-submit mt-5 mb-4">
 						<button class="reset" (click)="reset()">Reset</button>
-						<button class="submit" type="button"
-							(click)="addHistoricalCost('historical_cost')">Submit</button>
+						<button class="submit" type="button" (click)="addHistoricalCost('historical_cost')">Submit</button>
 					</div>
 				</div>
 			</div>
