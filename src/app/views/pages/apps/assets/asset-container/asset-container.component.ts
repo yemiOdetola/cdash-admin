@@ -57,7 +57,7 @@ export class AssetContainerComponent implements OnInit {
 		{ 'id': 'date_acquired', 'name': 'Date acquired', 'type': 'date', 'required': 'true' },
 		{ 'id': 'cost', 'name': 'Cost of acquisition(naira)', 'type': 'number', 'required': 'true' },
 		{ 'id': 'business_purpose', 'name': 'Business purpose', 'type': 'text', 'required': 'true' },
-		{ 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Others'] },
+		{ 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Business continuity'] },
 		{ 'id': 'depreciation', 'name': 'Depreciation per annum(%)', 'type': 'number', 'max': '100', 'required': 'true' },
 	];
 	constructor(
@@ -212,7 +212,7 @@ export class AssetContainerComponent implements OnInit {
 		this.loadingSubject.next(true);
 		const payload = this.assetForm.value;
 		console.log('before', this.myForms);
-		if (this.myForms.length > 0) {
+		// if (this.myForms.length > 0) {
 			this.compulsoryFields.forEach(field => {
 				this.myForms.push(field);
 			});
@@ -233,10 +233,10 @@ export class AssetContainerComponent implements OnInit {
 					const message = 'Sorry, Temporary Error Occured';
 					this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 				});
-		} else {
-			const message = `Please add elements to create a form`;
-			this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-		}
+		// } else {
+		// 	const message = `Please add elements to create a form`;
+		// 	this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+		// }
 	}
 
 	reset() {
