@@ -54,7 +54,7 @@ export class AssetEditComponent implements OnInit {
 		{ 'id': 'summary', 'name': 'Summary', 'type': 'text', 'required': 'true' },
 		{ 'id': 'date_acquired', 'name': 'Date acquired', 'type': 'date', 'required': 'true' },
 		{ 'id': 'business_purpose', 'name': 'Business purpose', 'type': 'text', 'required': 'true' },
-		{ 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Business continuity'] },
+		{ 'id': 'type', 'name': 'Type (dropdown)', 'type': 'select', 'required': 'true', 'options': ['Software', 'Hardware', 'Connectivity', 'Business_continuity', 'Others'] },
 		{ 'id': 'depreciation', 'name': 'Depreciation per annum(%)', 'type': 'number', 'max': '100', 'required': 'true' },
 	];
 	constructor(
