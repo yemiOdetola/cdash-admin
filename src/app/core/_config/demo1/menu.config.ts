@@ -22,14 +22,14 @@ export class MenuConfig {
 					icon: 'flaticon2-expand',
 					submenu: [
 						{
-							title: 'All users',
-							page: 'users/users',
+							title: 'Human assets',
+							page: 'users/staffs',
 							root: true,
 							bullet: 'dot',
 						},
 						{
-							title: 'Staffs',
-							page: 'users/staffs',
+							title: 'All users',
+							page: 'users/users',
 							root: true,
 							bullet: 'dot',
 						},

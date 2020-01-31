@@ -118,10 +118,10 @@ export class StaffEditComponent implements OnInit {
 	getComponentTitle() {
 		let result = 'Please Wait';
 		if (!this.staff || !this.staff._id) {
-			result = 'Create New staff';
+			result = 'Add new human asset';
 			return result;
 		}
-		result = `Edit staff -  ${this.titleCase(this.staff.name)}`;
+		result = `Edit -  ${this.titleCase(this.staff.name)}`;
 		return result;
 	}
 
