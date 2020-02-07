@@ -311,11 +311,9 @@ export class AssetEditComponent implements OnInit {
 		}
 	}
 
-	onFileChange(event, type) {
-		if (type === 'icon') {
-			if (event.target.files.length > 0) {
-				this.fs = event.target.files[0];
-			}
+	onFileChange(event) {
+		if (event.target.files.length > 0) {
+			this.fs = event.target.files[0];
 		}
 	}
 
