@@ -10,6 +10,7 @@ import { LayoutConfigService } from '../../../../../core/_base/layout';
 // CRUD
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 import { MatDialog } from '@angular/material';
+import icons from './line-awesome';
 
 // imprts for date hiccup
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -40,9 +41,11 @@ export class AssetContainerComponent implements OnInit {
 	formname = '';
 	formTypes;
 	sForm;
+	fs;
 	formMap: any;
 	myForms: any;
 	stMap: any;
+	iconsList = icons;
 	selectedType = 'text';
 	customName = '';
 	customForm;
@@ -50,6 +53,7 @@ export class AssetContainerComponent implements OnInit {
 	currencies = ['naira', 'dollar'];
 	customTypes = ['text', 'number'];
 	customIndex = 1;
+	formIcon = '';
 	containerId = '';
 	containerAssets: any;
 	compulsoryFields = [
@@ -78,20 +82,26 @@ export class AssetContainerComponent implements OnInit {
 		this.myForms = [];
 		this.assetsService.getAssetContainerById(this.containerId).subscribe(
 			assetsData => {
+				console.log('assets response data', assetsData['data']);
+				if (typeof assetsData['data'].form === 'string') {
+					assetsData['data'].form = JSON.parse(assetsData['data'].form);
+				}
 				this.containerAssets = assetsData['data'];
 				this.initAssetForm(assetsData['data']);
-				this.containerAssets.form.forEach(field => {
-					this.compulsoryFields.forEach(cField => {
-						if (field.id === cField.id) {
-							this.containerAssets.splice(field.id, 1);
-						} else {
-							if (this.formMap[field.id] === undefined || this.formMap[field.id] === false) {
-								this.myForms.push(field);
-								this.formMap[field.id] = true;
+				if (this.containerAssets.form) {
+					this.containerAssets.form.forEach(field => {
+						this.compulsoryFields.forEach(cField => {
+							if (field.id === cField.id) {
+								this.containerAssets.splice(field.id, 1);
+							} else {
+								if (this.formMap[field.id] === undefined || this.formMap[field.id] === false) {
+									this.myForms.push(field);
+									this.formMap[field.id] = true;
+								}
 							}
-						}
+						});
 					});
-				});
+				}
 				localStorage.setItem('formElement', JSON.stringify(assetsData['data']));
 				console.log('this myfirms unut', this.myForms);
 				this.loadingSubject.next(false);
@@ -137,6 +147,11 @@ export class AssetContainerComponent implements OnInit {
 
 	goBack() {
 		this._location.back();
+	}
+
+	chooseIcon(icon) {
+		this.formIcon = icon;
+		console.log(this.formIcon);
 	}
 
 	initAssetForm(asset: any = {}) {
@@ -210,33 +225,41 @@ export class AssetContainerComponent implements OnInit {
 
 	onSubmit() {
 		this.loadingSubject.next(true);
-		const payload = this.assetForm.value;
-		console.log('before', this.myForms);
-		// if (this.myForms.length > 0) {
-			this.compulsoryFields.forEach(field => {
-				this.myForms.push(field);
+		let payload = new FormData();
+		this.compulsoryFields.forEach(field => {
+			this.myForms.push(field);
+		});
+		payload.append('forms', this.myForms);
+		if (this.fs) {
+			payload.append('icon', this.fs, this.fs.name);
+		}
+		if (this.formIcon) {
+			payload.append('icon_name', this.formIcon);
+		}
+		this.assetsService.editAssetContainer(payload, this.containerId).subscribe(
+			data => {
+				this.loadingSubject.next(false);
+				console.log('success reponse', data);
+				const message = `New asset has been successfully created`;
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+				this.router.navigate(['/cdash/assets/assets']);
+			}, error => {
+				this.loadingSubject.next(false);
+				console.log('Error response', error);
+				const title = 'Please Retry';
+				const message = 'Sorry, Temporary Error Occured';
+				this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 			});
-			console.log('after', this.myForms);
-			payload.forms = this.myForms;
-			console.log('payload to send', payload);
-			this.assetsService.editAssetContainer(payload, this.containerId).subscribe(
-				data => {
-					this.loadingSubject.next(false);
-					console.log('success reponse', data);
-					const message = `New asset has been successfully created`;
-					this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-					this.router.navigate(['/cdash/assets/assets']);
-				}, error => {
-					this.loadingSubject.next(false);
-					console.log('Error response', error);
-					const title = 'Please Retry';
-					const message = 'Sorry, Temporary Error Occured';
-					this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
-				});
 		// } else {
 		// 	const message = `Please add elements to create a form`;
 		// 	this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
 		// }
+	}
+
+	onFileChange(event) {
+		if (event.target.files.length > 0) {
+			this.fs = event.target.files[0];
+		}
 	}
 
 	reset() {

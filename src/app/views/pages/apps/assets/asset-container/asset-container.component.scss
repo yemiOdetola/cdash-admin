@@ -26,5 +26,32 @@
 	}
 }
 .la, .las {
-	color: #444 !important;
+	color: #555;
+	font-weight: 600;
+	&:hover {
+		color: #333;
+	}
+}
+
+.icons-container {
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	border: 1px solid #97979d;
+	padding: 1rem;
+	max-height: 400px;
+	overflow-x: scroll;
+	.icon {
+		padding: 0.5rem;
+		&:hover {
+			cursor: pointer;
+			background: #e1e1e1;
+		}
+	}
+}
+.selected {
+	font-size: 1.5rem;
+	position: relative;
+	bottom: 0.5rem;
+	color: #777;
 }
