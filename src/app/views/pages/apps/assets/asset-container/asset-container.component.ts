@@ -82,11 +82,14 @@ export class AssetContainerComponent implements OnInit {
 		this.myForms = [];
 		this.assetsService.getAssetContainerById(this.containerId).subscribe(
 			assetsData => {
-				console.log('assets response data', assetsData['data']);
 				if (typeof assetsData['data'].form === 'string') {
 					assetsData['data'].form = JSON.parse(assetsData['data'].form);
 				}
 				this.containerAssets = assetsData['data'];
+				if (typeof this.containerAssets.form[0] === 'string') {
+					this.containerAssets.form = JSON.parse(this.containerAssets.form);
+				}
+				this.loadingSubject.next(false);
 				this.initAssetForm(assetsData['data']);
 				if (this.containerAssets.form) {
 					this.containerAssets.form.forEach(field => {
@@ -103,7 +106,6 @@ export class AssetContainerComponent implements OnInit {
 					});
 				}
 				localStorage.setItem('formElement', JSON.stringify(assetsData['data']));
-				console.log('this myfirms unut', this.myForms);
 				this.loadingSubject.next(false);
 			},
 			error => {
@@ -119,16 +121,16 @@ export class AssetContainerComponent implements OnInit {
 			this.idParams = this.activatedRoute.snapshot.params['id'];
 		}
 		this.formTypes = [
+			{ 'id': 'technical_details', 'name': 'Technical details', 'type': 'text', 'required': 'true' },
 			{ 'id': 'industrial_link', 'name': 'Industrial Link', 'type': 'file', 'required': 'true' },
-			{ 'id': 'projected_cost', 'name': 'Projected cost (naira)', 'type': 'number', 'required': 'true' },
+			{ 'id': 'diagram', 'name': 'Diagram/ Schematics', 'type': 'file', 'required': 'true' },
 			{ 'id': 'business_owners', 'name': 'Business owners', 'type': 'select', 'required': 'true' },
+			{ 'id': 'location_of_deployment', 'name': 'Location of deployment', 'type': 'text', 'required': 'true' },
+			{ 'id': 'icon', 'name': 'Icon', 'type': 'file', 'required': 'true' },
 			{ 'id': 'recurrent_expenditure_year', 'name': 'Recurrent expenditure(year)', 'type': 'chart', 'required': 'true' },
 			{ 'id': 'recurrent_expenditure_month', 'name': 'Recurrent expenditure(month)', 'type': 'chart', 'required': 'true' },
-			{ 'id': 'icon', 'name': 'Icon', 'type': 'file', 'required': 'true' },
-			{ 'id': 'location_of_deployment', 'name': 'Location of deployment', 'type': 'text', 'required': 'true' },
-			{ 'id': 'technical_details', 'name': 'Technical details', 'type': 'text', 'required': 'true' },
 			{ 'id': 'historical_cost', 'name': 'Historical cost', 'type': 'chart', 'required': 'true' },
-			{ 'id': 'diagram', 'name': 'Diagram/ Schematics', 'type': 'file', 'required': 'true' },
+			{ 'id': 'projected_cost', 'name': 'Projected cost (naira)', 'type': 'number', 'required': 'true' }
 		];
 		if (this.idParams) {
 			this.loadingSubject.next(true);
@@ -226,10 +228,14 @@ export class AssetContainerComponent implements OnInit {
 	onSubmit() {
 		this.loadingSubject.next(true);
 		let payload = new FormData();
+		let forms = this.assetForm.value;
+		for (let key in forms) {
+			payload.append(key, forms[key]);
+		}
 		this.compulsoryFields.forEach(field => {
 			this.myForms.push(field);
 		});
-		payload.append('forms', this.myForms);
+		payload.append('forms', JSON.stringify(this.myForms));
 		if (this.fs) {
 			payload.append('icon', this.fs, this.fs.name);
 		}
