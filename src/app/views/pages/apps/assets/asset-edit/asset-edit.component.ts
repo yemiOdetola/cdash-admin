@@ -47,10 +47,12 @@ export class AssetEditComponent implements OnInit {
 	selectedType = 'text';
 	customName = '';
 	customForm;
+	formIcon = '';
 	assetForm: FormGroup;
 	currencies = ['naira', 'dollar'];
 	customTypes = ['text', 'number'];
 	customIndex = 1;
+	fs;
 	compulsoryFields = [
 		{ 'id': 'cost', 'name': 'Cost of acquisition (naira)', 'type': 'number', 'required': 'true' },
 		{ 'id': 'summary', 'name': 'Summary', 'type': 'text', 'required': 'true' },
@@ -108,6 +110,11 @@ export class AssetEditComponent implements OnInit {
 			this.stMap[e.id] = e.name;
 		});
 		this.iconsList = icons;
+	}
+
+	chooseIcon(icon) {
+		this.formIcon = icon;
+		console.log(this.formIcon);
 	}
 
 	goBack() {
@@ -267,13 +274,22 @@ export class AssetEditComponent implements OnInit {
 
 	onSubmit() {
 		this.loadingSubject.next(true);
-		const payload = this.assetForm.value;
-		console.log('before', this.myForms);
+		let payload = new FormData();
+		let forms = this.assetForm.value;
+		for (let key in forms) {
+			payload.append(key, forms[key]);
+		}
 		if (this.myForms.length > 0) {
 			this.compulsoryFields.forEach(field => {
 				this.myForms.push(field);
 			});
-			payload.forms = this.myForms;
+			payload.append('forms', JSON.stringify(this.myForms));
+			if (this.fs) {
+				payload.append('icon', this.fs, this.fs.name);
+			}
+			if (this.formIcon) {
+				payload.append('icon_name', this.formIcon);
+			}
 			this.assetsService.createAsset(payload).subscribe(
 				data => {
 					this.loadingSubject.next(false);
@@ -287,10 +303,19 @@ export class AssetEditComponent implements OnInit {
 					const title = 'Please Retry';
 					const message = 'Sorry, Temporary Error Occured';
 					this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+					this.myForms = [];
 				});
 		} else {
 			const message = `Please add elements to create a form`;
 			this.layoutUtilsService.showActionNotification(message, MessageType.Create, 10000, true, true);
+		}
+	}
+
+	onFileChange(event, type) {
+		if (type === 'icon') {
+			if (event.target.files.length > 0) {
+				this.fs = event.target.files[0];
+			}
 		}
 	}
 

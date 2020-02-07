@@ -6,7 +6,6 @@
 			<img src="./assets/media/icons/backBtn.svg" alt="">
 			<span>Back</span>
 		</div>
-		<i class="las la-5x la-battery-three-quarters"></i>
 		<form [formGroup]="assetForm">
 			<div class="form-group">
 				<div class="row">
@@ -28,20 +27,39 @@
 						</div>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="form-item">
-							<label for="title" class="label">Select form icon</label>
-							<div class="icons-container">
-								<div class="icon" *ngFor="let icon of iconsList">
-									<i [className]="'las la-5x ' + icon"></i>
-								</div>
+			</div>
+		</form>
+		<div class="form-group">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="form-item">
+						<label for="title" class="label">Select form icon</label>
+						<div class="icons-container">
+							<div class="icon" *ngFor="let icon of iconsList" (click)="chooseIcon(icon)">
+								<i [className]="'las la-4x ' + icon"></i>
 							</div>
+						</div>
+						<div class="mt-3 mb-3 slide-in" *ngIf="formIcon">
+							<p>
+								<span class="selected">Selected icon: </span>
+								<i [className]="'las la-3x ' + formIcon"></i>
+							</p>
 						</div>
 					</div>
 				</div>
 			</div>
-		</form>
+			<div class="col-lg-12">
+				<div class="form-item upload">
+					<label for="title" class="label">(If icon is selected, and you upload an image, the image will replace the icon.)</label>
+					<label class="label" for="icon">
+						<img src="./assets/media/icons/upload-all.svg" alt="">
+					</label>
+					<input type="file" (change)="onFileChange($event)" id="icon" accept="image/*">
+					<div class="placeholder" *ngIf="!fs"> Upload form icon</div>
+					<div class="placeholder slide-in" *ngIf="fs"> {{fs.name}}</div>
+				</div>
+			</div>
+		</div>
 		<div class="form-group">
 			<div class="row">
 				<div class="col-lg-6">
