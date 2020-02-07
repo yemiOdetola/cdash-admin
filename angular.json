@@ -27,12 +27,13 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-			  "src/assets",
-			  "src/firebase-messaging-sw.js",
-         	  "src/manifest.json"
+              "src/assets",
+              "src/firebase-messaging-sw.js",
+              "src/manifest.json"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "./node_modules/line-awesome/dist/line-awesome/css/line-awesome.min.css"
             ],
             "scripts": [
               "src/assets/vendors/global/vendors.bundle.js",
@@ -91,8 +92,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "karmaConfig": "./karma.conf.js",
-            "scripts": [
-            ],
+            "scripts": [],
             "styles": [
               "src/styles.scss"
             ],

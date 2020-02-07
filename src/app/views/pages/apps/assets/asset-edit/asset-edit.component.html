@@ -6,12 +6,13 @@
 			<img src="./assets/media/icons/backBtn.svg" alt="">
 			<span>Back</span>
 		</div>
+		<i class="las la-5x la-battery-three-quarters"></i>
 		<form [formGroup]="assetForm">
 			<div class="form-group">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="form-item">
-							<label class="label">form name</label>
+							<label class="label">Form name</label>
 							<input type="text" placeholder="Enter form name" formControlName="name">
 						</div>
 					</div>
@@ -24,6 +25,18 @@
 								<option value="" selected="true">Select element</option>
 								<option [value]="type.id" *ngFor="let type of formTypes;">{{type.name}}</option>
 							</select>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="form-item">
+							<label for="title" class="label">Select form icon</label>
+							<div class="icons-container">
+								<div class="icon" *ngFor="let icon of iconsList">
+									<i [className]="'las la-5x ' + icon"></i>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

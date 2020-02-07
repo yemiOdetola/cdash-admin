@@ -25,3 +25,20 @@
 		text-align: left;
 	}
 }
+
+.la, .las {
+	color: #555;
+	&:hover {
+		color: #333;
+	}
+}
+
+.icons-container {
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	border: 1px solid #97979d;
+	padding: 1rem;
+	max-height: 400px;
+	overflow-x: scroll;
+}

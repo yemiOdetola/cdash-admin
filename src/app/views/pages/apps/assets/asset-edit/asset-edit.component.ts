@@ -9,6 +9,7 @@ import { LayoutConfigService } from '../../../../../core/_base/layout';
 import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 import { MatDialog } from '@angular/material';
 import { tap, map } from 'rxjs/operators';
+import icons from './line-awesome';
 
 // imprts for date hiccup
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -38,6 +39,7 @@ export class AssetEditComponent implements OnInit {
 	addedIcon = false;
 	formname = '';
 	formTypes;
+	iconsList = icons;
 	sForm;
 	formMap: any;
 	myForms: any;
@@ -105,6 +107,7 @@ export class AssetEditComponent implements OnInit {
 		this.formTypes.forEach((e) => {
 			this.stMap[e.id] = e.name;
 		});
+		this.iconsList = icons;
 	}
 
 	goBack() {
