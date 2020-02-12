@@ -93,9 +93,6 @@ export class AssetDataComponent implements OnInit {
 		if (localStorage.getItem('formElement')) {
 			this.localForms = JSON.parse(localStorage.getItem('formElement'));
 		}
-		if (typeof this.localForms.form === 'string') {
-			this.forms = JSON.parse(this.localForms.form);
-		}
 		this.getAllStaffs();
 		console.clear();
 		let group = {};

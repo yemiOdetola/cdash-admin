@@ -458,40 +458,40 @@
 												</div>
 											</div>
 										</div>
-										<div *ngSwitchCase="'file'">
-											<div class="row" *ngIf="!assetDataId && form_elem.id !== 'industrial_link'">
-												<div class="col-lg-12">
-													<div class="form-item upload">
-														<label class="label" for="{{form_elem.id}}">
-															<img src="./assets/media/icons/upload-all.svg" alt="">
-														</label>
-														<input type="file" id="{{form_elem.id}}" (change)="onFileChange($event, form_elem.id)"
-															accept="image/*">
-														<div class="placeholder" *ngIf="form_elem.id === 'icon' && !fileNameIcon">Upload
-															{{form_elem.name}}</div>
+									</div>
+									<div *ngSwitchCase="'file'">
+										<div class="row" *ngIf="!assetDataId && form_elem.id !== 'industrial_link'">
+											<div class="col-lg-12">
+												<div class="form-item upload">
+													<label class="label" for="{{form_elem.id}}">
+														<img src="./assets/media/icons/upload-all.svg" alt="">
+													</label>
+													<input type="file" id="{{form_elem.id}}" (change)="onFileChange($event, form_elem.id)"
+														accept="image/*">
+													<div class="placeholder" *ngIf="form_elem.id === 'icon' && !fileNameIcon">Upload
+														{{form_elem.name}}</div>
 
-														<div class="placeholder" *ngIf="form_elem.id === 'diagram' && !fileNameSchematics">
-															Upload {{form_elem.name}}</div>
+													<div class="placeholder" *ngIf="form_elem.id === 'diagram' && !fileNameSchematics">
+														Upload {{form_elem.name}}</div>
 
-														<div class="placeholder" *ngIf="form_elem.id === 'industrial_link' && !fileNameIndustrial">
-															Upload {{form_elem.name}}</div>
+													<div class="placeholder" *ngIf="form_elem.id === 'industrial_link' && !fileNameIndustrial">
+														Upload {{form_elem.name}}</div>
 
-														<div class="placeholder"
-															*ngIf="form_elem.id === 'location_of_deployment_image' && !fileNameLocation">
-															Upload {{form_elem.name}}</div>
+													<div class="placeholder"
+														*ngIf="form_elem.id === 'location_of_deployment_image' && !fileNameLocation">
+														Upload {{form_elem.name}}</div>
 
-														<div class="placeholder slide-in" *ngIf="form_elem.id === 'icon'">
-															{{fileNameIcon}}</div>
+													<div class="placeholder slide-in" *ngIf="form_elem.id === 'icon'">
+														{{fileNameIcon}}</div>
 
-														<div class="placeholder slide-in" *ngIf="form_elem.id === 'diagram'">
-															{{fileNameSchematics}}</div>
+													<div class="placeholder slide-in" *ngIf="form_elem.id === 'diagram'">
+														{{fileNameSchematics}}</div>
 
-														<div class="placeholder slide-in" *ngIf="form_elem.id === 'industrial_link'">
-															{{fileNameIndustrial}}</div>
+													<div class="placeholder slide-in" *ngIf="form_elem.id === 'industrial_link'">
+														{{fileNameIndustrial}}</div>
 
-														<div class="placeholder slide-in" *ngIf="form_elem.id === 'location_of_deployment_image'">
-															{{fileNameLocation}}
-														</div>
+													<div class="placeholder slide-in" *ngIf="form_elem.id === 'location_of_deployment_image'">
+														{{fileNameLocation}}
 													</div>
 												</div>
 											</div>
