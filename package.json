@@ -39,7 +39,7 @@
     "angular-google-charts": "^0.1.6",
     "angular-in-memory-web-api": "^0.8.0",
     "angularx-social-login": "^2.2.1",
-    "chart.js": "^2.9.2",
+    "chart.js": "^2.9.4",
     "chartist": "^0.11.0",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.6.5",
